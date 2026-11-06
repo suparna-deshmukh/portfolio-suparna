@@ -35,6 +35,7 @@
   --fb:var(--font-satoshi),system-ui,-apple-system,"Segoe UI",sans-serif;
   --fm:var(--font-dm-mono),ui-monospace,monospace;
   --r:14px;--rS:8px;--ease:cubic-bezier(.16,1,.3,1);
+  --settle:linear(0,.34 8%,.76 16%,.97 26%,1.035 35%,1.01 47%,1);
   --pad:clamp(20px,5vw,64px);--sec:clamp(80px,10vw,128px);
   /* spacing roles */
   --s-sec:clamp(64px,7vw,96px);--s-head:clamp(20px,2vw,28px);--s-group:24px;--s-tight:12px;
@@ -565,7 +566,6 @@ html.motion-ok .case-tm.paused::before,html.motion-ok .case-tm.paused .tm-field 
 /* FitStage: a fixed-size illustration scaled to its column */
 .fit{position:relative;width:100%}
 .fit>.stage{position:absolute;top:0;left:calc((100% - var(--w) * var(--s,1)) / 2);transform-origin:0 0;transform:scale(var(--s,1))}
-.case{--settle:linear(0,.34 8%,.76 16%,.97 26%,1.035 35%,1.01 47%,1)}
 /* Filtr board: scattered notes thread together, then sort into a ranked answer */
 .fb{position:absolute;inset:0;border-radius:var(--r);overflow:hidden;border:1px solid var(--lineS);--note:color-mix(in oklab,var(--pa) 62%,#FFF8E1);--noteInk:#2A1D00;
   background:radial-gradient(color-mix(in oklab,var(--paText) 26%,transparent) 1px,transparent 1.4px) 0 0/18px 18px,color-mix(in oklab,var(--pa) 12%,var(--surf))}

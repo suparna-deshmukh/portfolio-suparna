@@ -8,8 +8,8 @@ import SectionHeader from './SectionHeader'
 import { CurrentlyTicker } from './AboutExtras'
 
 /**
- * A field of square tiles that fill in one by one when the panel enters view —
- * the cohort placed, the project board run. Each tile stands for a block of the number.
+ * A field of slim tiles that fill in one by one when the panel enters view —
+ * the project board run, one tile per engagement.
  */
 function TileField({ count, cols, caption, label }: { count: number; cols: number; caption: string; label: string }) {
   return (
@@ -18,6 +18,18 @@ function TileField({ count, cols, caption, label }: { count: number; cols: numbe
         {Array.from({ length: count }).map((_, i) => <i key={i} style={{ ['--i' as string]: i }} />)}
       </div>
       <span>{caption}</span>
+    </div>
+  )
+}
+
+/** The placement ledger: rubber-stamped offers that slam in one by one — each stamp stands for 40 students. */
+function OfferStamps() {
+  return (
+    <div className="ab-offers" role="img" aria-label="240 students placed — six stamps, each one stands for 40 students">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <i key={i} style={{ ['--i' as string]: i, ['--tilt' as string]: i % 2 ? '1.6deg' : '-2.2deg' }} aria-hidden="true">OFFER</i>
+      ))}
+      <span>1 stamp = 40 students · 240 placed</span>
     </div>
   )
 }
@@ -59,11 +71,9 @@ function Positions() {
             </header>
             <p>{p.blurb}</p>
             {p.id === 'consult'
-              ? <TileField count={16} cols={4} caption="16 projects · 45 consultants" label="16 projects run across 45 consultants" />
+              ? <TileField count={16} cols={8} caption="16 projects · 45 consultants" label="16 projects run across 45 consultants" />
               : p.team && <TeamDots count={p.team.count} label={p.team.label} />}
-            {p.id === 'placement' && (
-              <TileField count={24} cols={12} caption="each tile = 10 students · 240 placed" label="240 students placed, one tile per ten students" />
-            )}
+            {p.id === 'placement' && <OfferStamps />}
             {p.id === 'consult' && <SponsorMarquee />}
             {p.stats.length > 0 && (
               <dl className="ab-stats">
