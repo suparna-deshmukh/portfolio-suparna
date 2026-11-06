@@ -13,8 +13,8 @@ const CASE_STYLE: Record<string, { wash: string; accent: string }> = {
   'research-agent': { wash: '#E2EAEF', accent: OG.blue },
 }
 
-export default async function OgImage({ params }: { params: { slug: string } }) {
-  const { slug } = params
+export default async function OgImage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
   const project = getCaseStudies().find(p => p.slug === slug)
   if (!project) {
     return new ImageResponse(

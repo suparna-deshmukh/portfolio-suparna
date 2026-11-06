@@ -38,10 +38,12 @@ export default function Header() {
   }
 
   useEffect(() => {
+    // One-time sync of the preference stored by the pre-paint script (SSR renders the static default).
     let stored: string | null = null
     try { stored = localStorage.getItem('theme') } catch { /* storage blocked */ }
     const initial: ThemePref = stored === 'light' || stored === 'dark' || stored === 'system' ? stored : DEFAULT_THEME
     prefRef.current = initial
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- post-mount sync of the pre-paint script's state
     setPref(initial)
     const sysDark = window.matchMedia('(prefers-color-scheme: dark)')
     const initialResolved = resolveTheme(initial, sysDark.matches)

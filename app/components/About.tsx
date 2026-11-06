@@ -1,7 +1,7 @@
 'use client'
 
 import '../about.css'
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { ACHIEVEMENTS, EDUCATION, POSITIONS, link } from '../lib/site'
 import CountUp from './CountUp'
 import MetricTip from './MetricTip'

@@ -15,7 +15,7 @@ export function usePrefersReducedMotion(): boolean {
 }
 
 /** Calls start/stop as the element enters/leaves the viewport and as the tab is shown/hidden. */
-export function useVisibleLoop(ref: RefObject<Element>, start: () => void, stop: () => void, enabled = true) {
+export function useVisibleLoop(ref: RefObject<Element | null>, start: () => void, stop: () => void, enabled = true) {
   useEffect(() => {
     const el = ref.current
     if (!el || !enabled) return
@@ -39,7 +39,7 @@ export function useVisibleLoop(ref: RefObject<Element>, start: () => void, stop:
 }
 
 /** True once the element has scrolled into view (fires once). */
-export function useInViewOnce(ref: RefObject<Element>, threshold = 0.2): boolean {
+export function useInViewOnce(ref: RefObject<Element | null>, threshold = 0.2): boolean {
   const [seen, setSeen] = useState(false)
   useEffect(() => {
     const el = ref.current

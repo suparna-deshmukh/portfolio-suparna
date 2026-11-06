@@ -1,7 +1,7 @@
 # Suparna Deshmukh · Portfolio — UI Specification (end to end)
 
 Complete, file-accurate description of every screen, component, animation and state on the site.
-Source of truth: the code in this repo (Next.js 14 App Router, TypeScript, hand-rolled CSS).
+Source of truth: the code in this repo (Next.js 16 App Router, TypeScript, hand-rolled CSS).
 If code and this doc disagree, the code wins — update the doc.
 
 ---
@@ -26,7 +26,7 @@ a resume — every section is a physical object that animates its own proof.
 Page order (`app/page.tsx`): Hero → Experience → Projects → Corporate → DataLedger →
 About → Contact(+Footer) → PageMotion → EndPull.
 
-Stack: Next.js 14.2, React 18, TypeScript, no UI framework, no CSS framework.
+Stack: Next.js 16.4.5 (Turbopack), React 19, TypeScript, no UI framework, no CSS framework.
 All motion is CSS + a few rAF/timeout loops, gated by `html.motion-ok` and
 `prefers-reduced-motion: reduce` (no-JS and reduced-motion always show final states).
 
@@ -815,8 +815,9 @@ decks) and throws on a placeholder destination.
 Dev loop: `python3 dev-daemon.py` (port 3210) → `npx tsc --noEmit` → headless CDP
 screenshots (fresh Chrome profile per run — stale profile cache can serve old chunks)
 → PIL slices → review → `git add -A && git commit` (local commits only, **no remote**).
-`npm run check` = `tsc --noEmit` + `next lint` + `scripts/check-resume.mjs`
-(needs devDependency `jiti` to load the TS resume data).
+`npm run check` = `tsc --noEmit` + `eslint .` (flat config, `eslint.config.mjs` from
+`eslint-config-next` 16) + `scripts/check-resume.mjs` (needs devDependency `jiti`
+to load the TS resume data). `next lint` does not exist in Next 16.
 Builds are isolated from dev: `npm run build` sets `NEXT_DIST_DIR=.next-build`
 (next.config reads it), so the dev server's `.next` can never be corrupted.
 Repo hygiene (P1-12): no UI-kit or animation dependencies — `motion`,
@@ -845,8 +846,9 @@ no component-level metadata.
   three hero proof rows, pressed SD seal. 1200×630.
 * `app/projects/[slug]/opengraph-image.tsx` — per-case card: tint wash by
   slug (CASE_STYLE), `CASE STUDY — NN` label, name, subtitle, tag row,
-  hot-stat stamp box. `params` is a plain object (Next 14, not a Promise).
-* Fonts: satori in this Next 14.2 build cannot parse woff2 or variable-font
+  hot-stat stamp box. `params` is a **Promise** in Next 15+/16 — the page, its
+`generateMetadata` and this OG image all `await` it.
+* Fonts: satori in this Next 16 build cannot parse woff2 or variable-font
   fvar tables, so **static TTF instances** live in `app/fonts/`
   (`fraunces/Fraunces-Latin-600.ttf`, `fraunces/Fraunces-Latin-600-Italic.ttf`,
   `fontshare/Satoshi-{400,500,700}.ttf`). Buffers are read once and cached in

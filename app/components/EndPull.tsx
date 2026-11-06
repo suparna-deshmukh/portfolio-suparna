@@ -59,6 +59,8 @@ export default function EndPull() {
   const flashRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    // Mount flag: content is SSR'd and only "pulled" client-side, so this setState belongs in an effect.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true)
     const main = document.querySelector<HTMLElement>('main.bands')
     const contact = document.getElementById('contact')

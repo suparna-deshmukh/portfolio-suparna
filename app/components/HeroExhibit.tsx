@@ -1,6 +1,7 @@
 'use client'
 
 import '../hero-right.css'
+import Link from 'next/link'
 import AskCartPhone from './AskCartPhone'
 import MetricTip from './MetricTip'
 import { m } from '../lib/metrics'
@@ -30,10 +31,10 @@ export default function HeroExhibit() {
           <span className="ex-risa-sub">{m('risa-payers').shown} payers · {m('risa-coverage').shown} coverage / {m('risa-precision').shown} precision</span>
         </a>
 
-        <a className="ex-ob ex-phone" href="/projects/askcart" style={{ ['--d' as string]: 0.7, ['--rot' as string]: '2.5deg' }}>
+        <Link className="ex-ob ex-phone" href="/projects/askcart" style={{ ['--d' as string]: 0.7, ['--rot' as string]: '2.5deg' }}>
           <span className="ex-island" aria-hidden="true" />
           <span className="acp-frame"><AskCartPhone /></span>
-        </a>
+        </Link>
 
         <a className="ex-ob ex-campus" href="#about" style={{ ['--d' as string]: 0.9, ['--rot' as string]: '-2deg' }} aria-label="BITS Pilani, Goa — ECE with a Finance minor, class of 2027">
           <span className="ex-clip" aria-hidden="true" />

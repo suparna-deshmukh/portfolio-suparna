@@ -7,7 +7,7 @@ import MarkOnRead from './MarkOnRead'
 import EndDesk from './EndDesk'
 import ViewTransitionLink from './ViewTransitionLink'
 import { annotatedParagraph, NOTE_ARROW } from './annotate'
-import type { Annotated, Post } from '../lib/content'
+import type { Annotated } from '../lib/content'
 import { LEAD_NOTES, sectionOf, sections, slugify, type PileItem } from '../lib/posts'
 
 const TOC_MIN_HEADINGS = 4

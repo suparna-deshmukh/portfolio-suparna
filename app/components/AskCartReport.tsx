@@ -36,6 +36,8 @@ export default function AskCartReport() {
   const reduced = usePrefersReducedMotion()
   const [counts, setCounts] = useState(false)
 
+  // Feature detection after mount (SSR renders the static path) — the only safe place for this setState.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { setCounts(typeof CSS !== 'undefined' && 'registerProperty' in CSS) }, [])
 
   const later = (fn: () => void, ms: number) => { timers.current.push(window.setTimeout(fn, ms)) }
@@ -56,14 +58,13 @@ export default function AskCartReport() {
     later(() => p.classList.add('g'), GAUGE_AT)
     later(() => p.classList.add('st', 'shake'), STAMP_AT)
     later(() => p.classList.remove('shake'), STAMP_AT + SHAKE_MS)
+    // eslint-disable-next-line react-hooks/immutability -- self-recursive loop callback
     later(cycle, LOOP_MS)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   // The first frame is the finished report; the loop replays it from the first failure.
   const start = useCallback(() => {
     running.current = true
     if (!timers.current.length) later(cycle, LOOP_MS - STAMP_AT)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cycle])
   const stop = useCallback(() => { running.current = false; clear() }, [])
   useVisibleLoop(ref, start, stop, !reduced)

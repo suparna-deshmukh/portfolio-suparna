@@ -20,7 +20,7 @@ const NOTES: Note[] = [
   { src: 'slack', tag: 'Reddit', text: 'size chart is wrong', x0: 228, y0: 252, r0: -4, x1: 10, y1: 208, z: 1, d: 11 },
 ]
 
-const ICONS: Record<Src, JSX.Element> = {
+const ICONS: Record<Src, React.JSX.Element> = {
   call: <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />,
   slack: <><line x1="4" x2="20" y1="9" y2="9" /><line x1="4" x2="20" y1="15" y2="15" /><line x1="10" x2="8" y1="3" y2="21" /><line x1="16" x2="14" y1="3" y2="21" /></>,
   jira: <><rect width="18" height="18" x="3" y="3" rx="2" /><path d="m9 12 2 2 4-4" /></>,
@@ -67,8 +67,9 @@ export default function ResearchBoard() {
     clear()
     scatter()
     later(() => { if (!hovering.current) sort() }, SCATTER_MS)
+    // eslint-disable-next-line react-hooks/immutability -- self-recursive loop callback
     later(cycle, SCATTER_MS + SORTED_MS)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- `scatter`/`sort` are stable per-mount closures
   }, [])
   // The first frame is the finished answer, so a glance never lands on a mess; the loop starts after a hold.
   const start = useCallback(() => {
@@ -76,7 +77,6 @@ export default function ResearchBoard() {
     if (hovering.current || timers.current.length) return
     later(cycle, first.current ? FIRST_HOLD_MS : 400)
     first.current = false
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cycle])
   const stop = useCallback(() => { running.current = false; clear() }, [])
   useVisibleLoop(ref, start, stop, !reduced)

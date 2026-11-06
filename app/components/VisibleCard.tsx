@@ -13,7 +13,7 @@ const FRONT_LINE = '0px 0px -50% 0px'
  * the top half of the viewport. In the sticky stack that is the card in front, so the band can take its tint.
  * When no card is on the line (section above or below the viewport) the last value is kept.
  */
-function useFrontTint(ref: RefObject<HTMLElement>, tint?: string) {
+function useFrontTint(ref: RefObject<HTMLElement | null>, tint?: string) {
   useEffect(() => {
     const el = ref.current
     const band = el?.closest<HTMLElement>('section')

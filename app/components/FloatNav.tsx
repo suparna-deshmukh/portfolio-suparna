@@ -49,6 +49,8 @@ export default function FloatNav() {
 
   // Active section comes from the shared arrival observer (lib/hooks useSectionArrival).
   useEffect(() => {
+    // Sync the nav to the non-home state on mount/navigation — legitimate post-mount state alignment.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (!isHome) { setActive(-1); activeRef.current = -1; return }
     const onSection = (e: Event) => {
       const id = (e as CustomEvent<string>).detail

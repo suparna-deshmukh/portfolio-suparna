@@ -102,14 +102,13 @@ function CorporateDoc({ c, index }: { c: Corporate; index: number }) {
     later(() => p.classList.add('g'), GAUGE_AT)
     later(() => p.classList.add('st', 'shake'), STAMP_AT)
     later(() => p.classList.remove('shake'), STAMP_AT + SHAKE_MS)
+    // eslint-disable-next-line react-hooks/immutability -- self-recursive loop callback
     later(cycle, LOOP_MS)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   // First frame is the finished doc; the loop replays it from the first row.
   const start = useCallback(() => {
     running.current = true
     if (!timers.current.length) later(cycle, LOOP_MS - STAMP_AT)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cycle])
   const stop = useCallback(() => { running.current = false; clear() }, [])
   useVisibleLoop(ref, start, stop, !reduced)
