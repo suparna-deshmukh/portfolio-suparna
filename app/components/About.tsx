@@ -7,6 +7,7 @@ import CountUp from './CountUp'
 import MetricTip from './MetricTip'
 import SectionHeader from './SectionHeader'
 import { CurrentlyTicker } from './AboutExtras'
+import Stamp from './Stamp'
 
 /**
  * A field of slim tiles that fill in one by one when the panel enters view —
@@ -28,7 +29,15 @@ function OfferStamps() {
   return (
     <div className="ab-offers" role="img" aria-label="240 students placed — six stamps, each one stands for 40 students">
       {Array.from({ length: 6 }).map((_, i) => (
-        <i key={i} style={{ ['--i' as string]: i, ['--tilt' as string]: i % 2 ? '1.6deg' : '-2.2deg' }} aria-hidden="true">OFFER</i>
+        <Stamp
+          key={i}
+          shape="offer" tone="ok" size="sm"
+          rot={i % 2 ? 1.6 : -2.2}
+          label="OFFER"
+          decorative
+          className="ab-offer"
+          style={{ ['--i' as string]: i }}
+        />
       ))}
       <span>1 stamp = 40 students · 240 placed</span>
     </div>

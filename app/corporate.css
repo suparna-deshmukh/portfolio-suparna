@@ -8,9 +8,6 @@
   transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
 [data-theme="dark"] .cf-file{--stamp:#E08A5E;box-shadow:0 1px 0 rgba(0,0,0,.4),0 22px 32px -24px rgba(0,0,0,.85)}
 html.motion-ok .cf-file:hover{transform:translateY(-3px);box-shadow:0 1px 0 var(--press),0 28px 40px -22px rgba(23,19,14,.55)}
-html.motion-ok .cfdoc-stamp{opacity:0}
-html.motion-ok .cfdoc-paper.st ~ .cfdoc-stamp{animation:cfSlam .55s var(--settle) both}
-@keyframes cfSlam{0%{opacity:0;transform:rotate(-6deg) scale(2.1)}55%{opacity:.95}100%{opacity:.92;transform:rotate(-6deg) scale(1)}}
 html.motion-ok .cf-chip{opacity:0;translate:0 8px;transition:opacity .45s var(--ease),translate .45s var(--ease)}
 html.motion-ok .cf-file.in .cf-chip{opacity:1;translate:0 0}
 html.motion-ok .cf-file.in .cf-chip:nth-child(1){transition-delay:.55s}
@@ -25,7 +22,7 @@ html.motion-ok .cf-file.in .cf-chip:nth-child(3){transition-delay:.81s}
 [data-theme="dark"] .cfdoc-paper{box-shadow:0 0 0 1px var(--line),0 18px 28px -20px rgba(0,0,0,.85)}
 html.motion-ok .cfdoc-paper{transition:transform .35s var(--ease)}
 html.motion-ok .cfdoc:hover .cfdoc-paper{transform:translateY(-3px)}
-.cfdoc-paper.shake{animation:cfdocShake .38s var(--ease)}
+html.motion-ok .cfdoc-paper.st.shake{animation:cfdocShake .38s var(--ease)}
 @keyframes cfdocShake{20%{transform:translate(2px,2px) rotate(.3deg)}45%{transform:translate(-2px,1px) rotate(-.25deg)}70%{transform:translate(1px,-1px)}}
 .cfdoc-hd{display:flex;align-items:center;gap:9px;padding-bottom:10px;border-bottom:1px dashed var(--lineS)}
 .cfdoc-emb{width:30px;height:30px;flex:none;color:var(--accText)}
@@ -49,12 +46,7 @@ html.motion-ok .cfdoc:hover .cfdoc-paper{transform:translateY(-3px)}
 .cfdoc:hover .cfdoc-gv{filter:drop-shadow(0 0 6px color-mix(in oklab,var(--acc) 70%,transparent))}
 .cfdoc-gz b{display:block;margin-top:5px;font:700 25px/1 var(--fd);letter-spacing:-.02em;color:var(--accText);font-variant-numeric:tabular-nums}
 .cfdoc-gz span{display:block;margin-top:4px;font:500 9.5px/1.45 var(--fm);letter-spacing:.02em;color:var(--dim);max-width:190px;margin-inline:auto}
-.cfdoc-stamp{position:absolute;right:6px;bottom:-15px;display:grid;justify-items:center;gap:2px;
-  transform:rotate(-6deg);color:var(--stamp);pointer-events:none;white-space:nowrap;
-  font:700 12px/1 var(--fm);letter-spacing:.12em;text-transform:uppercase;
-  border:2px solid currentColor;outline:1px solid currentColor;outline-offset:2px;
-  border-radius:4px;padding:6px 9px;opacity:.92;background:var(--surf)}
-[data-theme="dark"] .cfdoc-stamp{background:var(--surf)}
+.cf-file .stamp.cfdoc-stamp{position:absolute;right:6px;bottom:-15px;--stamp-c:var(--stamp)}
 @media (prefers-reduced-motion:reduce){.cfdoc-vd{opacity:1;rotate:0deg;scale:1}.cfdoc-row span{opacity:1;transform:none}}
 
 /* ── the emblems ── */

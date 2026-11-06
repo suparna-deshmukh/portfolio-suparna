@@ -626,11 +626,9 @@ html.motion-ok .case-tm.paused::before,html.motion-ok .case-tm.paused .tm-field 
 .fb-rw .hl{position:relative;z-index:0}
 .fb-rw .hl::before{content:"";position:absolute;left:-3px;right:-3px;top:42%;bottom:-2px;z-index:-1;background:color-mix(in oklab,var(--pa) 62%,transparent);border-radius:2px;clip-path:inset(0 100% 0 0)}
 .fb.sorted .hl::before{clip-path:inset(0);transition:clip-path .5s var(--ease) .8s}
-.fb-stamp{position:absolute;right:6px;top:-2px;padding:5px 9px;border:2px solid var(--err);border-radius:5px;color:var(--err);font:700 12px/1 var(--fd);letter-spacing:.1em;text-transform:uppercase;opacity:0;rotate:-7deg;mix-blend-mode:multiply}
-[data-theme="dark"] .fb-stamp,[data-theme="dark"] .tr-stamp{mix-blend-mode:normal}
-.fb.sorted .fb-stamp{animation:fbSlam .45s var(--settle) 1.1s both}
+.fb-stamp{position:absolute;right:6px;top:-2px}
+.fb-stamp b{font-family:var(--fd);letter-spacing:.1em}
 .fb.sorted{animation:fbThud .3s var(--ease) 1.2s}
-@keyframes fbSlam{0%{opacity:0;scale:2.2}35%{opacity:1}100%{opacity:1;scale:1}}
 @keyframes fbThud{30%{transform:translateY(2px)}}
 .fb-cap{position:absolute;left:12px;bottom:10px;font:500 11.5px/1 var(--fm);letter-spacing:.04em;color:var(--dim);opacity:0}
 .fb.sorted .fb-cap{opacity:1;transition:opacity .4s .7s}
@@ -676,13 +674,8 @@ html.motion-ok .case-tm.paused::before,html.motion-ok .case-tm.paused .tm-field 
 .tr-paper.cnt .gl .v{counter-reset:a var(--tra) b var(--trb);font-size:0;transition:--tra .9s var(--ease),--trb .9s var(--ease)}
 .tr-paper.cnt .gl .v::before{content:counter(a) "." counter(b);font-size:15px}
 .tr-paper.cnt.g .gl .v{--tra:96;--trb:7}
-.tr-stamp{position:absolute;right:18px;bottom:14px;width:116px;height:116px;display:grid;place-items:center;text-align:center;color:var(--err);opacity:0;rotate:-9deg;pointer-events:none;mix-blend-mode:multiply;filter:url(#tr-ink)}
-.tr-stamp.grn{color:var(--acc)}
-.tr-stamp .ring{position:absolute;inset:0;border:3px solid currentColor;border-radius:50%;box-shadow:inset 0 0 0 5px var(--surf),inset 0 0 0 7px currentColor}
-.tr-stamp b{display:block;font:700 30px/1 var(--fd);letter-spacing:-.02em}
-.tr-stamp i{display:block;font:500 10.5px/1 var(--fm);font-style:normal;letter-spacing:.2em;margin-top:5px}
-.tr-paper.st .tr-stamp{animation:trSlam .5s var(--settle) both}
-@keyframes trSlam{0%{opacity:0;scale:2.4}30%{opacity:1}100%{opacity:.92;scale:1}}
+.tr-stamp{position:absolute;right:18px;bottom:14px}
+html.motion-ok .tr-paper.st.shake{animation:trShake .55s var(--ease)}
 @media (prefers-reduced-motion:reduce){.fb,.fb *,.tr-paper,.tr-paper *{transition:none!important;animation-duration:.01s!important;animation-delay:0s!important}}
 .wave{display:flex;gap:3px;align-items:center;height:28px}
 .wave i{width:3px;border-radius:3px;background:var(--acc);height:100%;transform:scaleY(.3);animation:wv 1.2s ease-in-out infinite}

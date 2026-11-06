@@ -1,13 +1,14 @@
 'use client'
 
 import '../corporate.css'
-import { useCallback, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { CORPORATE, CORPORATE_AGG, PREFILL_EVENT, link, type Corporate } from '../lib/site'
 import { m } from '../lib/metrics'
 import CountUp from './CountUp'
+import Stamp from './Stamp'
 import MetricTip from './MetricTip'
 import SectionHeader from './SectionHeader'
-import { usePrefersReducedMotion, useVisibleLoop } from '../lib/hooks'
+import { useTimeline, type TlStep } from '../lib/timeline'
 
 /** One animated emblem per engagement: diamond, autonomous vehicle, biochar sprout. */
 const KRI = 'kri' + 'she'
@@ -69,8 +70,15 @@ const ROW_AT = [380, 1500, 2620]
 const VERDICT_AT = 460
 const GAUGE_AT = 3750
 const STAMP_AT = 4650
-const SHAKE_MS = 450
 const LOOP_MS = 8800
+const DOC_STEPS: TlStep[] = [
+  ...[0, 1, 2].flatMap(i => [
+    { at: ROW_AT[i], name: `row${i}.inj` },
+    { at: ROW_AT[i] + VERDICT_AT, name: `row${i}.vrd` },
+  ]),
+  { at: GAUGE_AT, name: 'gauge' },
+  { at: STAMP_AT, name: 'stamp' },
+]
 
 /**
  * The file's paper: a compact AskCart-report — rows whose verdicts slam in one by one,
@@ -79,53 +87,21 @@ const LOOP_MS = 8800
  */
 function CorporateDoc({ c, index }: { c: Corporate; index: number }) {
   const ref = useRef<HTMLDivElement>(null)
-  const paper = useRef<HTMLDivElement>(null)
-  const rows = useRef<(HTMLDivElement | null)[]>([])
-  const timers = useRef<number[]>([])
-  const running = useRef(false)
-  const reduced = usePrefersReducedMotion()
-
-  const later = (fn: () => void, ms: number) => { timers.current.push(window.setTimeout(fn, ms)) }
-  const clear = () => { timers.current.forEach(clearTimeout); timers.current = [] }
-  const rowEls = () => rows.current.filter((r): r is HTMLDivElement => !!r)
-
-  const cycle = useCallback(() => {
-    const p = paper.current
-    if (!p || !running.current) return
-    clear()
-    rowEls().forEach(r => r.classList.remove('inj', 'vrd'))
-    p.classList.remove('g', 'st', 'shake')
-    ROW_AT.forEach((base, i) => {
-      later(() => rows.current[i]?.classList.add('inj'), base)
-      later(() => rows.current[i]?.classList.add('vrd'), base + VERDICT_AT)
-    })
-    later(() => p.classList.add('g'), GAUGE_AT)
-    later(() => p.classList.add('st', 'shake'), STAMP_AT)
-    later(() => p.classList.remove('shake'), STAMP_AT + SHAKE_MS)
-    // eslint-disable-next-line react-hooks/immutability -- self-recursive loop callback
-    later(cycle, LOOP_MS)
-  }, [])
-  // First frame is the finished doc; the loop replays it from the first row.
-  const start = useCallback(() => {
-    running.current = true
-    if (!timers.current.length) later(cycle, LOOP_MS - STAMP_AT)
-  }, [cycle])
-  const stop = useCallback(() => { running.current = false; clear() }, [])
-  useVisibleLoop(ref, start, stop, !reduced)
-  useEffect(() => stop, [stop])
+  const tl = useTimeline(ref, DOC_STEPS, LOOP_MS, { initialHoldMs: LOOP_MS - STAMP_AT })
+  const replaying = tl.inCycle && tl.has('stamp')
 
   return (
     <div ref={ref} className="cfdoc" role="img"
       aria-label={`${c.doc.type} for ${c.name}: ${c.doc.rows.map(r => `${r.label} — ${r.verdict}`).join(', ')}. Proof: ${c.proof.value} ${c.proof.label}.${c.proofMetric ? ` ${m(c.proofMetric).source}, as of ${m(c.proofMetric).asOf}.` : ''}`}>
-      <div ref={paper} className="cfdoc-paper g st">
+      <div className={`cfdoc-paper${tl.has('gauge') ? ' g' : ''}${replaying ? ' st shake' : tl.has('stamp') ? ' st' : ''}`}>
         <div className="cfdoc-hd">
           <span className="cfdoc-emb" aria-hidden="true">{EMBLEMS[c.id]}</span>
           <span className="cfdoc-tt"><b>{c.doc.type}</b><small>file 0{index + 1} · {c.name}</small></span>
         </div>
         {c.doc.rows.map((r, i) => (
-          <div key={r.label} ref={el => { rows.current[i] = el }} className="cfdoc-row inj vrd">
+          <div key={r.label} className={`cfdoc-row${tl.has(`row${i}.inj`) ? ' inj' : ''}${tl.has(`row${i}.vrd`) ? ' vrd' : ''}`}>
             <span>{r.label}</span>
-            <em className="cfdoc-vd">{r.verdict}</em>
+            <em className="cfdoc-vd ink-rect">{r.verdict}</em>
           </div>
         ))}
         <div className="cfdoc-gz">
@@ -139,7 +115,13 @@ function CorporateDoc({ c, index }: { c: Corporate; index: number }) {
           <span>{c.proof.label}</span>
         </div>
       </div>
-      <span className="cfdoc-stamp" aria-hidden="true"><b>{c.proof.value}</b><i>{c.doc.stampWord}</i></span>
+      <Stamp
+        shape="rect" tone="ink" size="md" rot={-6}
+        label={c.proof.value} sub={c.doc.stampWord}
+        slammed={tl.has('stamp')}
+        decorative
+        className="cfdoc-stamp timeline"
+      />
     </div>
   )
 }

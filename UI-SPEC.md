@@ -438,9 +438,9 @@ Each card:
 * `tm-field` on AskCart: two animated field lines.
 
 ### 8.2 AskCartReport (560×440 `FitStage`) — the benchmark animation
-An ink-pressed **search quality report** (SVG `feTurbulence` displacement filter gives
-stamps their rough edge). First frame = finished report; loop replays from the first
-failure while in view.
+An ink-pressed **search quality report**. First frame = finished report; a declarative
+`useTimeline` (P2-6, §16.3) replays it from the first failure while in view. Stamp and
+verdict ink edges come from the shared baked masks in `stamp.css` — no live filters.
 
 * Header: "AskCart / Search quality report · MVP evals" + "eval suite · n=113 / every
   mode caught".
@@ -453,10 +453,12 @@ failure while in view.
 * Gauge row: "Eval pass rate **96.7** GREEN" — counter via registered
   `--tra/--trb` (96|7); a 420px track with red→amber→green zones, the surface cover
   wipes away and a 3px **mark slides to 96.7%**.
-* Round double-ring stamp "**96.7 GREEN**" (mix-blend multiply, ink filter) **slams in**
-  (`trSlam` .5s, scale 2.4→1, `--settle`) + paper **shake** (.38s).
-* Timing: rows inject at 400/1750/3100ms (label → +520ms agent line → +1040ms verdict
-  slam), gauge 4500, stamp 5500, shake 550ms, **loop 9500ms**.
+* Round double-ring `<Stamp shape="round" tone="ok">` "**96.7 GREEN**" (mix-blend
+  multiply, baked rough-ink mask) **slams in** (`stampSlam` .5s, `--settle`) + paper
+  **shake** (.55s) while the cycle runs.
+* Timing (timeline steps): rows at 400/1750/3100ms (inject → +520ms agent line →
+  +1040ms verdict), gauge 4500, stamp 5500, **loop 9500ms**, first-view hold
+  `LOOP_MS − STAMP_AT`.
 * Interaction: hover tilts the paper 3D (perspective 900, ±3°); hovering a row
   **replays just that row**.
 
@@ -466,10 +468,11 @@ icons: call/phone, slack/grid, jira/check-square; tags Reddit / HN / Reddit #182
 texts: "battery dies after a year", "still no fast charging", "replaced the pack
 twice", "subscription charged twice", "auto-renew trap, again", "size chart is wrong").
 
-Cycle: **scattered** (rotated random-ish positions) → **threaded** (lines drawn between
-related notes, 2100ms) → **sorted** (notes slide into three theme piles; right side
-ranks themes with bars, count-up "**7 mentions**", result stamp, 4700ms) → loop.
-First hold 2600ms; count-up 600ms; pauses while hovered.
+Cycle (timeline steps): **thread** (scattered, rotated positions) → **sorted** at
+2100ms (notes slide into three theme piles; right side ranks themes with bars, count-up
+"**7 mentions**", **FIX FIRST** stamp at +1100ms) → **loop 6800ms**. First hold 2600ms;
+count-up 600ms. Hover overrides the display to the scattered state while the loop keeps
+its schedule in the background; leaving restores the current cycle phase.
 
 ---
 
@@ -496,14 +499,14 @@ Self-animating paper (`.cfdoc-paper`, 13/14/16 padding, border, shadow; hover li
   | KriSHE Carbon | **Grant review** | Investor deck & model → PITCHED · Biochar impact metrics → VERIFIED · 20+ high-fit buyers → MAPPED |
 * **gauge**: 100×54 arc (`stroke-dasharray: var(--g) 100`, fills over 1.1s on `.g`),
   then the **CountUp proof number** (25px accent) + label (9.5px).
-* **Stamp** — hangs off the paper's bottom-right edge (right 6 / bottom −15), double
-  border + offset outline, rotate −6°: proof value + word
-  (**$2.5M / SERIES A**, **30% / UNIT ECONOMICS**, **₹12.5L / GRANTS**). Slams with
-  `cfSlam` (scale 2.1→1, .55s `--settle`) + paper shake (.38s). Visible without
-  `motion-ok` (base opacity .92).
-* Loop: rows 380/1500/2620 (+460ms verdicts), gauge 3750, stamp 4650, shake 450ms,
-  **loop 8800ms**; first frame finished; `useVisibleLoop`; reduced-motion → static
-  finished doc.
+* **Stamp** — `<Stamp shape="rect">` hanging off the paper's bottom-right edge (right 6
+  / bottom −15), double border + offset outline, rotate −6°, tone via the file's
+  `--stamp` accent: proof value + word (**$2.5M / SERIES A**, **30% / UNIT
+  ECONOMICS**, **₹12.5L / GRANTS**). Slams with the shared `stampSlam` + paper shake
+  (.38s). Static final state shows it (base opacity .92).
+* Loop (timeline steps): rows 380/1500/2620 (+460ms verdicts), gauge 3750, stamp 4650,
+  **loop 8800ms**; first frame finished; visibility pause via `useTimeline`;
+  reduced-motion / Motion Off → static finished doc.
 
 ### 9.2 Emblems (30px in doc headers; full-size animations)
 * **Diamond** (Everyday): outline brilliant-cut + glow pulse (3.2s), clipped shine
@@ -593,10 +596,11 @@ spans full width below.
    + 3px inset bar). Blurb (1 of 8 out of 1,000+; 25-member team). Then:
    * **TeamDots (25)** — 8px dots light up one by one (30ms stagger; hover pulse),
      "25 · team led end-to-end".
-   * **OfferStamps** — the placement ledger: **six rubber-stamped "OFFER" marks**
-     (8.5px mono, 1.5px border, alternating tilt −2.2°/+1.6°) that **slam in** one by
-     one (scale 1.5→1, `--settle`, 140ms stagger) — caption "1 stamp = 40 students ·
-     240 placed". (Replaces the earlier batch-rate bar and 24-tile grid.)
+   * **OfferStamps** — the placement ledger: **six `<Stamp shape="offer" tone="ok">`
+     "OFFER" marks** (11px mono, 1.5px border, rough-ink mask, alternating tilt
+     −2.2°/+1.6°) that settle in one by one (scale 1.5→1, `--settle`, 140ms stagger
+     via `--i`) — caption "1 stamp = 40 students · 240 placed". (Replaces the earlier
+     batch-rate bar and 24-tile grid.)
    * Stats: 58%→85% batch placement in 5 months · 240 students placed · 25 team.
    * Chips: "1 of 8 selected" · "Project SYNERGY approved · 3 campuses".
 2. **Director** (180 Degrees Consulting · May 2025 – Jun 2026). Blurb (youngest
@@ -795,6 +799,48 @@ portal, `z` above everything.
   ignores it (warning only) — use `next analyze` for a webpack report.
 * **Dead code, flagged not removed:** `GitHubGraph.tsx` (SocialCards draws its own
   mini grid via `useContributions`; only the type import survives).
+
+### 16.3 Stamp system & timeline engine (P2-6)
+
+One shared stamp + one declarative timeline replaced the per-component timeout
+machinery (`trSlam`/`cfSlam`/`fbSlam` deleted).
+
+**`<Stamp />` (`app/components/Stamp.tsx`, `app/stamp.css`)**
+* Props: `label`, `sub?`, `tone` (`ok|warn|bad|ink` → `--acc|--paText|--err|--fg`),
+  `shape` (`round|rect|offer`), `size` (`sm|md|lg`), `rot` (deg), `slammed` (boolean),
+  `decorative`, `className`, `style`.
+* Shapes: `round` = 116px double-ring proof stamp (ring in CSS, 30px numeral);
+  `rect` = double-ruled plate (2px border + 2px offset outline, 4px radius, `--surf`
+  plate); `offer` = thin 1.5px single-rule chip.
+* Ink edge: **baked** rough masks (static SVG data-URI with `feDisplacementMap`,
+  rasterised once) — `round` circle, `rect`/`offer` rect. No live `feTurbulence` on
+  DOM. `.ink-rect`/`.ink-round` utility classes let non-Stamp elements (the `.vd` and
+  `.cfdoc-vd` row verdicts) share the same mask.
+* One slam: `stampSlam` (scale 2.3→1, `--settle`, .5s) under `html.motion-ok` when
+  `.slammed`; base state opacity .92 so the finished frame stands without motion.
+  `.stamp.timeline` stamps are hidden until their step fires while a cycle runs
+  (`html.motion-ok .stamp.timeline:not(.slammed){opacity:0}`) — in the static first
+  frame, reduced motion and Motion Off they are always shown.
+* `mix-blend-mode:multiply` in light, normal in dark.
+
+**`useTimeline` (`app/lib/timeline.ts`)**
+```ts
+const tl = useTimeline(hostRef, steps /* {at, name}[] */, loopMs,
+  { initialHoldMs })
+tl.has('row1.vrd')  // boolean → drives class names
+tl.inCycle          // true only while a replay cycle is running
+```
+* First frame is the finished state (all steps fired). Each visible cycle clears the
+  baseline and re-fires steps at their absolute offsets; the next cycle is scheduled
+  at `loopMs` (no chained timeouts — one `later()` batch per cycle).
+* Handles: off-screen pause + tab-hidden pause (`.paused` on host, like
+  `useVisibleLoop`), reduced motion and Motion Off (final frame, no timers), and a
+  pre-cycle hold so the finished state breathes before the first replay.
+* Call sites: `AskCartReport` (5500ms stamp, 9500ms loop), `CorporateDoc` ×3
+  (4650ms, 8800ms), `ResearchBoard` (thread/sorted/fbstamp, 6800ms, hover overrides
+  the display without stopping the schedule).
+* Paper shake is tied to the cycle, not the static frame: `.st.shake` is applied only
+  while `inCycle && has('stamp')`, so the finished first frame never shakes.
 
 ---
 

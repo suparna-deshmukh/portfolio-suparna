@@ -1,8 +1,10 @@
 'use client'
 
-import { useCallback, useEffect, useRef, type CSSProperties, type PointerEvent } from 'react'
-import { usePrefersReducedMotion, useVisibleLoop } from '../lib/hooks'
+import { useCallback, useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react'
+import { usePrefersReducedMotion } from '../lib/hooks'
+import { useTimeline, type TlStep } from '../lib/timeline'
 import FitStage from './FitStage'
+import Stamp from './Stamp'
 import { m } from '../lib/metrics'
 
 type Src = 'call' | 'slack' | 'jira'
@@ -30,8 +32,13 @@ const SCATTER_MS = 2100
 const SORTED_MS = 4700
 const FIRST_HOLD_MS = 2600
 const COUNT_MS = 600
-const RESUME_MS = 450
 const TOP_MENTIONS = m('ra-mentions').num ?? 7
+const LOOP_MS = SCATTER_MS + SORTED_MS
+const STEPS: TlStep[] = [
+  { at: 0, name: 'thread' },
+  { at: SCATTER_MS, name: 'sorted' },
+  { at: SCATTER_MS + 1100, name: 'fbstamp' },
+]
 
 const v = (name: string, value: string | number) => ({ [`--${name}`]: value })
 
@@ -39,16 +46,14 @@ export default function ResearchBoard() {
   const ref = useRef<HTMLDivElement>(null)
   const board = useRef<HTMLDivElement>(null)
   const count = useRef<HTMLSpanElement>(null)
-  const timers = useRef<number[]>([])
-  const running = useRef(false)
-  const hovering = useRef(false)
-  const first = useRef(true)
   const reduced = usePrefersReducedMotion()
+  const [hover, setHover] = useState(false)
 
-  const later = (fn: () => void, ms: number) => { timers.current.push(window.setTimeout(fn, ms)) }
-  const clear = () => { timers.current.forEach(clearTimeout); timers.current = [] }
+  const tl = useTimeline(ref, STEPS, LOOP_MS, { initialHoldMs: FIRST_HOLD_MS })
+  const inCycleSorted = tl.inCycle && tl.has('sorted')
+  const showThread = hover || (tl.has('thread') && !tl.has('sorted'))
 
-  const countUp = () => {
+  const countUp = useCallback(() => {
     const el = count.current
     if (!el) return
     const t0 = performance.now()
@@ -58,31 +63,11 @@ export default function ResearchBoard() {
       if (p < 1) requestAnimationFrame(tick)
     }
     requestAnimationFrame(tick)
-  }
-  const scatter = () => { board.current?.classList.remove('sorted'); board.current?.classList.add('thread') }
-  const sort = () => { board.current?.classList.remove('thread'); board.current?.classList.add('sorted'); countUp() }
-
-  const cycle = useCallback(() => {
-    if (!running.current || hovering.current) return
-    clear()
-    scatter()
-    later(() => { if (!hovering.current) sort() }, SCATTER_MS)
-    // eslint-disable-next-line react-hooks/immutability -- self-recursive loop callback
-    later(cycle, SCATTER_MS + SORTED_MS)
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- `scatter`/`sort` are stable per-mount closures
   }, [])
-  // The first frame is the finished answer, so a glance never lands on a mess; the loop starts after a hold.
-  const start = useCallback(() => {
-    running.current = true
-    if (hovering.current || timers.current.length) return
-    later(cycle, first.current ? FIRST_HOLD_MS : 400)
-    first.current = false
-  }, [cycle])
-  const stop = useCallback(() => { running.current = false; clear() }, [])
-  useVisibleLoop(ref, start, stop, !reduced)
-  useEffect(() => stop, [stop])
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- fires when the cycle's sorted step lands
+  useEffect(() => { if (inCycleSorted) countUp() }, [inCycleSorted])
 
-  const onEnter = () => { if (reduced) return; hovering.current = true; clear(); scatter() }
+  const onEnter = () => { if (reduced) return; setHover(true) }
   const onMove = (e: PointerEvent<HTMLDivElement>) => {
     const b = board.current
     if (!b || reduced) return
@@ -92,19 +77,16 @@ export default function ResearchBoard() {
   }
   const onLeave = () => {
     const b = board.current
-    if (!b || reduced) return
-    hovering.current = false
-    b.style.setProperty('--px', '0')
-    b.style.setProperty('--py', '0')
-    clear()
-    later(sort, RESUME_MS)
-    later(cycle, RESUME_MS + SORTED_MS)
+    if (b) {
+      if (!reduced) { b.style.setProperty('--px', '0'); b.style.setProperty('--py', '0') }
+      setHover(false)
+    }
   }
 
   return (
     <div ref={ref} role="img" aria-label="Animated research board: pain points scraped from Reddit and Hacker News are grouped by theme and ranked, with Battery and Charging on top">
       <FitStage w={560} h={340}>
-        <div ref={board} className="fb sorted" onPointerEnter={onEnter} onPointerMove={onMove} onPointerLeave={onLeave}>
+        <div ref={board} className={`fb ${showThread ? 'thread' : 'sorted'}`} onPointerEnter={onEnter} onPointerMove={onMove} onPointerLeave={onLeave}>
           {NOTES.map((n, i) => (
             <div
               key={n.text}
@@ -125,7 +107,7 @@ export default function ResearchBoard() {
             <div className="fb-rw top" style={{ ...v('y', '12px'), ...v('i', 0) } as CSSProperties}>
               <div className="t"><span className="rk">1</span><span className="hl">Battery & Charging</span></div>
               <div className="m"><span className="bar"><i style={{ ...v('w', 1), ...v('i', 0) } as CSSProperties} /></span><span ref={count} className="n">{TOP_MENTIONS} mentions</span><span className="imp h">High impact</span></div>
-              <span className="fb-stamp">Fix first</span>
+              <Stamp shape="rect" tone="bad" size="md" rot={-7} label="Fix first" slammed={tl.has('fbstamp')} decorative className="fb-stamp timeline" />
             </div>
             <div className="fb-rw redact" aria-hidden="true" style={{ ...v('y', '106px'), ...v('i', 1) } as CSSProperties}>
               <div className="t"><span className="rk">2</span><span className="tx">████████ ██████</span></div>

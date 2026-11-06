@@ -1,8 +1,10 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react'
-import { usePrefersReducedMotion, useVisibleLoop } from '../lib/hooks'
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react'
+import { usePrefersReducedMotion } from '../lib/hooks'
+import { useTimeline, type TlStep } from '../lib/timeline'
 import FitStage from './FitStage'
+import Stamp from './Stamp'
 import { m } from '../lib/metrics'
 
 interface Mode { name: string; tool: string; agent: string; missed: boolean }
@@ -16,14 +18,23 @@ const MODES: Mode[] = [
   { name: 'missing_context', tool: 'filters: none', agent: `guided narrowing \u2192 ${m('ac-narrow').shown} SKUs`, missed: false },
 ]
 
-const STEP = { inject: 0, answer: 520, verdict: 1040 }
+const STEP = { answer: 520, verdict: 1040 }
 const ROW_AT = [400, 1750, 3100]
 const GAUGE_AT = 4500
 const STAMP_AT = 5500
-const SHAKE_MS = 550
 const LOOP_MS = 9500
 const TRACK_PX = 420
 const SCORE = parseFloat(m('ac-eval').shown)
+
+const STEPS: TlStep[] = [
+  ...MODES.flatMap((_, i) => [
+    { at: ROW_AT[i], name: `row${i}.inj` },
+    { at: ROW_AT[i] + STEP.answer, name: `row${i}.ans` },
+    { at: ROW_AT[i] + STEP.verdict, name: `row${i}.vrd` },
+  ]),
+  { at: GAUGE_AT, name: 'gauge' },
+  { at: STAMP_AT, name: 'stamp' },
+]
 
 const search = (<><circle cx="11" cy="11" r="7" /><path d="m20 20-3.8-3.8" /></>)
 
@@ -32,43 +43,18 @@ export default function AskCartReport() {
   const paper = useRef<HTMLDivElement>(null)
   const rows = useRef<(HTMLDivElement | null)[]>([])
   const timers = useRef<number[]>([])
-  const running = useRef(false)
   const reduced = usePrefersReducedMotion()
   const [counts, setCounts] = useState(false)
+
+  const tl = useTimeline(ref, STEPS, LOOP_MS, { initialHoldMs: LOOP_MS - STAMP_AT })
+  const replaying = tl.inCycle && tl.has('stamp')
 
   // Feature detection after mount (SSR renders the static path) — the only safe place for this setState.
   // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { setCounts(typeof CSS !== 'undefined' && 'registerProperty' in CSS) }, [])
 
   const later = (fn: () => void, ms: number) => { timers.current.push(window.setTimeout(fn, ms)) }
-  const clear = () => { timers.current.forEach(clearTimeout); timers.current = [] }
-  const rowEls = () => rows.current.filter((r): r is HTMLDivElement => !!r)
-
-  const cycle = useCallback(() => {
-    const p = paper.current
-    if (!p || !running.current) return
-    clear()
-    rowEls().forEach(r => r.classList.remove('inj', 'ans', 'vrd'))
-    p.classList.remove('g', 'st', 'shake')
-    ROW_AT.forEach((base, i) => {
-      later(() => rows.current[i]?.classList.add('inj'), base + STEP.inject)
-      later(() => rows.current[i]?.classList.add('ans'), base + STEP.answer)
-      later(() => rows.current[i]?.classList.add('vrd'), base + STEP.verdict)
-    })
-    later(() => p.classList.add('g'), GAUGE_AT)
-    later(() => p.classList.add('st', 'shake'), STAMP_AT)
-    later(() => p.classList.remove('shake'), STAMP_AT + SHAKE_MS)
-    // eslint-disable-next-line react-hooks/immutability -- self-recursive loop callback
-    later(cycle, LOOP_MS)
-  }, [])
-  // The first frame is the finished report; the loop replays it from the first failure.
-  const start = useCallback(() => {
-    running.current = true
-    if (!timers.current.length) later(cycle, LOOP_MS - STAMP_AT)
-  }, [cycle])
-  const stop = useCallback(() => { running.current = false; clear() }, [])
-  useVisibleLoop(ref, start, stop, !reduced)
-  useEffect(() => stop, [stop])
+  useEffect(() => () => { timers.current.forEach(clearTimeout) }, [])
 
   const onMove = (e: PointerEvent<HTMLDivElement>) => {
     const p = paper.current
@@ -91,31 +77,25 @@ export default function AskCartReport() {
 
   return (
     <div ref={ref} role="img" aria-label={`Animated AskCart search quality report: three search failure modes from the MVP evals, all caught, with an eval pass rate of ${SCORE}, green`}>
-      <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
-        <filter id="tr-ink" x="-10%" y="-10%" width="120%" height="120%">
-          <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="8" result="t" />
-          <feColorMatrix in="t" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -9 5.4" result="holes" />
-          <feDisplacementMap in="SourceGraphic" in2="t" scale="3" result="d" />
-          <feComposite in="d" in2="holes" operator="in" />
-        </filter>
-      </svg>
       <FitStage w={560} h={440}>
         <div className="tr" onPointerMove={onMove} onPointerLeave={onLeave}>
-          <div ref={paper} className={`tr-paper g st${counts ? ' cnt' : ''}`} style={{ ['--tw' as string]: `${TRACK_PX}px` } as CSSProperties}>
+          <div ref={paper} className={`tr-paper${tl.has('gauge') ? ' g' : ''}${replaying ? ' st shake' : tl.has('stamp') ? ' st' : ''}${counts ? ' cnt' : ''}`} style={{ ['--tw' as string]: `${TRACK_PX}px` } as CSSProperties}>
             <div className="tr-hd">
               <div><b>AskCart</b><small>Search quality report · MVP evals</small></div>
               <span className="sc">eval suite · n={m('ac-eval').n}<br />every mode caught</span>
             </div>
-            {MODES.map((m, i) => (
-              <div key={m.name} ref={el => { rows.current[i] = el }} className="tr-row inj ans vrd" onPointerEnter={() => replay(i)}>
-                <span className="chip"><svg viewBox="0 0 24 24" aria-hidden="true">{search}</svg>{m.name}</span>
+            {MODES.map((mode, i) => (
+              <div key={mode.name} ref={el => { rows.current[i] = el }}
+                className={`tr-row${tl.has(`row${i}.inj`) ? ' inj' : ''}${tl.has(`row${i}.ans`) ? ' ans' : ''}${tl.has(`row${i}.vrd`) ? ' vrd' : ''}`}
+                onPointerEnter={() => replay(i)}>
+                <span className="chip"><svg viewBox="0 0 24 24" aria-hidden="true">{search}</svg>{mode.name}</span>
                 <div className="ln2">
-                  <span><em>tool</em><b>{m.tool}</b></span>
-                  <span className={m.missed ? 'bad' : ''}><em>agent</em><b>{m.agent}</b></span>
+                  <span><em>tool</em><b>{mode.tool}</b></span>
+                  <span className={mode.missed ? 'bad' : ''}><em>agent</em><b>{mode.agent}</b></span>
                 </div>
-                <span className={`vd ${m.missed ? 'miss' : 'hit'}`}>
-                  <svg viewBox="0 0 24 24" aria-hidden="true">{m.missed ? <path d="M18 6 6 18M6 6l12 12" /> : <path d="M20 6 9 17l-5-5" />}</svg>
-                  {m.missed ? 'MISSED' : 'CAUGHT'}
+                <span className={`vd ink-rect ${mode.missed ? 'miss' : 'hit'}`}>
+                  <svg viewBox="0 0 24 24" aria-hidden="true">{mode.missed ? <path d="M18 6 6 18M6 6l12 12" /> : <path d="M20 6 9 17l-5-5" />}</svg>
+                  {mode.missed ? 'MISSED' : 'CAUGHT'}
                 </span>
               </div>
             ))}
@@ -123,7 +103,13 @@ export default function AskCartReport() {
               <div className="gl"><span>Eval pass rate</span><b><span className="v">{SCORE}</span> <span className="zone">GREEN</span></b></div>
               <div className="track"><span className="mark" /></div>
             </div>
-            <div className="tr-stamp grn"><span className="ring" /><span><b>{SCORE}</b><i>GREEN</i></span></div>
+            <Stamp
+              shape="round" tone="ok" size="lg" rot={-9}
+              label={SCORE} sub="GREEN"
+              slammed={tl.has('stamp')}
+              decorative
+              className="tr-stamp timeline"
+            />
           </div>
         </div>
       </FitStage>
