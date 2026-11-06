@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import localFont from 'next/font/local'
 import { DM_Mono } from 'next/font/google'
-import './tailwind.css'
 import './globals.css'
 import Header from './components/Header'
 import FloatNav from './components/FloatNav'

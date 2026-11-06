@@ -50,7 +50,6 @@ app/
   contact.css                contact night desk + form
   endpull.css                page curl
   topnav.css                 float nav pill
-  tailwind.css               (utility base only)
   lib/
     site.ts                  ALL home data: EXPERIENCE, CORPORATE, POSITIONS, ACHIEVEMENTS,
                              EDUCATION, NAV_SECTIONS, SOCIALS, LOG, EMAIL/PHONE, URLs,
@@ -816,7 +815,15 @@ decks) and throws on a placeholder destination.
 Dev loop: `python3 dev-daemon.py` (port 3210) → `npx tsc --noEmit` → headless CDP
 screenshots (fresh Chrome profile per run — stale profile cache can serve old chunks)
 → PIL slices → review → `git add -A && git commit` (local commits only, **no remote**).
-NEVER `npm run build` while the daemon runs (corrupts `.next`).
+`npm run check` = `tsc --noEmit` + `next lint` + `scripts/check-resume.mjs`
+(needs devDependency `jiti` to load the TS resume data).
+Builds are isolated from dev: `npm run build` sets `NEXT_DIST_DIR=.next-build`
+(next.config reads it), so the dev server's `.next` can never be corrupted.
+Repo hygiene (P1-12): no UI-kit or animation dependencies — `motion`,
+`lucide-react`, `clsx`, `class-variance-authority`, `tailwind-merge`,
+`tw-animate-css`, Tailwind/Postcss were removed; the only runtime deps are
+`next`, `react`, `react-dom`, `react-markdown` + `remark-gfm` (case-study
+articles), `resend` (contact mail), and `jiti` (dev, resume lint).
 
 ## 19. Metadata, sharing & discoverability (P0-6)
 
