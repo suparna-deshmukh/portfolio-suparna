@@ -1,8 +1,10 @@
-import { SOCIALS } from '../lib/site'
+'use client'
 
-// Hero left column: the name set as his own letterhead, a sheet taped to the same surface as the desk.
-// Every fact below is published (site.ts LOG and EXPERIENCE, PRODUCT.md). Text is visible on first paint;
-// only the rules and the highlight draw in, and only under html.motion-ok (see hero-left.css).
+import { SOCIALS, PHONE } from '../lib/site'
+
+// Hero left column: the name set as an engineering title block — a name plate, then ruled rows
+// for the current work and the education, and the foot with CTAs and direct lines.
+// Text is visible on first paint; only the rules and the highlight draw in, and only under html.motion-ok.
 
 interface Row {
   label: string
@@ -13,54 +15,54 @@ interface Row {
 }
 
 const ROWS: Row[] = [
-  { label: 'Currently', value: 'Product Manager at Dezerv', detail: 'lending, voice agents', stack: true },
-  { label: 'Building', value: 'Voxikin', detail: 'after hours, now', live: true },
-  { label: 'Shipped', value: 'ToolMonkey, Filtr', detail: 'case studies below' },
+  { label: 'Currently', value: 'Associate Product Manager at RISA Labs', detail: 'AI workflows, US healthcare', stack: true, live: true },
+  { label: 'Building', value: 'AskCart', detail: 'guided AI search, personal build', live: true },
+  { label: 'Placements', value: 'Placement Coordinator at BITS Goa', detail: '240 placed · batch 58% → 85%', live: true, stack: true },
+  { label: 'Education', value: 'BITS Pilani, Goa — ECE (Hons.) + Finance minor', detail: 'Class of 2027', stack: true },
 ]
 
 const LINKS = [
   { label: 'LinkedIn', href: SOCIALS.linkedin },
-  { label: 'X', href: SOCIALS.x },
+  { label: 'X', href: SOCIALS.x || null },
   { label: 'GitHub', href: SOCIALS.github },
-]
+].filter((l): l is { label: string; href: string } => !!l.href)
 
 export default function HeroLetterhead() {
   return (
-    <div className="lh">
-      <div className="lh-sheet">
-        <span className="lh-tape t1" aria-hidden="true" />
-        <span className="lh-tape t2" aria-hidden="true" />
-
-        <h1 className="lh-name"><span className="lh-first">Shubh</span><br />Sankalp Das</h1>
-
-        <p className="lh-meta">
-          <span>Bengaluru</span>
-          {LINKS.map((l) => (
-            <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer">{l.label} <span aria-hidden="true">↗</span></a>
-          ))}
-        </p>
-
-        <dl className="lh-rows">
-          {ROWS.map((r, i) => (
-            <div key={r.label} className={['lh-row', r.live && 'live', r.stack && 'stack'].filter(Boolean).join(' ')} style={{ ['--i' as string]: i }}>
-              <dt>{r.live && <i aria-hidden="true" />}{r.label}</dt>
-              <dd className="lh-val">{r.live ? <mark>{r.value}</mark> : r.value}</dd>
-              <dd className="lh-det">{r.detail}</dd>
-            </div>
-          ))}
-        </dl>
-
-        <div className="hctas lh-ctas">
+    <div className="tb">
+      <div className="tb-r tb-name-r">
+        <h1 className="tb-name"><span className="tb-first">Suparna</span> Deshmukh</h1>
+        <span className="tb-seal" aria-hidden="true">
+          <svg viewBox="0 0 80 80">
+            <circle cx="40" cy="40" r="37" fill="none" stroke="currentColor" strokeWidth="1.4" />
+            <circle cx="40" cy="40" r="21.5" fill="none" stroke="currentColor" strokeWidth="1" />
+            <defs>
+              <path id="tb-seal-arc" d="M40 13 a27 27 0 1 1 -0.01 0" fill="none" />
+            </defs>
+            <text className="tb-seal-t"><textPath href="#tb-seal-arc">SUPARNA DESHMUKH · PRODUCT · CLASS OF 27 ·</textPath></text>
+            <text x="40" y="45" textAnchor="middle" className="tb-seal-m">SD</text>
+          </svg>
+        </span>
+      </div>
+      <dl className="tb-rows">
+        {ROWS.map((r, i) => (
+          <div key={r.label} className={['tb-row', r.live && 'live', r.stack && 'stack'].filter(Boolean).join(' ')} style={{ ['--i' as string]: i }}>
+            <dt>{r.live && <i aria-hidden="true" />}{r.label}</dt>
+            <dd className="tb-val">{r.value}</dd>
+            <dd className="tb-det">{r.detail}</dd>
+          </div>
+        ))}
+      </dl>
+      <div className="tb-foot">
+        <div className="hctas">
           <a className="btn" href="#projects">See the builds <span aria-hidden="true">↓</span></a>
           <a className="btn ghost" href="#contact">Let&apos;s talk</a>
         </div>
+        <p className="tb-links">
+          <span>{PHONE}</span>
+          {LINKS.map(l => <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer">{l.label} <span aria-hidden="true">↗</span></a>)}
+        </p>
       </div>
-
-      <p className="lh-hint">
-        <i aria-hidden="true" />
-        <span className="lh-hint-mouse">Drag anything on the desk. Click to open it.</span>
-        <span className="lh-hint-touch">Swipe the desk. Tap anything to open it.</span>
-      </p>
     </div>
   )
 }

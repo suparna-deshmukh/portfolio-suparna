@@ -8,15 +8,15 @@ type Src = 'call' | 'slack' | 'jira'
 
 interface Note { src: Src; tag: string; text: string; x0: number; y0: number; r0: number; x1: number; y1: number; z: number; d: number }
 
-// Scattered position (x0, y0, r0) and the pile it sorts into (x1, y1). The first three are one issue.
-// The note on top of each sorted pile shows a different source: Jira, Call, Slack.
+// Scattered position (x0, y0, r0) and the pile it sorts into (x1, y1). The first three are one theme.
+// The note on top of each sorted pile shows a different source thread.
 const NOTES: Note[] = [
-  { src: 'call', tag: 'Call', text: 'checkout keeps failing on my phone', x0: 14, y0: 22, r0: -5, x1: 24, y1: 28, z: 4, d: 10 },
-  { src: 'slack', tag: 'Slack', text: 'cannot pay on iOS again', x0: 318, y0: 34, r0: 4, x1: 17, y1: 22, z: 5, d: 7 },
-  { src: 'jira', tag: 'Jira PAY-412', text: 'Payment sheet crashes on Safari', x0: 160, y0: 158, r0: -2, x1: 10, y1: 16, z: 6, d: 13 },
-  { src: 'call', tag: 'Call', text: 'the export takes forever', x0: 376, y0: 182, r0: 5, x1: 10, y1: 112, z: 3, d: 9 },
-  { src: 'slack', tag: 'Slack', text: 'csv export timed out again', x0: 36, y0: 208, r0: 3, x1: 17, y1: 118, z: 2, d: 6 },
-  { src: 'slack', tag: 'Slack', text: 'can we change the report colors', x0: 228, y0: 252, r0: -4, x1: 10, y1: 208, z: 1, d: 11 },
+  { src: 'call', tag: 'Reddit', text: 'battery dies after a year', x0: 14, y0: 22, r0: -5, x1: 24, y1: 28, z: 4, d: 10 },
+  { src: 'slack', tag: 'HN', text: 'still no fast charging', x0: 318, y0: 34, r0: 4, x1: 17, y1: 22, z: 5, d: 7 },
+  { src: 'jira', tag: 'Reddit #182', text: 'replaced the pack twice', x0: 160, y0: 158, r0: -2, x1: 10, y1: 16, z: 6, d: 13 },
+  { src: 'call', tag: 'Reddit', text: 'subscription charged twice', x0: 376, y0: 182, r0: 5, x1: 10, y1: 112, z: 3, d: 9 },
+  { src: 'slack', tag: 'HN', text: 'auto-renew trap, again', x0: 36, y0: 208, r0: 3, x1: 17, y1: 118, z: 2, d: 6 },
+  { src: 'slack', tag: 'Reddit', text: 'size chart is wrong', x0: 228, y0: 252, r0: -4, x1: 10, y1: 208, z: 1, d: 11 },
 ]
 
 const ICONS: Record<Src, JSX.Element> = {
@@ -34,7 +34,7 @@ const TOP_MENTIONS = 7
 
 const v = (name: string, value: string | number) => ({ [`--${name}`]: value })
 
-export default function FiltrBoard() {
+export default function ResearchBoard() {
   const ref = useRef<HTMLDivElement>(null)
   const board = useRef<HTMLDivElement>(null)
   const count = useRef<HTMLSpanElement>(null)
@@ -101,7 +101,7 @@ export default function FiltrBoard() {
   }
 
   return (
-    <div ref={ref} role="img" aria-label="Animated Filtr board: notes from calls, Slack and Jira are grouped by issue and ranked, with Mobile Checkout Failures at the top">
+    <div ref={ref} role="img" aria-label="Animated research board: pain points scraped from Reddit and Hacker News are grouped by theme and ranked, with Battery and Charging on top">
       <FitStage w={560} h={340}>
         <div ref={board} className="fb sorted" onPointerEnter={onEnter} onPointerMove={onMove} onPointerLeave={onLeave}>
           {NOTES.map((n, i) => (
@@ -122,7 +122,7 @@ export default function FiltrBoard() {
           </svg>
           <div className="fb-rows">
             <div className="fb-rw top" style={{ ...v('y', '12px'), ...v('i', 0) } as CSSProperties}>
-              <div className="t"><span className="rk">1</span><span className="hl">Mobile Checkout Failures</span></div>
+              <div className="t"><span className="rk">1</span><span className="hl">Battery & Charging</span></div>
               <div className="m"><span className="bar"><i style={{ ...v('w', 1), ...v('i', 0) } as CSSProperties} /></span><span ref={count} className="n">{TOP_MENTIONS} mentions</span><span className="imp h">High impact</span></div>
               <span className="fb-stamp">Fix first</span>
             </div>
@@ -135,7 +135,7 @@ export default function FiltrBoard() {
               <div className="m"><span className="bar"><i style={{ ...v('w', 0.3), ...v('i', 2) } as CSSProperties} /></span><span className="n">██</span><span className="imp l">Low</span></div>
             </div>
           </div>
-          <span className="fb-cap">3 sources, 1 answer</span>
+          <span className="fb-cap">2 sources, 1 PRD</span>
         </div>
       </FitStage>
     </div>

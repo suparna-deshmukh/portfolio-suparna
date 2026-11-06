@@ -1,7 +1,15 @@
 import { Resend } from 'resend'
 import { NextResponse } from 'next/server'
+import { EMAIL } from '../../lib/site'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+// Lazy so the site builds and runs without RESEND_API_KEY set; sending 500s cleanly until it is.
+let client: Resend | null = null
+const getResend = (): Resend | null => {
+  const key = process.env.RESEND_API_KEY
+  if (!key) return null
+  client ??= new Resend(key)
+  return client
+}
 
 export async function POST(request: Request) {
   try {
@@ -14,9 +22,13 @@ export async function POST(request: Request) {
       )
     }
 
+    const resend = getResend()
+    if (!resend) {
+      return NextResponse.json({ error: 'Mail is not configured on this deployment' }, { status: 503 })
+    }
     const { error } = await resend.emails.send({
       from: 'Portfolio Contact <onboarding@resend.dev>',
-      to: 'dasshriyans2802@gmail.com',
+      to: EMAIL,
       subject: `Portfolio message from ${name}`,
       text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
       replyTo: email,

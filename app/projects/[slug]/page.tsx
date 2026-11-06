@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Article from '../../components/Article'
-import { getCaseStudies as published, getDraft, getLead, postToPile, projectToPile, readMinutes } from '../../lib/posts'
+import { getCaseStudies as published, getLead, postToPile, projectToPile, readMinutes } from '../../lib/posts'
 
 const MAX_OTHER_CASES = 2
 
@@ -12,7 +12,7 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const project = published().find(p => p.slug === params.slug)
   if (!project) return {}
-  const title = `${project.title} · Shubh Sankalp Das`
+  const title = `${project.title} · Suparna Deshmukh`
   return {
     title,
     description: project.summary,
@@ -37,7 +37,6 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
       annot={project}
       reply={`Questions about how ${name} was built?`}
       pile={pile}
-      draft={getDraft()}
       backHref="/#projects"
       backLabel="Projects"
       title={name}

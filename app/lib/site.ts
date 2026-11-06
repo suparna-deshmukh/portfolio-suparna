@@ -1,24 +1,27 @@
 // Site-wide constants and section data that is not part of the posts/projects content.
 
-export const RESUME_URL = 'https://drive.google.com/file/d/1BA4IKjQMZAQbHeRM5nver6vW0qQF7s7Y/view'
-export const EMAIL = 'dasshriyans2802@gmail.com'
-export const GITHUB_USER = 'shubhdas0208'
+export const RESUME_URL = '#' // TODO: paste the resume link (Drive/website)
+export const EMAIL = 'f20230611@goa.bits-pilani.ac.in'
+export const PHONE = '+91 89569 67964'
+export const GITHUB_USER = 'suparna-deshmukh'
 
 export const SOCIALS = {
-  linkedin: 'https://www.linkedin.com/in/shubhsankalpdas/',
+  linkedin: 'https://www.linkedin.com/in/suparna-deshmukh/', // TODO: confirm URL
   github: `https://github.com/${GITHUB_USER}`,
-  x: 'https://x.com/shubh_das02',
+  x: '', // TODO: add the X handle; the X card stays hidden until it does
 }
 
+export const PREFILL_EVENT = 'contact:prefill'
+export const ASK_OWN_MESSAGE = "Hi Suparna, I'd like to hear about your corporate consulting work."
+
 export const NAV_SECTIONS = [
-  { id: 'projects', label: 'Projects' },
   { id: 'experience', label: 'Experience' },
-  { id: 'writing', label: 'Blogs' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'corporate', label: 'Corporate' },
+  { id: 'data', label: 'Data' },
   { id: 'about', label: 'About' },
   { id: 'contact', label: 'Contact' },
 ] as const
-
-export const VOXIKIN_LINE = 'A voice AI elderly healthcare assistant.'
 
 export interface LogEntry {
   when: string
@@ -28,10 +31,10 @@ export interface LogEntry {
 
 // "Log" tile in About. Newest first. Only published facts.
 export const LOG: LogEntry[] = [
-  { when: 'Now', text: 'Product Manager at Dezerv, on lending and voice AI agents.' },
-  { when: "Mar '26", text: 'Shipped ToolMonkey and Filtr. Wrote', link: { label: 'P99 is a UX Metric', href: '/writing/p99-is-a-ux-metric' } },
-  { when: "Dec '25", text: 'Wrapped the Dezerv internship. M1 retention 38% to 51%.' },
-  { when: "Apr '25", text: 'Left 91Ventures. LP reporting down from 48 hours to 60 minutes.' },
+  { when: 'Now', text: 'Associate Product Manager Intern at RISA Labs. AI workflows for US healthcare.' },
+  { when: "Jul '26", text: 'Started at RISA Labs. Owning Status Tracking 0→1 for 200 users.' },
+  { when: "May '26", text: 'As Placement Coordinator at BITS Goa, placed 240 students; batch percentage 58% to 85%.' },
+  { when: "May '25", text: 'Youngest Director at 180 Degrees Consulting. 45 consultants across 16 projects, 30% YoY revenue.' },
 ]
 
 export interface Bullet { lead: string; rest: string }
@@ -54,77 +57,221 @@ export interface Company {
   metric: string
   metricCaption: string
   summary: string
+  /** the sector the role sat in, shown on the route manifest */
+  sector: string
+  /** product = the two product roles, industry = the rotations page */
+  group?: 'product' | 'industry'
   roles: Role[]
 }
 
-// Bullet copy is verbatim from the original Experience section.
+// Bullet copy is from the resume (source of truth for numbers).
 export const EXPERIENCE: Company[] = [
   {
-    id: 'dezerv', name: 'Dezerv', monogram: 'Dz', city: 'Bengaluru', years: "'25 to now", metric: '38→51%', metricCaption: 'M1 retention after shipping Portfolio Snapshot', summary: 'Product Manager · Product Intern',
+    id: 'risa', name: 'RISA Labs', monogram: 'RL', city: 'Bengaluru', years: "'26 to now", metric: '500 hrs/wk', metricCaption: 'saved across 200 users by Status Tracking', summary: 'Associate Product Manager Intern · AI Workflows for US Healthcare', sector: 'Healthcare AI', group: 'product',
     roles: [
-      { title: 'Product Manager', meta: 'Full-time · Bengaluru', pending: true, bullets: [
-        { lead: 'Lending products', rest: 'Loan against mutual funds and loan against securities.' },
-        { lead: 'Voice AI agents', rest: 'For PMS client calls.' },
-      ] },
-      { title: 'Product Intern', meta: 'Jul 2025 to Dec 2025 · Internship · Bengaluru',
-        hero: { value: '38→51%', label: 'M1 retention' },
-        how: 'by conducting user research on weekly portfolio tracking needs and shipping the Portfolio Snapshot feature.',
+      { title: 'Associate Product Manager Intern', meta: 'Jul 2026 to Present · Healthcare AI · Bengaluru',
+        hero: { value: '500 hrs/wk', label: 'saved across 200 users' },
+        how: 'by owning Status Tracking 0→1: 90k-order SQL analysis, user research, user stories, PRDs (v0 to v1), HLD and dev-testing.',
         results: [
-          { value: '94→2%', label: 'status misclassification' },
-          { value: '18%', label: 'more conversions, same RM capacity' },
-          { value: '+40%', label: 'session time, controlled cohort' },
+          { value: '75% / 96%', label: 'coverage / precision across 118 payers' },
+          { value: '92%', label: 'accuracy on the Vapi calling MVP' },
+          { value: '2x', label: 'QC throughput on the unified UI' },
+          { value: '87%', label: 'precision on Pulse auto-RCA' },
         ],
         bullets: [
-          { lead: 'M1 retention lifted from 38% to 51%', rest: ' by conducting user research on weekly portfolio tracking needs and shipping the Portfolio Snapshot feature.' },
-          { lead: 'Status misclassification reduced from 94% to 2%', rest: ' by engineering a client call status identifier that analysed transcripts using classification rules.' },
-          { lead: '18% more conversions with the same RM capacity', rest: ' by developing an affluent user model using salary, spend, and investment patterns.' },
-          { lead: 'Session time increased 40% in a controlled cohort', rest: ' by discovering the need for actionable insights and integrating Thurro AI into the stocks page.' },
+          { lead: '200 users save 500 hrs/wk', rest: ' by owning Status Tracking 0→1: 90k-order SQL analysis, user research, user stories, PRDs (v0 to v1), HLD and dev-testing.' },
+          { lead: '118 payers on a live 30-minute sync', rest: ' — docs pulled via portal APIs, bots and a fax API, then categorized and order-matched with a coverage-first trade-off: 75% coverage at 96% precision.' },
+          { lead: '92% accuracy on inquiry calls', rest: ' by building an agentic calling MVP on Vapi from 4 months of data, call checklists and configs; a 20-user pilot sped up testing.' },
+          { lead: '2x QC throughput, 40% faster error fixes', rest: ' — user interviews found QC juggling 4 platforms; prototyped and shipped a unified UI. 2500 orders/day.' },
+          { lead: '87% precision on auto-RCA', rest: ' — built Pulse, a RAG tool-calling auto-RCA tool with chatbot, eval-tested; flags 15 metric drops/day, 60% RCA coverage.' },
+          { lead: '60% fewer filing clicks', rest: ' — launched RISA Assist on the Chrome Store, a low-latency AI extension that parses portal HTML and auto-fills answers.' },
+          { lead: 'Saved $10K/yr, 60% step TAT cut', rest: ' — shipped Document Studio on standard APIs to fetch and process clinical docs; replaced Acrobat.' },
+          { lead: '30% time-per-order cut', rest: ' — revamped 4 key order UI steps for edge cases with tech, design and compliance via user research and Amplitude.' },
         ] },
     ],
   },
   {
-    id: '91ventures', name: '91Ventures', monogram: '91', city: 'Remote', years: "'24 to '25", metric: '97.9%', metricCaption: 'less effort on quarterly LP reporting', summary: 'Investment Analyst Intern',
-    roles: [{ title: 'Investment Analyst Intern', meta: 'Apr 2024 to Apr 2025 · Internship · Remote',
-      hero: { value: '97.9%', label: 'less effort on quarterly LP reporting' },
-      how: '(48 hours to 60 minutes) by programming Excel automation for the reporting workflow.',
+    id: 'investmates', name: 'InvestMates', monogram: 'IM', city: 'Seattle (Remote)', years: "'25", metric: '25%', metricCaption: 'homepage CTR lift from the revamp A/B test', summary: 'Product Manager (Part-time) · AI Wealth Management for NRIs', sector: 'FinTech · Wealth', group: 'product',
+    roles: [{ title: 'Product Manager (Part-time)', meta: 'Jul 2025 to Sept 2025 · FinTech · Seattle (Remote)',
+      hero: { value: '25%', label: 'homepage CTR lift' },
+      how: 'by authoring PRDs for the homepage revamp and AI portfolio health, A/B tested (n=4200, p<0.05).',
       results: [
-        { value: '83%', label: 'portfolio review time cut' },
-        { value: '50%', label: 'deal closure time cut' },
+        { value: '20%', label: 'longer sessions' },
+        { value: '18%', label: 'drop-offs cut by lifecycle campaigns' },
+        { value: '+3 pp', label: 'D7 retention' },
       ],
       bullets: [
-        { lead: 'Portfolio review time reduced by 83%', rest: ' (30 to 5 minutes) by consolidating MIS reports into curated summaries for 200+ LPs.' },
-        { lead: 'Quarterly LP reporting effort cut by 97.9%', rest: ' (48 hours to 60 minutes) by programming Excel automation for the reporting workflow.' },
-        { lead: 'Deal closure time cut by 50%', rest: ' (60 days to 30 days) by establishing standardised deal documentation and communication workflows.' },
+        { lead: 'Lifted homepage CTR 25%, sessions 20%', rest: ' by authoring PRDs for the homepage revamp and AI portfolio health, ran A/B test (n=4200, p<0.05).' },
+        { lead: 'Cut drop-offs 18%, D7 retention up 3 pp', rest: ' by running cohort CleverTap lifecycle email and notification campaigns for 3k users on user funnel data.' },
       ] }],
   },
   {
-    id: 'multigraphics', name: 'Multigraphics', monogram: 'Mg', city: 'Delhi', years: "'24", metric: '3x', metricCaption: 'dealership inquiries in 30 days', summary: 'Business Analyst Intern',
-    roles: [{ title: 'Business Analyst Intern', meta: 'May 2024 to Jul 2024 · Internship · Delhi',
-      hero: { value: '3x', label: 'dealership inquiries in 30 days' },
-      how: '(33 to 95) by identifying user drop-off due to lack of product context and redesigning the inquiry flow.',
-      results: [
-        { value: '1.8%', label: 'conversion rate, from under 1%' },
-        { value: '92→27%', label: 'bounce rate in 45 days' },
-      ],
-      bullets: [
-        { lead: 'Dealership inquiries increased 3x in 30 days', rest: ' (33 to 95) by identifying user drop-off due to lack of product context and redesigning the inquiry flow.' },
-        { lead: 'Conversion rate increased from under 1% to 1.8% in 60 days', rest: ' by analysing data identifying delivery drivers as the highest-intent cohort and restructuring outreach.' },
-        { lead: 'Bounce rate reduced from 92% to 27% within 45 days', rest: ' by restructuring homepage CTAs with product categories and test drive options.' },
-      ] }],
+    id: 'suzlon', name: 'Suzlon Group', monogram: 'SZ', city: 'Pune', years: "'25", metric: '66%', metricCaption: 'reporting time cut by automated pipelines', summary: 'Summer Intern (Team Lead) · Renewable Energy', sector: 'Renewable Energy', group: 'industry',
+    roles: [
+      { title: 'Summer Intern (Team Lead)', meta: 'May 2025 to Jul 2025 · Renewable energy · Pune',
+        hero: { value: '66%', label: 'reporting time cut' },
+        how: 'by automating 20 data pipelines with n8n, AI agents and IMAP email parsing.',
+        results: [
+          { value: '8-state', label: 'CSR analysis led as team lead' },
+          { value: '20', label: 'data pipelines automated' },
+        ],
+        bullets: [
+          { lead: 'Led 5 interns on an 8-state CSR analysis', rest: ' with Excel and VBA; built and presented Power BI KPI dashboards and PPTs to leadership.' },
+          { lead: 'Automated 20 data pipelines with n8n', rest: ' integrating AI agents and IMAP email parsing to build CSVs and PPTs; cut reporting time by 66%.' },
+        ] },
+    ],
   },
   {
-    id: 'product-space', name: 'Product Space', monogram: 'PS', city: 'Remote', years: "'24", metric: '+15%', metricCaption: 'signups within 2 weeks', summary: 'Product Intern',
-    roles: [{ title: 'Product Intern', meta: 'Mar 2024 to Apr 2024 · Internship · Remote',
-      hero: { value: '+15%', label: 'signups within 2 weeks' },
-      how: 'by restructuring the website with testimonials and sample decks to address the trust barrier, validated via A/B testing.',
-      results: [
-        { value: '22%', label: 'higher conversion than other sources' },
-        { value: '25 to 30%', label: 'lower cost per signup' },
-      ],
-      bullets: [
-        { lead: '+15% signups within 2 weeks', rest: ' by restructuring the website with testimonials and sample decks to address the trust barrier, validated via A/B testing.' },
-        { lead: '22% higher conversion rate than other traffic sources', rest: ' achieved by releasing a monthly Product Newsletter to drive cohort awareness.' },
-        { lead: 'Lead attribution time cut by 1 week, cost per signup reduced 25 to 30%', rest: ' by implementing a UTM-linked conversion dashboard tracking 9 sources.' },
-      ] }],
+    id: 'chimera', name: 'Chimera VC', monogram: 'CV', city: 'Singapore (Remote)', years: "'25", metric: '$5M', metricCaption: 'pipeline built · 3 term sheets · 2 investments', summary: 'Investment Analyst Intern · Gaming Venture Capital', sector: 'Venture Capital', group: 'industry',
+    roles: [
+      { title: 'Investment Analyst Intern', meta: 'Mar 2025 to May 2025 · Gaming venture capital · Singapore (Remote)',
+        hero: { value: '$5M', label: 'pipeline built' },
+        how: 'by vetting 10 early-stage startups on benchmarks, traction and CAC/LTV, co-authoring 7 memos.',
+        results: [
+          { value: '3', label: 'term sheets driven' },
+          { value: '2', label: 'closed investments' },
+        ],
+        bullets: [
+          { lead: 'Vetted 10 early-stage gaming startups', rest: ' on benchmarks, traction and CAC/LTV; co-authored 7 memos and sourced 2 leads.' },
+          { lead: 'Drove 3 term sheets and 2 closed investments', rest: ' — key to the team’s $5M pipeline; shaped 4 additional deals through early-stage analysis.' },
+          { lead: 'Owned end-to-end due diligence', rest: ' and deal-flow management on Notion, running core workflows in a lean team of 4.' },
+        ] },
+    ],
+  },
+  {
+    id: 'primewealth', name: 'PrimeWealth', monogram: 'PW', city: 'Pune (Remote)', years: "'24 to '25", metric: '33%', metricCaption: 'AUM lift, US NRI market entry', summary: 'GTM Intern · Wealth Management, US Expansion', sector: 'Wealth Management', group: 'industry',
+    roles: [
+      { title: 'GTM Intern', meta: 'Dec 2024 to Mar 2025 · Wealth management, US expansion · Pune (Remote)',
+        hero: { value: '33%', label: 'AUM lift' },
+        how: 'by identifying US NRI pain points, sizing SAM/SOM and refining PMF for market entry.',
+        results: [
+          { value: '40%', label: 'inbound leads up' },
+          { value: '50%', label: 'AUM growth in the scenario model' },
+        ],
+        bullets: [
+          { lead: 'Helped lift AUM 33%', rest: ' by identifying US NRI pain points, sizing SAM/SOM, refining PMF and building the market entry strategy.' },
+          { lead: 'Inbound leads up 40%', rest: ' from a customer-centric GTM strategy: mapped acquisition channels, content strategy and targeting criteria.' },
+          { lead: 'Persona-segmented scenario model', rest: ' simulating the optimal client mix; go-live recommendations drove 50% AUM growth in simulation.' },
+        ] },
+    ],
+  },
+]
+
+// ── Corporate practice: the consulting files, separate from personal builds ──
+
+export interface Corporate {
+  id: string
+  name: string
+  role: string
+  context: string
+  where: string
+  when: string
+  /** the rubber stamp: the one number the file is remembered for */
+  stamp: string
+  points: string[]
+  chips: Stat[]
+  ask: string
+}
+
+export const CORPORATE: Corporate[] = [
+  {
+    id: 'everyday', name: 'Everyday Diamonds', role: 'Team Lead · GTM and Series A Fundraising', context: '180 Degrees Consulting engagement · Bengaluru',
+    where: 'Bengaluru', when: 'Aug 2024 – Sept 2024', stamp: '$2.5M raised',
+    points: [
+      'Modeled profitability, pricing and financial projections; built the 4-year expansion roadmap and the Series A deck that aided a $2.5M raise from All In Capital.',
+      'Formulated the offline expansion strategy for 5 stores across India — and the first one launched in Bengaluru.',
+    ],
+    chips: [{ value: '$2.5M', label: 'Series A, All In Capital' }, { value: '5', label: 'store expansion roadmap' }],
+    ask: "Hi Suparna, I'd like to hear about the Everyday Diamonds Series A work.",
+  },
+  {
+    id: 'fedaykin', name: 'Fedaykin AV', role: 'GTM Strategy Consultant', context: 'Independent consulting engagement',
+    where: 'Remote', when: 'Jul 2024 – Aug 2024', stamp: '30% unit economics',
+    points: [
+      'Formulated the GTM strategy via market research, competitor analysis and a refined product-market fit for stronger positioning.',
+      'Optimized the pricing strategy across technical specs, operations and annotation costs, improving unit economics by 30%.',
+      'Curated a database of 950 potential AV clients and ran a bottom-up B2B market sizing to inform a scalable business model.',
+    ],
+    chips: [{ value: '30%', label: 'unit economics' }, { value: '950', label: 'client database' }],
+    ask: "Hi Suparna, I'd like to hear about the Fedaykin AV GTM strategy work.",
+  },
+  {
+    id: 'kri' + 'she', name: 'KriSHE Carbon', role: 'Team Lead · GTM and Fundraising', context: '180 Degrees Consulting engagement · Gurugram',
+    where: 'Gurugram', when: 'Jul 2025 – Aug 2025', stamp: '₹12.5L grants',
+    points: [
+      'Built the investor pitch deck and financial projections; a scalable biochar model and impact metrics enabled ₹12.5L in grants.',
+      'Ran carbon market and buyer research; developed the positioning and sales narrative, identifying 20+ high-fit opportunities.',
+    ],
+    chips: [{ value: '₹12.5L', label: 'grants enabled' }, { value: '20+', label: 'high-fit opportunities' }],
+    ask: "Hi Suparna, I'd like to hear about the KriSHE Carbon fundraising work.",
+  },
+]
+
+export const CORPORATE_AGG: Stat[] = [
+  { value: '$2.5M', label: 'Series A raised' },
+  { value: '₹12.5L', label: 'grants enabled' },
+  { value: '30%', label: 'unit economics' },
+]
+
+// ── About page: education, skills, honors ──
+
+export const EDUCATION = {
+  school: 'BITS Pilani, Goa Campus',
+  degree: 'B.E. (Hons.) Electronics and Communication Engineering',
+  minor: 'Minor in Finance',
+  when: 'Aug 2023 – May 2027',
+  classYear: 'Class of 2027',
+}
+
+export const ACHIEVEMENTS: { rank: string; of: string; name: string; note: string }[] = [
+  { rank: 'Top 8', of: '9,000+', name: "Accenture Strategy Connect '25", note: 'GenAI in supply chain, India' },
+  { rank: 'Top 5', of: '2,500+', name: "IIMA Fintech Frontier '24", note: '0→1 product design and GTM' },
+  { rank: 'Top 10%', of: '270', name: "NextLeap PM Fellowship '26", note: 'Guided AI search for Google Photos' },
+]
+
+export const CONSULTATHON_URL = 'https://unstop.com/competitions/consultathon-50-bits-pilani-k-k-birla-goa-campus-1674892'
+
+export interface Position {
+  id: string
+  org: string
+  title: string
+  when: string
+  blurb: string
+  stats: Stat[]
+  chips: { text: string; href?: string }[]
+}
+
+/** Positions of responsibility, as the highlights of the college years. */
+export const POSITIONS: Position[] = [
+  {
+    id: 'placement', org: 'BITS Goa', title: 'Placement Coordinator', when: 'May 2026 – Present',
+    blurb: 'Selected 1 of 8 out of 1,000+ students. Leads campus placements and corporate outreach for the 2026 batch, end-to-end, with a 25-member team.',
+    stats: [
+      { value: '58%→85%', label: 'batch placement in 5 months' },
+      { value: '240', label: 'students placed' },
+      { value: '25', label: 'team led end-to-end' },
+    ],
+    chips: [{ text: '1 of 8 selected' }, { text: 'Project SYNERGY approved · 3 campuses' }],
+  },
+  {
+    id: 'consult', org: '180 Degrees Consulting', title: 'Director', when: 'May 2025 – Jun 2026',
+    blurb: 'Youngest Director: 45 consultants across 16 projects, driving 30% YoY revenue growth. Awarded “Best Consultant” as a sophomore.',
+    stats: [
+      { value: '₹17L', label: 'Consultathon sponsorships' },
+      { value: '3,200', label: 'Consultathon registrations' },
+      { value: '30%', label: 'YoY revenue growth' },
+      { value: '50K+', label: 'course impressions, 85% retention' },
+    ],
+    chips: [{ text: 'Best Consultant' }, { text: 'Consultathon — sponsored by Uplearn by Upstox, NextLeap, The MBA Edge & more · on Unstop', href: CONSULTATHON_URL }],
+  },
+  {
+    id: 'cel', org: 'Center for Entrepreneurial Leadership', title: 'Creative Director', when: 'May 2025 – Jun 2026',
+    blurb: "Coalescence'24: secured 40+ founders, investors and partners — including Ankur Warikoo and UTI. Led a 20-member team across marketing and operations; 400K+ impressions and ₹10L+ revenue.",
+    stats: [
+      { value: '40+', label: 'founders and investors' },
+      { value: '400K+', label: 'impressions' },
+      { value: '₹10L+', label: 'event revenue' },
+    ],
+    chips: [],
   },
 ]

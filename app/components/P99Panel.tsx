@@ -33,7 +33,7 @@ export default function P99Panel() {
     window.addEventListener('keydown', onKey)
     window.addEventListener(P99_EVENT, open)
     if (process.env.NODE_ENV === 'production') {
-      console.info('Built by Shubh Sankalp Das. Type "p99" anywhere to see how fast this page loaded.')
+      console.info('Built by Suparna Deshmukh. Type "p99" anywhere to see how fast this page loaded.')
     }
     return () => { window.removeEventListener('keydown', onKey); window.removeEventListener(P99_EVENT, open); po?.disconnect() }
   }, [])

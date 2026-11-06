@@ -2,8 +2,8 @@
    The two triangles never change shape; only the stage's scale moves, so it stays on the compositor. */
 html.endpull{overscroll-behavior-y:none}
 main.bands{position:relative;z-index:1}
-.endpull-stage{--epDesk:#E2D9CB;--epRule:rgba(23,19,14,.12);--epFlapA:#FBF8F3;--epFlapB:#BFAF98;--epNote:#B23C0B;position:fixed;right:0;bottom:0;width:260px;height:260px;z-index:2;pointer-events:none;visibility:hidden;transform:scale(0);transform-origin:100% 100%}
-[data-theme="dark"] .endpull-stage{--epDesk:#1F1A15;--epRule:rgba(244,239,231,.08);--epFlapA:#D9CFC0;--epFlapB:#6E655A;--epNote:#FF8533}
+.endpull-stage{--epDesk:#E3EAE0;--epRule:rgba(21,33,26,.12);--epFlapA:#FAFCF8;--epFlapB:#B9C8B4;--epNote:#146248;position:fixed;right:0;bottom:0;width:260px;height:260px;z-index:2;pointer-events:none;visibility:hidden;transform:scale(0);transform-origin:100% 100%}
+[data-theme="dark"] .endpull-stage{--epDesk:#161F1A;--epRule:rgba(236,243,238,.08);--epFlapA:#D8E2D8;--epFlapB:#64756A;--epNote:#4FD3A0}
 .ep-desk,.ep-flap{position:absolute;inset:0}
 .ep-desk{clip-path:polygon(100% 0,100% 100%,0 100%);background:repeating-linear-gradient(180deg,transparent 0 27px,var(--epRule) 27px 28px),var(--epDesk)}
 .ep-desk span{position:absolute;right:16px;bottom:22px;font:500 17.7px/1 var(--fb);color:var(--epNote);white-space:nowrap}

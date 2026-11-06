@@ -13,13 +13,13 @@ const ICONS = {
   x: <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>,
 }
 
-const NAME = 'Shubh Sankalp Das'
-const SHORT_NAME = 'Shubh Das' // fits the resume paper; LinkedIn keeps the full name
-const X_NAME = 'Shubh Das' // X display name: confirm with Shubh
+const NAME = 'Suparna Deshmukh'
+const SHORT_NAME = 'Suparna D.' // fits the resume paper; LinkedIn keeps the full name
+const X_NAME = 'Suparna' // X display name: confirm handle
 const stripScheme = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')
 const X_HANDLE = SOCIALS.x.split('/').filter(Boolean).pop() ?? ''
 const CURRENT = EXPERIENCE[0]
-const ROLE_LINE = `${CURRENT.roles[0].title} at ${CURRENT.name} · ${CURRENT.city}`
+const ROLE_LINE = `${CURRENT.roles[0].title} at ${CURRENT.name} · Placement Coordinator at BITS Goa · ${CURRENT.city}`
 
 const linkProps = { target: '_blank', rel: 'noopener noreferrer' } as const
 
@@ -70,15 +70,17 @@ export default function SocialCards() {
         <span className="pc-cta">Connect <span className="pc-arr" aria-hidden="true">↗</span></span>
       </a>
 
-      <a className="pc pc-x" href={SOCIALS.x} {...linkProps} aria-label={`Follow @${X_HANDLE} on X, opens in a new tab`}>
-        <span className="pc-top">
-          <span className="pc-av" aria-hidden="true">{X_NAME[0]}</span>
-          <span className="pc-id"><b>{X_NAME}</b><small>@{X_HANDLE}</small></span>
-          <span className="pc-xlogo">{ICONS.x}</span>
-        </span>
-        <span className="pc-url">{stripScheme(SOCIALS.x)}</span>
-        <span className="pc-follow">Follow on X</span>
-      </a>
+      {SOCIALS.x && (
+        <a className="pc pc-x" href={SOCIALS.x} {...linkProps} aria-label={`Follow @${X_HANDLE} on X, opens in a new tab`}>
+          <span className="pc-top">
+            <span className="pc-av" aria-hidden="true">{X_NAME[0]}</span>
+            <span className="pc-id"><b>{X_NAME}</b><small>@{X_HANDLE}</small></span>
+            <span className="pc-xlogo">{ICONS.x}</span>
+          </span>
+          <span className="pc-url">{stripScheme(SOCIALS.x)}</span>
+          <span className="pc-follow">Follow on X</span>
+        </a>
+      )}
 
       <GitHubCard />
 

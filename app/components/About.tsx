@@ -1,104 +1,145 @@
 'use client'
 
 import '../about.css'
-import { useEffect, useRef, useState } from 'react'
-import { BOOKS } from '../lib/content'
-import { SOCIALS, GITHUB_USER } from '../lib/site'
+import { useRef } from 'react'
+import { ACHIEVEMENTS, EDUCATION, POSITIONS } from '../lib/site'
 import { useInViewOnce } from '../lib/hooks'
-import GitHubGraph from './GitHubGraph'
+import CountUp from './CountUp'
 import SectionHeader from './SectionHeader'
-import { CurrentlyTicker, HowIWork, LapTimer } from './AboutExtras'
+import { CurrentlyTicker } from './AboutExtras'
 
-type Stage = 'pre' | 'go' | 'settled'
-
-/** Right page: the reading feature. Every cover, title, author and note is visible at once. */
-function Reading() {
+/** The placement bar: the tick marks where the batch stood in May '26, the fill grows to today. */
+function PlacementBar() {
+  const ref = useRef<HTMLDivElement>(null)
+  const seen = useInViewOnce(ref, 0.4)
   return (
-    <>
-      <p className="lab">Currently reading <span>{BOOKS.length} books</span></p>
-      <ul className="ab-books" aria-label="Books">
-        {BOOKS.map((b, i) => (
-          <li key={b.id} className="ab-book" style={{ ['--i' as string]: i }}>
-            <span className="ab-cvw"><span className="ab-cover"><img src={b.cover_url} alt="" loading="lazy" /></span></span>
-            <b>{b.title}</b>
-            <span className="ab-au">{b.author}</span>
-            <em>{b.note}</em>
-          </li>
-        ))}
-      </ul>
-    </>
+    <div ref={ref} className={`ab-bar${seen ? ' in' : ''}`} role="img" aria-label="Batch placement rate, from 58 percent in May 2026 to 85 percent five months later">
+      <div className="ab-bar-lab"><span>Batch placement rate</span><CountUp text="58% → 85%" /></div>
+      <div className="ab-bar-track">
+        <span className="ab-bar-fill" aria-hidden="true" />
+        <span className="ab-bar-tick" aria-hidden="true" />
+      </div>
+      <div className="ab-bar-scale" aria-hidden="true"><i>May &apos;26 · 58%</i><i>today · 85%</i></div>
+    </div>
   )
 }
 
-function F1() {
+const SPONSORS = ['Uplearn by Upstox', 'NextLeap', 'Unstop', 'The MBA Edge']
+
+/** The Consultathon sponsor strip: a slow marquee across the panel. */
+function SponsorMarquee() {
+  const row = [...SPONSORS, ...SPONSORS]
   return (
-    <div className="ab-f1">
-      <img src="/images/now/obsessing.avif" alt="" loading="lazy" />
-      <div className="in">
-        <small>Obsessing over</small>
-        <b>F1: Race Strategy</b>
-        <LapTimer />
+    <div className="ab-marq" aria-label={`Consultathon sponsors: ${SPONSORS.join(', ')} and more`}>
+      <div className="ab-marq-in">
+        {row.map((n, i) => <span key={i} aria-hidden={i >= SPONSORS.length}>{n}</span>)}
+      </div>
+    </div>
+  )
+}
+
+const MEDAL = (
+  <svg viewBox="0 0 40 46" aria-hidden="true">
+    <path d="M12.5 1 20 15l-5 3.4L9 4.2z" fill="currentColor" opacity=".45" />
+    <path d="M27.5 1 20 15l5 3.4 6-14.2z" fill="currentColor" opacity=".45" />
+    <circle cx="20" cy="31" r="12.5" fill="none" stroke="currentColor" strokeWidth="1.8" />
+    <path d="m20 23.6 2 4.1 4.5.6-3.3 3.2.8 4.5-4-2.1-4 2.1.8-4.5-3.3-3.2 4.5-.6z" fill="currentColor" />
+  </svg>
+)
+
+/** Right page: the college years as stat panels — positions of responsibility, numbers doing the talking. */
+function Positions() {
+  return (
+    <div className="ab-read" id="about-positions">
+      <p className="lab">Positions of responsibility <span>3 roles · BITS Goa</span></p>
+      <div className="ab-panels">
+        {POSITIONS.map(p => (
+          <article key={p.id} className="ab-panel">
+            <header>
+              <b>{p.title}</b><span>{p.org}</span><em>{p.when}</em>
+            </header>
+            <p>{p.blurb}</p>
+            {p.id === 'placement' && <PlacementBar />}
+            {p.id === 'consult' && <SponsorMarquee />}
+            {p.stats.length > 0 && (
+              <dl className="ab-stats">
+                {p.stats.map(s => (
+                  <div key={s.label}><CountUp text={s.value} /><span>{s.label}</span></div>
+                ))}
+              </dl>
+            )}
+            {p.chips.length > 0 && (
+              <ul className="ab-chips">
+                {p.chips.map(ch => (
+                  <li key={ch.text}>
+                    {ch.href
+                      ? <a href={ch.href} target="_blank" rel="noopener noreferrer">{ch.text} ↗</a>
+                      : ch.text}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </article>
+        ))}
+      </div>
+      <div className="ab-honors">
+        <p className="lab">Honors <span>case competitions and fellowships</span></p>
+        <ol>
+          {ACHIEVEMENTS.map(a => (
+            <li key={a.name}>
+              <span className="ab-medal">{MEDAL}</span>
+              <b>{a.rank} <i>of {a.of}</i></b>
+              <span className="ab-hn-name">{a.name}</span>
+              <span>{a.note}</span>
+            </li>
+          ))}
+        </ol>
       </div>
     </div>
   )
 }
 
 export default function About() {
-  const spreadRef = useRef<HTMLDivElement>(null)
-  const inView = useInViewOnce(spreadRef, 0.15)
-  // Server renders the settled spread; covers and cells only start hidden when motion is on and the spread is below the fold.
-  const [stage, setStage] = useState<Stage>('settled')
-  const [swept, setSwept] = useState(true)
-
-  useEffect(() => {
-    const el = spreadRef.current
-    if (!el || !document.documentElement.classList.contains('motion-ok')) return
-    if (el.getBoundingClientRect().top > window.innerHeight) { setStage('pre'); setSwept(false) }
-  }, [])
-
-  useEffect(() => {
-    if (!inView || stage !== 'pre') return
-    setStage('go')
-    const a = window.setTimeout(() => setSwept(true), 380)
-    const b = window.setTimeout(() => setStage('settled'), 1500)
-    return () => { clearTimeout(a); clearTimeout(b) }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inView])
-
   return (
     <section className="band" id="about">
       <div className="sec wrap">
-      <SectionHeader
-        id="about"
-        label="About"
-        variant="serif"
-        title="The person behind the work."
-        meta={['Product Manager at Dezerv', 'Bengaluru']}
-        aside={<CurrentlyTicker facts={['Product Manager at Dezerv', 'Lending and voice AI agents', 'Building Voxikin', `Reading ${BOOKS[0]?.title ?? ''}`, 'Obsessing over F1 race strategy']} />}
-      />
-      <div ref={spreadRef} className={`ab-spread ab-${stage}`}>
-        <div className="ab-page ab-l">
-          <blockquote className="ab-pq">The most interesting product problems are people problems.</blockquote>
-          <div className="ab-bio">
-            <p className="ab-dc">I studied Electronics and Instrumentation at BITS Pilani Goa, with a Finance minor. I drifted into product because my questions were never only about technical output. They were also about people. Now I&apos;m a Product Manager at Dezerv.</p>
-            <p>Outside work I train, read history and mythology, and travel when I can.</p>
+        <SectionHeader
+          id="about"
+          label="About"
+          variant="serif"
+          title="The person behind the work."
+          meta={['Associate Product Manager at RISA Labs', 'Bengaluru']}
+          aside={<CurrentlyTicker facts={['Associate Product Manager at RISA Labs', 'AI workflows for US healthcare', 'Placement Coordinator at BITS Goa', 'Consultathon: ₹17L sponsorships, 3,200 registrations', 'Building AskCart']} />}
+        />
+        <div className="ab-spread">
+          <div className="ab-page ab-l">
+            <blockquote className="ab-pq">The best product decisions come from people, not dashboards.</blockquote>
+            <div className="ab-bio">
+              <p className="ab-dc">I studied Electronics and Communication Engineering at BITS Pilani Goa, with a Finance minor. I drifted into product because my questions were never only about the tech — they were also about people, and about money. Now I&apos;m an Associate Product Manager at RISA Labs, shipping AI workflows for US healthcare.</p>
+              <p>Outside work I lead campus placements at BITS Goa and run a 45-consultant practice at 180 Degrees Consulting.</p>
+            </div>
+            <div className="ab-edu">
+              <svg className="ab-edu-crest" viewBox="0 0 44 44" aria-hidden="true">
+                <circle cx="22" cy="22" r="20" fill="none" stroke="currentColor" strokeWidth="1.4" />
+                <circle cx="22" cy="22" r="15" fill="none" stroke="currentColor" strokeWidth=".7" />
+                <path d="M14 27v-8l8-5 8 5v8" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
+                <path d="M17.5 27v-5.5M22 27v-5.5M26.5 27v-5.5" stroke="currentColor" strokeWidth="1.4" />
+                <path d="M13.5 30h17" stroke="currentColor" strokeWidth="1.4" />
+              </svg>
+              <div className="ab-edu-bd">
+                <p className="lab">Education</p>
+                <b>{EDUCATION.school}</b>
+                <span>{EDUCATION.degree}</span>
+                <span className="ab-edu-meta"><em>{EDUCATION.minor}</em><i aria-hidden="true" /><em>{EDUCATION.classYear}</em></span>
+              </div>
+            </div>
+            <span className="ab-folio" aria-hidden="true">Suparna Deshmukh</span>
           </div>
-          <div className={`ab-gh${swept ? ' swept' : ''}${stage === 'settled' ? ' settled' : ''}`} id="about-github">
-            <GitHubGraph profileUrl={SOCIALS.github} user={GITHUB_USER} fullYear />
+          <div className="ab-page ab-r">
+            <Positions />
+            <span className="ab-folio" aria-hidden="true">Bengaluru</span>
           </div>
-          <span className="ab-folio" aria-hidden="true">Shubh Sankalp Das</span>
         </div>
-        <div className="ab-page ab-r">
-          <div className="ab-read" id="about-reading">
-            <Reading />
-          </div>
-          <div className="ab-foot">
-            <F1 />
-            <div className="ab-work"><HowIWork /></div>
-          </div>
-          <span className="ab-folio" aria-hidden="true">Bengaluru</span>
-        </div>
-      </div>
       </div>
     </section>
   )

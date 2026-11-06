@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
-import { DM_Mono } from 'next/font/google'
+import { DM_Mono, Fraunces } from 'next/font/google'
 import './tailwind.css'
 import './globals.css'
 import Header from './components/Header'
@@ -8,11 +8,10 @@ import FloatNav from './components/FloatNav'
 import P99Panel from './components/P99Panel'
 import { ViewTransitionResolver } from './components/ViewTransitionLink'
 
-const clash = localFont({
-  src: [
-    { path: './fonts/fontshare/Clash-Display-600.woff2', weight: '600' },
-    { path: './fonts/fontshare/Clash-Display-700.woff2', weight: '700' },
-  ],
+const clash = Fraunces({
+  subsets: ['latin'],
+  weight: ['500', '600', '700'],
+  style: ['normal', 'italic'],
   variable: '--font-clash',
   display: 'swap',
 })
@@ -30,12 +29,12 @@ const satoshi = localFont({
 const dmMono = DM_Mono({ subsets: ['latin'], weight: ['400', '500'], variable: '--font-dm-mono', display: 'swap' })
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://portfolio-website-shubh-das.vercel.app'),
-  title: 'Shubh Sankalp Das · Product Manager who builds AI products',
-  description: 'Product Manager at Dezerv. Case studies on LLM agent reliability and RAG, and blogs on the product decisions inside engineering.',
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
+  title: 'Suparna Deshmukh · AI Product Manager',
+  description: 'Associate Product Manager at RISA Labs. Case studies on AI search, agentic research and GTM, data ledgers, and product work across five industries.',
   openGraph: {
-    title: 'Shubh Sankalp Das · Product Manager who builds AI products',
-    description: 'Product Manager at Dezerv. Case studies on LLM agent reliability and RAG, and blogs on the product decisions inside engineering.',
+    title: 'Suparna Deshmukh · AI Product Manager',
+    description: 'Associate Product Manager at RISA Labs. Case studies on AI search, agentic research and GTM, data ledgers, and product work across five industries.',
     type: 'website',
   },
 }

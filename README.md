@@ -1,17 +1,18 @@
-# Shubh Sankalp Das
+# Suparna Deshmukh
 
-AI Product Manager. I build at the intersection of LLM infrastructure and the consumer experiences that sit on top of it.
+AI Product Manager. I build where product judgment, data and LLMs meet — right now shipping AI workflows for US healthcare at RISA Labs.
 
-This repo is the source for my personal site — **[portfolio-website-shubh-das.vercel.app](https://portfolio-website-shubh-das.vercel.app/)** — where I keep my case studies, writing, and what I'm working on right now.
+This repo is the source for my personal site: two case studies, a corporate-practice card, four data ledgers, and the experience binder.
 
-## Reach me
+## Stack
 
-- **Email** — [dasshriyans2802@gmail.com](mailto:dasshriyans2802@gmail.com)
-- **GitHub** — [@shubhdas0208](https://github.com/shubhdas0208)
-- **Site** — [portfolio-website-shubh-das.vercel.app](https://portfolio-website-shubh-das.vercel.app/)
+Next.js 14 + TypeScript + Tailwind v4. One scrolling desk: case studies, a data ledger, an experience ring binder (product core + industry rotations), an about spread, and a contact form (Resend).
 
-The contact form on the site routes to my inbox via Resend.
+## Run it
 
----
+```bash
+npm install
+npm run dev   # http://localhost:3000
+```
 
-*Site is Next.js 14 + TypeScript + Tailwind, hosted on Vercel. Code's in this repo if you want to look around.*
+Set `RESEND_API_KEY` and the `EMAIL` in `app/lib/site.ts` for the contact form to actually send mail.

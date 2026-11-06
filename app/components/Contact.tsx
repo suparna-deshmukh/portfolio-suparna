@@ -2,11 +2,11 @@
 
 import '../contact.css'
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react'
-import { EMAIL, SOCIALS } from '../lib/site'
+import { EMAIL, PHONE, SOCIALS } from '../lib/site'
 import { istTime, useVisibleLoop } from '../lib/hooks'
 import SectionHeader from './SectionHeader'
 import ContactThreads from './ContactThreads'
-import { PREFILL_EVENT } from './VoxikinCase'
+import { PREFILL_EVENT } from '../lib/site'
 import SocialCards from './SocialCards'
 import Signature from './Signature'
 
@@ -118,7 +118,7 @@ export default function Contact({ footer }: { footer?: ReactNode }) {
           variant="xl"
           pre="Need a PM who ships?"
           title="Let's talk."
-          meta={['Form, email, LinkedIn or X', 'Bengaluru · IST']}
+          meta={['Form, email, phone or LinkedIn', 'Bengaluru · IST']}
         />
         <div className="ct">
           <div>
@@ -126,6 +126,7 @@ export default function Contact({ footer }: { footer?: ReactNode }) {
               <a className="addr" href={`mailto:${EMAIL}`}>{EMAIL}</a>
               <button className={`copyb${copied ? ' done' : ''}`} type="button" onClick={copyEmail}>{copied ? 'Copied' : 'Copy email'}</button>
             </div>
+            <p className="phone">{PHONE} · Bengaluru, IN</p>
             <span className="sr" aria-live="polite">{copied ? 'Email address copied' : ''}</span>
             <p className="here"><i aria-hidden="true" />It&apos;s <span className="num" suppressHydrationWarning>{now || '--:--'}</span> in Bengaluru right now.</p>
             <SocialCards />
@@ -151,7 +152,7 @@ export default function Contact({ footer }: { footer?: ReactNode }) {
                   <textarea
                     name="message"
                     rows={5}
-                    placeholder="A role, a problem worth solving, or a disagreement with my P99 blog."
+                    placeholder="A role, a problem worth solving, or a question about my case studies."
                     value={values.message}
                     className={errors.message ? 'invalid' : undefined}
                     aria-invalid={!!errors.message}

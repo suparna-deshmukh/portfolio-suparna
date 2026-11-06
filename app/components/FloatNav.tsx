@@ -13,8 +13,9 @@ const SHORT_PX = 500 // phones in landscape: auto-hide the bottom bar too
 /** One line icon per section, drawn from the site's own objects: a shipped box, the ring binder, a pen nib, the ID badge, a paper plane. */
 const ICONS: Record<string, React.ReactNode> = {
   projects: <><path d="M3.5 7.5 12 3l8.5 4.5v9L12 21l-8.5-4.5z" /><path d="M3.5 7.5 12 12l8.5-4.5M12 12v9" /><path d="m7.8 5.3 8.5 4.5" /></>,
+  corporate: <><path d="M3.5 7.5 6 4h4.5L12 7.5h8.5V19a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 19z" /><path d="M3.5 12h17M9.5 15.5h5" /></>,
+  data: <><ellipse cx="12" cy="5.5" rx="8.5" ry="3" /><path d="M3.5 5.5v13c0 1.7 3.8 3 8.5 3s8.5-1.3 8.5-3v-13M3.5 12c0 1.7 3.8 3 8.5 3s8.5-1.3 8.5-3" /></>,
   experience: <><rect x="5" y="3" width="15" height="18" rx="1.5" /><path d="M3 7.5h4M3 12h4M3 16.5h4M10 8h7M10 12h7M10 16h4" /></>,
-  writing: <><path d="M12 3c3 3 5 6.5 5 9.5L12 21l-5-8.5C7 9.5 9 6 12 3z" /><circle cx="12" cy="11" r="1.6" /><path d="M12 12.6V21" /></>,
   about: <><rect x="3.5" y="5" width="17" height="14" rx="2" /><circle cx="9" cy="11" r="2.2" /><path d="M5.8 16.2c.6-1.6 1.8-2.4 3.2-2.4s2.6.8 3.2 2.4M14.5 10h3.5M14.5 13.5h2.5M10 3v3M14 3v3" /></>,
   contact: <><path d="M21 3 3 10.5l7 2.5 2.5 7L21 3z" /><path d="m10 13 4.5-4.5" /></>,
 }

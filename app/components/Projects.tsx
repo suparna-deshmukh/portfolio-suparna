@@ -1,9 +1,8 @@
 import { PROJECTS } from '../lib/content'
 import SectionHeader from './SectionHeader'
 import CountUp from './CountUp'
-import ToolMonkeyReport from './ToolMonkeyReport'
-import FiltrBoard from './FiltrBoard'
-import VoxikinCase from './VoxikinCase'
+import AskCartReport from './AskCartReport'
+import ResearchBoard from './ResearchBoard'
 import ViewTransitionLink from './ViewTransitionLink'
 import VisibleCard from './VisibleCard'
 import ProjectIndex, { type ProjectRef } from './ProjectIndex'
@@ -22,6 +21,7 @@ interface CaseProps {
   title: string
   summary: string
   liveUrl?: string | null
+  links?: { label: string; href: string }[]
   stack: string
   tag?: string
   statsLabel?: string
@@ -30,7 +30,7 @@ interface CaseProps {
   signature?: React.ReactNode
 }
 
-function Case({ variant, id, index, refs, slug, title, summary, liveUrl, stack, tag, statsLabel, stats, media, signature }: CaseProps) {
+function Case({ variant, id, index, refs, slug, title, summary, liveUrl, links, stack, tag, statsLabel, stats, media, signature }: CaseProps) {
   const [name, sub] = title.split(': ')
   const href = `/projects/${slug}`
   return (
@@ -53,6 +53,9 @@ function Case({ variant, id, index, refs, slug, title, summary, liveUrl, stack, 
         <div className="ft">
           <ViewTransitionLink href={href} className="btn">Read the case study →</ViewTransitionLink>
           {liveUrl && <a href={liveUrl} target="_blank" rel="noopener noreferrer">{liveHost(liveUrl)} ↗</a>}
+          {links?.map(l => (
+            <a key={l.label} className="case-link" href={l.href} target="_blank" rel="noopener noreferrer">{l.label} <span aria-hidden="true">↗</span></a>
+          ))}
         </div>
       </div>
       <div className="media" style={{ viewTransitionName: `case-media-${slug}` }}>{media}</div>
@@ -62,16 +65,16 @@ function Case({ variant, id, index, refs, slug, title, summary, liveUrl, stack, 
 }
 
 export default function Projects() {
-  const toolmonkey = PROJECTS.find(p => p.slug === 'toolmonkey-chaos-agent')
-  const filtr = PROJECTS.find(p => p.slug === 'filtr-rag-pm-tool')
-  const shipped = [toolmonkey, filtr].filter(Boolean)
-  const refs: ProjectRef[] = [
-    ...(toolmonkey ? [{ id: 'projects-toolmonkey', name: toolmonkey.title.split(': ')[0] }] : []),
-    ...(filtr ? [{ id: 'projects-filtr', name: filtr.title.split(': ')[0] }] : []),
-    { id: 'projects-own', name: 'Voxikin' },
-  ]
+  const askcart = PROJECTS.find(p => p.slug === 'askcart')
+  const research = PROJECTS.find(p => p.slug === 'research-agent')
+    const shipped = [askcart, research].filter(Boolean)
+    const refs: ProjectRef[] = [
+      ...(askcart ? [{ id: 'projects-askcart', name: askcart.title.split(': ')[0] }] : []),
+      ...(research ? [{ id: 'projects-research', name: research.title.split(': ')[0] }] : []),
+      { id: 'corporate', name: 'Corporate projects' },
+    ]
 
-  const meta: [string, string] = [`${shipped.length} shipped · 1 being built`, 'Case study and live link for each']
+    const meta: [string, string] = [`${shipped.length} personal case studies`, 'Corporate projects right below']
 
   return (
     <section className="band" id="projects" data-current="tm">
@@ -80,8 +83,8 @@ export default function Projects() {
         <SectionHeader
           id="projects"
           label="Projects"
-          variant="xl"
-          title="Built and shipped, end to end."
+          variant="md"
+          title="What I've built."
           meta={meta}
           aside={<>
             <b>{meta[0]}</b><span>{meta[1]}</span>
@@ -89,48 +92,49 @@ export default function Projects() {
           </>}
         />
         <div className="pj stack">
-          {toolmonkey && (
+          {askcart && (
             <Case
               variant="tm"
-              id="projects-toolmonkey"
+              id="projects-askcart"
               index={0}
               refs={refs}
-              slug={toolmonkey.slug}
-              title={toolmonkey.title}
-              summary="Breaks your agent's tools on purpose, then shows exactly how it fails, before your users do."
-              liveUrl={toolmonkey.live_url}
-              stack="AgentEval · LLM · FastAPI · Python"
-              statsLabel="First test run"
+              slug={askcart.slug}
+              title={askcart.title}
+              summary="E-commerce search fails silently: when the catalog returns nothing, the shopper leaves. AskCart asks one narrow question instead — and the dead end becomes a conversation."
+              liveUrl={askcart.live_url}
+              links={askcart.links}
+              stack="Next.js · SQL · Python · ML · Gemini API"
+              statsLabel="From the MVP"
               stats={[
-                { value: '100%', label: 'tasks completed' },
-                { value: '33%', label: 'failures caught' },
-                { value: '25%', label: 'went unnoticed', hot: true },
+                { value: '8%', label: 'null results, down from 27.3% (n=150)' },
+                { value: '96.7%', label: 'RAG eval pass rate (n=113)' },
+                { value: '78.7%', label: 'resolved within 2 follow-ups', hot: true },
               ]}
-              media={<ToolMonkeyReport />}
+              media={<AskCartReport />}
             />
           )}
-          {filtr && (
+          {research && (
             <Case
               variant="fl"
-              id="projects-filtr"
+              id="projects-research"
               index={1}
               refs={refs}
-              slug={filtr.slug}
-              title={filtr.title}
-              summary="Reads your call transcripts, Slack and Jira tickets, then ranks the biggest issues by impact so you know what to fix first."
-              liveUrl={filtr.live_url}
-              stack="RAG · LLM · FastAPI · Pinecone"
-              statsLabel="What you get"
+              slug={research.slug}
+              title={research.title}
+              summary="Give it a topic: it mines Reddit and Hacker News, clusters the pain points, and hands back a ranked list plus a first draft of the PRD."
+              liveUrl={research.live_url}
+              links={research.links}
+              stack="n8n · Ollama (Llama 3) · Python · REST APIs"
+              statsLabel="One run"
               stats={[
-                { value: '~45 s', label: 'to first insight', hot: true },
-                { value: '5', label: 'ranked issues' },
-                { value: '3', label: 'sources' },
+                { value: '500+', label: 'pain points aggregated', hot: true },
+                { value: '28', label: 'nodes in the workflow' },
+                { value: '70%', label: 'research-to-spec time cut' },
               ]}
-              media={<FiltrBoard />}
+              media={<ResearchBoard />}
               signature={<SortingDots />}
             />
           )}
-          <VoxikinCase index={refs.length - 1} refs={refs} />
         </div>
       </div>
     </section>

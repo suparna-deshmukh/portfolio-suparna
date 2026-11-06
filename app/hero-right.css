@@ -1,0 +1,107 @@
+/* ── hero right column: the annotated exhibit. Four objects pinned loose on the cross-grid —
+   the ID badge, the BITS Goa campus, the RISA stat card, the AskCart phone (a live loop of the
+   guided search) — each tagged with a dimension-style callout. The pointer drives a small
+   parallax; objects lift on hover. Under html.motion-ok the objects settle in; without JS or
+   with reduced motion they show final. */
+
+.ex-wrap{position:relative;width:min(660px,100%);aspect-ratio:660/540;margin-inline:auto}
+.exhibit{position:absolute;top:0;left:0;width:660px;height:540px;transform:scale(var(--s,1));transform-origin:0 0}
+
+.ex-ob{position:absolute;display:block;text-decoration:none;color:var(--fg);
+  transform:rotate(var(--rot,0deg)) translate3d(calc(var(--mx,0) * var(--d,1) * 12px),calc(var(--my,0) * var(--d,1) * 8px),0);
+  transition:translate .3s var(--ease)}
+.ex-ob:hover{translate:0 -5px}
+.ex-ob:focus-visible{outline:2px solid var(--focus);outline-offset:4px;border-radius:8px}
+
+/* ID badge */
+.ex-badge{left:0;top:44px;width:172px;background:var(--surf);border:1px solid var(--lineS);border-radius:12px;
+  padding:30px 12px 10px;box-shadow:0 22px 34px -20px rgba(23,19,14,.5)}
+[data-theme="dark"] .ex-badge{box-shadow:0 0 0 1px var(--line),0 22px 34px -20px rgba(0,0,0,.8)}
+.ex-clip{position:absolute;top:8px;left:50%;translate:-50% 0;width:34px;height:12px;border-radius:7px;
+  background:color-mix(in oklab,var(--fg) 14%,transparent);border:1px solid var(--lineS)}
+.ex-badge img{display:block;width:100%;aspect-ratio:144/136;object-fit:cover;border-radius:7px}
+.ex-badge b{display:block;margin-top:9px;font:700 14.5px/1.2 var(--fb);letter-spacing:-.01em}
+.ex-badge small{display:block;font:500 10px/1.5 var(--fm);color:var(--dim)}
+.ex-bcode{display:block;height:12px;margin-top:8px;border-radius:1px;opacity:.55;
+  background:repeating-linear-gradient(90deg,currentColor 0 2px,transparent 2px 5px,currentColor 5px 6px,transparent 6px 9px,currentColor 9px 12px,transparent 12px 15px)}
+
+/* phone with the AskCart loop */
+.ex-phone{left:386px;top:16px;width:248px;height:474px;background:#0D1411;border-radius:38px;padding:10px;
+  box-shadow:0 34px 50px -24px rgba(23,19,14,.55)}
+[data-theme="dark"] .ex-phone{box-shadow:0 0 0 1px var(--line),0 34px 50px -24px rgba(0,0,0,.9)}
+.ex-island{position:absolute;top:18px;left:50%;translate:-50% 0;width:86px;height:22px;border-radius:12px;background:#0D1411;z-index:2}
+.acp-frame{display:flex;background:#FAFCF8;color:#15211A;border-radius:30px;height:100%;overflow:hidden;padding:30px 14px 14px}
+
+.acp{display:flex;flex-direction:column;height:100%;font-family:var(--fb)}
+.acp-status{display:flex;justify-content:space-between;align-items:center;font:600 11px/1 var(--fm);color:rgba(21,33,26,.75)}
+.acp-bat{display:inline-flex;width:22px;height:11px;border:1.5px solid rgba(21,33,26,.5);border-radius:3px;padding:1.5px}
+.acp-bat i{display:block;width:70%;height:100%;background:rgba(21,33,26,.6);border-radius:1px}
+.acp-app{display:flex;align-items:baseline;gap:7px;margin:10px 0 8px}
+.acp-app b{font:700 17px/1 var(--fd);letter-spacing:-.02em}
+.acp-app small{font:500 9.5px/1 var(--fm);letter-spacing:.1em;text-transform:uppercase;color:rgba(21,33,26,.55)}
+.acp-field{display:flex;align-items:center;gap:8px;border:1.5px solid rgba(21,33,26,.25);border-radius:999px;padding:8px 12px;font-size:12.5px}
+.acp-field svg{width:13px;height:13px;flex:none;color:rgba(21,33,26,.55)}
+.acp-q{white-space:nowrap;overflow:hidden}
+.acp-caret{display:inline-block;width:1.5px;height:12px;margin-left:1px;background:#15211A;vertical-align:-1px;animation:acpBlink 1s steps(1) infinite}
+@keyframes acpBlink{50%{opacity:0}}
+
+.acp-card{margin-top:10px;border:1.5px dashed rgba(23,126,91,.5);background:rgba(23,126,91,.06);border-radius:10px;padding:9px 11px;
+  display:grid;gap:4px;opacity:0;translate:0 6px;transition:opacity .45s ease,translate .45s var(--ease)}
+.acp-card.on{opacity:1;translate:0 0}
+.acp-card small{font:500 8.5px/1 var(--fm);letter-spacing:.12em;text-transform:uppercase;color:rgba(23,126,91,.85)}
+.acp-card b{font:600 13px/1.25 var(--fb)}
+.acp-opts{display:flex;gap:5px;margin-top:3px}
+.acp-opts i{font:500 9.5px/1 var(--fm);font-style:normal;border:1px solid rgba(21,33,26,.25);border-radius:999px;padding:4px 8px;color:rgba(21,33,26,.75)}
+.acp-opts i.pick{background:#177E5B;border-color:#177E5B;color:#F4FAF7}
+
+.acp-res{margin-top:10px;display:grid;gap:7px;opacity:0;translate:0 6px;transition:opacity .45s ease .12s,translate .45s var(--ease) .12s}
+.acp-res.on{opacity:1;translate:0 0}
+.acp-res > small{font:500 8.5px/1 var(--fm);letter-spacing:.12em;text-transform:uppercase;color:rgba(21,33,26,.5)}
+.acp-row{display:flex;align-items:center;gap:9px;border-top:1px solid rgba(21,33,26,.1);padding-top:7px}
+.acp-th{flex:none;width:30px;height:22px;border-radius:5px;background:linear-gradient(135deg,rgba(23,126,91,.35),rgba(23,126,91,.12))}
+.acp-row span{display:grid;min-width:0}
+.acp-row b{font:600 11.5px/1.25 var(--fb)}
+.acp-row small{font:500 10px/1.4 var(--fm);color:rgba(21,33,26,.6)}
+.acp-row em{margin-left:auto;font:600 10px/1 var(--fm);font-style:normal;color:#B24A26;white-space:nowrap}
+
+/* the RISA stat card */
+.ex-risa{left:206px;top:148px;width:168px;background:var(--surf);border:1px solid var(--lineS);border-radius:10px;
+  padding:13px 14px 12px;box-shadow:0 22px 34px -20px rgba(23,19,14,.5)}
+[data-theme="dark"] .ex-risa{box-shadow:0 0 0 1px var(--line),0 22px 34px -20px rgba(0,0,0,.8)}
+.ex-risa::before{content:"";position:absolute;top:0;left:14px;right:14px;height:3px;background:var(--acc);border-radius:0 0 2px 2px}
+.ex-risa-hd{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.ex-risa-hd b{font:700 12.5px/1.2 var(--fb)}
+.ex-risa-hd small{font:500 8px/1.3 var(--fm);letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-align:right}
+.ex-risa-big{display:block;margin-top:9px;font:700 27px/1 var(--fd);letter-spacing:-.02em;color:var(--accText)}
+.ex-risa-big i{font-style:normal;font-size:14px}
+.ex-risa-sub{display:block;margin-top:5px;font:500 9.5px/1.45 var(--fm);color:var(--dim)}
+
+/* the BITS Goa campus card */
+.ex-campus{left:14px;top:340px;width:228px;background:var(--surf);border:1px solid var(--lineS);border-radius:10px;
+  padding:22px 12px 10px;box-shadow:0 22px 34px -20px rgba(23,19,14,.5)}
+[data-theme="dark"] .ex-campus{box-shadow:0 0 0 1px var(--line),0 22px 34px -20px rgba(0,0,0,.8)}
+.ex-campus img{display:block;width:100%;aspect-ratio:188/113;object-fit:cover;border-radius:5px}
+.ex-campus b{display:block;margin-top:7px;font:700 12.5px/1.2 var(--fb)}
+.ex-campus small{display:block;font:500 9.5px/1.5 var(--fm);color:var(--dim)}
+
+/* dimension-style callouts */
+.ex-calls{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.ex-calls text{font:500 10.5px var(--fm);letter-spacing:.1em;fill:var(--dim)}
+.ex-calls text .ix{fill:var(--accText);font-weight:700}
+.ex-calls path{fill:none;stroke:var(--lineS);stroke-width:1;stroke-dasharray:3 3}
+.ex-calls circle{fill:var(--acc)}
+
+/* motion: objects settle in once on load */
+html.motion-ok .ex-ob{animation:exIn .9s var(--ease) both;animation-delay:calc(.3s + var(--d) * .12s)}
+@keyframes exIn{from{opacity:0;translate:0 18px}}
+html.motion-ok .ex-calls g{animation:exIn .7s var(--ease) .8s both}
+html.motion-ok .hero.paused .acp-caret,html.motion-ok .hero.paused .ex-ob{animation-play-state:paused}
+
+@media (max-width:899px){
+  .ex-wrap{width:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  .ex-ob,.ex-calls g,.acp-caret{animation:none}
+  .ex-ob{transform:rotate(var(--rot,0deg))}
+  .acp-card,.acp-res{transition:none}
+}

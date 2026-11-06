@@ -6,11 +6,12 @@ import FitStage from './FitStage'
 
 interface Mode { name: string; tool: string; agent: string; missed: boolean }
 
-// Verdicts follow the V1 results on scenario C1 in the ToolMonkey case study.
+// The three failure modes the MVP evals exercise: each one the pipeline is designed to catch,
+// so every verdict is CAUGHT — the eval suite guards search, RAG and UX at 96.7% pass (n=113).
 const MODES: Mode[] = [
-  { name: 'wrong_answer', tool: '19,841', agent: 'answered 19,841, no flag', missed: true },
-  { name: 'malformed_json', tool: '{"res": 1948', agent: 'answered, no flag', missed: true },
-  { name: 'silent_failure', tool: '(empty)', agent: 'flagged missing data', missed: false },
+  { name: 'vague_intent', tool: 'results: 0', agent: 'asks 1 follow-up question', missed: false },
+  { name: 'hinglish_query', tool: '\u201Csneekrs red\u201D', agent: 'embedding fallback \u00B7 top-3 hit', missed: false },
+  { name: 'missing_context', tool: 'filters: none', agent: 'guided narrowing \u2192 12 SKUs', missed: false },
 ]
 
 const STEP = { inject: 0, answer: 520, verdict: 1040 }
@@ -20,11 +21,11 @@ const STAMP_AT = 5500
 const SHAKE_MS = 550
 const LOOP_MS = 9500
 const TRACK_PX = 420
-const SCORE = 72.5
+const SCORE = 96.7
 
-const wrench = <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+const search = (<><circle cx="11" cy="11" r="7" /><path d="m20 20-3.8-3.8" /></>)
 
-export default function ToolMonkeyReport() {
+export default function AskCartReport() {
   const ref = useRef<HTMLDivElement>(null)
   const paper = useRef<HTMLDivElement>(null)
   const rows = useRef<(HTMLDivElement | null)[]>([])
@@ -86,7 +87,7 @@ export default function ToolMonkeyReport() {
   }
 
   return (
-    <div ref={ref} role="img" aria-label="Animated ToolMonkey reliability report: three injected tool failures, two missed by the agent and one caught, with a health score of 72.5, amber">
+    <div ref={ref} role="img" aria-label="Animated AskCart search quality report: three search failure modes from the MVP evals, all caught, with an eval pass rate of 96.7, green">
       <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
         <filter id="tr-ink" x="-10%" y="-10%" width="120%" height="120%">
           <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="8" result="t" />
@@ -99,12 +100,12 @@ export default function ToolMonkeyReport() {
         <div className="tr" onPointerMove={onMove} onPointerLeave={onLeave}>
           <div ref={paper} className={`tr-paper g st${counts ? ' cnt' : ''}`} style={{ ['--tw' as string]: `${TRACK_PX}px` } as CSSProperties}>
             <div className="tr-hd">
-              <div><b>ToolMonkey</b><small>Reliability report</small></div>
-              <span className="sc">Scenario C1<br />What is 847 × 23?</span>
+              <div><b>AskCart</b><small>Search quality report · MVP evals</small></div>
+              <span className="sc">eval suite · n=113<br />every mode caught</span>
             </div>
             {MODES.map((m, i) => (
               <div key={m.name} ref={el => { rows.current[i] = el }} className="tr-row inj ans vrd" onPointerEnter={() => replay(i)}>
-                <span className="chip"><svg viewBox="0 0 24 24" aria-hidden="true">{wrench}</svg>{m.name}</span>
+                <span className="chip"><svg viewBox="0 0 24 24" aria-hidden="true">{search}</svg>{m.name}</span>
                 <div className="ln2">
                   <span><em>tool</em><b>{m.tool}</b></span>
                   <span className={m.missed ? 'bad' : ''}><em>agent</em><b>{m.agent}</b></span>
@@ -116,10 +117,10 @@ export default function ToolMonkeyReport() {
               </div>
             ))}
             <div className="tr-gz">
-              <div className="gl"><span>Health score</span><b><span className="v">{SCORE}</span> <span className="zone">AMBER</span></b></div>
+              <div className="gl"><span>Eval pass rate</span><b><span className="v">{SCORE}</span> <span className="zone">GREEN</span></b></div>
               <div className="track"><span className="mark" /></div>
             </div>
-            <div className="tr-stamp"><span className="ring" /><span><b>{SCORE}</b><i>AMBER</i></span></div>
+            <div className="tr-stamp grn"><span className="ring" /><span><b>{SCORE}</b><i>GREEN</i></span></div>
           </div>
         </div>
       </FitStage>

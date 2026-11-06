@@ -1,10 +1,11 @@
 /* Contact: profile cards (LinkedIn, X, GitHub, resume envelope) and the signed sign-off. The band stays warm black in both themes. */
 
 #contact .here{margin-top:14px}
+#contact .phone{margin:12px 0 0;font:500 13.5px/1.4 var(--fm);letter-spacing:.05em;color:var(--dim)}
 
 /* ── profile cards ── */
 #contact .pcs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:20px;padding-top:18px;border-top:1px solid var(--lineS)}
-#contact .pc{position:relative;display:flex;flex-direction:column;gap:10px;min-width:0;padding:13px 15px;border-radius:12px;border:1px solid var(--lineS);background:color-mix(in oklab,#1C1712 88%,transparent);color:var(--fg);text-decoration:none;
+#contact .pc{position:relative;display:flex;flex-direction:column;gap:10px;min-width:0;padding:13px 15px;border-radius:12px;border:1px solid var(--lineS);background:color-mix(in oklab,#14231C 88%,transparent);color:var(--fg);text-decoration:none;
   transition:transform .35s var(--ease),border-color .25s,box-shadow .35s var(--ease)}
 #contact .pc:hover,#contact .pc:focus-visible{transform:translateY(-4px);border-color:var(--acc);box-shadow:0 18px 30px -18px rgba(255,133,51,.45)}
 #contact .pc:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
@@ -20,15 +21,15 @@
 #contact .pc-act .num{color:var(--accText);font-weight:500}
 
 /* LinkedIn: the one wide cream card, with the orange Connect action */
-#contact .pc-li{grid-column:1/-1;flex-direction:row;align-items:center;gap:16px;padding:13px 16px;background:#F4EFE7;color:#17130E;border-color:#F4EFE7}
-#contact .pc-li:hover,#contact .pc-li:focus-visible{border-color:#E0600F}
-#contact .pc-logo{display:grid;place-items:center;width:50px;height:50px;flex:none;border-radius:10px;background:#17130E;color:#F4EFE7}
+#contact .pc-li{grid-column:1/-1;flex-direction:row;align-items:center;gap:16px;padding:13px 16px;background:#F1F4EF;color:#15211A;border-color:#F1F4EF}
+#contact .pc-li:hover,#contact .pc-li:focus-visible{border-color:#177E5B}
+#contact .pc-logo{display:grid;place-items:center;width:50px;height:50px;flex:none;border-radius:10px;background:#15211A;color:#ECF3EE}
 #contact .pc-li .pc-id{flex:1}
 #contact .pc-li .pc-id b{font:600 21px/1.1 var(--fd);letter-spacing:-.01em}
 #contact .pc-role{font-size:14px;line-height:1.35;color:rgba(23,19,14,.78)}
 #contact .pc-li .pc-id small{color:rgba(23,19,14,.62)}
-#contact .pc-cta{flex:none;display:inline-flex;align-items:center;gap:6px;padding:12px 18px;border-radius:999px;background:#E0600F;color:#17130E;font:600 15px/1 var(--fb);transition:background .2s}
-#contact .pc-li:hover .pc-cta{background:#F07126}
+#contact .pc-cta{flex:none;display:inline-flex;align-items:center;gap:6px;padding:12px 18px;border-radius:999px;background:#177E5B;color:#F4FAF7;font:600 15px/1 var(--fb);transition:background .2s}
+#contact .pc-li:hover .pc-cta{background:#1B8F68}
 
 /* X: a post-style card in X's own monochrome language (pure black, white type, grey handle, white Follow pill) */
 #contact .pc-x{background:#000;border-color:#2F3336;color:#E7E9EA}
@@ -42,14 +43,14 @@
 #contact .pc-x:hover .pc-follow,#contact .pc-x:focus-visible .pc-follow{background:#D7DBDC}
 
 /* GitHub: mini contribution strip from /api/github, glowing the same orange as the threads */
-#contact .pc-gh{--gh0:#28221B;--gh1:color-mix(in oklab,#FF8533 25%,transparent);--gh2:color-mix(in oklab,#FF8533 50%,transparent);--gh3:color-mix(in oklab,#FF8533 75%,transparent);--gh4:#FF8533}
+#contact .pc-gh{--gh0:#1F2B24;--gh1:color-mix(in oklab,#4FD3A0 25%,transparent);--gh2:color-mix(in oklab,#4FD3A0 50%,transparent);--gh3:color-mix(in oklab,#4FD3A0 75%,transparent);--gh4:#4FD3A0}
 #contact .pc-mini{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,auto);grid-template-columns:repeat(20,minmax(0,1fr));gap:2px}
 #contact .pc-mini i{display:block;aspect-ratio:1;border-radius:1.5px;background:var(--gh0)}
 #contact .pc-mini i[data-l="-1"]{background:transparent}
 #contact .pc-mini i[data-l="1"]{background:var(--gh1)}
 #contact .pc-mini i[data-l="2"]{background:var(--gh2)}
 #contact .pc-mini i[data-l="3"]{background:var(--gh3)}
-#contact .pc-mini i[data-l="4"]{background:var(--gh4);box-shadow:0 0 6px rgba(255,133,51,.45)}
+#contact .pc-mini i[data-l="4"]{background:var(--gh4);box-shadow:0 0 6px rgba(79,211,160,.45)}
 #contact .pc-mini:not(.on) i{opacity:.55}
 html.motion-ok #contact .pc-mini.on i{animation:pcCell .45s var(--ease) backwards;animation-delay:calc(var(--c,0) * 18ms)}
 @keyframes pcCell{from{opacity:0;transform:scale(.3)}}
@@ -57,14 +58,14 @@ html.motion-ok #contact .pc-mini.on i{animation:pcCell .45s var(--ease) backward
 /* Resume: a cream CV tucked in a kraft envelope; it slides up and tilts out on hover and focus */
 #contact .cv-stage{position:relative;display:block;height:66px;width:100px}
 #contact .cv-back,#contact .cv-front{position:absolute;left:0;right:0;bottom:0;height:44px;border-radius:3px}
-#contact .cv-back{background:#9E7148}
-#contact .cv-back::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:18px;background:#B5875A;clip-path:polygon(0 100%,50% 0,100% 100%)}
-#contact .cv-front{background:#C99A68;clip-path:polygon(0 0,50% 52%,100% 0,100% 100%,0 100%);box-shadow:inset 0 -1px 0 rgba(0,0,0,.18)}
-#contact .cv-paper{position:absolute;left:12px;right:12px;bottom:6px;height:58px;padding:7px 7px 0;border-radius:2px;background:#FBF8F3;box-shadow:0 2px 6px rgba(0,0,0,.35);display:flex;flex-direction:column;gap:4px;
+#contact .cv-back{background:#6F8570}
+#contact .cv-back::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:18px;background:#85987F;clip-path:polygon(0 100%,50% 0,100% 100%)}
+#contact .cv-front{background:#9CAC95;clip-path:polygon(0 0,50% 52%,100% 0,100% 100%,0 100%);box-shadow:inset 0 -1px 0 rgba(0,0,0,.18)}
+#contact .cv-paper{position:absolute;left:12px;right:12px;bottom:6px;height:58px;padding:7px 7px 0;border-radius:2px;background:#FAFCF8;box-shadow:0 2px 6px rgba(0,0,0,.35);display:flex;flex-direction:column;gap:4px;
   transform:translateY(0) rotate(0);transform-origin:50% 100%;transition:transform .5s var(--ease)}
-#contact .cv-paper b{font:700 7px/1 var(--fb);letter-spacing:.08em;text-transform:uppercase;color:#17130E;white-space:nowrap}
+#contact .cv-paper b{font:700 7px/1 var(--fb);letter-spacing:.08em;text-transform:uppercase;color:#15211A;white-space:nowrap}
 #contact .cv-paper i{display:block;height:2px;border-radius:1px;background:rgba(23,19,14,.22)}
-#contact .cv-paper i:first-of-type{background:#E0600F;width:46%}
+#contact .cv-paper i:first-of-type{background:#177E5B;width:46%}
 #contact .cv-paper i.s{width:70%}
 #contact .pc-cv:hover .cv-paper,#contact .pc-cv:focus-visible .cv-paper{transform:translateY(-20px) rotate(-4deg)}
 

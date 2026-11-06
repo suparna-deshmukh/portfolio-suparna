@@ -1,0 +1,96 @@
+/* ── Corporate projects: stamped files. One wide sheet per engagement: a big outlined
+   index numeral, the rubber stamp straddling the right edge, ruled points, result chips. */
+
+.cf-files{margin:0;padding:0;list-style:none;display:grid;gap:20px}
+.cf-file{--stamp:#B24A26;position:relative;display:grid;grid-template-columns:132px minmax(0,1fr);
+  gap:6px 24px;border:1px solid var(--lineS);border-radius:10px;background:var(--surf);
+  padding:24px 26px 20px 26px;box-shadow:0 1px 0 var(--press),0 20px 30px -24px rgba(23,19,14,.5);
+  transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+[data-theme="dark"] .cf-file{--stamp:#E08A5E;box-shadow:0 1px 0 rgba(0,0,0,.4),0 22px 32px -24px rgba(0,0,0,.85)}
+html.motion-ok .cf-file:hover{transform:translateY(-3px);box-shadow:0 1px 0 var(--press),0 28px 40px -22px rgba(23,19,14,.55)}
+
+.cf-side{display:grid;justify-items:center;align-content:center;gap:10px;align-self:center}
+.cf-emb{display:grid;place-items:center;width:124px;height:124px;border:1px solid var(--lineS);border-radius:12px;background:var(--tint)}
+[data-theme="dark"] .cf-emb{background:color-mix(in oklab,var(--acc) 7%,var(--surf))}
+.cf-emb svg{width:86px;height:86px}
+.cf-num{font:700 clamp(30px,2.6vw,38px)/1 var(--fd);letter-spacing:-.02em;
+  color:transparent;-webkit-text-stroke:1.6px color-mix(in oklab,var(--acc) 55%,var(--lineS));user-select:none}
+[data-theme="dark"] .cf-num{-webkit-text-stroke-color:color-mix(in oklab,var(--acc) 60%,var(--lineS))}
+
+/* ── the emblems ── */
+.cf-file[data-emb="everyday"] .cf-emb{color:var(--accText)}
+.cf-dia-shine{opacity:0}
+html.motion-ok .cf-file.in .cf-dia-shine{opacity:1;animation:cfShine 3.2s var(--ease) 1s infinite}
+@keyframes cfShine{0%{transform:rotate(18deg) translateX(-46px)}55%,100%{transform:rotate(18deg) translateX(88px)}}
+.cf-spark{opacity:.9}
+html.motion-ok .cf-file.in .cf-spark{animation:cfSpark 3.2s ease-in-out 1s infinite}
+@keyframes cfSpark{0%,18%{opacity:0;transform:scale(.6)}30%{opacity:.9;transform:scale(1)}44%,100%{opacity:0;transform:scale(.6)}}
+
+.cf-file[data-emb="fedaykin"] .cf-emb{color:var(--fg)}
+.cf-lane{stroke:var(--lineS);stroke-width:2;stroke-dasharray:7 9}
+html.motion-ok .cf-file.in .cf-lane{animation:cfLane 1.15s linear infinite}
+@keyframes cfLane{to{stroke-dashoffset:-32}}
+.cf-scan{opacity:0}
+html.motion-ok .cf-file.in .cf-scan{animation:cfScan 2.4s ease-out infinite}
+html.motion-ok .cf-file.in .cf-scan.s2{animation-delay:.4s}
+@keyframes cfScan{0%,15%{opacity:0}35%{opacity:.85}60%,100%{opacity:0}}
+html.motion-ok .cf-file.in .cf-car{animation:cfBob 2.4s ease-in-out infinite}
+@keyframes cfBob{50%{transform:translateY(2.5px)}}
+
+.cf-file[data-emb="krishe"] .cf-emb{color:var(--accText)}
+.cf-soil{fill:currentColor;opacity:.16}
+.cf-stem,.cf-leaf{transform-box:fill-box}
+.cf-stem{transform-origin:50% 100%}
+.cf-leaf{fill:currentColor}
+.cf-leaf.l1{transform-origin:92% 85%}
+.cf-leaf.l2{transform-origin:8% 85%}
+.cf-dot{fill:currentColor;opacity:.55}
+html.motion-ok .cf-file.in .cf-stem{animation:cfGrow .9s var(--ease) .1s both}
+html.motion-ok .cf-file.in .cf-leaf{animation:cfLeaf .7s var(--ease) both}
+html.motion-ok .cf-file.in .cf-leaf.l1{animation-delay:.7s}
+html.motion-ok .cf-file.in .cf-leaf.l2{animation-delay:.9s}
+html.motion-ok .cf-file.in .cf-dot{animation:cfDot 3.4s ease-in-out 1.4s infinite}
+html.motion-ok .cf-file.in .cf-dot.d2{animation-delay:2.1s}
+html.motion-ok .cf-file.in .cf-dot.d3{animation-delay:2.8s}
+@keyframes cfGrow{from{transform:scaleY(.15)}}
+@keyframes cfLeaf{from{transform:scale(0)}}
+@keyframes cfDot{0%,100%{transform:translateY(0);opacity:.55}50%{transform:translateY(-9px);opacity:0}}
+@media (prefers-reduced-motion:reduce){.cf-dia-shine,.cf-scan{opacity:0}.cf-spark{opacity:.9}}
+
+.cf-stamp{position:absolute;top:20px;right:-13px;transform:rotate(-7deg);color:var(--stamp);
+  font:700 12.5px/1 var(--fm);letter-spacing:.13em;text-transform:uppercase;
+  border:2px solid currentColor;outline:1px solid currentColor;outline-offset:3px;
+  border-radius:4px;padding:8px 11px;opacity:.92;pointer-events:none;white-space:nowrap;background:var(--surf)}
+
+.cf-main{min-width:0}
+.cf-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:3px 14px;padding-right:130px}
+.cf-head h3{margin:0;font:700 26px/1.15 var(--fd);letter-spacing:-.02em}
+.cf-meta{font:500 12px/1.5 var(--fm);color:var(--dim);letter-spacing:.02em}
+.cf-ctx{margin:4px 0 12px;font:500 11px/1.4 var(--fm);color:var(--dimmer);text-transform:uppercase;letter-spacing:.1em}
+.cf-points{margin:0 0 14px;padding:0;list-style:none;display:grid;gap:8px;max-width:74ch}
+.cf-points li{position:relative;padding-left:19px;font-size:14.5px;line-height:1.55;color:var(--fg)}
+.cf-points li::before{content:"";position:absolute;left:2px;top:.64em;width:9px;height:2px;background:var(--acc)}
+
+.cf-foot{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding-top:13px;border-top:1px dashed var(--lineS)}
+.cf-chip{display:inline-flex;align-items:baseline;gap:7px;border:1px solid var(--lineS);border-radius:8px;padding:6px 11px;background:var(--tint)}
+.cf-chip b{font:600 13.5px/1 var(--fm);letter-spacing:-.01em}
+.cf-chip span{font-size:11.5px;color:var(--dim)}
+.cf-foot .btn{margin-left:auto}
+.btn.sm{padding:10px 14px;font-size:13.5px;border-radius:9px}
+
+/* aggregates in the section header's fact column */
+.cf-aggs{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.cf-aggs span{display:inline-flex;align-items:baseline;gap:6px;border:1px solid var(--lineS);border-radius:999px;padding:5px 11px;background:var(--tint);font-size:11.5px;color:var(--dim)}
+.cf-aggs b{font:600 12px/1 var(--fm);color:var(--fg)}
+
+@media (max-width:640px){
+  .cf-file{grid-template-columns:1fr;padding:20px 18px 18px}
+  .cf-side{justify-items:start}
+  .cf-emb{width:104px;height:104px}
+  .cf-emb svg{width:72px;height:72px}
+  .cf-num{font-size:30px}
+  .cf-stamp{position:static;display:inline-block;margin:0 0 14px;transform:rotate(-2deg);right:auto}
+  .cf-head{padding-right:0}
+  .cf-head h3{width:100%}
+  .cf-foot .btn{margin-left:0;width:100%;justify-content:center}
+}

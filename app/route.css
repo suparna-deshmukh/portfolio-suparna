@@ -1,0 +1,98 @@
+/* ── Experience as a route: a sticky route manifest (the itinerary) on the left, and the
+   stops on a dashed road on the right — oldest stop first, ending at the one she's on now.
+   Same physical, paper feel as the old binder: cards, a proof underline, a hover flight-card. */
+
+.rt-wrap{position:relative;z-index:1;padding-top:8px;padding-bottom:var(--s-sec)}
+.rt{position:relative;display:grid;grid-template-columns:minmax(270px,340px) minmax(0,1fr);gap:clamp(24px,3vw,48px);align-items:start}
+.rt .float{z-index:8}
+
+/* ── route manifest ── */
+.rt-man{position:sticky;top:96px;border:1px solid var(--lineS);border-radius:12px;background:var(--surf);
+  padding:18px 16px 14px;box-shadow:0 1px 0 var(--press),0 20px 30px -24px rgba(23,19,14,.5)}
+[data-theme="dark"] .rt-man{box-shadow:0 0 0 1px var(--line),0 20px 30px -24px rgba(0,0,0,.8)}
+.rt-man header{display:flex;align-items:center;gap:9px;padding:0 8px 12px;border-bottom:2px solid var(--fg)}
+.rt-man header b{font:700 13px/1 var(--fm);letter-spacing:.14em;text-transform:uppercase}
+.rt-man header small{margin-left:auto;font:500 10.5px/1 var(--fm);color:var(--dim)}
+.rt-compass{width:19px;height:19px;flex:none;color:var(--accText);fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.rt-man ol{margin:0;padding:0;list-style:none}
+.rt-div{display:flex;align-items:center;gap:8px;font:600 9.5px/1 var(--fm);letter-spacing:.18em;text-transform:uppercase;color:var(--accText);padding:12px 8px 5px}
+.rt-div::after{content:"";flex:1;height:1px;background:var(--lineS)}
+.rt-man a{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:2px 10px;align-items:baseline;padding:11px 8px 10px;border-radius:8px;text-decoration:none;color:inherit;transition:background-color .2s}
+.rt-man a:hover{background:var(--tint)}
+.rt-man a.on{background:color-mix(in oklab,var(--acc) 9%,var(--surf))}
+.rt-st{font:700 10px/1 var(--fm);letter-spacing:.08em;color:var(--accText);border:1px solid var(--lineS);border-radius:999px;padding:3.5px 8px;white-space:nowrap}
+.rt-man .n{display:flex;align-items:center;gap:8px;min-width:0;font:600 14px/1.25 var(--fb);letter-spacing:-.01em}
+.rt-man .n em{font:500 8.5px/1 var(--fm);font-style:normal;letter-spacing:.09em;text-transform:uppercase;color:var(--dim);border:1px dashed var(--lineS);border-radius:999px;padding:3.5px 7px;white-space:nowrap}
+.rt-man .m{font:600 12.5px/1 var(--fm);font-variant-numeric:tabular-nums;white-space:nowrap}
+.rt-man .y{font:500 10.5px/1 var(--fm);color:var(--dimmer);white-space:nowrap}
+.rt-man .k{grid-column:1/-1;margin-top:3px;font-size:12px;line-height:1.35;color:var(--dim)}
+
+/* ── the road and its stations ── */
+.rt-stops{position:relative;display:grid;gap:28px;padding-left:74px}
+.rt-stops::before{content:"";position:absolute;left:23px;top:16px;bottom:16px;border-left:2px dashed color-mix(in oklab,var(--acc) 42%,var(--lineS))}
+.rt-stn{position:relative;scroll-margin-top:96px}
+.rt-node{position:absolute;left:-74px;top:20px;width:48px;height:48px;z-index:1;display:grid;place-items:center;
+  border-radius:50%;background:var(--surf);border:2px solid var(--fg);
+  font:700 11.5px/1 var(--fm);letter-spacing:.04em;color:var(--fg);
+  box-shadow:0 8px 16px -10px rgba(23,19,14,.45)}
+.rt-node::after{content:"";position:absolute;inset:4px;border-radius:50%;border:1px solid var(--lineS)}
+.rt-stn.now .rt-node{border-color:var(--acc);color:var(--accText)}
+.rt-stn.now .rt-node::after{inset:-7px;border-color:color-mix(in oklab,var(--acc) 55%,transparent);animation:rtNow 2.2s ease-out infinite}
+@keyframes rtNow{0%{transform:scale(.9);opacity:.9}70%{transform:scale(1.25);opacity:0}100%{opacity:0}}
+
+.rt-card{position:relative;border:1px solid var(--lineS);border-radius:12px;background:var(--surf);
+  padding:20px 24px 20px;box-shadow:0 1px 0 var(--press),0 22px 34px -26px rgba(23,19,14,.5)}
+[data-theme="dark"] .rt-card{box-shadow:0 0 0 1px var(--line),0 22px 34px -26px rgba(0,0,0,.85)}
+html.motion-ok .rt-card{transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+html.motion-ok .rt-card:hover{transform:translateY(-3px);box-shadow:0 1px 0 var(--press),0 30px 42px -24px rgba(23,19,14,.55)}
+
+.rt-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 16px;padding-bottom:14px;border-bottom:1px solid var(--lineS)}
+.rt-head h3{margin:0;font:700 26px/1.1 var(--fd);letter-spacing:-.02em}
+.rt-sum{margin-left:auto;font:500 11px/1.5 var(--fm);letter-spacing:.05em;text-transform:uppercase;color:var(--dimmer)}
+
+.rt-body{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:26px;margin-top:16px}
+.rt-dates{font:400 11.5px/1.45 var(--fm);letter-spacing:.05em;text-transform:uppercase;color:var(--dim)}
+.rt-role h4{margin:6px 0 12px;font:600 18px/1.15 var(--fd);letter-spacing:-.015em}
+.rt-big b{position:relative;display:inline-block;padding-bottom:7px;font:600 46px/1 var(--fd);letter-spacing:-.035em;
+  color:var(--accText);font-variant-numeric:tabular-nums}
+.rt-big b::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.5px;background:var(--acc);transform-origin:left center}
+html.motion-ok .rt-big b::after{transition:transform .8s var(--ease) .15s}
+.rt-big>span{display:block;margin-top:7px;font:500 15.5px/1.2 var(--fb);color:var(--fg)}
+.rt-how{margin:12px 0 0;font-size:14px;line-height:1.55;color:var(--dim)}
+
+.rt-out{margin:0;padding:0;list-style:none}
+.rt-out li{display:grid;grid-template-columns:104px minmax(0,1fr);gap:12px;align-items:baseline;padding:10px 0 9px;border-bottom:1px solid var(--line)}
+.rt-out li:first-child{border-top:1px solid var(--line)}
+.rt-out li b{font:600 20px/1 var(--fd);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.rt-out li span{font-size:12.5px;line-height:1.3;color:var(--dim)}
+
+.rt-ft{margin-top:16px;font:700 12px/1 var(--fm);letter-spacing:.07em;text-transform:uppercase;color:var(--accText);align-self:flex-start}
+.rt-ft>summary{list-style:none;cursor:pointer;display:inline-flex}
+.rt-ft>summary::-webkit-details-marker{display:none}
+.rt-ft>summary span{display:inline-flex;align-items:center;gap:6px;padding-bottom:3px;border-bottom:1px solid currentColor}
+.rt-ft>summary:hover{color:var(--fg)}
+.rt-ft svg{transition:transform .2s var(--ease)}
+.rt-ft[open] svg{transform:rotate(180deg)}
+.rt-ft ul{margin:12px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px;
+  font:400 13px/1.45 var(--fb);letter-spacing:0;text-transform:none;color:var(--dim)}
+.rt-ft li strong{color:var(--fg);font-weight:700}
+
+/* motion: stations settle in once, top down */
+html.motion-ok .rt-stn{animation:rtIn .8s var(--ease) both;animation-delay:calc(var(--si,0) * 90ms)}
+@keyframes rtIn{from{opacity:0;translate:0 16px}}
+@media (prefers-reduced-motion:reduce){
+  .rt-stn,.rt-stn.now .rt-node::after{animation:none}
+  .rt-card{transition:none}
+}
+
+/* ── tablet and phone: the manifest stacks above the road ── */
+@media (max-width:900px){
+  .rt{grid-template-columns:1fr;gap:22px}
+  .rt-man{position:static}
+  .rt-man .k{display:none}
+  .rt-stops{padding-left:56px}
+  .rt-stops::before{left:17px}
+  .rt-node{left:-56px;width:38px;height:38px;top:16px;font-size:10px}
+  .rt-body{grid-template-columns:1fr;gap:16px}
+  .rt-big b{font-size:38px}
+}

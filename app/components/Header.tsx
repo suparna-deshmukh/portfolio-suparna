@@ -58,8 +58,8 @@ export default function Header() {
     <>
       <span ref={sentinelRef} className="hdr-sentinel" aria-hidden="true" />
       <header className={`hdr${scrolled ? ' scrolled' : ''}`}>
-        <Link href="/" className="home" aria-label="Shubh Sankalp Das, home">
-          <span className="full">Shubh Sankalp Das</span><span className="ini">SSD</span>
+        <Link href="/" className="home" aria-label="Suparna Deshmukh, home">
+          <span className="full">Suparna Deshmukh</span><span className="ini">SD</span>
         </Link>
         <div className="right">
           <span className="pill loc" aria-label="Bengaluru, local time">

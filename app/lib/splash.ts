@@ -1,24 +1,24 @@
-// Generated from Voxikin v4/final/out/V4F-SPLASH--a.html: the field of Indic greetings that gathers into the wordmark.
+// AskCart splash: a field of e-commerce search phrases that gathers into the wordmark.
 // Each row: vertical position, x offset, entry drift and delay; each word: [text, font size px, tone 5 to 8].
 
 export interface SplashRow { y: number; tx: number; dy: number; d: number; words: [string, number, number][] }
 
 export const SPLASH_ROWS: SplashRow[] = [
-  { y: 70, tx: -26, dy: -24, d: 368, words: [['ನಮಸ್ಕಾರ', 25, 8], ['آداب', 15, 5], ['ভক্সিকিন', 13, 6], ['ନମସ୍କାର', 17, 5], ['নমস্কার', 21, 8], ['वॉक्सिकिन', 14, 6]] },
-  { y: 112, tx: -8, dy: -22, d: 322, words: [['नमस्कार', 16, 5], ['నమస్కారం', 21, 8], ['ਸਤ ਸ੍ਰੀ ਅਕਾਲ', 14, 6], ['നമസ്കാരം', 25, 8], ['વોક્સિકિન', 15, 5], ['வணக்கம்', 13, 6]] },
-  { y: 156, tx: -44, dy: -20, d: 276, words: [['નમસ્તે', 14, 6], ['ووکسیکن', 26, 8], ['নমস্কাৰ', 16, 5], ['ವೊಕ್ಸಿಕಿನ್', 13, 6], ['ਵੌਕਸਿਕਿਨ', 19, 7], ['വൊക്സികിൻ', 15, 5]] },
-  { y: 200, tx: -12, dy: -18, d: 230, words: [['వొక్సికిన్', 15, 5], ['வொக்ஸிகின்', 13, 6], ['ଭକ୍ସିକିନ', 22, 8], ['नमस्ते', 16, 5], ['नमस्कार', 14, 6], ['ନମସ୍କାର', 20, 7]] },
-  { y: 246, tx: -34, dy: -16, d: 184, words: [['வொக்ஸிகின்', 17, 5], ['നമസ്കാരം', 14, 6], ['নমস্কার', 20, 7], ['नमस्ते', 15, 5], ['નમસ્તે', 24, 8], ['வணக்கம்', 13, 6]] },
-  { y: 292, tx: -6, dy: -14, d: 138, words: [['ਵੌਕਸਿਕਿਨ', 14, 6], ['నమస్కారం', 20, 7], ['ನಮಸ್ಕಾರ', 15, 5], ['ভক্সিকিন', 23, 8], ['वॉक्सिकिन', 13, 6], ['વોક્સિકિન', 17, 5]] },
-  { y: 338, tx: -40, dy: -12, d: 92, words: [['ووکسیکن', 25, 8], ['নমস্কাৰ', 15, 5], ['آداب', 13, 6], ['ವೊಕ್ಸಿಕಿನ್', 17, 5], ['വൊക്സികിൻ', 21, 8], ['ଭକ୍ସିକିନ', 14, 6]] },
-  { y: 386, tx: -16, dy: -10, d: 46, words: [['ਸਤ ਸ੍ਰੀ ਅਕਾਲ', 16, 5], ['వొక్సికిన్', 21, 8], ['वॉक्सिकिन', 14, 6], ['ভক্সিকিন', 25, 8], ['ਸਤ ਸ੍ਰੀ ਅਕਾਲ', 15, 5], ['ನಮಸ್ಕಾರ', 13, 6]] },
-  { y: 434, tx: -2, dy: 0, d: 0, words: [['વોક્સિકિન', 14, 6], ['వొక్సికిన్', 26, 8], ['ਵੌਕਸਿਕਿਨ', 16, 5], ['नमस्ते', 13, 6], ['வணக்கம்', 19, 7], ['নমস্কাৰ', 15, 5]] },
-  { y: 482, tx: -36, dy: 10, d: 46, words: [['آداب', 15, 5], ['నమస్కారం', 13, 6], ['ووکسیکن', 22, 8], ['নমস্কার', 16, 5], ['नमस्कार', 14, 6], ['നമസ്കാരം', 20, 7]] },
-  { y: 528, tx: -10, dy: 12, d: 92, words: [['ନମସ୍କାର', 17, 5], ['വൊക്സികിൻ', 14, 6], ['ವೊಕ್ಸಿಕಿನ್', 20, 7], ['ଭକ୍ସିକିନ', 15, 5], ['નમસ્તે', 24, 8], ['வொக்ஸிகின்', 13, 6]] },
-  { y: 574, tx: -30, dy: 14, d: 138, words: [['నమస్కారం', 14, 6], ['নমস্কাৰ', 20, 7], ['ನಮಸ್ಕಾರ', 15, 5], ['नमस्कार', 23, 8], ['ভক্সিকিন', 13, 6], ['വൊക്സികിൻ', 17, 5]] },
-  { y: 620, tx: -6, dy: 16, d: 184, words: [['వొక్సికిన్', 25, 8], ['ووکسیکن', 15, 5], ['નમસ્તે', 13, 6], ['آداب', 17, 5], ['ವೊಕ್ಸಿಕಿನ್', 21, 8], ['வொக்ஸிகின்', 14, 6]] },
-  { y: 666, tx: -42, dy: 18, d: 230, words: [['നമസ്കാരം', 16, 5], ['वॉक्सिकिन', 21, 8], ['ਵੌਕਸਿਕਿਨ', 14, 6], ['વોક્સિકિન', 25, 8], ['नमस्ते', 15, 5], ['ନମସ୍କାର', 13, 6]] },
-  { y: 712, tx: -18, dy: 20, d: 276, words: [['வணக்கம்', 14, 6], ['ਸਤ ਸ੍ਰੀ ਅਕਾਲ', 26, 8], ['নমস্কার', 16, 5], ['ଭକ୍ସିକିନ', 13, 6], ['வொக்ஸிகின்', 19, 7], ['வணக்கம்', 15, 5]] },
-  { y: 756, tx: -4, dy: 22, d: 322, words: [['ನಮಸ್ಕಾರ', 15, 5], ['নমস্কাৰ', 13, 6], ['नमस्कार', 22, 8], ['നമസ്കാരം', 16, 5], ['ଭକ୍ସିକିନ', 14, 6], ['নমস্কার', 20, 7]] },
-  { y: 800, tx: -32, dy: 24, d: 368, words: [['నమస్కారం', 17, 5], ['ਵੌਕਸਿਕਿਨ', 14, 6], ['ନମସ୍କାର', 20, 7], ['વોક્સિકિન', 15, 5], ['नमस्ते', 24, 8], ['ವೊಕ್ಸಿಕಿನ್', 13, 6]] },
+  { y: 70, tx: -26, dy: -24, d: 368, words: [['waterproof?', 25, 8], ['size chart', 15, 5], ['battery life', 13, 6], ['return policy', 17, 5], ['price drop', 21, 8], ['AskCart', 14, 6]] },
+  { y: 112, tx: -8, dy: -22, d: 322, words: [['warranty claim', 16, 5], ['in stock?', 21, 8], ['gift wrap', 14, 6], ['shipping time', 25, 8], ['cash on delivery', 15, 5], ['AskCart', 13, 6]] },
+  { y: 156, tx: -44, dy: -20, d: 276, words: [['sneaker deal', 14, 6], ['slow charging', 26, 8], ['screen cracked', 16, 5], ['AskCart', 13, 6], ['compare price', 19, 7], ['best rating', 15, 5]] },
+  { y: 200, tx: -12, dy: -18, d: 230, words: [['firm mattress', 15, 5], ['travel size', 13, 6], ['AskCart', 22, 8], ['one piece dress', 16, 5], ['noise cancelling', 14, 5], ['AskCart', 20, 7]] },
+  { y: 246, tx: -34, dy: -16, d: 184, words: [['gift for mom', 17, 5], ['delivery by friday', 14, 6], ['AskCart', 16, 5], ['matte finish', 16, 5], ['2 year warranty', 15, 5], ['AskCart', 21, 8]] },
+  { y: 292, tx: -6, dy: -14, d: 138, words: [['bluetooth 5.3', 25, 8], ['hand wash only', 15, 5], ['AskCart', 14, 6], ['price history', 16, 5], ['vegan leather', 23, 8], ['AskCart', 13, 6]] },
+  { y: 338, tx: -40, dy: -12, d: 92, words: [['bluetooth 5.3', 25, 8], ['hand wash only', 15, 5], ['AskCart', 14, 6], ['price history', 16, 5], ['vegan leather', 23, 8], ['AskCart', 13, 6]] },
+  { y: 386, tx: -16, dy: -10, d: 46, words: [['bluetooth 5.3', 25, 8], ['hand wash only', 15, 5], ['AskCart', 14, 6], ['price history', 16, 5], ['vegan leather', 23, 8], ['AskCart', 13, 6]] },
+  { y: 434, tx: -2, dy: 0, d: 0, words: [['bluetooth 5.3', 25, 8], ['hand wash only', 15, 5], ['AskCart', 14, 6], ['price history', 16, 5], ['vegan leather', 23, 8], ['AskCart', 13, 6]] },
+  { y: 482, tx: -36, dy: 10, d: 46, words: [['bluetooth 5.3', 25, 8], ['hand wash only', 15, 5], ['AskCart', 14, 6], ['price history', 16, 5], ['vegan leather', 23, 8], ['AskCart', 13, 6]] },
+  { y: 528, tx: -10, dy: 12, d: 92, words: [['bluetooth 5.3', 25, 8], ['hand wash only', 15, 5], ['AskCart', 14, 6], ['price history', 16, 5], ['vegan leather', 23, 8], ['AskCart', 13, 6]] },
+  { y: 574, tx: -30, dy: 14, d: 138, words: [['bluetooth 5.3', 25, 8], ['hand wash only', 15, 5], ['AskCart', 14, 6], ['price history', 16, 5], ['vegan leather', 23, 8], ['AskCart', 13, 6]] },
+  { y: 620, tx: -6, dy: 16, d: 184, words: [['bluetooth 5.3', 25, 8], ['hand wash only', 15, 5], ['AskCart', 14, 6], ['price history', 16, 5], ['vegan leather', 23, 8], ['AskCart', 13, 6]] },
+  { y: 666, tx: -42, dy: 18, d: 230, words: [['bluetooth 5.3', 25, 8], ['hand wash only', 15, 5], ['AskCart', 14, 6], ['price history', 16, 5], ['vegan leather', 23, 8], ['AskCart', 13, 6]] },
+  { y: 712, tx: -18, dy: 20, d: 276, words: [['bluetooth 5.3', 25, 8], ['hand wash only', 15, 5], ['AskCart', 14, 6], ['price history', 16, 5], ['vegan leather', 23, 8], ['AskCart', 13, 6]] },
+  { y: 756, tx: -4, dy: 22, d: 322, words: [['bluetooth 5.3', 25, 8], ['hand wash only', 15, 5], ['AskCart', 14, 6], ['price history', 16, 5], ['vegan leather', 23, 8], ['AskCart', 13, 6]] },
+  { y: 800, tx: -32, dy: 24, d: 368, words: [['bluetooth 5.3', 25, 8], ['hand wash only', 15, 5], ['AskCart', 14, 6], ['price history', 16, 5], ['vegan leather', 23, 8], ['AskCart', 13, 6]] },
 ]

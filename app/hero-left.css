@@ -1,100 +1,83 @@
-/* ── hero left column: "Letterhead". The name on his own stationery, taped to the desk surface and signed. ──
-   Text is always at full strength on first paint. Under html.motion-ok only the sheet settle, the rules,
-   the highlighter, the signature and the swoosh animate; without JS or with reduced motion they show final. */
+/* ── hero left column: "title block". The name set as an engineering drawing's title block —
+   a double-ruled sheet with a name plate, three fact cells (education, location with a live
+   IST clock, impact) and ruled rows for the current work.
+   Text is always at full strength on first paint. Under html.motion-ok only the block landing,
+   the rules and the highlight draw in; without JS or with reduced motion they show final. */
 
 .hd-left{min-width:0}
-.lh{position:relative;max-width:440px}
+.tb{position:relative;max-width:580px;margin-bottom:10px;color:var(--fg);background:var(--surf);
+  border:2px solid var(--fg);outline:1px solid var(--lineS);outline-offset:5px;border-radius:3px;
+  box-shadow:0 26px 46px -22px rgba(23,19,14,.42)}
+[data-theme="dark"] .tb{box-shadow:0 0 0 1px var(--line),0 26px 46px -22px rgba(0,0,0,.7)}
 
-.lh-sheet{position:relative;padding:30px 26px 28px;border-radius:6px;rotate:-1.2deg;color:var(--fg);
-  background:
-    linear-gradient(180deg,transparent 0 63%,color-mix(in oklab,var(--fg) 4%,transparent) 63.2%,transparent 65%),
-    radial-gradient(color-mix(in oklab,var(--fg) 11%,transparent) .8px,transparent 1.2px) 0 0/14px 14px,
-    var(--surf);
-  box-shadow:0 2px 3px var(--press),0 26px 46px -18px rgba(23,19,14,.38)}
-[data-theme="dark"] .lh-sheet{box-shadow:0 0 0 1px var(--line),0 2px 3px rgba(0,0,0,.4),0 26px 46px -18px rgba(0,0,0,.7)}
+.tb-r{display:grid}
 
-/* tape: same colour as the desk prints */
-.lh-tape{position:absolute;top:-10px;width:64px;height:20px;background:color-mix(in oklab,var(--acc) 22%,rgba(255,255,255,.5));opacity:.85;pointer-events:none}
-[data-theme="dark"] .lh-tape{background:color-mix(in oklab,var(--acc) 30%,rgba(244,239,231,.18))}
-.lh-tape.t1{left:-12px;rotate:-22deg}
-.lh-tape.t2{right:-12px;rotate:18deg}
+/* name plate row */
+.tb-name-r{position:relative}
+.tb-name-r::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;background:var(--fg)}
+.tb-name{margin:0;padding:26px 26px 20px;font:600 clamp(40px,4.4vw,56px)/.94 var(--fd);letter-spacing:-.02em}
+.tb-first{color:var(--accText)}
 
-/* letterhead: the h1 stays the accessible name; the first name carries the accent */
-.lh-name{margin:0;font:600 clamp(38px,4.3vw,54px)/.94 var(--fd);letter-spacing:-.02em;color:var(--fg)}
-.lh-first{color:var(--accText)}
-
-/* double rule (accent + hairline) above the letterhead line */
-.lh-meta{position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:4px 0;margin:14px 0 6px;padding:11px 0 0;font:500 12px/1.4 var(--fm);letter-spacing:.04em;color:var(--dim)}
-.lh-meta::before,.lh-meta::after{content:"";position:absolute;left:0;right:0;transform-origin:left}
-.lh-meta::before{top:0;height:1.5px;background:var(--acc)}
-.lh-meta::after{top:4px;height:1px;background:var(--lineS)}
-.lh-meta > *:not(:first-child)::before{content:"·";margin:0 9px;color:var(--dimmer)}
-.lh-meta a{color:var(--fg);text-decoration:underline;text-decoration-color:var(--accB);text-underline-offset:3px;transition:text-decoration-color .2s}
-.lh-meta a:hover{text-decoration-color:var(--acc)}
-.lh-meta a:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:2px}
+/* corner seal on the name plate */
+.tb-seal{position:absolute;right:18px;top:14px;width:60px;height:60px;color:var(--accText);opacity:.75;pointer-events:none}
+[data-theme="dark"] .tb-seal{opacity:.6}
+.tb-seal svg{width:100%;height:100%;display:block;transform:rotate(-8deg)}
+.tb-seal-t{font:600 6.8px var(--fm);letter-spacing:.17em;fill:currentColor}
+.tb-seal-m{font:700 15px var(--fd);letter-spacing:.01em;fill:currentColor}
+html.motion-ok .tb-seal svg{animation:tbSealIn .8s var(--ease) .8s both}
+@keyframes tbSealIn{from{opacity:0;transform:rotate(14deg) scale(.85)}}
 
 /* ruled rows: mono label | bold value | right-aligned detail */
-.lh-rows{container-type:inline-size;margin:0 0 6px;padding:0}
-.lh-row{position:relative;display:grid;grid-template-columns:74px minmax(0,auto) minmax(0,1fr);align-items:baseline;column-gap:10px;padding:11px 0 10px}
-.lh-row::after{content:"";position:absolute;left:0;right:0;bottom:0;border-bottom:1px dashed var(--lineS);transform-origin:left}
-.lh-row dt{display:flex;align-items:center;gap:6px;font:500 11.5px/1.3 var(--fm);letter-spacing:.06em;text-transform:uppercase;color:var(--dim);white-space:nowrap}
-.lh-row dt i{flex:none;width:7px;height:7px;border-radius:50%;background:var(--acc)}
-.lh-row.live dt{color:var(--accText)}
-.lh-row dd{margin:0}
-.lh-val{font:700 16px/1.25 var(--fb);letter-spacing:-.01em;color:var(--fg);white-space:nowrap}
-.lh-det{justify-self:end;text-align:right;font:11.5px/1.35 var(--fm);color:var(--dim)}
-.lh-row.live .lh-det{justify-self:start;text-align:left;font:500 17.7px/1.1 var(--fb);letter-spacing:0;color:var(--accText)}
-.lh-val mark{color:inherit;padding:0 3px;margin:0 -3px;
-  background:linear-gradient(transparent 52%,color-mix(in oklab,var(--acc) 48%,transparent) 52% 94%,transparent 94%) no-repeat 0 0/100% 100%}
-[data-theme="dark"] .lh-val mark{background-image:linear-gradient(transparent 52%,color-mix(in oklab,var(--acc) 40%,transparent) 52% 94%,transparent 94%)}
+.tb-rows{margin:0;padding:0}
+.tb-row{position:relative;display:grid;grid-template-columns:84px minmax(0,auto) minmax(0,1fr);align-items:baseline;column-gap:12px;padding:14px 24px 13px}
+.tb-row + .tb-row{border-top:1px dashed var(--lineS)}
+.tb-row dt{display:flex;align-items:center;gap:7px;font:500 11.5px/1.3 var(--fm);letter-spacing:.06em;text-transform:uppercase;color:var(--dim);white-space:nowrap}
+.tb-row dt i{flex:none;width:7px;height:7px;border-radius:50%;background:var(--acc)}
+.tb-row.live dt{color:var(--accText)}
+.tb-row dd{margin:0}
+.tb-val{font:700 16.5px/1.25 var(--fb);letter-spacing:-.01em;color:var(--fg);white-space:nowrap}
+.tb-det{justify-self:end;text-align:right;font:12px/1.4 var(--fm);color:var(--dim)}
+.tb-row.live .tb-val{color:var(--accText);
+  background:linear-gradient(transparent 52%,color-mix(in oklab,var(--acc) 46%,transparent) 52% 94%,transparent 94%) no-repeat 0 0/100% 100%}
+[data-theme="dark"] .tb-row.live .tb-val{background-image:linear-gradient(transparent 52%,color-mix(in oklab,var(--acc) 38%,transparent) 52% 94%,transparent 94%)}
 
-/* detail drops under the value: always on a .stack row (value too long to share a line), every row on a narrow sheet (tablet column, phones) */
-.lh-row.stack{grid-template-columns:74px minmax(0,1fr);row-gap:2px}
-.lh-row.stack .lh-det{grid-column:2;justify-self:start;text-align:left}
-@container (max-width:340px){
-  .lh-row{grid-template-columns:74px minmax(0,1fr);row-gap:2px}
-  .lh-det{grid-column:2;justify-self:start;text-align:left}
-}
+/* detail drops under the value: on .stack rows and on narrow sheets */
+.tb-row.stack{grid-template-columns:84px minmax(0,1fr);row-gap:3px}
+.tb-row.stack .tb-det{grid-column:2;justify-self:start;text-align:left}
 
-/* signature + swoosh, decorative (the h1 carries the name) */
-
-.lh-ctas{flex-wrap:wrap}
-
-/* hint: the drag gesture is mouse only, so touch screens get the tap copy */
-.lh-hint{margin:20px 0 0 6px;display:flex;align-items:center;gap:8px;font:12px/1.4 var(--fm);color:var(--dim)}
-.lh-hint i{flex:none;width:7px;height:7px;border-radius:50%;background:var(--acc)}
-.lh-hint-touch{display:none}
-@media (hover:none),(pointer:coarse){
-  .lh-hint-mouse{display:none}
-  .lh-hint-touch{display:inline}
-}
+/* foot: CTAs, then the phone + links line */
+.tb-foot{display:grid;gap:14px;padding:18px 24px 20px;position:relative}
+.tb-foot::before{content:"";position:absolute;left:0;right:0;top:-1px;height:1px;background:var(--lineS)}
+.tb-foot .hctas{display:flex;gap:12px;flex-wrap:wrap}
+.tb-foot .btn{padding:13px 20px;font-size:14.5px}
+.tb-links{margin:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:5px 16px;font:500 12px/1.4 var(--fm);letter-spacing:.02em;color:var(--dim)}
+.tb-links a{color:var(--fg);text-decoration:underline;text-decoration-color:var(--acc);text-underline-offset:3px;transition:text-decoration-color .2s}
+.tb-links a:hover{text-decoration-color:var(--accText)}
+.tb-links a:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:2px}
 
 /* motion: draw once on load */
-html.motion-ok .lh-sheet{animation:lhLand .8s var(--ease) .1s both}
-html.motion-ok .lh-meta::before,html.motion-ok .lh-meta::after{animation:lhRule .7s var(--ease) .45s both}
-html.motion-ok .lh-meta::after{animation-delay:.6s}
-html.motion-ok .lh-row::after{animation:lhRule .6s var(--ease) both;animation-delay:calc(.7s + var(--i,0) * .12s)}
-html.motion-ok .lh-val mark{animation:lhMark .8s var(--ease) 1.1s both}
-html.motion-ok .lh-hint i{animation:dkpulse 1.6s ease-in-out infinite}
-html.motion-ok .hero.paused .lh-hint i{animation-play-state:paused}
-@keyframes lhLand{from{translate:0 -14px;rotate:-3.4deg}}
-@keyframes lhRule{from{transform:scaleX(0)}}
-@keyframes lhMark{from{background-size:0% 100%}}
-@keyframes lhSig{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
-@keyframes lhDraw{from{stroke-dashoffset:1}}
+html.motion-ok .tb{animation:tbLand .8s var(--ease) .05s both}
+html.motion-ok .tb-name-r::after{animation:tbRule .7s var(--ease) .45s both}
+html.motion-ok .tb-foot::before{animation:tbRule .7s var(--ease) .66s both}
+html.motion-ok .tb-rows{animation:tbRowsIn .6s var(--ease) .62s both}
+html.motion-ok .tb-row.live .tb-val{animation:tbMark .8s var(--ease) 1.15s both}
+html.motion-ok .tb-seal{animation:none}
+@keyframes tbLand{from{translate:0 -14px;opacity:0}}
+@keyframes tbRule{from{transform:scaleX(0)}transform-origin:left}
+@keyframes tbRowsIn{from{opacity:0;translate:0 5px}}
+@keyframes tbMark{from{background-size:0% 100%}}
 
 @media (max-width:899px){
-  .lh{max-width:none}
-  .lh-sheet{padding:26px 22px 22px;rotate:-.6deg}
-  html.motion-ok .lh-sheet{animation-name:lhLandSm}
-  .lh-name{font-size:40px}
-  .lh-meta{font-size:11.5px}
-  .lh-ctas{flex-wrap:nowrap}
-  .lh-ctas .btn{flex:1 1 0;justify-content:center;padding:14px 10px;white-space:nowrap}
-  .lh-hint{margin-top:16px}
+  .tb{max-width:none}
+  .tb-name{font-size:42px;padding:20px 20px 16px}
+  .tb-foot .hctas{flex-wrap:nowrap}
+  .tb-foot .hctas .btn{flex:1 1 0;justify-content:center;padding:14px 10px;white-space:nowrap}
 }
-@keyframes lhLandSm{from{translate:0 -10px;rotate:-2deg}}
-
+@media (max-width:520px){
+  .tb-row{grid-template-columns:76px minmax(0,1fr);row-gap:3px}
+  .tb-det{grid-column:2;justify-self:start;text-align:left}
+  .tb-seal{width:48px;height:48px;right:14px;top:12px}
+}
 @media (prefers-reduced-motion:reduce){
-  .lh-sheet,.lh-meta::before,.lh-meta::after,.lh-row::after,.lh-val mark,.lh-hint i{animation:none}
+  .tb,.tb-name-r::after,.tb-foot::before,.tb-rows,.tb-row.live .tb-val,.tb-seal svg{animation:none}
 }

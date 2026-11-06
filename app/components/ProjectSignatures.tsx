@@ -1,6 +1,6 @@
 /* Decorative, per-project signature graphics. All aria-hidden and painted behind card content. */
 
-// Filtr: 18 dots that move from a scatter into four ranked rows (5, 5, 4, 4).
+// Research Agent: 18 dots that move from a scatter into four ranked rows (5, 5, 4, 4).
 const SCATTER = [[8, 40], [96, 6], [40, 58], [120, 30], [70, 18], [18, 12], [104, 60], [56, 4], [30, 30], [84, 44], [124, 8], [4, 62], [62, 34], [110, 18], [44, 14], [92, 26], [22, 50], [76, 62]]
 const ROWS = [5, 5, 4, 4]
 const RANKED = ROWS.flatMap((n, r) => Array.from({ length: n }, (_, c) => [c * 14, r * 18 + 4]))
@@ -20,9 +20,4 @@ export function SortingDots() {
       ))}
     </span>
   )
-}
-
-/** Voxikin: call ripples expanding from behind the call card. */
-export function CallRings() {
-  return <span className="sig sig-rings" aria-hidden="true"><i /><i /><i /></span>
 }

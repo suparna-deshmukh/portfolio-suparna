@@ -32,7 +32,6 @@ interface ArticleProps {
   annot: Annotated
   reply: string
   pile: PileItem[]
-  draft?: Post | null
 }
 
 const headingText = (children: React.ReactNode): string =>
@@ -43,7 +42,7 @@ const headingText = (children: React.ReactNode): string =>
  * margin notes beside the lines they quote, a section rail, and an ending that stays on the desk.
  * Paper, title, rail bars and notes carry the view-transition names the home sheet and pile pages use.
  */
-export default function Article({ kind, slug, backHref, backLabel, title, subtitle, meta, minutes, cover, body, annot, reply, pile, draft }: ArticleProps) {
+export default function Article({ kind, slug, backHref, backLabel, title, subtitle, meta, minutes, cover, body, annot, reply, pile }: ArticleProps) {
   const toc = sections(body)
   const hasToc = toc.length >= TOC_MIN_HEADINGS
   const isCase = kind === 'Case study'
@@ -112,7 +111,7 @@ export default function Article({ kind, slug, backHref, backLabel, title, subtit
           </div>
         </article>
       </div>
-      <EndDesk heading={reply} title={title} quote={quote?.text ?? subtitle} pile={pile} draft={draft} />
+      <EndDesk heading={reply} title={title} quote={quote?.text ?? subtitle} pile={pile} />
       <Footer />
     </main>
   )

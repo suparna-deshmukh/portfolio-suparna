@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="foot">
       <div className="links">
         <P99Hint />
-        <span>© {new Date().getFullYear()} Shubh Sankalp Das</span>
+        <span>© {new Date().getFullYear()} Suparna Deshmukh</span>
       </div>
     </footer>
   )
