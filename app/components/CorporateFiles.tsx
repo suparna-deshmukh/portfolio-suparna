@@ -195,6 +195,7 @@ export default function Corporate() {
                   <span className="cf-meta">{c.role} · {c.when} · {c.where}</span>
                 </div>
                 <p className="cf-ctx">{c.context}</p>
+                {c.myPart && <p className="cf-mypart"><b>My part</b> {c.myPart}</p>}
                 <ul className="cf-points">
                   {c.points.map(pt => <li key={pt}>{pt}</li>)}
                 </ul>

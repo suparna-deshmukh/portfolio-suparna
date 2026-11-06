@@ -484,11 +484,18 @@ h3 (26px) + meta line (`role · when · where`), context line (mono caps), point
 (doc icon, label, ↗; hover accent) + **"Ask me about it →"** ghost btn — dispatches
 `contact:prefill` with a role-specific question (see §12.3).
 
+**Claim wording (P0-3):** stamps and proof labels use verifiable, project-level
+outcome verbs ("Series A aided", "unit economics lifted via pricing", "grants
+enabled") so nothing reads larger than Suparna's role. A `myPart?: string` field
+renders a "My part" line (`.cf-mypart`, accented left rule) directly under the
+context line — currently undefined on all three files, hidden until Suparna
+supplies her one-liners (Section 7 item 5).
+
 | file | stamp | proof (gauge) | points | chips | deck |
 |---|---|---|---|---|---|
-| Everyday Diamonds (Bengaluru, Aug–Sep '24) | $2.5M raised | $2.5M (100) | 2 | $2.5M Series A, All In Capital · 5 store expansion roadmap | Series A deck (`#` TODO) |
-| Fedaykin AV (Remote, Jul–Aug '24) | 30% unit economics | 30% (30) | 3 | 30% unit economics · 950 client database | Project report (`#` TODO) |
-| KriSHE Carbon (Gurugram, Jul–Aug '25) | ₹12.5L grants | ₹12.5L (100) | 2 | ₹12.5L grants enabled · 20+ high-fit opportunities | — |
+| Everyday Diamonds (Bengaluru, Aug–Sep '24) | Series A aided | $2.5M (100) "Series A aided, All In Capital — first store launched" | 2 | $2.5M Series A, All In Capital · 5 store expansion roadmap | Series A deck (hidden until URL) |
+| Fedaykin AV (Remote, Jul–Aug '24) | Unit economics +30% | 30% (30) "unit economics lifted via pricing, across specs, ops and annotation costs" | 3 | 30% unit economics · 950 client database | Project report (hidden until URL) |
+| KriSHE Carbon (Gurugram, Jul–Aug '25) | ₹12.5L grants enabled | ₹12.5L (100) "in grants enabled via the deck and biochar model" | 2 | ₹12.5L grants enabled · 20+ high-fit opportunities | — |
 
 Mobile ≤640: one column, doc capped 300px.
 
@@ -737,6 +744,7 @@ numbers); case bodies in `app/lib/content.ts`. Known placeholders:
 | item | where | status |
 |---|---|---|
 | Resume | `RESUME_URL` → `/Suparna-Deshmukh-Resume.pdf` | done — served from `public/`, generated from `/resume`; header + social card use a download icon |
+| "My part" lines | `CORPORATE[*].myPart` | hidden — pending Suparna's one-liners (P0-3) |
 | 96.7% eval numerator | `METRICS['ac-eval']` (`needsReview`) | as-is + dev warning — pending Suparna |
 | LinkedIn URL | `SOCIALS.linkedin` | set — **confirm** |
 | X handle | `SOCIALS.x` | empty (card hidden until set) |

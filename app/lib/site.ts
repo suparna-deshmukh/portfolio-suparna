@@ -215,6 +215,12 @@ export interface Corporate {
   proof: { value: string; label: string; gauge: number }
   /** metric registry id for the proof figure, for the hover proof */
   proofMetric?: string
+  /**
+   * One line, in Suparna's words: what *she* did on this engagement (P0-3). Renders only
+   * when present — the copy is pending from her, and until then the claim wording below
+   * is kept verifiable at the project level ("aided", "enabled").
+   */
+  myPart?: string
   /** the animated mini-doc beside the file: its paper type, the rows that get stamped, the stamp's word */
   doc: { type: string; stampWord: string; rows: { label: string; verdict: string }[] }
   /** the deck / report this engagement produced */
@@ -227,12 +233,12 @@ export interface Corporate {
 export const CORPORATE: Corporate[] = [
   {
     id: 'everyday', name: 'Everyday Diamonds', role: 'Team Lead · GTM and Series A Fundraising', context: '180 Degrees Consulting engagement · Bengaluru',
-    where: 'Bengaluru', when: 'Aug 2024 – Sept 2024', stamp: `${m('ed-raise').shown} raised`,
-    proof: { value: m('ed-raise').shown, label: 'Series A raised from All In Capital, first store launched', gauge: 100 },
+    where: 'Bengaluru', when: 'Aug 2024 – Sept 2024', stamp: 'Series A aided',
+    proof: { value: m('ed-raise').shown, label: 'Series A aided, All In Capital — first store launched', gauge: 100 },
     proofMetric: 'ed-raise',
     doc: { type: 'Term sheet', stampWord: 'Series A', rows: [
-      { label: 'Pricing & unit model', verdict: 'SIGNED' },
-      { label: 'Series A deck v3', verdict: 'SHARED' },
+      { label: 'Profitability & pricing model', verdict: 'BUILT' },
+      { label: 'Series A deck', verdict: 'SHARED' },
       { label: 'First store, Bengaluru', verdict: 'LAUNCHED' },
     ] },
     deck: { label: 'Series A deck', href: '#' },
@@ -245,12 +251,12 @@ export const CORPORATE: Corporate[] = [
   },
   {
     id: 'fedaykin', name: 'Fedaykin AV', role: 'GTM Strategy Consultant', context: 'Independent consulting engagement',
-    where: 'Remote', when: 'Jul 2024 – Aug 2024', stamp: `${m('fa-unit').shown} unit economics`,
-    proof: { value: m('fa-unit').shown, label: 'unit economics improved across specs, ops and annotation costs', gauge: 30 },
+    where: 'Remote', when: 'Jul 2024 – Aug 2024', stamp: 'Unit economics +30%',
+    proof: { value: m('fa-unit').shown, label: 'unit economics lifted via pricing, across specs, ops and annotation costs', gauge: 30 },
     proofMetric: 'fa-unit',
     doc: { type: 'Pricing audit', stampWord: 'Unit economics', rows: [
       { label: 'Competitor benchmarks', verdict: 'DONE' },
-      { label: 'Annotation cost audit', verdict: '−30%' },
+      { label: 'Unit economics via pricing', verdict: '+30%' },
       { label: '950-client B2B sizing', verdict: 'SIZED' },
     ] },
     deck: { label: 'Project report', href: '#' },
@@ -264,7 +270,7 @@ export const CORPORATE: Corporate[] = [
   },
   {
     id: 'kri' + 'she', name: 'KriSHE Carbon', role: 'Team Lead · GTM and Fundraising', context: '180 Degrees Consulting engagement · Gurugram',
-    where: 'Gurugram', when: 'Jul 2025 – Aug 2025', stamp: `${m('kc-grants').shown} grants`,
+    where: 'Gurugram', when: 'Jul 2025 – Aug 2025', stamp: `${m('kc-grants').shown} grants enabled`,
     proof: { value: m('kc-grants').shown, label: 'in grants enabled via the deck and biochar model', gauge: 100 },
     proofMetric: 'kc-grants',
     doc: { type: 'Grant review', stampWord: 'Grants', rows: [
