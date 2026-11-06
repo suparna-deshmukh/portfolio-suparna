@@ -8,6 +8,14 @@
   transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
 [data-theme="dark"] .cf-file{--stamp:#E08A5E;box-shadow:0 1px 0 rgba(0,0,0,.4),0 22px 32px -24px rgba(0,0,0,.85)}
 html.motion-ok .cf-file:hover{transform:translateY(-3px);box-shadow:0 1px 0 var(--press),0 28px 40px -22px rgba(23,19,14,.55)}
+html.motion-ok .cf-file .cf-stamp{opacity:0}
+html.motion-ok .cf-file.in .cf-stamp{animation:cfSlam .55s var(--settle) .4s both}
+@keyframes cfSlam{0%{opacity:0;transform:rotate(-7deg) scale(2.1)}55%{opacity:.95}100%{opacity:.92;transform:rotate(-7deg) scale(1)}}
+html.motion-ok .cf-chip{opacity:0;translate:0 8px;transition:opacity .45s var(--ease),translate .45s var(--ease)}
+html.motion-ok .cf-file.in .cf-chip{opacity:1;translate:0 0}
+html.motion-ok .cf-file.in .cf-chip:nth-child(1){transition-delay:.55s}
+html.motion-ok .cf-file.in .cf-chip:nth-child(2){transition-delay:.68s}
+html.motion-ok .cf-file.in .cf-chip:nth-child(3){transition-delay:.81s}
 
 .cf-side{display:grid;justify-items:center;align-content:center;gap:10px;align-self:center}
 .cf-emb{display:grid;place-items:center;width:124px;height:124px;border:1px solid var(--lineS);border-radius:12px;background:var(--tint)}
@@ -19,11 +27,17 @@ html.motion-ok .cf-file:hover{transform:translateY(-3px);box-shadow:0 1px 0 var(
 
 /* ── the emblems ── */
 .cf-file[data-emb="everyday"] .cf-emb{color:var(--accText)}
+.cf-glow{fill:currentColor;opacity:.1}
+html.motion-ok .cf-file.in .cf-glow{animation:cfGlow 3.2s ease-in-out 1s infinite}
+@keyframes cfGlow{50%{opacity:.22}}
 .cf-dia-shine{opacity:0}
 html.motion-ok .cf-file.in .cf-dia-shine{opacity:1;animation:cfShine 3.2s var(--ease) 1s infinite}
+html.motion-ok .cf-file.in .cf-dia-shine.s2{animation-delay:1.7s}
 @keyframes cfShine{0%{transform:rotate(18deg) translateX(-46px)}55%,100%{transform:rotate(18deg) translateX(88px)}}
+.cf-file:hover .cf-dia-shine{animation-duration:1.5s}
 .cf-spark{opacity:.9}
 html.motion-ok .cf-file.in .cf-spark{animation:cfSpark 3.2s ease-in-out 1s infinite}
+html.motion-ok .cf-file.in .cf-spark.sp2{animation-delay:2.3s}
 @keyframes cfSpark{0%,18%{opacity:0;transform:scale(.6)}30%{opacity:.9;transform:scale(1)}44%,100%{opacity:0;transform:scale(.6)}}
 
 .cf-file[data-emb="fedaykin"] .cf-emb{color:var(--fg)}
@@ -36,6 +50,11 @@ html.motion-ok .cf-file.in .cf-scan.s2{animation-delay:.4s}
 @keyframes cfScan{0%,15%{opacity:0}35%{opacity:.85}60%,100%{opacity:0}}
 html.motion-ok .cf-file.in .cf-car{animation:cfBob 2.4s ease-in-out infinite}
 @keyframes cfBob{50%{transform:translateY(2.5px)}}
+.cf-file:hover .cf-car{animation-duration:1.2s}
+.cf-blip{fill:var(--acc);opacity:0;transform-box:fill-box;transform-origin:center}
+html.motion-ok .cf-file.in .cf-blip{animation:cfBlip 2.4s ease-out 1s infinite}
+html.motion-ok .cf-file.in .cf-blip.b2{animation-delay:1.8s}
+@keyframes cfBlip{0%,18%{opacity:0;transform:scale(.5)}40%{opacity:.9;transform:scale(1)}70%,100%{opacity:0;transform:scale(1.7)}}
 
 .cf-file[data-emb="krishe"] .cf-emb{color:var(--accText)}
 .cf-soil{fill:currentColor;opacity:.16}
@@ -52,12 +71,17 @@ html.motion-ok .cf-file.in .cf-leaf.l2{animation-delay:.9s}
 html.motion-ok .cf-file.in .cf-dot{animation:cfDot 3.4s ease-in-out 1.4s infinite}
 html.motion-ok .cf-file.in .cf-dot.d2{animation-delay:2.1s}
 html.motion-ok .cf-file.in .cf-dot.d3{animation-delay:2.8s}
+html.motion-ok .cf-file.in .cf-dot.d4{animation-delay:3.4s}
+.cf-bud{fill:currentColor;opacity:.85;transform-box:fill-box;transform-origin:50% 100%}
+html.motion-ok .cf-file.in .cf-bud{animation:cfBud .9s var(--ease) 1.05s both}
+@keyframes cfBud{from{transform:scale(0)}}
 @keyframes cfGrow{from{transform:scaleY(.15)}}
 @keyframes cfLeaf{from{transform:scale(0)}}
 @keyframes cfDot{0%,100%{transform:translateY(0);opacity:.55}50%{transform:translateY(-9px);opacity:0}}
 @media (prefers-reduced-motion:reduce){.cf-dia-shine,.cf-scan{opacity:0}.cf-spark{opacity:.9}}
 
 .cf-stamp{position:absolute;top:20px;right:-13px;transform:rotate(-7deg);color:var(--stamp);
+  opacity:1;
   font:700 12.5px/1 var(--fm);letter-spacing:.13em;text-transform:uppercase;
   border:2px solid currentColor;outline:1px solid currentColor;outline-offset:3px;
   border-radius:4px;padding:8px 11px;opacity:.92;pointer-events:none;white-space:nowrap;background:var(--surf)}
@@ -67,9 +91,23 @@ html.motion-ok .cf-file.in .cf-dot.d3{animation-delay:2.8s}
 .cf-head h3{margin:0;font:700 26px/1.15 var(--fd);letter-spacing:-.02em}
 .cf-meta{font:500 12px/1.5 var(--fm);color:var(--dim);letter-spacing:.02em}
 .cf-ctx{margin:4px 0 12px;font:500 11px/1.4 var(--fm);color:var(--dimmer);text-transform:uppercase;letter-spacing:.1em}
-.cf-points{margin:0 0 14px;padding:0;list-style:none;display:grid;gap:8px;max-width:74ch}
+.cf-body{display:grid;grid-template-columns:minmax(0,1fr) 188px;gap:20px;align-items:center}
+.cf-points{margin:0 0 14px;padding:0;list-style:none;display:grid;gap:8px;max-width:66ch}
 .cf-points li{position:relative;padding-left:19px;font-size:14.5px;line-height:1.55;color:var(--fg)}
 .cf-points li::before{content:"";position:absolute;left:2px;top:.64em;width:9px;height:2px;background:var(--acc)}
+
+.cf-proof{display:grid;justify-items:center;gap:4px;align-self:center;min-width:172px;padding:14px 16px 12px;
+  border:1px solid var(--lineS);border-radius:10px;background:var(--tint);text-align:center}
+[data-theme="dark"] .cf-proof{background:color-mix(in oklab,var(--acc) 6%,var(--surf))}
+.cf-gauge{width:118px;height:62px;display:block}
+.cf-gf{fill:none;stroke:var(--lineS);stroke-width:8;stroke-linecap:round}
+.cf-gv{fill:none;stroke:var(--acc);stroke-width:8;stroke-linecap:round;
+  stroke-dasharray:var(--g) 100;transition:stroke-dasharray 1.25s var(--ease) .35s,filter .3s}
+html.motion-ok .cf-file:not(.in) .cf-gv{stroke-dasharray:0 100}
+.cf-file:hover .cf-gv{filter:drop-shadow(0 0 6px color-mix(in oklab,var(--acc) 70%,transparent))}
+.cf-proof-num{font:700 30px/1 var(--fd);letter-spacing:-.02em;color:var(--accText);font-variant-numeric:tabular-nums;margin-top:2px}
+.cf-proof-lab{font:500 10px/1.45 var(--fm);letter-spacing:.02em;color:var(--dim)}
+@media (max-width:900px){.cf-body{grid-template-columns:1fr}.cf-proof{justify-items:start;text-align:left;flex-direction:row;align-items:center}}
 
 .cf-foot{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding-top:13px;border-top:1px dashed var(--lineS)}
 .cf-chip{display:inline-flex;align-items:baseline;gap:7px;border:1px solid var(--lineS);border-radius:8px;padding:6px 11px;background:var(--tint)}
@@ -89,6 +127,7 @@ html.motion-ok .cf-file.in .cf-dot.d3{animation-delay:2.8s}
   .cf-emb{width:104px;height:104px}
   .cf-emb svg{width:72px;height:72px}
   .cf-num{font-size:30px}
+  .cf-proof{width:100%}
   .cf-stamp{position:static;display:inline-block;margin:0 0 14px;transform:rotate(-2deg);right:auto}
   .cf-head{padding-right:0}
   .cf-head h3{width:100%}

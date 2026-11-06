@@ -84,6 +84,23 @@
 .ex-campus b{display:block;margin-top:7px;font:700 12.5px/1.2 var(--fb)}
 .ex-campus small{display:block;font:500 9.5px/1.5 var(--fm);color:var(--dim)}
 
+/* pinned stat notes: the profile's standout numbers, taped into the gap */
+.ex-note{position:absolute;width:132px;background:var(--surf);border:1px solid var(--lineS);border-radius:8px;
+  padding:9px 10px 8px;box-shadow:0 14px 24px -16px rgba(23,19,14,.5)}
+[data-theme="dark"] .ex-note{box-shadow:0 0 0 1px var(--line),0 14px 24px -16px rgba(0,0,0,.8)}
+.ex-note::before{content:"";position:absolute;top:-6px;left:50%;width:28px;height:11px;translate:-50% 0;rotate:-2deg;
+  background:color-mix(in oklab,var(--acc) 28%,rgba(255,255,255,.55));opacity:.9}
+.ex-note-num{display:block;font:700 16px/1 var(--fd);letter-spacing:-.01em;color:var(--accText)}
+.ex-note-lab{display:block;margin-top:4px;font:500 8.5px/1.4 var(--fm);letter-spacing:.02em;color:var(--dim)}
+.ex-n1{left:252px;top:318px;transform:rotate(-2deg)}
+.ex-n2{left:252px;top:396px;transform:rotate(1.6deg)}
+.ex-n3{left:252px;top:472px;transform:rotate(-1.2deg)}
+html.motion-ok .ex-note{animation:exIn .8s var(--ease) both}
+html.motion-ok .ex-n1{animation-delay:1.05s}
+html.motion-ok .ex-n2{animation-delay:1.2s}
+html.motion-ok .ex-n3{animation-delay:1.35s}
+@media (prefers-reduced-motion:reduce){.ex-note{animation:none}}
+
 /* dimension-style callouts */
 .ex-calls{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
 .ex-calls text{font:500 10.5px var(--fm);letter-spacing:.1em;fill:var(--dim)}

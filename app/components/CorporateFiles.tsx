@@ -3,6 +3,7 @@
 import '../corporate.css'
 import { useEffect } from 'react'
 import { CORPORATE, CORPORATE_AGG, PREFILL_EVENT } from '../lib/site'
+import CountUp from './CountUp'
 import SectionHeader from './SectionHeader'
 
 /** One animated emblem per engagement: diamond, autonomous vehicle, biochar sprout. */
@@ -22,10 +23,13 @@ const EMBLEMS: Record<string, React.ReactNode> = {
         <path d="M24 26h36l12 15-28 31-28-31z" />
         <path d="M14 41h56M24 26l9 15 9-15 9 15 9-15M33 41l9 31 9-31" />
       </g>
+      <circle className="cf-glow" cx="42" cy="42" r="26" />
       <g clipPath="url(#cfDiaClip)">
         <rect className="cf-dia-shine" x="-26" y="14" width="14" height="66" fill="url(#cfDiaGrad)" transform="rotate(18 42 42)" />
+        <rect className="cf-dia-shine s2" x="-26" y="14" width="8" height="66" fill="url(#cfDiaGrad)" transform="rotate(18 42 42)" />
       </g>
       <path className="cf-spark" d="M66 12v10M61 17h10" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+      <path className="cf-spark sp2" d="M16 10v8M12 14h8" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
     </svg>
   ),
   fedaykin: (
@@ -39,6 +43,8 @@ const EMBLEMS: Record<string, React.ReactNode> = {
         <line x1="35.5" y1="34" x2="48.5" y2="34" strokeLinecap="round" />
         <line x1="35.5" y1="50" x2="48.5" y2="50" strokeLinecap="round" />
       </g>
+      <circle className="cf-blip" cx="62" cy="64" r="3" />
+      <circle className="cf-blip b2" cx="22" cy="14" r="2.4" />
     </svg>
   ),
   [KRI]: (
@@ -47,9 +53,11 @@ const EMBLEMS: Record<string, React.ReactNode> = {
       <path className="cf-stem" d="M42 62V30" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
       <path className="cf-leaf l1" d="M42 46c-3-11-11-14-19-13 1 9 8 15 19 13z" />
       <path className="cf-leaf l2" d="M42 36c3-11 11-14 19-13-1 9-8 15-19 13z" />
+      <circle className="cf-bud" cx="42" cy="26" r="4.5" />
       <circle className="cf-dot d1" cx="25" cy="56" r="2" />
       <circle className="cf-dot d2" cx="59" cy="52" r="2" />
       <circle className="cf-dot d3" cx="48" cy="58" r="1.6" />
+      <circle className="cf-dot d4" cx="34" cy="52" r="1.4" />
     </svg>
   ),
 }
@@ -108,9 +116,19 @@ export default function Corporate() {
                   <span className="cf-meta">{c.role} · {c.when} · {c.where}</span>
                 </div>
                 <p className="cf-ctx">{c.context}</p>
-                <ul className="cf-points">
-                  {c.points.map(pt => <li key={pt}>{pt}</li>)}
-                </ul>
+                <div className="cf-body">
+                  <ul className="cf-points">
+                    {c.points.map(pt => <li key={pt}>{pt}</li>)}
+                  </ul>
+                  <div className="cf-proof">
+                    <svg className="cf-gauge" viewBox="0 0 120 64" aria-hidden="true">
+                      <path className="cf-gf" d="M10 60 a50 50 0 0 1 100 0" />
+                      <path className="cf-gv" d="M10 60 a50 50 0 0 1 100 0" style={{ ['--g' as string]: c.proof.gauge }} />
+                    </svg>
+                    <span className="cf-proof-num"><CountUp text={c.proof.value} /></span>
+                    <span className="cf-proof-lab">{c.proof.label}</span>
+                  </div>
+                </div>
                 <div className="cf-foot">
                   {c.chips.map(ch => (
                     <span key={ch.label} className="cf-chip"><b>{ch.value}</b><span>{ch.label}</span></span>

@@ -168,6 +168,8 @@ export interface Corporate {
   when: string
   /** the rubber stamp: the one number the file is remembered for */
   stamp: string
+  /** the proof panel: the big number, what it measured, and how far the gauge fills (0-100) */
+  proof: { value: string; label: string; gauge: number }
   points: string[]
   chips: Stat[]
   ask: string
@@ -177,6 +179,7 @@ export const CORPORATE: Corporate[] = [
   {
     id: 'everyday', name: 'Everyday Diamonds', role: 'Team Lead · GTM and Series A Fundraising', context: '180 Degrees Consulting engagement · Bengaluru',
     where: 'Bengaluru', when: 'Aug 2024 – Sept 2024', stamp: '$2.5M raised',
+    proof: { value: '$2.5M', label: 'Series A raised from All In Capital, first store launched', gauge: 100 },
     points: [
       'Modeled profitability, pricing and financial projections; built the 4-year expansion roadmap and the Series A deck that aided a $2.5M raise from All In Capital.',
       'Formulated the offline expansion strategy for 5 stores across India — and the first one launched in Bengaluru.',
@@ -187,6 +190,7 @@ export const CORPORATE: Corporate[] = [
   {
     id: 'fedaykin', name: 'Fedaykin AV', role: 'GTM Strategy Consultant', context: 'Independent consulting engagement',
     where: 'Remote', when: 'Jul 2024 – Aug 2024', stamp: '30% unit economics',
+    proof: { value: '30%', label: 'unit economics improved across specs, ops and annotation costs', gauge: 30 },
     points: [
       'Formulated the GTM strategy via market research, competitor analysis and a refined product-market fit for stronger positioning.',
       'Optimized the pricing strategy across technical specs, operations and annotation costs, improving unit economics by 30%.',
@@ -198,6 +202,7 @@ export const CORPORATE: Corporate[] = [
   {
     id: 'kri' + 'she', name: 'KriSHE Carbon', role: 'Team Lead · GTM and Fundraising', context: '180 Degrees Consulting engagement · Gurugram',
     where: 'Gurugram', when: 'Jul 2025 – Aug 2025', stamp: '₹12.5L grants',
+    proof: { value: '₹12.5L', label: 'in grants enabled via the deck and biochar model', gauge: 100 },
     points: [
       'Built the investor pitch deck and financial projections; a scalable biochar model and impact metrics enabled ₹12.5L in grants.',
       'Ran carbon market and buyer research; developed the positioning and sales narrative, identifying 20+ high-fit opportunities.',
@@ -223,10 +228,10 @@ export const EDUCATION = {
   classYear: 'Class of 2027',
 }
 
-export const ACHIEVEMENTS: { rank: string; of: string; name: string; note: string }[] = [
-  { rank: 'Top 8', of: '9,000+', name: "Accenture Strategy Connect '25", note: 'GenAI in supply chain, India' },
-  { rank: 'Top 5', of: '2,500+', name: "IIMA Fintech Frontier '24", note: '0→1 product design and GTM' },
-  { rank: 'Top 10%', of: '270', name: "NextLeap PM Fellowship '26", note: 'Guided AI search for Google Photos' },
+export const ACHIEVEMENTS: { rank: string; of: string; name: string; note: string; crest: { text: string; color: string } }[] = [
+  { rank: 'Top 8', of: '9,000+', name: "Accenture Strategy Connect '25", note: 'GenAI in supply chain, India', crest: { text: 'A', color: '#E2401B' } },
+  { rank: 'Top 5', of: '2,500+', name: "IIMA Fintech Frontier '24", note: '0→1 product design and GTM', crest: { text: 'IIM', color: '#1F4E8C' } },
+  { rank: 'Top 10%', of: '270', name: "NextLeap PM Fellowship '26", note: 'Guided AI search for Google Photos', crest: { text: 'N', color: '#0E9F8A' } },
 ]
 
 export const CONSULTATHON_URL = 'https://unstop.com/competitions/consultathon-50-bits-pilani-k-k-birla-goa-campus-1674892'
@@ -237,6 +242,8 @@ export interface Position {
   title: string
   when: string
   blurb: string
+  /** the people behind the role, shown as a team that lights up */
+  team?: { count: number; label: string }
   stats: Stat[]
   chips: { text: string; href?: string }[]
 }
@@ -246,6 +253,7 @@ export const POSITIONS: Position[] = [
   {
     id: 'placement', org: 'BITS Goa', title: 'Placement Coordinator', when: 'May 2026 – Present',
     blurb: 'Selected 1 of 8 out of 1,000+ students. Leads campus placements and corporate outreach for the 2026 batch, end-to-end, with a 25-member team.',
+    team: { count: 25, label: 'team led end-to-end' },
     stats: [
       { value: '58%→85%', label: 'batch placement in 5 months' },
       { value: '240', label: 'students placed' },
@@ -256,6 +264,7 @@ export const POSITIONS: Position[] = [
   {
     id: 'consult', org: '180 Degrees Consulting', title: 'Director', when: 'May 2025 – Jun 2026',
     blurb: 'Youngest Director: 45 consultants across 16 projects, driving 30% YoY revenue growth. Awarded “Best Consultant” as a sophomore.',
+    team: { count: 16, label: 'projects run across 45 consultants' },
     stats: [
       { value: '₹17L', label: 'Consultathon sponsorships' },
       { value: '3,200', label: 'Consultathon registrations' },
@@ -267,6 +276,7 @@ export const POSITIONS: Position[] = [
   {
     id: 'cel', org: 'Center for Entrepreneurial Leadership', title: 'Creative Director', when: 'May 2025 – Jun 2026',
     blurb: "Coalescence'24: secured 40+ founders, investors and partners — including Ankur Warikoo and UTI. Led a 20-member team across marketing and operations; 400K+ impressions and ₹10L+ revenue.",
+    team: { count: 20, label: 'team across marketing and operations' },
     stats: [
       { value: '40+', label: 'founders and investors' },
       { value: '400K+', label: 'impressions' },

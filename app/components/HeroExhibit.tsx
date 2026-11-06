@@ -37,8 +37,22 @@ export default function HeroExhibit() {
           <span className="ex-clip" aria-hidden="true" />
           <img src="/images/hero/bits-goa-sketch.webp" alt="Sketch of the BITS Pilani Goa campus" width={228} height={137} loading="lazy" />
           <b>BITS Pilani, Goa</b>
-          <small>ECE (Hons.) + Finance minor · Class of 2027</small>
+          <small>Electronics & Communication Engineering</small>
+          <small>Finance minor · Class of 2027</small>
         </a>
+
+        <div className="ex-note ex-n1">
+          <span className="ex-note-num">Top 8</span>
+          <span className="ex-note-lab">of 9,000+ · Accenture Strategy ’25</span>
+        </div>
+        <div className="ex-note ex-n2">
+          <span className="ex-note-num">240</span>
+          <span className="ex-note-lab">students placed · 58% → 85%</span>
+        </div>
+        <div className="ex-note ex-n3">
+          <span className="ex-note-num">$2.5M</span>
+          <span className="ex-note-lab">Series A · 180DC, Everyday Diamonds</span>
+        </div>
 
         <svg className="ex-calls" viewBox="0 0 660 540" aria-hidden="true">
           <g>

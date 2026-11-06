@@ -30,6 +30,18 @@
 /* ── the road and its stations ── */
 .rt-stops{position:relative;display:grid;gap:28px;padding-left:74px}
 .rt-stops::before{content:"";position:absolute;left:23px;top:16px;bottom:16px;border-left:2px dashed color-mix(in oklab,var(--acc) 42%,var(--lineS))}
+/* the driven trail: an accent line that fills as you scroll, with a train dot on the tip.
+   Absolutely positioned — must never join the grid flow. */
+.rt-trail,.rt-train{position:absolute;display:block}
+.rt-trail{left:22.5px;top:16px;width:3px;height:0;border-radius:2px;z-index:1;
+  background:linear-gradient(180deg,var(--acc),color-mix(in oklab,var(--acc) 30%,transparent));
+  box-shadow:0 0 10px color-mix(in oklab,var(--acc) 50%,transparent);
+  transform:scaleY(0);transform-origin:top center;will-change:transform}
+.rt-train{left:24px;top:16px;width:11px;height:11px;translate:-50% -50%;border-radius:50%;z-index:3;
+  background:var(--acc);box-shadow:0 0 0 4px color-mix(in oklab,var(--acc) 20%,transparent),0 0 16px color-mix(in oklab,var(--acc) 65%,transparent);
+  will-change:transform}
+html.motion-ok .rt-train{animation:rtTrain 2.4s ease-in-out infinite}
+@keyframes rtTrain{50%{box-shadow:0 0 0 7px color-mix(in oklab,var(--acc) 12%,transparent),0 0 22px color-mix(in oklab,var(--acc) 80%,transparent)}}
 .rt-stn{position:relative;scroll-margin-top:96px}
 .rt-node{position:absolute;left:-74px;top:20px;width:48px;height:48px;z-index:1;display:grid;place-items:center;
   border-radius:50%;background:var(--surf);border:2px solid var(--fg);
@@ -80,6 +92,15 @@ html.motion-ok .rt-big b::after{transition:transform .8s var(--ease) .15s}
 /* motion: stations settle in once, top down */
 html.motion-ok .rt-stn{animation:rtIn .8s var(--ease) both;animation-delay:calc(var(--si,0) * 90ms)}
 @keyframes rtIn{from{opacity:0;translate:0 16px}}
+/* when a station crosses the reading line, its proof rows and details step in */
+html.motion-ok .rt-out li{opacity:0;transition:opacity .55s var(--ease)}
+html.motion-ok .rt-stn.in .rt-out li{opacity:1}
+html.motion-ok .rt-stn.in .rt-out li:nth-child(1){transition-delay:.2s}
+html.motion-ok .rt-stn.in .rt-out li:nth-child(2){transition-delay:.32s}
+html.motion-ok .rt-stn.in .rt-out li:nth-child(3){transition-delay:.44s}
+html.motion-ok .rt-stn.in .rt-out li:nth-child(4){transition-delay:.56s}
+html.motion-ok .rt-stn.in .rt-ft{animation:rtFtIn .45s var(--ease) .65s both}
+@keyframes rtFtIn{from{opacity:0}}
 @media (prefers-reduced-motion:reduce){
   .rt-stn,.rt-stn.now .rt-node::after{animation:none}
   .rt-card{transition:none}
@@ -88,6 +109,8 @@ html.motion-ok .rt-stn{animation:rtIn .8s var(--ease) both;animation-delay:calc(
 /* ── tablet and phone: the manifest stacks above the road ── */
 @media (max-width:900px){
   .rt{grid-template-columns:1fr;gap:22px}
+  .rt-trail{left:16.5px}
+  .rt-train{left:18px}
   .rt-man{position:static}
   .rt-man .k{display:none}
   .rt-stops{padding-left:56px}

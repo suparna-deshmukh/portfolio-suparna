@@ -73,6 +73,7 @@ export default function Experience() {
   const STOPS = EXPERIENCE
   const since = firstYear()
   const routeRef = useRef<HTMLDivElement>(null)
+  const stopsRef = useRef<HTMLDivElement>(null)
   const floatRef = useRef<HTMLDivElement>(null)
   const pointer = useRef<[number, number] | null>(null)
   const hoverMq = useRef<MediaQueryList | null>(null)
@@ -86,6 +87,7 @@ export default function Experience() {
     const stops = Array.from(box.querySelectorAll<HTMLElement>('.rt-stn'))
     const io = new IntersectionObserver(entries => {
       entries.forEach(e => {
+        if (e.isIntersecting) (e.target as HTMLElement).classList.add('in')
         if (!e.isIntersecting) return
         const i = stops.indexOf(e.target as HTMLElement)
         if (i >= 0) setActive(i)
@@ -93,6 +95,46 @@ export default function Experience() {
     }, { rootMargin: READING_LINE })
     stops.forEach(s => io.observe(s))
     return () => io.disconnect()
+  }, [])
+
+  // The trail: as the reading line travels down the road, the accent line fills and the
+  // train dot rides the tip. Geometry is cached (measured once, plus on resize) and the
+  // per-frame handler only touches transforms — no layout reads on the scroll path.
+  useEffect(() => {
+    const stops = stopsRef.current
+    if (!stops) return
+    const trail = stops.querySelector<HTMLElement>('.rt-trail')
+    const train = stops.querySelector<HTMLElement>('.rt-train')
+    if (!trail || !train) return
+    let absTop = 0
+    let lineH = 1
+    const measure = () => {
+      const r = stops.getBoundingClientRect()
+      absTop = r.top + window.scrollY
+      lineH = Math.min(4000, Math.max(1, r.height - 32))
+      trail.style.height = `${lineH}px`
+    }
+    let raf = 0
+    const update = () => {
+      raf = 0
+      const p = Math.min(1, Math.max(0, (window.scrollY + window.innerHeight * 0.4 - absTop - 16) / lineH))
+      trail.style.transform = `scaleY(${p.toFixed(4)})`
+      train.style.transform = `translateY(${(p * lineH).toFixed(1)}px)`
+    }
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update) }
+    measure()
+    update()
+    const ro = new ResizeObserver(() => { measure(); update() })
+    ro.observe(stops)
+    document.fonts?.ready.then(update).catch(() => {})
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      ro.disconnect()
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      cancelAnimationFrame(raf)
+    }
   }, [])
 
   // Hover card: the headline result of the stop whose manifest row is under the cursor (mouse only).
@@ -104,9 +146,10 @@ export default function Experience() {
     const idx = row ? Number(row.dataset.row) : -1
     if (idx < 0) { setCard(null); return }
     const r = box.getBoundingClientRect()
-    fl.style.left = `${Math.max(0, Math.min(r.width - 300, p[0] - r.left + 28))}px`
-    fl.style.top = `${p[1] - r.top}px`
-    setCard(idx)
+    const x = Math.max(0, Math.min(r.width - 300, p[0] - r.left + 28))
+    const y = p[1] - r.top
+    if (fl.dataset.xy !== `${x}:${y}`) { fl.dataset.xy = `${x}:${y}`; fl.style.left = `${x}px`; fl.style.top = `${y}px` }
+    if (fl.dataset.idx !== String(idx)) { fl.dataset.idx = String(idx); setCard(idx) }
   }, [])
 
   useEffect(() => {
@@ -169,7 +212,9 @@ export default function Experience() {
               ))}
             </ol>
           </nav>
-          <div className="rt-stops">
+          <div className="rt-stops" ref={stopsRef}>
+            <span className="rt-trail" aria-hidden="true" />
+            <span className="rt-train" aria-hidden="true" />
             {STOPS.map((c, i) => <Station key={c.id} c={c} index={i} now={i === 0} />)}
           </div>
           <div ref={floatRef} className={`float${shownCard ? ' on' : ''}`} aria-hidden="true">

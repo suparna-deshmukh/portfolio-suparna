@@ -180,6 +180,20 @@ html.motion-ok .sh .w{transition:transform .6s var(--ease);transition-delay:calc
 .dl-vis .cap{font:500 8.5px var(--fm);letter-spacing:.09em;text-transform:uppercase;fill:var(--dimmer)}
 .dl-vis .heat rect{fill:var(--acc);opacity:var(--o,1)}
 .dl-vis .ring{fill:none;stroke:var(--dlRed);stroke-width:1.5}
+.dl-vis.v1{color:var(--acc)}
+.dl-vis .area{fill:url(#dlArea);opacity:0;transition:opacity .9s ease .9s}
+html.motion-ok .dl-card.in .area{opacity:1}
+.dl-vis .rowlab{font:500 6.5px var(--fm);fill:var(--dimmer)}
+.dl-vis .ringlab{fill:var(--dlRed)}
+.dl-vis .heat .crow{transition:opacity .25s}
+.dl-vis .heat:hover .crow{opacity:.35}
+.dl-vis .heat .crow:hover{opacity:1}
+.dl-vis .barg{cursor:default}
+.dl-vis .barlab{font:600 7.5px var(--fm);fill:var(--dim);opacity:.6;transition:opacity .2s,fill .2s}
+.dl-vis .barg:hover .barlab{opacity:1;fill:var(--fg)}
+.dl-vis .barg:hover .bar{fill:var(--acc)}
+.dl-vis .seg{transition:stroke-width .25s var(--ease),stroke-opacity .25s,stroke-dasharray 1s var(--ease)}
+.dl-vis .seg:hover{stroke-width:12.5;stroke-opacity:1}
 .dl-vis .bar{fill:color-mix(in oklab,var(--fg) 20%,transparent)}
 .dl-vis .bar.hot{fill:var(--acc)}
 .dl-vis .donutbg{stroke:var(--lineS)}

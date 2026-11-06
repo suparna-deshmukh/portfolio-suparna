@@ -1,7 +1,7 @@
 'use client'
 
 import '../about.css'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { ACHIEVEMENTS, EDUCATION, POSITIONS } from '../lib/site'
 import { useInViewOnce } from '../lib/hooks'
 import CountUp from './CountUp'
@@ -38,14 +38,15 @@ function SponsorMarquee() {
   )
 }
 
-const MEDAL = (
-  <svg viewBox="0 0 40 46" aria-hidden="true">
-    <path d="M12.5 1 20 15l-5 3.4L9 4.2z" fill="currentColor" opacity=".45" />
-    <path d="M27.5 1 20 15l5 3.4 6-14.2z" fill="currentColor" opacity=".45" />
-    <circle cx="20" cy="31" r="12.5" fill="none" stroke="currentColor" strokeWidth="1.8" />
-    <path d="m20 23.6 2 4.1 4.5.6-3.3 3.2.8 4.5-4-2.1-4 2.1.8-4.5-3.3-3.2 4.5-.6z" fill="currentColor" />
-  </svg>
-)
+/** The people behind the role: a field of dots that lights up member by member. */
+function TeamDots({ count, label }: { count: number; label: string }) {
+  return (
+    <div className="ab-team" aria-label={`${count} — ${label}`}>
+      {Array.from({ length: count }).map((_, i) => <i key={i} style={{ ['--i' as string]: i }} aria-hidden="true" />)}
+      <span>{count} · {label}</span>
+    </div>
+  )
+}
 
 /** Right page: the college years as stat panels — positions of responsibility, numbers doing the talking. */
 function Positions() {
@@ -59,6 +60,7 @@ function Positions() {
               <b>{p.title}</b><span>{p.org}</span><em>{p.when}</em>
             </header>
             <p>{p.blurb}</p>
+            {p.team && <TeamDots count={p.team.count} label={p.team.label} />}
             {p.id === 'placement' && <PlacementBar />}
             {p.id === 'consult' && <SponsorMarquee />}
             {p.stats.length > 0 && (
@@ -87,7 +89,16 @@ function Positions() {
         <ol>
           {ACHIEVEMENTS.map(a => (
             <li key={a.name}>
-              <span className="ab-medal">{MEDAL}</span>
+              <span className="ab-crest" style={{ color: a.crest.color }} aria-hidden="true">
+                <svg viewBox="0 0 48 48">
+                  <circle cx="24" cy="24" r="21" fill="none" stroke="currentColor" strokeWidth="1.7" />
+                  <circle cx="24" cy="24" r="16.5" fill="none" stroke="currentColor" strokeWidth=".7" strokeDasharray="2 3" />
+                  <text x="24" y={a.crest.text.length > 1 ? 27.5 : 30.5} textAnchor="middle"
+                    style={{ font: `700 ${a.crest.text.length > 1 ? 10.5 : 20}px var(--fd)`, fill: 'currentColor', letterSpacing: a.crest.text.length > 1 ? '.06em' : '0' }}>
+                    {a.crest.text}
+                  </text>
+                </svg>
+              </span>
               <b>{a.rank} <i>of {a.of}</i></b>
               <span className="ab-hn-name">{a.name}</span>
               <span>{a.note}</span>
@@ -100,6 +111,17 @@ function Positions() {
 }
 
 export default function About() {
+  useEffect(() => {
+    const panels = Array.from(document.querySelectorAll<HTMLElement>('#about .ab-panel'))
+    const io = new IntersectionObserver(entries => {
+      for (const e of entries) {
+        if (e.isIntersecting) { (e.target as HTMLElement).classList.add('in'); io.unobserve(e.target) }
+      }
+    }, { threshold: 0.3 })
+    panels.forEach(p => io.observe(p))
+    return () => io.disconnect()
+  }, [])
+
   return (
     <section className="band" id="about">
       <div className="sec wrap">

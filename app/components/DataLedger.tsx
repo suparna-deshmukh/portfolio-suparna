@@ -61,47 +61,70 @@ const COHORT_ROWS = [1, 0.92, 0.97, 0.9, 1, 0.95]
 function LedgerVis({ n }: { n: string }) {
   if (n === '01') {
     return (
-      <svg className="dl-vis" viewBox="0 0 300 64" aria-hidden="true">
+      <svg className="dl-vis v1" viewBox="0 0 300 64" aria-hidden="true">
+        <defs>
+          <linearGradient id="dlArea" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="currentColor" stopOpacity=".28" />
+            <stop offset="1" stopColor="currentColor" stopOpacity="0" />
+          </linearGradient>
+        </defs>
         <line className="g" x1="8" y1="54" x2="292" y2="54" />
         <line className="g" x1="8" y1="40" x2="292" y2="40" />
+        <line className="g" x1="8" y1="26" x2="292" y2="26" />
+        <path className="area" d="M10 50 L44 46 L74 48 L104 42 L134 38 L158 32 L176 26 L208 8 L228 30 L256 38 L290 44 L290 54 L10 54 Z" />
         <path className="line" pathLength="100" d="M10 50 L44 46 L74 48 L104 42 L134 38 L158 32 L176 26 L208 8 L228 30 L256 38 L290 44" />
         <circle className="peak" cx="208" cy="8" r="3" />
-        <text className="cap" x="292" y="16" textAnchor="end">trending spike</text>
+        <text className="cap" x="208" y="5" textAnchor="middle">spike → trend</text>
+        <text className="cap" x="292" y="62" textAnchor="end">82% AUC classifier</text>
       </svg>
     )
   }
   if (n === '02') {
-    const cells: React.ReactNode[] = []
+    const rows: React.ReactNode[] = []
     COHORT_ROWS.forEach((f, r) => {
+      const cells: React.ReactNode[] = []
       for (let w = 0; w < 9; w++) {
         const o = Math.max(0.08, (1 - w * 0.105) * f)
         cells.push(
-          <rect key={`${r}-${w}`} className="c" x={20 + w * 28} y={4 + r * 10} width={24} height={7} rx={1.5}
+          <rect key={`${r}-${w}`} className="c" x={34 + w * 28} y={4 + r * 10} width={24} height={7} rx={1.5}
             style={{ ['--o' as string]: o.toFixed(3), transitionDelay: `${(r * 9 + w) * 16}ms` }} />
         )
       }
+      rows.push(
+        <g key={r} className="crow">
+          <text className="rowlab" x={22} y={10 + r * 10}>{`C${r + 1}`}</text>
+          {cells}
+        </g>
+      )
     })
     return (
-      <svg className="dl-vis" viewBox="0 0 300 64" aria-hidden="true">
-        <g className="heat">{cells}</g>
-        <rect className="ring" x={20 + 6 * 28 - 1.5} y={3 + 3 * 10} width={27} height={10} rx={2.5} />
-        <rect className="ring" x={20 + 7 * 28 - 1.5} y={3 + 4 * 10} width={27} height={10} rx={2.5} />
-        <text className="cap" x="8" y="62">week →</text>
+      <svg className="dl-vis v2" viewBox="0 0 300 64" aria-hidden="true">
+        <g className="heat">{rows}</g>
+        <rect className="ring" x={34 + 6 * 28 - 1.5} y={3 + 3 * 10} width={27} height={10} rx={2.5} />
+        <rect className="ring" x={34 + 7 * 28 - 1.5} y={3 + 4 * 10} width={27} height={10} rx={2.5} />
+        <text className="cap" x="34" y="63">wk 0</text>
+        <text className="cap" x={34 + 8 * 28} y="63" textAnchor="end">wk 8 →</text>
+        <text className="cap ringlab" x={34 + 8 * 28 + 12} y={3 + 4 * 10 + 7}>dormant</text>
       </svg>
     )
   }
   if (n === '03') {
     const bars = [
-      { x: 24, h: 34 }, { x: 72, h: 22 }, { x: 120, h: 50, hot: true }, { x: 168, h: 18 }, { x: 216, h: 30 },
+      { x: 24, h: 27, v: '24' }, { x: 72, h: 20, v: '18' }, { x: 120, h: 47, v: '42', hot: true },
+      { x: 168, h: 13, v: '12' }, { x: 216, h: 25, v: '22' },
     ]
     return (
-      <svg className="dl-vis" viewBox="0 0 300 64" aria-hidden="true">
+      <svg className="dl-vis v3" viewBox="0 0 300 64" aria-hidden="true">
         <line className="g" x1="8" y1="58" x2="292" y2="58" />
+        <line className="g" x1="8" y1="35" x2="292" y2="35" />
         {bars.map((b, i) => (
-          <rect key={b.x} className={`bar${b.hot ? ' hot' : ''}`} x={b.x} y={58 - b.h} width={30} height={b.h} rx={3}
-            style={{ transitionDelay: `${i * 120}ms` }} />
+          <g key={b.x} className="barg">
+            <rect className={`bar${b.hot ? ' hot' : ''}`} x={b.x} y={58 - b.h} width={30} height={b.h} rx={3}
+              style={{ transitionDelay: `${i * 120}ms` }} />
+            <text className="barlab" x={b.x + 15} y={54 - b.h} textAnchor="middle">{b.v}</text>
+          </g>
         ))}
-        <text className="cap" x="292" y="14" textAnchor="end">SHAP by channel</text>
+        <text className="cap" x="292" y="63" textAnchor="end">SHAP impact by channel · relative</text>
       </svg>
     )
   }
