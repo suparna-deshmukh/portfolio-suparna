@@ -750,6 +750,52 @@ portal, `z` above everything.
   * `document.startViewTransition` is feature-detected in `Header` and
     `ViewTransitionLink`; fallback is instant apply / CSS-only transition.
 
+### 16.1 Rendering diet (P1-6)
+
+* **Grain:** no live `feTurbulence` anywhere in the background layer. One seamless
+  128 px WebP noise tile (`public/images/noise-128.webp`, ~5.3 KB) is tiled at
+  `background-size:128px` on `#writing::before`, `.hbg-grain` and `.tr-paper::after`
+  (opacity .5/.5/.6 light; .08/.12/.12 dark with `filter:invert(1)`).
+* **Blobs:** every `filter:blur()` element is a `radial-gradient(closest-side, …,
+  transparent 70–72%)` background instead — hero glows g1–g3, the About aurora
+  `::before/::after`. Animation is transform-only as before.
+* **Containment:** `main>section.band{contain:layout style}` (deliberately not
+  `paint` — band auras overflow the box). `content-visibility:auto` +
+  `contain-intrinsic-size:auto 1200px` on `#about #corporate #data #contact` only.
+  `#hero` (LCP) and `#experience` (trail needs live geometry) stay fully rendered;
+  `#projects` left out because the stacked-card view transitions need live layout.
+  Anchor jumps, hash scrolling and the route trail were verified after adding it.
+* **LCP first-paint rule:** the H1 land (`tbLand`) and exhibit settle (`exIn`)
+  keyframes carry **translate only, no opacity** — the name plate and desk objects
+  are visible in the very first frame.
+
+### 16.2 JS and loading strategy (P1-7)
+
+* **LazyMount** (`app/components/LazyMount.tsx`): IntersectionObserver-gated mount
+  using `useInViewOnce(ref, threshold, rootMargin)`. `app/components/lazy.tsx`
+  exports module-level `next/dynamic` (`ssr:false`) wrappers: `LazyAskCartReport`
+  and `LazyResearchBoard` (800 px margin — they are the case-card media),
+  `LazyEndPull` (800 px), `LazyP99Panel` (2000 px). Static figures render their
+  final frame via CSS before the component mounts (see §4).
+* **Images:** `next/image` with explicit width/height everywhere — hero portrait,
+  campus card (`priority`; it is the real-throttle LCP asset, 1.66 s on a
+  real-throttle run) and article covers. `COVER_SIZE` in `Article.tsx` must match
+  the real files: askcart 1200×690, research-agent 480×288, null-results
+  1200×675.
+* **Fonts:** the committed `Fraunces-Latin-Variable-Normal.woff2` (67,388 B) is the
+  per-table-compressed source of truth — do **not** regenerate it through
+  fontTools' whole-stream woff2 writer (measured 77,412 B) and do not axis-instance
+  it (gvar deltas are retained when only the range is clipped; measured 77,444 B).
+  The static 600 TTFs (normal + italic) exist only for the icon/OG routes.
+* **Budgets:** see `docs/baseline.md`, "After P1-6 + P1-7" — real-throttle LCP
+  1.66 s (target met); simulated LCP 3.3–3.9 s (documented deviation); eager JS
+  210.3 KB gz vs 170 KB budget (framework floor of the mandated Next 16 / React 19
+  upgrade; every app chunk ≤ 25 KB gz).
+* `ANALYZE=1` in `next.config.mjs` toggles `@next/bundle-analyzer`; Turbopack
+  ignores it (warning only) — use `next analyze` for a webpack report.
+* **Dead code, flagged not removed:** `GitHubGraph.tsx` (SocialCards draws its own
+  mini grid via `useContributions`; only the type import survives).
+
 ---
 
 ## 17. Metrics registry & hover proof

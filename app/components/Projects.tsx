@@ -4,8 +4,7 @@ import CountUp from './CountUp'
 import MetricTip from './MetricTip'
 import { m } from '../lib/metrics'
 import { link } from '../lib/site'
-import AskCartReport from './AskCartReport'
-import ResearchBoard from './ResearchBoard'
+import { LazyAskCartReport, LazyResearchBoard } from './lazy'
 import ViewTransitionLink from './ViewTransitionLink'
 import VisibleCard from './VisibleCard'
 import ProjectIndex, { type ProjectRef } from './ProjectIndex'
@@ -116,7 +115,7 @@ export default function Projects() {
               stack="Next.js · SQL · Python · ML · Gemini API"
               statsLabel="From the MVP"
               stats={(askcart.stats ?? []).map(s => ({ id: s.id, value: m(s.id).shown, label: s.label, hot: s.hot }))}
-              media={<AskCartReport />}
+              media={<LazyAskCartReport />}
             />
           )}
           {research && (
@@ -133,7 +132,7 @@ export default function Projects() {
               stack="n8n · Ollama (Llama 3) · Python · REST APIs"
               statsLabel="One run"
               stats={(research.stats ?? []).map(s => ({ id: s.id, value: m(s.id).shown, label: s.label, hot: s.hot }))}
-              media={<ResearchBoard />}
+              media={<LazyResearchBoard />}
               signature={<SortingDots />}
             />
           )}

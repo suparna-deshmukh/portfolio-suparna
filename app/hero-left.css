@@ -62,14 +62,14 @@ html.motion-ok .tb-foot::before{animation:tbRule .7s var(--ease) .66s both}
 html.motion-ok .tb-rows{animation:tbRowsIn .6s var(--ease) .62s both}
 html.motion-ok .tb-row.live .tb-val{animation:tbMark .8s var(--ease) 1.15s both}
 html.motion-ok .tb-seal{animation:none}
-@keyframes tbLand{from{translate:0 -14px;opacity:0}}
+@keyframes tbLand{from{translate:0 -14px}} /* no opacity: the name plate is the LCP element — text must be visible on first paint */
 @keyframes tbRule{from{transform:scaleX(0)}transform-origin:left}
 @keyframes tbRowsIn{from{opacity:0;translate:0 5px}}
 @keyframes tbMark{from{background-size:0% 100%}}
 
 @media (max-width:899px){
   .tb{max-width:none}
-  .tb-name{font-size:42px;padding:20px 20px 16px}
+  .tb-name{font-size:clamp(26px,8.5vw,42px);padding:20px 20px 16px}
   .tb-foot .hctas{flex-wrap:nowrap}
   .tb-foot .hctas .btn{flex:1 1 0;justify-content:center;padding:14px 10px;white-space:nowrap}
 }

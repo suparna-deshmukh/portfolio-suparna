@@ -5,4 +5,11 @@ const nextConfig = {
   distDir: process.env.NEXT_DIST_DIR ?? '.next',
 }
 
-export default nextConfig
+// Bundle analysis is opt-in: `ANALYZE=1 npm run build` (P1-7).
+const withBundleAnalyzer = process.env.ANALYZE
+  ? (await import('@next/bundle-analyzer')).default
+  : null
+
+export default withBundleAnalyzer
+  ? withBundleAnalyzer({}) (nextConfig)
+  : nextConfig

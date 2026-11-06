@@ -39,17 +39,17 @@ export function useVisibleLoop(ref: RefObject<Element | null>, start: () => void
 }
 
 /** True once the element has scrolled into view (fires once). */
-export function useInViewOnce(ref: RefObject<Element | null>, threshold = 0.2): boolean {
+export function useInViewOnce(ref: RefObject<Element | null>, threshold = 0.2, rootMargin = '0px'): boolean {
   const [seen, setSeen] = useState(false)
   useEffect(() => {
     const el = ref.current
     if (!el || seen) return
     const io = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) { setSeen(true); io.disconnect() }
-    }, { threshold })
+    }, { threshold, rootMargin })
     io.observe(el)
     return () => io.disconnect()
-  }, [ref, threshold, seen])
+  }, [ref, threshold, rootMargin, seen])
   return seen
 }
 

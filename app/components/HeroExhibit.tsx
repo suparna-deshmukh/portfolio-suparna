@@ -2,6 +2,7 @@
 
 import '../hero-right.css'
 import Link from 'next/link'
+import Image from 'next/image'
 import AskCartPhone from './AskCartPhone'
 import MetricTip from './MetricTip'
 import { m } from '../lib/metrics'
@@ -17,7 +18,7 @@ export default function HeroExhibit() {
       <div className="exhibit" id="hero-exhibit">
         <a className="ex-ob ex-badge" href="#about" style={{ ['--d' as string]: 1.15, ['--rot' as string]: '-5deg' }}>
           <span className="ex-clip" aria-hidden="true" />
-          <img src="/images/hero/suparna-portrait.webp" alt="Suparna Deshmukh" width={144} height={136} />
+          <Image src="/images/hero/suparna-portrait.webp" alt="Suparna Deshmukh" width={144} height={136} />
           <b>Suparna Deshmukh</b>
           <small>Associate Product Manager</small>
           <small>RISA Labs · Bengaluru</small>
@@ -38,7 +39,7 @@ export default function HeroExhibit() {
 
         <a className="ex-ob ex-campus" href="#about" style={{ ['--d' as string]: 0.9, ['--rot' as string]: '-2deg' }} aria-label="BITS Pilani, Goa — ECE with a Finance minor, class of 2027">
           <span className="ex-clip" aria-hidden="true" />
-          <img src="/images/hero/bits-goa-sketch.webp" alt="Sketch of the BITS Pilani Goa campus" width={228} height={137} loading="lazy" />
+          <Image src="/images/hero/bits-goa-sketch.webp" alt="Sketch of the BITS Pilani Goa campus" width={228} height={137} priority />
           <b>BITS Pilani, Goa</b>
           <small>Electronics & Communication Engineering</small>
           <small>Finance minor · Class of 2027</small>

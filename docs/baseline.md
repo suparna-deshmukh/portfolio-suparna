@@ -69,3 +69,59 @@ Mobile articles at 390×844 light: both. 404: not yet built (P0-6). /resume: not
   browsers (fixed in the round before this brief; kept global in `:root`).
 * Dead deps in package.json: `motion`, `lucide-react`, `clsx`, `class-variance-authority`,
   `tailwind-merge` (none imported). `tailwind.css` imports full Tailwind v4 utilities.
+
+## After P1-6 + P1-7 (Next 16.4.5 / React 19.2.9, Turbopack build)
+
+Lighthouse 12 mobile, simulated Slow 4G / 4× CPU, fresh profile. Measured twice on 6 Nov
+(machine load 3.6–4.6 — sim numbers vary ±0.5 s with it).
+
+| metric | baseline | after | target |
+|---|---|---|---|
+| Performance | 89 | 88–93 (load-dependent) | ≥ 95 |
+| **LCP (sim)** | **3.8 s** | **3.3–3.9 s** | ≤ 2.0 s — **documented deviation** |
+| FCP | 1.5 s | 1.2 s | — |
+| TBT | 10 ms | 10–20 ms | ≤ 150 ms ✓ |
+| CLS | 0 | 0 | ≤ 0.02 ✓ |
+| Speed Index | 1.9 s | 1.5 s | — |
+| Total weight | 444 KiB | 459 KiB | ≤ 700 KB ✓ |
+| Home JS (gz, eager) | 163 KB | 210.3 KB (3 framework chunks 69.8/44.2/38.5) | ≤ 170 KB — **deviation** |
+
+**LCP deviation (real vs simulated).** Real-throttle CDP probe (390×844 @3x, 1.6 Mbps,
+150 ms RTT, 4× CPU): LCP = campus image, **1.66 s** (H1 text paints at 1.23 s). The real
+world meets the 2.0 s target. The simulated model serialises the whole first load
+(~459 KiB of fonts + JS + images over 1.6 Mbps) and lands the H1 repaint at 3.3–3.9 s.
+LCP element is text ("Suparna Deshmukh", H1) in sim and the 228×137 campus image
+(`priority`) in real throttle — both are first-painted, opacity-free (tbLand/exIn
+animations carry translate only; see hero-left.css / hero-right.css).
+
+**Font work (P1-7).** The committed 67,388 B `Fraunces-Latin-Variable-Normal.woff2` is
+already per-table compressed (brotli, generated outside fontTools). Re-saving it through
+fontTools' whole-stream woff2 writer yields 77,412 B — the committed file stays.
+Instancing `wght` to 500–700 (fontTools 4.60.2 `varLib.instancer`) did not shrink the
+file (gvar deltas are retained when only the axis range is clipped; 77,444 B) and was
+reverted. Removed dead variable-italic sources (`Fraunces-Latin-Variable-Italic.{ttf,woff2}`,
+220 KB, referenced by nothing). Built font set in `.next-build/static/media`:
+Fraunces 66.8 KB, Satoshi 400/500/700 25.5/25.6/25.3 KB, DM Mono 5.7 KB ×2, two 8.7 KB
+OG faces.
+
+**JS budget deviation.** The mandated P1-12 platform upgrade (Next 14.2 → 16.4.5,
+React 18 → 19.2.9) raises the framework floor: 210.3 KB eager gz vs 170 KB budget
+(+47 KB). Every app-level chunk stays ≤ 25 KB gz. `@next/bundle-analyzer` is wired
+behind `ANALYZE=1` but Turbopack ignores it (prints a warning); use `next analyze`
+after a webpack build if a report is needed. `GitHubGraph.tsx` is dead code (only its
+type is imported by SocialCards) — kept, flagged.
+
+**Rendering diet (P1-6).** Three live `feTurbulence` data-URIs → one 5.3 KB seamless
+noise tile `public/images/noise-128.webp` (verified tileable, seed 7, 16 px seam
+crossfade). All `filter: blur()` blobs → `radial-gradient` backgrounds (hero g1–g3,
+about aurora). `contain: layout style` on `main>section.band`; `content-visibility: auto`
+(+ `contain-intrinsic-size: auto 1200px`) on `#about #corporate #data #contact` only —
+hero excluded (LCP), experience excluded (trail needs live geometry). Verified: all
+sections render, anchor jumps land, route-trail geometry intact (shots /tmp/p16-*.png).
+
+**Lazy mount (P1-7).** `LazyMount` (IO-gated, `useInViewOnce` with rootMargin) wraps
+`AskCartReport`, `ResearchBoard`, `EndPull`, `P99Panel` via module-level
+`next/dynamic(ssr:false)` in `app/components/lazy.tsx` (mount margins 800/2000 px).
+`next/image` with explicit dimensions on hero portrait, campus card (`priority` — the
+real-throttle LCP asset) and article covers; `COVER_SIZE` map corrected to the real
+files (askcart 1200×690, research-agent 480×288, null-results 1200×675).

@@ -4,7 +4,7 @@ import { DM_Mono } from 'next/font/google'
 import './globals.css'
 import Header from './components/Header'
 import FloatNav from './components/FloatNav'
-import P99Panel from './components/P99Panel'
+import { LazyP99Panel } from './components/lazy'
 import { ViewTransitionResolver } from './components/ViewTransitionLink'
 import { SITE_URL } from './lib/site'
 
@@ -78,7 +78,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <FloatNav />
         {children}
-        <P99Panel />
+        <LazyP99Panel />
         <ViewTransitionResolver />
       </body>
     </html>

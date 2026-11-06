@@ -7,7 +7,7 @@ import Experience from './components/Experience'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import PageMotion from './components/PageMotion'
-import EndPull from './components/EndPull'
+import { LazyEndPull } from './components/lazy'
 import { SITE_URL, SOCIALS, CONTACT_EMAIL } from './lib/site'
 
 // Proof first: shipped work and work history before the person. Each section is its own sheet.
@@ -34,7 +34,7 @@ export default function Home() {
       <About />
       <Contact footer={<Footer />} />
       <PageMotion />
-      <EndPull />
+      <LazyEndPull />
     </main>
   )
 }

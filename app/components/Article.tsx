@@ -7,15 +7,16 @@ import MarkOnRead from './MarkOnRead'
 import EndDesk from './EndDesk'
 import ViewTransitionLink from './ViewTransitionLink'
 import { annotatedParagraph, NOTE_ARROW } from './annotate'
+import Image from 'next/image'
 import type { Annotated } from '../lib/content'
 import { LEAD_NOTES, sectionOf, sections, slugify, type PileItem } from '../lib/posts'
 
 const TOC_MIN_HEADINGS = 4
 /** Intrinsic sizes of the cover files in public/, so the figure reserves its height before the image loads. */
 const COVER_SIZE: Record<string, [number, number]> = {
-  '/images/blog/p99-is-a-ux-metric-cover.webp': [1920, 1115],
-  '/images/projects/toolmonkey-chaos-agent-cover.webp': [1099, 600],
-  '/images/projects/filtr-rag-pm-tool-cover.webp': [1433, 857],
+  '/images/projects/askcart-cover.webp': [1200, 690],
+  '/images/projects/research-agent-cover.webp': [480, 288],
+  '/images/blog/null-results-cover.webp': [1200, 675],
 }
 
 interface ArticleProps {
@@ -69,7 +70,7 @@ export default function Article({ kind, slug, backHref, backLabel, title, subtit
             </div>
             {cover && (
               <figure className="fig" style={isCase ? { viewTransitionName: `case-media-${slug}` } : undefined}>
-                <img src={cover} alt="" width={coverW} height={coverH} />
+                <Image src={cover} alt="" width={coverW} height={coverH} sizes="(max-width: 900px) 100vw, 900px" style={{ width: '100%', height: 'auto' }} />
               </figure>
             )}
             {(quote || annot.notes?.length) && (
