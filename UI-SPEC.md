@@ -736,8 +736,10 @@ portal, `z` above everything.
 * No scroll listeners where avoidable (sentinel IO for header, cached geometry +
   transforms for the route trail, rAF-throttled pointer handlers).
 * `.paused` class stops all off-screen CSS loops (bands, hero, contact threads).
-* Fonts: Fraunces (local variable woff2) + Satoshi (local woff2), both
-  `adjustFontFallback`; DM Mono via `next/font/google`. All `swap`.
+* Fonts: all three faces are local woff2 via `next/font/local` — Fraunces
+  (variable, `adjustFontFallback: Arial`), Satoshi 400/500/700, DM Mono 400/500
+  (latin + wider subsets, `app/fonts/dmmono/`). All `display: swap`. No
+  build-time network font fetches.
 * **Browser support** (last 2 of Chrome/Edge/Firefox/Safari, iOS Safari 16.4+):
   * `--settle` falls back to `cubic-bezier(.34,1.56,.64,1)` where
     `linear()` timing is unparseable, via

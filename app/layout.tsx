@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next'
 import localFont from 'next/font/local'
-import { DM_Mono } from 'next/font/google'
 import './globals.css'
 import Header from './components/Header'
 import FloatNav from './components/FloatNav'
@@ -29,7 +28,16 @@ const satoshi = localFont({
   display: 'swap',
 })
 
-const dmMono = DM_Mono({ subsets: ['latin'], weight: ['400', '500'], variable: '--font-dm-mono', display: 'swap' })
+const dmMono = localFont({
+  src: [
+    { path: './fonts/dmmono/DM-Mono-400.woff2', weight: '400' },
+    { path: './fonts/dmmono/DM-Mono-400-ext.woff2', weight: '400' },
+    { path: './fonts/dmmono/DM-Mono-500.woff2', weight: '500' },
+    { path: './fonts/dmmono/DM-Mono-500-ext.woff2', weight: '500' },
+  ],
+  variable: '--font-dm-mono',
+  display: 'swap',
+})
 
 const SITE_DESCRIPTION = 'Associate Product Manager at RISA Labs. Case studies on AI search, agentic research and GTM, data ledgers, and product work across five industries.'
 
