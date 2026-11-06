@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { RESUME_URL } from '../lib/site'
+import { RESUME_URL, link } from '../lib/site'
 import { istTime } from '../lib/hooks'
 
 type Theme = 'light' | 'dark'
@@ -12,6 +12,9 @@ const SUN = (
   <><circle cx="12" cy="12" r="4.5" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></>
 )
 const MOON = <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+const DL = (
+  <><path d="M12 3v11m0 0 4-4m-4 4-4-4" /><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" /></>
+)
 
 export default function Header() {
   const isHome = usePathname() === '/'
@@ -67,7 +70,12 @@ export default function Header() {
             <span className="num clock" suppressHydrationWarning>{time || '--:--'}</span><i />
             <span>IST</span>
           </span>
-          <a className="res" href={RESUME_URL} target="_blank" rel="noopener noreferrer">Resume ↗</a>
+          {link(RESUME_URL) && (
+            <a className="res" href={RESUME_URL}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{DL}</svg>
+              Resume
+            </a>
+          )}
           <a className="talk" href={isHome ? '#contact' : '/#contact'}>Let&apos;s talk</a>
           <button className="themebtn" type="button" onClick={toggleTheme} aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">{theme === 'dark' ? MOON : SUN}</svg>

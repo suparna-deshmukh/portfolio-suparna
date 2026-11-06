@@ -1,6 +1,6 @@
 'use client'
 
-import { EXPERIENCE, GITHUB_USER, RESUME_URL, SOCIALS } from '../lib/site'
+import { EXPERIENCE, GITHUB_USER, RESUME_URL, SOCIALS, link } from '../lib/site'
 import type { ContributionDay } from './GitHubGraph'
 import { useContributions } from './useContributions'
 
@@ -84,7 +84,8 @@ export default function SocialCards() {
 
       <GitHubCard />
 
-      <a className="pc pc-cv" href={RESUME_URL} {...linkProps} aria-label="Read my resume, opens in Google Drive">
+      {link(RESUME_URL) && (
+      <a className="pc pc-cv" href={RESUME_URL} aria-label="Read my resume (PDF download)">
         <span className="cv-stage" aria-hidden="true">
           <span className="cv-back" />
           <span className="cv-paper">
@@ -93,9 +94,10 @@ export default function SocialCards() {
           </span>
           <span className="cv-front" />
         </span>
-        <span className="pc-id"><b>Resume</b><small>Opens in Google Drive</small></span>
-        <span className="pc-act">Read my resume <span className="pc-arr" aria-hidden="true">↗</span></span>
+        <span className="pc-id"><b>Resume</b><small>PDF · one page</small></span>
+        <span className="pc-act">Download my resume <span className="pc-arr" aria-hidden="true">↓</span></span>
       </a>
+      )}
     </div>
   )
 }

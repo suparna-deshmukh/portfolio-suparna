@@ -3,6 +3,7 @@ import SectionHeader from './SectionHeader'
 import CountUp from './CountUp'
 import MetricTip from './MetricTip'
 import { m } from '../lib/metrics'
+import { link } from '../lib/site'
 import AskCartReport from './AskCartReport'
 import ResearchBoard from './ResearchBoard'
 import ViewTransitionLink from './ViewTransitionLink'
@@ -62,7 +63,7 @@ function Case({ variant, id, index, refs, slug, title, summary, liveUrl, links, 
         <div className="ft">
           <ViewTransitionLink href={href} className="btn">Read the case study →</ViewTransitionLink>
           {liveUrl && <a href={liveUrl} target="_blank" rel="noopener noreferrer">{liveHost(liveUrl)} ↗</a>}
-          {links?.map(l => (
+          {(links ?? []).filter(l => link(l.href)).map(l => (
             <a key={l.label} className="case-link" href={l.href} target="_blank" rel="noopener noreferrer">{l.label} <span aria-hidden="true">↗</span></a>
           ))}
         </div>

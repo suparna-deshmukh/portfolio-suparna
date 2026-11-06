@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Article from '../../components/Article'
 import { getCaseStudies as published, getLead, postToPile, projectToPile, readMinutes } from '../../lib/posts'
+import { link } from '../../lib/site'
 
 const MAX_OTHER_CASES = 2
 
@@ -47,7 +48,7 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
       meta={
         <>
           <span>{project.tags.join(' · ')}</span>
-          {project.live_url && <a href={project.live_url} target="_blank" rel="noopener noreferrer">{project.live_url.replace(/^https?:\/\//, '')} ↗</a>}
+          {link(project.live_url) && <a href={link(project.live_url)!} target="_blank" rel="noopener noreferrer">{project.live_url!.replace(/^https?:\/\//, '')} ↗</a>}
         </>
       }
     />

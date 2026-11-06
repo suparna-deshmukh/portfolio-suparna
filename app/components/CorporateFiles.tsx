@@ -2,7 +2,7 @@
 
 import '../corporate.css'
 import { useCallback, useEffect, useRef } from 'react'
-import { CORPORATE, CORPORATE_AGG, PREFILL_EVENT, type Corporate } from '../lib/site'
+import { CORPORATE, CORPORATE_AGG, PREFILL_EVENT, link, type Corporate } from '../lib/site'
 import { m } from '../lib/metrics'
 import CountUp from './CountUp'
 import MetricTip from './MetricTip'
@@ -202,7 +202,7 @@ export default function Corporate() {
                   {c.chips.map(ch => (
                     <span key={ch.label} className="cf-chip"><b>{ch.value}</b><span>{ch.label}</span></span>
                   ))}
-                  {c.deck && (
+                  {c.deck && link(c.deck.href) && (
                     <a key={c.deck.label} className="cf-chip cf-chip-deck" href={c.deck.href} target="_blank" rel="noopener noreferrer">
                       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z" /><path d="M14 3v5h5" /><path d="M10 13h6M10 17h6" /></svg>
                       <span>{c.deck.label}</span><b aria-hidden="true">↗</b>

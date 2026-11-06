@@ -2,7 +2,7 @@
 
 import '../about.css'
 import { useEffect, useRef } from 'react'
-import { ACHIEVEMENTS, EDUCATION, POSITIONS } from '../lib/site'
+import { ACHIEVEMENTS, EDUCATION, POSITIONS, link } from '../lib/site'
 import CountUp from './CountUp'
 import MetricTip from './MetricTip'
 import SectionHeader from './SectionHeader'
@@ -117,7 +117,7 @@ function Positions() {
               <b>{a.rank} <i>of {a.of}</i></b>
               <span className="ab-hn-name">{a.name}</span>
               <span>{a.note}</span>
-              {a.deck && (
+              {a.deck && link(a.deck.href) && (
                 <a className="ab-hn-deck" href={a.deck.href} target="_blank" rel="noopener noreferrer">
                   {a.deck.label} <span aria-hidden="true">↗</span>
                 </a>

@@ -1,7 +1,8 @@
 // Site-wide constants and section data that is not part of the posts/projects content.
 import { m } from './metrics'
+import { PROJECTS } from './content'
 
-export const RESUME_URL = '#' // TODO: paste the resume link (Drive/website)
+export const RESUME_URL = '/Suparna-Deshmukh-Resume.pdf' // generated: scripts/build-resume-pdf.mjs
 export const EMAIL = 'f20230611@goa.bits-pilani.ac.in'
 export const PHONE = '+91 89569 67964'
 export const GITHUB_USER = 'suparna-deshmukh'
@@ -12,6 +13,40 @@ export const SOCIALS = {
   x: '', // TODO: add the X handle; the X card stays hidden until it does
 }
 
+/**
+ * A link only renders when it has a real destination. Empty or '#' URLs stay hidden until
+ * Suparna supplies them (no dead ends on a portfolio). Dev-time, assertNoDeadLinks crawls
+ * every href that *will* render and fails on placeholders.
+ */
+export const link = (href?: string | null) => (href && href.trim() && href.trim() !== '#' ? href.trim() : undefined)
+
+function isRealHref(href: string): boolean {
+  if (href.startsWith('/')) return true
+  if (!/^https?:\/\//.test(href)) return false
+  if (href.includes('example.com')) return false
+  if (href.includes('localhost')) return false
+  return true
+}
+
+export function assertNoDeadLinks() {
+  const problems: string[] = []
+  const check = (where: string, href?: string | null) => {
+    if (!link(href)) return // hidden until supplied — not a dead link
+    if (!isRealHref(href as string)) problems.push(`${where} → "${href}"`)
+  }
+  check('RESUME_URL', RESUME_URL)
+  check('SOCIALS.linkedin', SOCIALS.linkedin)
+  check('SOCIALS.github', SOCIALS.github)
+  check('SOCIALS.x', SOCIALS.x)
+  check('CONSULTATHON_URL', CONSULTATHON_URL)
+  for (const p of PROJECTS) {
+    check(`PROJECTS[${p.slug}].live_url`, p.live_url)
+    for (const l of p.links ?? []) check(`PROJECTS[${p.slug}].links`, l.href)
+  }
+  for (const c of CORPORATE) check(`CORPORATE[${c.id}].deck`, c.deck?.href)
+  for (const a of ACHIEVEMENTS) check(`ACHIEVEMENTS[${a.name}].deck`, a.deck?.href)
+  if (problems.length) throw new Error(`[dead-links] rendered links without a real destination: ${problems.join('; ')}`)
+}
 export const PREFILL_EVENT = 'contact:prefill'
 export const ASK_OWN_MESSAGE = "Hi Suparna, I'd like to hear about your corporate consulting work."
 
@@ -387,3 +422,5 @@ export const DATA_LEDGERS: DataLedger[] = [
     tech: 'SQL · Python · scikit-learn',
   },
 ]
+
+if (process.env.NODE_ENV !== "production") assertNoDeadLinks()
