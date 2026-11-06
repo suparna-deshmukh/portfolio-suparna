@@ -82,3 +82,16 @@ Reduced-motion run (1280, dark): all figures on finished frames (`fq-reduced-mot
 ## 11. Console
 
 0 console errors, 0 hydration warnings across all route/theme runs.
+
+## 12. Final matrix + before/after (stamp rust)
+
+Captured on the final build after the a11y pass (motion off, fresh profile):
+* `mx-1440-light.png` / `mx-1440-dark.png` — desktop matrix tops (1440×900)
+* `mx-390-light.png` / `mx-390-dark.png` — mobile matrix tops (390×844)
+* `mx-390-corporate-light.png` — corporate folder-tab accordion at 390
+* `corp-files-1440-light.png` — all three corporate files at 1440
+* **Stamp before/after:** `corporate-desktop-1440-light.png` (commit `d3a9590`,
+  `--stamp: #B24A26`, `--dimmer` `.62`) vs `corp-file-1440-light.png` (final,
+  `--stamp: #963A18`, `--dimmer` `.70`). Same composition; only the ink is one
+  step deeper so the 92 %-opacity stamp text clears 4.5:1. Dark-mode stamp
+  (`#E08A5E`) is unchanged — `corp-file-1440-dark.png`.
