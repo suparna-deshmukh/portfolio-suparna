@@ -1,0 +1,27 @@
+# Changelog
+
+Upgrade run of 6 Nov 2026, against `UI-IMPROVEMENT-BRIEF.md` (site-wide) and the
+sections brief (Corporate / Data / Education / Positions / Honors). Newest first.
+Every commit is local-only (no remote exists).
+
+| commit | id | what changed |
+|---|---|---|
+| `e1117b9` | P1-1, P1-2, P1-3, P1-10, P2-1, P2-5, P3-6, E-5 | Site-wide batch — mobile hero desk (≤640: badge/RISA pair, native phone, scroll-snap note strip, campus last); FitStage figures un-scaled (report rows stacked + stamp band, board 2-col notes + stacked themes); sticky manifest capped at `100dvh − 120px`; 44px hit areas (disclosure, method steps, replay, YearStrip, SecRef, theme toggle, FloatNav) + flight-card keyboard focus parity; `p99` keyguard (form fields, modifiers); About stats `dl`→`div`; forced-colors block; phone `aria-label` + phone-mock contrast (Lighthouse a11y → 100); `HERO_LINE` positioning line under the nameplate; p99 panel now reports real TTFB/FCP/LCP/CLS/KB; security headers (Referrer-Policy, nosniff, Permissions-Policy, `frame-ancestors 'none'`); `EDUCATION.branch` constant so "Electronics and Communication Engineering" is stored once ("and", never "&"). UI-SPEC §6.2/§6.3/§9/§10/§11/§15/§16.4 rewritten, §20–§21 added. |
+| `ace1552` | sections brief (C/D/E/R/X) | Typed schemas + `assertSections()` dev assertions; `<Proof>`/`<Attribution>`/`<Disclosure>`/`<ProvenanceChip>`/`<YearStrip>` building blocks; `useTimeline` play-once (`loop:false`) + `replay()`. Corporate: folder-tab skim row, manila FILE tabs, one anatomy, lede sentence replacing aggregate chips, no money gauges, deliverable-verdict rows (BUILT/DRAFTED/SIZED/…), defensible stamps (SERIES A AIDED / PRICING AUDIT DONE / GRANTS PURSUED), 180-DC-vs-independent stated, replay on hover/focus/tap/button. Data: provenance chips, Result/Modeled/Scale kind labels, Illustrative tags on all figures, 4-step method strip with hover/focus highlighting, PM-relevance rank order. Education: CLASS OF 2027 round seal (play-once), dates line, 4-lane YearStrip 2023–27 from site data, mobile reading order quote→bio→education→positions→honors. POR: POSITION 0N anatomy (scope line, one headline Proof, one signature visual, static sponsor line replacing the 24s marquee, SYNERGY note, secondary stats in a disclosure), OfferStamps exact 6×40 + caption, TeamDots removed. Honors: organiser + year on all three cards. Baseline screenshots in `docs/sections-baseline/`. |
+| `28313e9` | P1-4 | 11px effective text floor at hard viewports; `scripts/qa-fonts.mjs` CDP audit (`npm run qa:fonts`); raised misses (hero exhibit, `.rt-div`, `.ab-team`, `.fb-note`, `dl-vis` SVG label viewBoxes). UI-SPEC §16.4. |
+| `6d79e9d` | P1-8 | DM Mono self-hosted (four woff2 subsets, per-file `unicode-range`); no more flaky Google Fonts fetch at build time. |
+| `99f1491` | P2-6 | `<Stamp/>` + `useTimeline` replace all hand-rolled timer machinery (AskCartReport, CorporateDoc ×3, ResearchBoard); baked rough-ink masks replace live `feTurbulence`; one shared `stampSlam`. Net code down. UI-SPEC §8.2/§8.3/§16.3. |
+| `b1b471e` | P1-7 | JS diet + loading strategy: `LazyMount` IO-gated chunks for the heavy figures and p99 panel, `next/image` with explicit dims (portrait priority → real-throttle LCP 1.66s), removed 220KB dead variable-italic fonts, ANALYZE-gated bundle analyzer. |
+| `90490d4` | P1-6 | Rendering-cost diet: live turbulence grain → 5.3KB noise tile, blur blobs → radial gradients, `contain` + `content-visibility` on below-fold sections, opacity-free LCP keyframes. |
+| `4a55d7f` | P1-5 | Motion control: visible On/Off toggle (WCAG 2.2.2), `html.motion-off` freeze, `html.lite` adaptive degrade, coarse-pointer parallax off. |
+| `574bc04` + `cb5c113` | P1-12 | Next 16.4.5 (Turbopack) + React 19.2.9; dead deps removed (motion, lucide, clsx, cva, tailwind-*); ESLint 9 flat config; `npm run check` script. |
+| `d603f2b` | P1-11 | Browser fallbacks: `--settle` `@supports`, `100dvh→100vh`, `@property`/`:has()` degradation documented. |
+| `03a1822` | P1-8 | Self-hosted variable Fraunces (`next/font/local`, no italic), `--font-clash` → `--font-display-var`, LICENSES.md. |
+| `7ede24a` | P1-9 | Theme correctness: system default, pre-paint resolution + `color-scheme`, three-way toggle with live system-follow. |
+| `13cff38` | P0-6 | Metadata + sharing: OG images (site + per-case) via `next/og`, SD monogram icon + apple icon, manifest, sitemap, robots, JSON-LD Person/Article, stamp-language 404/error pages. |
+| `ac9bb96` | P0-5 | Contact API hardening: shared validation, honeypot, 2.5s fill-time, 10KB cap, per-IP token bucket (5/hr, 429 + Retry-After), 8s mail timeout, typed error codes; client copy-message + mailto fallback. |
+| `4e98ac8` | P0-4 | Contact identity: email from `NEXT_PUBLIC_CONTACT_EMAIL` (hidden until supplied), phone tap-to-reveal on Contact only, hero phone removed, noscript mailto. |
+| `47e65d7` | P0-3 | Claim wording: verifiable project-level verbs; `myPart` field behind a data guard. |
+| `2e5e70b` | P0-1 | Zero dead links: `link()` render guard + `assertNoDeadLinks()`; `/resume` page + generated PDF; download icons. |
+| `7fdba5b` | P0-2 | `METRICS` registry: every number once, with source + asOf; dev-time rate assertion; `MetricTip` hover/focus proof on all headline stats; `ac-eval` flagged `needsReview`. |
+| `1651e0f` | baseline | Screenshot matrix, Lighthouse mobile, bundle + scroll metrics in `docs/baseline.md`; distDir isolation so builds can never corrupt the dev server. |
