@@ -4,10 +4,13 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { RESUME_URL, link } from '../lib/site'
+import { DEFAULT_THEME, NEXT_THEME, THEME_COLORS, resolveTheme, type ThemePref } from '../lib/site'
 import { istTime } from '../lib/hooks'
 
-type Theme = 'light' | 'dark'
-
+type Resolved = 'light' | 'dark'
+const SYSTEM = (
+  <><circle cx="12" cy="12" r="9" /><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none" /></>
+)
 const SUN = (
   <><circle cx="12" cy="12" r="4.5" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></>
 )
@@ -20,26 +23,56 @@ export default function Header() {
   const isHome = usePathname() === '/'
   const [time, setTime] = useState('')
   const [scrolled, setScrolled] = useState(false)
-  const [theme, setTheme] = useState<Theme>('light')
+  const [pref, setPref] = useState<ThemePref>(DEFAULT_THEME)
+  const [resolved, setResolved] = useState<Resolved>('light')
+  const prefRef = useRef<ThemePref>(DEFAULT_THEME)
   const sentinelRef = useRef<HTMLSpanElement>(null)
 
+  const applyTheme = (r: Resolved) => {
+    const d = document.documentElement
+    d.dataset.theme = r
+    d.style.colorScheme = r
+    document.querySelectorAll('meta[name="theme-color"]').forEach(meta => {
+      meta.setAttribute('content', (meta.getAttribute('media') ?? '').includes('dark') ? THEME_COLORS.dark : THEME_COLORS.light)
+    })
+  }
+
   useEffect(() => {
-    setTheme(document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light')
+    let stored: string | null = null
+    try { stored = localStorage.getItem('theme') } catch { /* storage blocked */ }
+    const initial: ThemePref = stored === 'light' || stored === 'dark' || stored === 'system' ? stored : DEFAULT_THEME
+    prefRef.current = initial
+    setPref(initial)
+    const sysDark = window.matchMedia('(prefers-color-scheme: dark)')
+    const initialResolved = resolveTheme(initial, sysDark.matches)
+    setResolved(initialResolved)
+    applyTheme(initialResolved)
+    const onSystem = (e: MediaQueryListEvent) => {
+      if (prefRef.current === 'system') {
+        const next = resolveTheme('system', e.matches)
+        setResolved(next)
+        applyTheme(next)
+      }
+    }
+    sysDark.addEventListener('change', onSystem)
     const tick = () => setTime(istTime())
     tick()
     const id = setInterval(tick, 30_000)
     // A sentinel 80px down the page: no scroll listener, so no forced layout on every scroll event.
     const io = new IntersectionObserver(([e]) => setScrolled(!e.isIntersecting))
     if (sentinelRef.current) io.observe(sentinelRef.current)
-    return () => { clearInterval(id); io.disconnect() }
+    return () => { clearInterval(id); io.disconnect(); sysDark.removeEventListener('change', onSystem) }
   }, [])
 
   const toggleTheme = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const next: Theme = theme === 'dark' ? 'light' : 'dark'
+    const next: ThemePref = NEXT_THEME[pref]
+    const nextResolved: Resolved = resolveTheme(next, window.matchMedia('(prefers-color-scheme: dark)').matches)
     const apply = () => {
-      document.documentElement.dataset.theme = next
       try { localStorage.setItem('theme', next) } catch { /* storage blocked */ }
-      setTheme(next)
+      prefRef.current = next
+      setPref(next)
+      setResolved(nextResolved)
+      applyTheme(nextResolved)
       window.dispatchEvent(new Event('themechange'))
     }
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -77,8 +110,9 @@ export default function Header() {
             </a>
           )}
           <a className="talk" href={isHome ? '#contact' : '/#contact'}>Let&apos;s talk</a>
-          <button className="themebtn" type="button" onClick={toggleTheme} aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">{theme === 'dark' ? MOON : SUN}</svg>
+          <button className="themebtn" type="button" onClick={toggleTheme}
+            aria-label={`Theme: ${pref === 'system' ? 'system (follows device)' : pref}. Switch to ${NEXT_THEME[pref] === 'system' ? 'system (follows device)' : NEXT_THEME[pref]}`}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">{pref === 'system' ? SYSTEM : resolved === 'dark' ? MOON : SUN}</svg>
           </button>
         </div>
       </header>

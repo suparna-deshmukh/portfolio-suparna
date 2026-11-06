@@ -162,10 +162,19 @@ prefers-reduced-motion). `:focus-visible{outline:2px solid var(--focus);offset 3
 
 ### 2.4 Themes
 
-* `html[data-theme="light"|"dark"]`, persisted to `localStorage.theme`, broadcast via
-  `themechange` event. Default light.
-* Toggle: 16px sun/moon button in header. Uses `document.startViewTransition` with a
-  **circle wipe from the click point** (550ms, `cubic-bezier(.65,0,.35,1)`,
+* Preference: **system** (default), light, dark — stored in `localStorage.theme`,
+  resolved to `html[data-theme="light"|"dark"]` by an inline pre-paint script in
+  `<head>` (no flash; the static `data-theme="light"` attribute is the no-JS
+  fallback). The script also sets `style.colorScheme`. `suppressHydrationWarning`
+  on `<html>`. Broadcast via `themechange` event.
+* `DEFAULT_THEME`, `NEXT_THEME`, `THEME_COLORS`, `resolveTheme` live in `site.ts`.
+* Toggle: cycles system → light → dark (half-filled circle / sun / moon icon).
+  Accessible name states the current mode and the next one. While the preference
+  is system, a `prefers-color-scheme` change listener re-resolves live. On every
+  apply, the `meta[name="theme-color"]` tags (light/dark media variants from
+  `viewport`) are updated to `THEME_COLORS`. Uses
+  `document.startViewTransition` with a **circle wipe from the click point**
+  (550ms, `cubic-bezier(.65,0,.35,1)`,
   `pseudoElement:'::view-transition-new(root)'`); falls back to instant apply when
   unsupported or reduced motion.
 

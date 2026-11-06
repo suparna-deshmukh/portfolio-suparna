@@ -5,6 +5,15 @@ import { PROJECTS } from './content'
 export const RESUME_URL = '/Suparna-Deshmukh-Resume.pdf' // generated: scripts/build-resume-pdf.mjs
 /** Canonical origin for metadata. Set NEXT_PUBLIC_SITE_URL once a domain exists (Section 7 #13). */
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3210'
+
+/** Theme preference cycle (P1-9): system -> light -> dark. Stored in localStorage 'theme'. */
+export type ThemePref = 'system' | 'light' | 'dark'
+export const DEFAULT_THEME: ThemePref = 'system'
+export const NEXT_THEME: Record<ThemePref, ThemePref> = { system: 'light', light: 'dark', dark: 'system' }
+export const THEME_COLORS: Record<'light' | 'dark', string> = { light: '#F1F4EF', dark: '#0E1512' }
+export function resolveTheme(pref: ThemePref, systemDark: boolean): 'light' | 'dark' {
+  return pref === 'system' ? (systemDark ? 'dark' : 'light') : pref
+}
 /** Institute address — the form's fallback recipient only; never displayed until a professional address arrives (P0-4). */
 export const EMAIL = 'f20230611@goa.bits-pilani.ac.in'
 /**
