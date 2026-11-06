@@ -128,7 +128,7 @@ Light (`:root,[data-theme="light"]`)
 | `--surf2` | `#E3EAE0` | `--lineF` | `rgba(21,33,26,.04)` |
 | `--fg` | `#15211A` | `--tint` | `rgba(21,33,26,.05)` |
 | `--dim` | `rgba(21,33,26,.72)` | `--press` | `rgba(21,33,26,.10)` |
-| `--dimmer` | `rgba(21,33,26,.62)` | `--acc` | `#177E5B` (pine green) |
+| `--dimmer` | `rgba(21,33,26,.70)` | `--acc` | `#177E5B` (pine green) |
 | | | `--accInk` | `#F4FAF7` | `--accText` | `#146248` |
 | `--err` | `#B3261E` | `--focus` | `#146248` |
 
@@ -950,9 +950,12 @@ portal, `z` above everything.
   and `LazyResearchBoard` (800 px margin — they are the case-card media),
   `LazyEndPull` (800 px), `LazyP99Panel` (2000 px). Static figures render their
   final frame via CSS before the component mounts (see §4).
-* **Images:** `next/image` with explicit width/height everywhere — hero portrait,
-  campus card (`priority`; it is the real-throttle LCP asset, 1.66 s on a
-  real-throttle run) and article covers. `COVER_SIZE` in `Article.tsx` must match
+* **Images:** `next/image` with explicit width/height everywhere — hero ID-badge
+  portrait and campus card (`priority`; the badge is the LCP element, 1.25 s on a
+  real-throttle mobile run, 390×844, Slow 4G + 4× CPU) and article covers.
+  Lighthouse's *simulated* mobile LCP (3.9 s) is a 4× CPU model artifact — the
+  real-throttle measurement is the number that meets the ≤ 2.0 s budget.
+  `COVER_SIZE` in `Article.tsx` must match
   the real files: askcart 1200×690, research-agent 480×288, null-results
   1200×675.
 * **Fonts:** the committed `Fraunces-Latin-Variable-Normal.woff2` (67,388 B) is the

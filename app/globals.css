@@ -3,7 +3,7 @@
 /* LIGHT (default). */
 :root,[data-theme="light"]{
   --bg:#F1F4EF;--surf:#FAFCF8;--surf2:#E3EAE0;
-  --fg:#15211A;--dim:rgba(21,33,26,.72);--dimmer:rgba(21,33,26,.62);
+  --fg:#15211A;--dim:rgba(21,33,26,.72);--dimmer:rgba(21,33,26,.70);
   --line:rgba(21,33,26,.09);--lineS:rgba(21,33,26,.16);--lineF:rgba(21,33,26,.04);
   --tint:rgba(21,33,26,.05);--press:rgba(21,33,26,.1);
   --acc:#177E5B;--accInk:#F4FAF7;--accText:#146248;
@@ -96,7 +96,7 @@ input,textarea{caret-color:var(--acc)}
 main>section.band{contain:layout style}
 /* Below-the-fold bands skip rendering until near the viewport. The hero (LCP) and the
    experience road (its trail needs live geometry) stay fully rendered. */
-#about,#corporate,#data,#contact{content-visibility:auto;contain-intrinsic-size:auto 1200px}
+#about,#corporate,#data{content-visibility:auto;contain-intrinsic-size:auto 1200px}
 .band-sand{--bg:var(--surf2)}
 .band-sand .form{--surf:var(--surf)}
 /* Contact, C1 "after hours": warm black with orange threads. Text tokens re-scoped for the dark surface in both themes. */
@@ -112,7 +112,7 @@ main>section.band{contain:layout style}
 @keyframes drift{from{transform:translateY(-1.4%)}to{transform:translateY(1.4%)}}
 .paused .threads{animation-play-state:paused}
 @media (prefers-reduced-motion:reduce){.threads{animation:none}}
-.band-night .form{--bg:#F1F4EF;--surf:#FAFCF8;--fg:#15211A;--dim:rgba(21,33,26,.72);--dimmer:rgba(21,33,26,.62);--line:rgba(21,33,26,.09);--lineS:rgba(21,33,26,.16);--acc:#177E5B;--accInk:#F4FAF7;--accText:#146248;--err:#B3261E;--focus:#146248;color:var(--fg)}
+.band-night .form{--bg:#F1F4EF;--surf:#FAFCF8;--fg:#15211A;--dim:rgba(21,33,26,.72);--dimmer:rgba(21,33,26,.70);--line:rgba(21,33,26,.09);--lineS:rgba(21,33,26,.16);--acc:#177E5B;--accInk:#F4FAF7;--accText:#146248;--err:#B3261E;--focus:#146248;color:var(--fg)}
 /* ── one calm background layer per section, always behind content ── */
 .band{isolation:isolate;overflow:clip}
 .band>.sec{position:relative;z-index:1}

@@ -93,12 +93,14 @@ function CorporateDoc({ c }: { c: Corporate }) {
   const replaying = tl.inCycle && tl.has('stamp')
 
   return (
-    <div ref={ref} className="cfdoc" role="img"
-      aria-label={`${c.doc.type} for ${c.name}: ${c.rows.map(r => `${r.label} — ${r.verdict}`).join(', ')}. Proof: ${c.proof.value} ${c.proof.label}.${c.proofMetric ? ` ${m(c.proofMetric).source}, as of ${m(c.proofMetric).asOf}.` : ''}`}
+    <div ref={ref} className="cfdoc"
       onPointerEnter={() => { if (!reduced) tl.replay() }}
       onFocus={() => { if (!reduced) tl.replay() }}
       onClick={() => tl.replay()}
     >
+      <div className="cfdoc-fig" role="img"
+        aria-label={`${c.doc.type} for ${c.name}: ${c.rows.map(r => `${r.label} — ${r.verdict}`).join(', ')}. Proof: ${c.proof.value} ${c.proof.label}.${c.proofMetric ? ` ${m(c.proofMetric).source}, as of ${m(c.proofMetric).asOf}.` : ''}`}
+      >
         <div className={`cfdoc-paper${replaying ? ' st shake' : tl.has('stamp') ? ' st' : ''}`}>
         <div className="cfdoc-hd">
           <span className="cfdoc-emb" aria-hidden="true">{EMBLEMS[c.id]}</span>
@@ -118,9 +120,6 @@ function CorporateDoc({ c }: { c: Corporate }) {
           <span>{c.proof.label}</span>
           <Attribution a={c.proofAttribution} className="cfdoc-attr" />
         </div>
-        <button type="button" className="cfdoc-replay" aria-label={`Replay the ${c.doc.type} animation`} onClick={() => tl.replay()}>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10a8 8 0 0 1 14-4l-4 4" /><path d="M20 14a8 8 0 0 1-14 4l4-4" /><path d="M4 4v6h6M20 20v-6h-6" /></svg>
-        </button>
       </div>
       <Stamp
         shape="rect" tone="ink" size="md" rot={-6}
@@ -129,6 +128,10 @@ function CorporateDoc({ c }: { c: Corporate }) {
         decorative
         className="cfdoc-stamp timeline"
       />
+      </div>
+      <button type="button" className="cfdoc-replay" aria-label={`Replay the ${c.doc.type} animation`} onClick={e => { e.stopPropagation(); tl.replay() }}>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10a8 8 0 0 1 14-4l-4 4" /><path d="M20 14a8 8 0 0 1-14 4l4-4" /><path d="M4 4v6h6M20 20v-6h-6" /></svg>
+      </button>
     </div>
   )
 }

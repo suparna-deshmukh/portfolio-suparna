@@ -48,7 +48,7 @@
 .acp-card{margin-top:10px;border:1.5px dashed rgba(23,126,91,.5);background:rgba(23,126,91,.06);border-radius:10px;padding:9px 11px;
   display:grid;gap:4px;opacity:0;translate:0 6px;transition:opacity .45s ease,translate .45s var(--ease)}
 .acp-card.on{opacity:1;translate:0 0}
-.acp-card small{font:500 13px/1 var(--fm);letter-spacing:.12em;text-transform:uppercase;color:rgba(23,126,91,.85)}
+.acp-card small{font:500 13px/1 var(--fm);letter-spacing:.12em;text-transform:uppercase;color:#1F6B4F}
 .acp-card b{font:600 13px/1.25 var(--fb)}
 .acp-opts{display:flex;gap:5px;margin-top:3px}
 .acp-opts i{font:500 11px/1 var(--fm);font-style:normal;border:1px solid rgba(21,33,26,.25);border-radius:999px;padding:4px 8px;color:rgba(21,33,26,.75)}

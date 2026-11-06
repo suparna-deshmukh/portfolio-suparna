@@ -32,12 +32,12 @@ export default function ResumePage() {
   const r = RESUME
   return (
     <div className="rpage" id="content">
-      <div className="r-sheet">
-        <header className="r-hd">
+      <main className="r-sheet">
+        <div className="r-hd">
           <h1>{r.name}</h1>
           <p className="r-stand">{r.standfirst}</p>
           <p className="r-contact">{r.contact.join('   ·   ')}</p>
-        </header>
+        </div>
 
         <section className="r-sec">
           <h2>Education</h2>
@@ -79,8 +79,8 @@ export default function ResumePage() {
           <h2>Skills</h2>
           {r.skills.map(s => <p key={s}>{rich(s)}</p>)}
         </section>
-      </div>
-      <p className="r-print-hint">Print or save as PDF — it fits exactly one A4 page.</p>
+        <p className="r-print-hint">Print or save as PDF — it fits exactly one A4 page.</p>
+      </main>
     </div>
   )
 }

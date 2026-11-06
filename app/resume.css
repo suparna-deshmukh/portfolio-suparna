@@ -33,7 +33,7 @@
 .r-skills p{margin:.55mm 0;font-size:8pt;color:#1E2225}
 .r-plain li{font-size:8pt}
 
-.r-print-hint{margin-top:6mm;font:500 11px/1.4 var(--fm);letter-spacing:.06em;color:var(--dimmer);text-transform:uppercase}
+.r-print-hint{margin-top:6mm;font:500 11px/1.4 var(--fm);letter-spacing:.06em;color:#5F6F62;text-transform:uppercase}
 
 @page{size:A4;margin:0}
 @media print{

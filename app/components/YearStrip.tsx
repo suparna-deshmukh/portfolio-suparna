@@ -60,7 +60,7 @@ export default function YearStrip() {
   const years = Array.from({ length: SPAN + 1 }, (_, i) => START + i)
 
   return (
-    <div className="ys" role="img" aria-label={`Timeline from ${START} to ${EDUCATION.classOf}: study, consulting engagements, positions and honors`}>
+    <figure className="ys" role="group" aria-label={`Timeline from ${START} to ${EDUCATION.classOf}: study, consulting engagements, positions and honors`}>
       <div className="ys-years" aria-hidden="true"><div>{years.map(y => <span key={y}>{y}</span>)}</div></div>
       <div className="ys-lanes">
         <div className="ys-lane"><i className="ys-lab">Study</i>
@@ -96,6 +96,6 @@ export default function YearStrip() {
           </div>
         </div>
       </div>
-    </div>
+    </figure>
   )
 }

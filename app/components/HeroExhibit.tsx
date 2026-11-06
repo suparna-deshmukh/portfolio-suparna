@@ -19,7 +19,7 @@ export default function HeroExhibit() {
       <div className="exhibit" id="hero-exhibit">
         <a className="ex-ob ex-badge" href="#about" style={{ ['--d' as string]: 1.15, ['--rot' as string]: '-5deg' }}>
           <span className="ex-clip" aria-hidden="true" />
-          <Image src="/images/hero/suparna-portrait.webp" alt="Suparna Deshmukh" width={144} height={136} />
+          <Image src="/images/hero/suparna-portrait.webp" alt="Suparna Deshmukh" width={144} height={136} priority />
           <b>Suparna Deshmukh</b>
           <small>Associate Product Manager</small>
           <small>RISA Labs · Bengaluru</small>

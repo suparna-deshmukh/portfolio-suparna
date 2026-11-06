@@ -29,7 +29,7 @@ export default function Disclosure({ label, children, className }: { label: stri
         <span>{label}</span>
         <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4.5 6 8.5 10 4.5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
       </button>
-      <div className="disc-body" id={bodyId} role="region" aria-label={label}>
+      <div className="disc-body" id={bodyId}>
         <div className="disc-inner">{children}</div>
       </div>
     </div>

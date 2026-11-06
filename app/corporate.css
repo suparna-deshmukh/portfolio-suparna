@@ -2,7 +2,7 @@
    index numeral, the rubber stamp straddling the right edge, ruled points, result chips. */
 
 .cf-files{margin:0;padding:0;list-style:none;display:grid;gap:20px}
-.cf-file{--stamp:#B24A26;position:relative;display:grid;grid-template-columns:minmax(218px,242px) minmax(0,1fr);
+.cf-file{--stamp:#963A18;position:relative;display:grid;grid-template-columns:minmax(218px,242px) minmax(0,1fr);
   gap:10px 30px;border:1px solid var(--lineS);border-radius:10px;background:var(--surf);
   padding:24px 26px 20px 26px;box-shadow:0 1px 0 var(--press),0 20px 30px -24px rgba(23,19,14,.5);
   transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
@@ -144,7 +144,8 @@ html.motion-ok .cf-file.in .cf-bud{animation:cfBud .9s var(--ease) 1.05s both}
 .cf-tab{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:10px;padding:10px 12px;
   border:1px solid var(--lineS);border-radius:9px;background:var(--surf);text-decoration:none;color:inherit;
   box-shadow:0 1px 0 var(--press);transition:transform .3s var(--ease),border-color .25s,background-color .25s}
-html.motion-ok .cf-tab:hover{transform:translateY(-2px);border-color:color-mix(in oklab,var(--acc) 45%,var(--lineS));background:var(--tint)}
+/* hover tint now sweeps in via .cf-tab background-size (micro-interactions.css, P3-2) */
+html.motion-ok .cf-tab:hover{transform:translateY(-2px);border-color:color-mix(in oklab,var(--acc) 45%,var(--lineS))}
 .cf-tab i{width:26px;height:26px;color:var(--accText)}
 .cf-tab i svg{width:100%;height:100%}
 .cf-tab b{display:block;font:600 13.5px/1.15 var(--fb);color:var(--fg)}
