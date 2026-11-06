@@ -26,6 +26,7 @@ export default function Hero() {
     ro.observe(wrap)
     let raf = 0
     const onMove = (e: PointerEvent) => {
+      if (document.documentElement.classList.contains('motion-off')) return
       if (raf) return
       raf = requestAnimationFrame(() => {
         raf = 0
@@ -35,7 +36,9 @@ export default function Hero() {
       })
     }
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (!reduced) window.addEventListener('pointermove', onMove, { passive: true })
+    // No pointer parallax on coarse pointers (P1-5); motion-off is checked per-event in onMove.
+    const coarse = window.matchMedia('(pointer: coarse)').matches
+    if (!reduced && !coarse) window.addEventListener('pointermove', onMove, { passive: true })
     return () => { ro.disconnect(); window.removeEventListener('pointermove', onMove); cancelAnimationFrame(raf) }
   }, [])
 

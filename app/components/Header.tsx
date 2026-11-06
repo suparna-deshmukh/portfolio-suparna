@@ -6,10 +6,15 @@ import { usePathname } from 'next/navigation'
 import { RESUME_URL, link } from '../lib/site'
 import { DEFAULT_THEME, NEXT_THEME, THEME_COLORS, resolveTheme, type ThemePref } from '../lib/site'
 import { istTime } from '../lib/hooks'
+import { useMotionPref, setMotion } from '../lib/motion'
 
 type Resolved = 'light' | 'dark'
 const SYSTEM = (
   <><circle cx="12" cy="12" r="9" /><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none" /></>
+)
+const WAVE = <path d="M2 12c1.5-4 3-6 4.5-6s3 2 4.5 6 3 6 4.5 6 3-2 4.5-6 3-6 4.5-6" />
+const WAVE_OFF = (
+  <><path d="M2 12c1.5-4 3-6 4.5-6s3 2 4.5 6 3 6 4.5 6 3-2 4.5-6 3-6 4.5-6" /><path d="M3 3l18 18" /></>
 )
 const SUN = (
   <><circle cx="12" cy="12" r="4.5" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></>
@@ -26,6 +31,7 @@ export default function Header() {
   const [pref, setPref] = useState<ThemePref>(DEFAULT_THEME)
   const [resolved, setResolved] = useState<Resolved>('light')
   const prefRef = useRef<ThemePref>(DEFAULT_THEME)
+  const motion = useMotionPref()
   const sentinelRef = useRef<HTMLSpanElement>(null)
 
   const applyTheme = (r: Resolved) => {
@@ -38,7 +44,7 @@ export default function Header() {
   }
 
   useEffect(() => {
-    // One-time sync of the preference stored by the pre-paint script (SSR renders the static default).
+    // One-time sync of the theme preference stored by the pre-paint script (SSR renders the static default).
     let stored: string | null = null
     try { stored = localStorage.getItem('theme') } catch { /* storage blocked */ }
     const initial: ThemePref = stored === 'light' || stored === 'dark' || stored === 'system' ? stored : DEFAULT_THEME
@@ -92,6 +98,8 @@ export default function Header() {
     })
   }
 
+  const toggleMotion = () => { setMotion(motion === 'off' ? 'on' : 'off') }
+
   return (
     <>
       <span ref={sentinelRef} className="hdr-sentinel" aria-hidden="true" />
@@ -112,6 +120,10 @@ export default function Header() {
             </a>
           )}
           <a className="talk" href={isHome ? '#contact' : '/#contact'}>Let&apos;s talk</a>
+          <button className="themebtn motionbtn" type="button" onClick={toggleMotion}
+            aria-label={motion === 'off' ? 'Motion: off. Turn motion on' : 'Motion: on. Turn motion off'}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">{motion === 'off' ? WAVE_OFF : WAVE}</svg>
+          </button>
           <button className="themebtn" type="button" onClick={toggleTheme}
             aria-label={`Theme: ${pref === 'system' ? 'system (follows device)' : pref}. Switch to ${NEXT_THEME[pref] === 'system' ? 'system (follows device)' : NEXT_THEME[pref]}`}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">{pref === 'system' ? SYSTEM : resolved === 'dark' ? MOON : SUN}</svg>

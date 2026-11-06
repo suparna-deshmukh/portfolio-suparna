@@ -226,10 +226,10 @@ loaded" — opens `P99Panel` (same as pressing `p99` on the keyboard: load/perf 
 
 ## 4. Motion system (how all animation is governed)
 
-1. **`html.motion-ok`** — added by `PageMotion` when JS is on and the user hasn't
-   requested reduced motion. Every entrance *pre-state* (hidden/offset) is scoped under
-   `html.motion-ok …`, so no-JS, reduced-motion and old browsers always show the final
-   composition.
+1. **`html.motion-ok`** — added by the inline pre-paint script (layout.tsx) when JS is
+   on, the user hasn't requested reduced motion, and the user's Motion control is on.
+   Every entrance *pre-state* (hidden/offset) is scoped under `html.motion-ok …`, so
+   no-JS, reduced-motion and old browsers always show the final composition.
 2. **`useVisibleLoop(ref, start, stop, enabled)`** — starts/stops a JS loop as the
    element crosses the viewport (IO threshold .05) and as the tab hides; also toggles
    `.paused` on the host, which pauses the associated CSS loops.
@@ -247,6 +247,24 @@ loaded" — opens `P99Panel` (same as pressing `p99` on the keyboard: load/perf 
 8. **`prefers-reduced-motion: reduce`** — smooth scroll off, all loops disabled, every
    animated figure has an explicit static fallback (stamps visible, verdicts shown,
    gauges full, marquee static).
+9. **Motion: On/Off (user control, P1-5)** — `app/lib/motion.ts`:
+   * `localStorage.motion` (`'on'|'off'`, default on). The pre-paint script adds
+     `html.motion-off` for a stored `'off'` and *never* sets `motion-ok`.
+   * `html.motion-off` CSS (globals.css): every animation collapses to one instant
+     iteration (`duration:1ms, delay:-1ms, iteration-count:1`) and every transition to
+     `1ms`, so all loops land on a finished frame and one-shots complete instantly —
+     WCAG 2.2.2. JS-driven loops keep running their timers but each step is visually
+     finished.
+   * Controls: a wave icon button in the header (next to the theme toggle) and a
+     "Motion: on/off" pill in the footer; both share `useMotionPref()` (subscribes to
+     the `motionchange` event), so they always agree.
+   * Coarse pointers get no hero pointer parallax; `onMove` also bails while
+     `motion-off` is set.
+10. **Lite (adaptive degrade, P1-5)** — `html.lite` is set (a) pre-paint when
+    `hardwareConcurrency ≤ 4 || deviceMemory ≤ 4 || connection.saveData`, or (b) by
+    `PageMotion` on coarse pointers after 3 long tasks (>50 ms) within the first 5 s.
+    Lite hides the hero blobs/grid/grain and freezes the band auras and marquees;
+    stamps and entrance transitions are kept.
 
 ---
 

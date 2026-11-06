@@ -63,9 +63,9 @@ export const viewport: Viewport = {
 }
 
 // Pre-paint: resolves the stored preference (default: system) before first paint so there is never
-// a flash, sets color-scheme, and marks motion-off. motion-ok is added only when JS runs and motion
-// is allowed, so every motion pre-state stays opt-in (P1-9, P1-5).
-const themeScript = `(function(){try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark'){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}var d=document.documentElement;d.dataset.theme=t;d.style.colorScheme=t;if(localStorage.getItem('motion')==='off'){d.classList.add('motion-off');return}if(!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('motion-ok')}catch(e){}})()`
+// a flash, sets color-scheme, marks motion-off, and marks lite on low-power devices. motion-ok is
+// added only when JS runs and motion is allowed, so every motion pre-state stays opt-in (P1-9, P1-5).
+const themeScript = `(function(){try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark'){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}var d=document.documentElement;d.dataset.theme=t;d.style.colorScheme=t;if(localStorage.getItem('motion')==='off'){d.classList.add('motion-off');return}if(!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('motion-ok');var n=navigator;if((n.hardwareConcurrency||8)<=4||(n.deviceMemory||8)<=4||(n.connection&&n.connection.saveData))d.classList.add('lite')}catch(e){}})()`
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
