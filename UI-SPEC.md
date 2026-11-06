@@ -785,3 +785,53 @@ Dev loop: `python3 dev-daemon.py` (port 3210) → `npx tsc --noEmit` → headles
 screenshots (fresh Chrome profile per run — stale profile cache can serve old chunks)
 → PIL slices → review → `git add -A && git commit` (local commits only, **no remote**).
 NEVER `npm run build` while the daemon runs (corrupts `.next`).
+
+## 19. Metadata, sharing & discoverability (P0-6)
+
+All routing-level metadata lives in `app/layout.tsx` and per-route files;
+no component-level metadata.
+
+**Base metadata** (`app/layout.tsx`)
+* `metadataBase`: `SITE_URL` from `site.ts` (`NEXT_PUBLIC_SITE_URL`, default
+  `http://localhost:3210`).
+* Title: default `Suparna Deshmukh · AI Product Manager`,
+  template `%s · Suparna Deshmukh`. Route titles supply only the first half
+  (e.g. not-found is `Page not found`, which renders as
+  `Page not found · Suparna Deshmukh` — do not repeat the name in the route title).
+* Description, Open Graph (`type: website`), Twitter card, `icons`,
+  `appleWebApp`, `viewport` with `themeColor` per color scheme.
+
+**OG images** (`next/og`, satori)
+* `app/opengraph-image.tsx` — site card: paper letterhead, name plate, the
+  three hero proof rows, pressed SD seal. 1200×630.
+* `app/projects/[slug]/opengraph-image.tsx` — per-case card: tint wash by
+  slug (CASE_STYLE), `CASE STUDY — NN` label, name, subtitle, tag row,
+  hot-stat stamp box. `params` is a plain object (Next 14, not a Promise).
+* Fonts: satori in this Next 14.2 build cannot parse woff2 or variable-font
+  fvar tables, so **static TTF instances** live in `app/fonts/`
+  (`fraunces/Fraunces-Latin-600.ttf`, `fraunces/Fraunces-Latin-600-Italic.ttf`,
+  `fontshare/Satoshi-{400,500,700}.ttf`). Buffers are read once and cached in
+  `app/lib/og-fonts.ts` (which also holds `OG_PALETTE`). The woff2 files next
+  door are what the site itself loads; the TTFs exist only for OG rendering.
+* `new ImageResponse` streams are lazy: rendering only starts when the body
+  is consumed. Verify OG output by consuming the response, not by status.
+
+**Icons / app**
+* `app/icon.svg` — SD monogram, dark-adaptive via `prefers-color-scheme`
+  inside the SVG.
+* `app/apple-icon.tsx` — 180×180, Fraunces 600 (static TTF, `weight: 600 as const`).
+* `app/manifest.ts` — served at `/manifest.webmanifest` (the `<link>` tag is
+  the source of truth; the `/manifest` path 404s by design).
+
+**SEO plumbing**
+* `app/sitemap.ts` — `/`, `/resume`, both case studies (with `created_at`).
+* `app/robots.ts` — allows all, points at the sitemap.
+* JSON-LD: `Person` on home (`jobTitle`, `worksFor` RISA Labs,
+  `alumniOf` BITS Pilani Goa, `sameAs` LinkedIn+GitHub, `email` only when
+  `CONTACT_EMAIL` is set); `Article` on each case study. Both rendered in
+  `page.tsx` via `dangerouslySetInnerHTML` over `JSON.stringify`.
+
+**Error pages in site language**
+* `app/not-found.tsx` — blank sheet + slammed `RETURN TO SENDER` ink stamp,
+  clear path home + Contact link (`.nf-stamp` in `globals.css`).
+* `app/error.tsx` (client) — `VOID` stamp + "Reset" button.

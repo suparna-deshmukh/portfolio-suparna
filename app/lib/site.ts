@@ -3,6 +3,8 @@ import { m } from './metrics'
 import { PROJECTS } from './content'
 
 export const RESUME_URL = '/Suparna-Deshmukh-Resume.pdf' // generated: scripts/build-resume-pdf.mjs
+/** Canonical origin for metadata. Set NEXT_PUBLIC_SITE_URL once a domain exists (Section 7 #13). */
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3210'
 /** Institute address — the form's fallback recipient only; never displayed until a professional address arrives (P0-4). */
 export const EMAIL = 'f20230611@goa.bits-pilani.ac.in'
 /**

@@ -1,0 +1,18 @@
+import type { MetadataRoute } from 'next'
+import { SITE_URL } from './lib/site'
+
+export default function manifest(): MetadataRoute.Manifest {
+  return {
+    id: '/',
+    name: 'Suparna Deshmukh · Portfolio',
+    short_name: 'Suparna',
+    description: 'Associate Product Manager at RISA Labs. Case studies, data ledgers, and product work across five industries.',
+    start_url: '/',
+    display: 'standalone',
+    background_color: '#F1F4EF',
+    theme_color: '#15211A',
+    icons: [
+      { src: '/apple-icon', sizes: '180x180', type: 'image/png', purpose: 'any' },
+    ],
+  }
+}

@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import localFont from 'next/font/local'
 import { DM_Mono, Fraunces } from 'next/font/google'
 import './tailwind.css'
@@ -7,6 +7,7 @@ import Header from './components/Header'
 import FloatNav from './components/FloatNav'
 import P99Panel from './components/P99Panel'
 import { ViewTransitionResolver } from './components/ViewTransitionLink'
+import { SITE_URL } from './lib/site'
 
 const clash = Fraunces({
   subsets: ['latin'],
@@ -28,15 +29,35 @@ const satoshi = localFont({
 
 const dmMono = DM_Mono({ subsets: ['latin'], weight: ['400', '500'], variable: '--font-dm-mono', display: 'swap' })
 
+const SITE_DESCRIPTION = 'Associate Product Manager at RISA Labs. Case studies on AI search, agentic research and GTM, data ledgers, and product work across five industries.'
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
-  title: 'Suparna Deshmukh · AI Product Manager',
-  description: 'Associate Product Manager at RISA Labs. Case studies on AI search, agentic research and GTM, data ledgers, and product work across five industries.',
+  metadataBase: new URL(SITE_URL),
+  title: { default: 'Suparna Deshmukh · AI Product Manager', template: '%s · Suparna Deshmukh' },
+  description: SITE_DESCRIPTION,
+  alternates: { canonical: '/' },
   openGraph: {
     title: 'Suparna Deshmukh · AI Product Manager',
-    description: 'Associate Product Manager at RISA Labs. Case studies on AI search, agentic research and GTM, data ledgers, and product work across five industries.',
+    description: SITE_DESCRIPTION,
+    url: '/',
+    siteName: 'Suparna Deshmukh · Portfolio',
+    locale: 'en_US',
     type: 'website',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Suparna Deshmukh · AI Product Manager',
+    description: SITE_DESCRIPTION,
+  },
+  icons: { icon: '/icon.svg', apple: '/apple-icon' },
+  appleWebApp: { capable: true, title: 'Suparna Deshmukh' },
+}
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#F1F4EF' },
+    { media: '(prefers-color-scheme: dark)', color: '#0E1512' },
+  ],
 }
 
 // Sets the theme before first paint (light by default) so there is no flash, and adds motion-ok

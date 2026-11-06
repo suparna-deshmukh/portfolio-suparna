@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Article from '../../components/Article'
 import { getCaseStudies as published, getLead, postToPile, projectToPile, readMinutes } from '../../lib/posts'
-import { link } from '../../lib/site'
+import { link, SITE_URL } from '../../lib/site'
 
 const MAX_OTHER_CASES = 2
 
@@ -25,6 +25,15 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
   const project = published().find(p => p.slug === params.slug)
   if (!project || !project.body) notFound()
   const [name, subtitle] = project.title.split(': ')
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: project.title,
+    description: project.summary,
+    author: { '@type': 'Person', name: 'Suparna Deshmukh' },
+    datePublished: project.created_at,
+    mainEntityOfPage: `${SITE_URL}/projects/${project.slug}`,
+  }
   // Next on the desk: other case studies newest first, then the lead essay, then the draft.
   const lead = getLead()
   const pile = [
@@ -32,7 +41,9 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
     ...(lead ? [postToPile(lead)] : []),
   ]
   return (
-    <Article
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
+      <Article
       kind="Case study"
       slug={project.slug}
       annot={project}
@@ -52,5 +63,6 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
         </>
       }
     />
+    </>
   )
 }
