@@ -1,10 +1,11 @@
 'use client'
 
 import '../corporate.css'
-import { useEffect } from 'react'
-import { CORPORATE, CORPORATE_AGG, PREFILL_EVENT } from '../lib/site'
+import { useCallback, useEffect, useRef } from 'react'
+import { CORPORATE, CORPORATE_AGG, PREFILL_EVENT, type Corporate } from '../lib/site'
 import CountUp from './CountUp'
 import SectionHeader from './SectionHeader'
+import { usePrefersReducedMotion, useVisibleLoop } from '../lib/hooks'
 
 /** One animated emblem per engagement: diamond, autonomous vehicle, biochar sprout. */
 const KRI = 'kri' + 'she'
@@ -62,10 +63,88 @@ const EMBLEMS: Record<string, React.ReactNode> = {
   ),
 }
 
+const ROW_AT = [380, 1500, 2620]
+const VERDICT_AT = 460
+const GAUGE_AT = 3750
+const STAMP_AT = 4650
+const SHAKE_MS = 450
+const LOOP_MS = 8800
+
 /**
- * Corporate projects as stamped files: one wide sheet per engagement, an animated emblem
- * beside a big outlined index numeral, a rubber stamp that straddles the sheet edge, and
- * the results as chips.
+ * The file's paper: a compact AskCart-report — rows whose verdicts slam in one by one,
+ * the proof gauge filling, then the rubber stamp landing on the bottom edge. Loops while
+ * in view; the first paint is the finished document.
+ */
+function CorporateDoc({ c, index }: { c: Corporate; index: number }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const paper = useRef<HTMLDivElement>(null)
+  const rows = useRef<(HTMLDivElement | null)[]>([])
+  const timers = useRef<number[]>([])
+  const running = useRef(false)
+  const reduced = usePrefersReducedMotion()
+
+  const later = (fn: () => void, ms: number) => { timers.current.push(window.setTimeout(fn, ms)) }
+  const clear = () => { timers.current.forEach(clearTimeout); timers.current = [] }
+  const rowEls = () => rows.current.filter((r): r is HTMLDivElement => !!r)
+
+  const cycle = useCallback(() => {
+    const p = paper.current
+    if (!p || !running.current) return
+    clear()
+    rowEls().forEach(r => r.classList.remove('inj', 'vrd'))
+    p.classList.remove('g', 'st', 'shake')
+    ROW_AT.forEach((base, i) => {
+      later(() => rows.current[i]?.classList.add('inj'), base)
+      later(() => rows.current[i]?.classList.add('vrd'), base + VERDICT_AT)
+    })
+    later(() => p.classList.add('g'), GAUGE_AT)
+    later(() => p.classList.add('st', 'shake'), STAMP_AT)
+    later(() => p.classList.remove('shake'), STAMP_AT + SHAKE_MS)
+    later(cycle, LOOP_MS)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  // First frame is the finished doc; the loop replays it from the first row.
+  const start = useCallback(() => {
+    running.current = true
+    if (!timers.current.length) later(cycle, LOOP_MS - STAMP_AT)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cycle])
+  const stop = useCallback(() => { running.current = false; clear() }, [])
+  useVisibleLoop(ref, start, stop, !reduced)
+  useEffect(() => stop, [stop])
+
+  return (
+    <div ref={ref} className="cfdoc" role="img"
+      aria-label={`${c.doc.type} for ${c.name}: ${c.doc.rows.map(r => `${r.label} — ${r.verdict}`).join(', ')}. Proof: ${c.proof.value} ${c.proof.label}.`}>
+      <div ref={paper} className="cfdoc-paper g st">
+        <div className="cfdoc-hd">
+          <span className="cfdoc-emb" aria-hidden="true">{EMBLEMS[c.id]}</span>
+          <span className="cfdoc-tt"><b>{c.doc.type}</b><small>file 0{index + 1} · {c.name}</small></span>
+        </div>
+        {c.doc.rows.map((r, i) => (
+          <div key={r.label} ref={el => { rows.current[i] = el }} className="cfdoc-row inj vrd">
+            <span>{r.label}</span>
+            <em className="cfdoc-vd">{r.verdict}</em>
+          </div>
+        ))}
+        <div className="cfdoc-gz">
+          <svg viewBox="0 0 120 64" aria-hidden="true">
+            <path className="cfdoc-gf" d="M10 60 a50 50 0 0 1 100 0" />
+            <path className="cfdoc-gv" d="M10 60 a50 50 0 0 1 100 0" style={{ ['--g' as string]: c.proof.gauge }} />
+          </svg>
+          <b><CountUp text={c.proof.value} /></b>
+          <span>{c.proof.label}</span>
+        </div>
+      </div>
+      <span className="cfdoc-stamp" aria-hidden="true"><b>{c.proof.value}</b><i>{c.doc.stampWord}</i></span>
+    </div>
+  )
+}
+
+/**
+ * Corporate projects as stamped files: one wide sheet per engagement. The left hand is a
+ * self-animating paper (term sheet, pricing audit, grant review) that re-stamps its proof;
+ * the right hand is the engagement's story and the deck it produced.
  */
 export default function Corporate() {
   useEffect(() => {
@@ -88,7 +167,7 @@ export default function Corporate() {
       <div className="sec wrap">
         <SectionHeader
           id="corporate"
-          label="Corporate"
+          label="Corporate Projects"
           variant="xl"
           title="Corporate projects."
           meta={meta}
@@ -105,34 +184,26 @@ export default function Corporate() {
         <ol className="cf-files" aria-label="Corporate projects">
           {CORPORATE.map((c, i) => (
             <li key={c.id} className="cf-file" data-emb={c.id}>
-              <div className="cf-side">
-                <span className="cf-emb" aria-hidden="true">{EMBLEMS[c.id]}</span>
-                <span className="cf-num" aria-hidden="true">0{i + 1}</span>
-              </div>
-              <span className="cf-stamp" aria-hidden="true">{c.stamp}</span>
+              <CorporateDoc c={c} index={i} />
               <div className="cf-main">
                 <div className="cf-head">
                   <h3>{c.name}</h3>
                   <span className="cf-meta">{c.role} · {c.when} · {c.where}</span>
                 </div>
                 <p className="cf-ctx">{c.context}</p>
-                <div className="cf-body">
-                  <ul className="cf-points">
-                    {c.points.map(pt => <li key={pt}>{pt}</li>)}
-                  </ul>
-                  <div className="cf-proof">
-                    <svg className="cf-gauge" viewBox="0 0 120 64" aria-hidden="true">
-                      <path className="cf-gf" d="M10 60 a50 50 0 0 1 100 0" />
-                      <path className="cf-gv" d="M10 60 a50 50 0 0 1 100 0" style={{ ['--g' as string]: c.proof.gauge }} />
-                    </svg>
-                    <span className="cf-proof-num"><CountUp text={c.proof.value} /></span>
-                    <span className="cf-proof-lab">{c.proof.label}</span>
-                  </div>
-                </div>
+                <ul className="cf-points">
+                  {c.points.map(pt => <li key={pt}>{pt}</li>)}
+                </ul>
                 <div className="cf-foot">
                   {c.chips.map(ch => (
                     <span key={ch.label} className="cf-chip"><b>{ch.value}</b><span>{ch.label}</span></span>
                   ))}
+                  {c.deck && (
+                    <a key={c.deck.label} className="cf-chip cf-chip-deck" href={c.deck.href} target="_blank" rel="noopener noreferrer">
+                      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z" /><path d="M14 3v5h5" /><path d="M10 13h6M10 17h6" /></svg>
+                      <span>{c.deck.label}</span><b aria-hidden="true">↗</b>
+                    </a>
+                  )}
                   <a
                     className="btn ghost sm"
                     href="#contact"

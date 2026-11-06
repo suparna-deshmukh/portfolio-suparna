@@ -30,7 +30,7 @@
 #about .ab-edu b{font:600 16px/1.35 var(--fb);letter-spacing:-.01em}
 #about .ab-edu > .ab-edu-bd > span:not(.ab-edu-meta){font-size:13.5px;line-height:1.45;color:var(--dim)}
 #about .ab-edu-meta{display:flex;align-items:center;gap:10px;margin-top:5px;font:500 11px/1.4 var(--fm);letter-spacing:.03em;text-transform:uppercase;color:var(--dimmer)}
-#about .ab-edu-meta em{font-style:normal;border:1px dashed var(--lineS);border-radius:999px;padding:3.5px 9px;color:var(--dim)}
+#about .ab-edu-meta em{font-style:normal;color:var(--dim)}
 #about .ab-edu-meta i{flex:1;height:1px;background:var(--lineS)}
 
 /* positions of responsibility: stat panels, the first one featured */
@@ -46,8 +46,8 @@ html.motion-ok #about .ab-panel:hover{transform:translateY(-2px);box-shadow:0 18
 #about .ab-panel header span{font-size:13px;color:var(--dim)}
 #about .ab-panel header em{font:500 11px/1.4 var(--fm);font-style:normal;letter-spacing:.03em;color:var(--dimmer);margin-left:auto}
 #about .ab-panel > p{margin:7px 0 0;font-size:13.5px;line-height:1.55;color:var(--dim)}
-#about .ab-stats{margin:12px 0 0;padding:12px 0 0;border-top:1px dashed var(--lineS);display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:10px 14px}
-#about .ab-stats b{font:700 21px/1.05 var(--fd);letter-spacing:-.02em;color:var(--fg);white-space:nowrap}
+#about .ab-stats{margin:12px 0 0;padding:12px 0 0;border-top:1px dashed var(--lineS);display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:10px 14px}
+#about .ab-stats b{font:700 19.5px/1.05 var(--fd);letter-spacing:-.02em;color:var(--fg);white-space:nowrap}
 #about .ab-stats span{display:block;margin-top:3px;font-size:11px;line-height:1.35;color:var(--dim)}
 #about .ab-chips{margin:12px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px}
 #about .ab-chips li{font:500 11px/1.4 var(--fm);letter-spacing:.02em;color:var(--dim);border:1px dashed var(--lineS);border-radius:999px;padding:4px 10px;text-align:left}
@@ -63,20 +63,15 @@ html.motion-ok #about .ab-panel:hover .ab-team i{animation:abDot 1.8s ease-in-ou
 #about .ab-team span{margin-left:9px;font:500 9.5px/1.5 var(--fm);letter-spacing:.07em;text-transform:uppercase;color:var(--dimmer);white-space:nowrap}
 @media (prefers-reduced-motion:reduce){#about .ab-team i{transition:none}}
 
-/* placement bar: where the batch stood, where it stands */
-#about .ab-bar{margin-top:12px;padding:12px 14px 10px;border:1px solid var(--lineS);border-radius:10px;background:var(--surf)}
-#about .ab-bar-lab{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
-#about .ab-bar-lab span{font:500 10px/1.4 var(--fm);letter-spacing:.09em;text-transform:uppercase;color:var(--dim);white-space:nowrap}
-#about .ab-bar-lab b{font:700 17px/1 var(--fd);letter-spacing:-.01em;color:var(--accText);white-space:nowrap}
-#about .ab-bar-track{position:relative;height:12px;margin-top:14px;border-radius:999px;background:var(--surf2)}
-#about .ab-bar-fill{position:absolute;inset:0 auto 0 0;width:85%;border-radius:inherit;
-  background:linear-gradient(90deg,color-mix(in oklab,var(--acc) 55%,var(--surf2)),var(--acc));
-  transform:scaleX(0);transform-origin:left center;transition:transform 1.15s var(--ease) .15s}
-#about .ab-bar.in .ab-bar-fill{transform:scaleX(1)}
-#about .ab-bar-tick{position:absolute;left:58%;top:-4px;bottom:-4px;width:2px;background:var(--fg);opacity:.55;border-radius:1px}
-#about .ab-bar-scale{display:flex;justify-content:space-between;margin-top:9px;font:500 10px/1 var(--fm);letter-spacing:.03em;color:var(--dimmer)}
-#about .ab-bar-scale i{font-style:normal}
-@media (prefers-reduced-motion:reduce){#about .ab-bar-fill{transition:none;transform:scaleX(1)}}
+/* the cohort / project board: tiles that fill in one by one */
+#about .ab-tiles{margin-top:12px;padding:12px 13px 10px;border:1px solid var(--lineS);border-radius:10px;background:var(--tint)}
+#about .ab-tiles-grid{display:grid;grid-template-columns:repeat(var(--cols,12),minmax(0,1fr));gap:4px}
+#about .ab-tiles-grid i{aspect-ratio:1;border-radius:3px;background:var(--surf2);
+  transition:background .45s ease,box-shadow .45s ease,transform .45s ease;transition-delay:calc(var(--i) * 42ms)}
+#about .ab-panel.in .ab-tiles-grid i{background:var(--acc);box-shadow:0 0 7px color-mix(in oklab,var(--acc) 45%,transparent);transform:scale(1)}
+html.motion-ok #about .ab-panel:hover .ab-tiles-grid i{animation:abDot 1.8s ease-in-out infinite;animation-delay:calc(var(--i) * 45ms)}
+#about .ab-tiles > span{display:block;margin-top:9px;font:500 10px/1.4 var(--fm);letter-spacing:.06em;text-transform:uppercase;color:var(--dimmer)}
+@media (prefers-reduced-motion:reduce){#about .ab-tiles-grid i{transition:none}}
 
 /* sponsor marquee */
 #about .ab-marq{margin-top:12px;overflow:hidden;border:1px dashed var(--lineS);border-radius:999px;padding:9px 0;
@@ -90,17 +85,22 @@ html.motion-ok #about .ab-panel:hover .ab-team i{animation:abDot 1.8s ease-in-ou
 
 /* honors: the medal shelf */
 #about .ab-honors{margin-top:16px;padding-top:14px;border-top:1px solid var(--lineS)}
-#about .ab-honors ol{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-#about .ab-honors li{display:grid;gap:7px;padding:14px 14px 12px;border:1px solid var(--lineS);border-radius:10px;background:var(--surf);
+#about .ab-honors ol{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+#about .ab-honors li{display:grid;gap:8px;padding:18px 16px 15px;border:1px solid var(--lineS);border-radius:10px;background:var(--surf);
   transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s}
 html.motion-ok #about .ab-honors li:hover{transform:translateY(-3px);box-shadow:0 18px 28px -20px rgba(23,19,14,.5);border-color:color-mix(in oklab,var(--acc) 42%,var(--lineS))}
-#about .ab-crest{width:42px;height:42px}
+#about .ab-crest{width:54px;height:54px}
 #about .ab-crest svg{width:100%;height:100%;display:block}
 #about .ab-honors li:hover .ab-crest{transform:rotate(-6deg) scale(1.06);transition:transform .35s var(--ease)}
-#about .ab-honors b{font:700 16.5px/1.15 var(--fd);letter-spacing:-.01em;color:var(--fg)}
-#about .ab-honors b i{font-style:normal;font-size:10.5px;font-weight:500;letter-spacing:.02em;color:var(--dimmer)}
-#about .ab-honors .ab-hn-name{font:600 12px/1.3 var(--fb);color:var(--fg)}
-#about .ab-honors li > span:last-child{font-size:11.5px;line-height:1.4;color:var(--dim)}
+#about .ab-honors b{font:700 19.5px/1.12 var(--fd);letter-spacing:-.01em;color:var(--fg)}
+#about .ab-honors b i{font-style:normal;font-size:11px;font-weight:500;letter-spacing:.02em;color:var(--dimmer)}
+#about .ab-honors .ab-hn-name{font:600 12.5px/1.3 var(--fb);color:var(--fg)}
+#about .ab-honors li > span:last-of-type{font-size:11.5px;line-height:1.4;color:var(--dim)}
+#about .ab-hn-deck{justify-self:start;display:inline-flex;align-items:center;gap:5px;margin-top:2px;
+  font:600 10.5px/1 var(--fm);letter-spacing:.05em;text-transform:uppercase;color:var(--accText);
+  border:1px solid color-mix(in oklab,var(--acc) 45%,var(--lineS));border-radius:999px;padding:5px 10px;
+  text-decoration:none;transition:background-color .25s}
+#about .ab-hn-deck:hover{background:color-mix(in oklab,var(--acc) 10%,transparent)}
 
 /* folios */
 #about .ab-folio{position:absolute;bottom:10px;font:500 10px/1 var(--fm);letter-spacing:.1em;text-transform:uppercase;color:var(--dimmer);pointer-events:none}
@@ -113,6 +113,8 @@ html.motion-ok #about .ab-honors li:hover{transform:translateY(-3px);box-shadow:
   #about.band .sh{padding-top:26px;margin-bottom:30px}
   #about.band .sh-serif .h2{font-size:clamp(38px,6vh,56px)}
   #about .ab-spread{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,3fr)}
+  #about .ab-panels{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #about .ab-panel:last-child{grid-column:1/-1}
   #about .ab-page{padding:20px var(--pageX) 28px}
   #about .ab-l{border-radius:6px 0 0 6px;background:linear-gradient(270deg,rgba(23,19,14,.10),transparent 44px),var(--surf)}
   #about .ab-r{border-radius:0 6px 6px 0;background:linear-gradient(90deg,rgba(23,19,14,.12),transparent 44px),var(--surf);display:flex;flex-direction:column}
@@ -147,6 +149,7 @@ html.motion-ok #about .ab-honors li:hover{transform:translateY(-3px);box-shadow:
   #about .ab-honors li{grid-template-columns:auto minmax(0,1fr);align-items:start}
   #about .ab-honors b{grid-column:2}
   #about .ab-honors .ab-hn-name{grid-column:2}
+  #about .ab-hn-deck{grid-column:2}
 }
 
 /* ── dark ── */

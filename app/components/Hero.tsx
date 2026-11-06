@@ -44,11 +44,6 @@ export default function Hero() {
       <div className="hbg" aria-hidden="true">
         <span className="hbg-glow g1" /><span className="hbg-glow g2" /><span className="hbg-glow g3" />
         <span className="hbg-grid" />
-        <svg className="hbg-lines" viewBox="0 0 1440 900" preserveAspectRatio="none">
-          <path d="M-40 640 C 280 520, 520 760, 860 600 S 1300 480, 1480 560" />
-          <path className="flow" d="M-40 700 C 320 600, 600 820, 920 660 S 1320 560, 1480 640" />
-          <path d="M-40 220 C 300 140, 640 300, 980 180 S 1320 120, 1480 170" />
-        </svg>
         <span className="hbg-grain" />
       </div>
 

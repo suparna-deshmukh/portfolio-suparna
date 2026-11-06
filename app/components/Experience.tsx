@@ -36,11 +36,12 @@ function Station({ c, index, now }: { c: Company; index: number; now: boolean })
   const role = c.roles[0]
   if (role.pending) return null
   return (
-    <article id={`experience-${c.id}`} className={`rt-stn${now ? ' now' : ''}`} style={{ ['--si' as string]: index }}>
+    <article id={`experience-${c.id}`} className={`rt-stn${now ? ' now' : ''}${c.featured ? ' featured' : ''}`} style={{ ['--si' as string]: index }}>
       <span className="rt-node" aria-hidden="true">{now ? 'NOW' : `S${index + 1}`}</span>
       <div className="rt-card">
         <header className="rt-head">
           <h3>{c.name}</h3>
+          {c.featured ? <span className="rt-flag">★ Standout role</span> : null}
           <span className="rt-sum">{c.summary}</span>
         </header>
         <div className="rt-body">
@@ -54,10 +55,16 @@ function Station({ c, index, now }: { c: Company; index: number; now: boolean })
             <ul className="rt-out">
               {role.results.map(r => <li key={r.label}><b>{r.value}</b><span>{r.label}</span></li>)}
             </ul>
-            <details className="rt-ft">
-              <summary><span>All {role.bullets.length} results {CHEVRON}</span></summary>
-              <ul>{role.bullets.map(b => <li key={b.lead}><strong>{b.lead}</strong>{b.rest}</li>)}</ul>
-            </details>
+            {c.featured ? (
+              <ul className="rt-out-full">
+                {role.bullets.map(b => <li key={b.lead}><strong>{b.lead}</strong>{b.rest}</li>)}
+              </ul>
+            ) : (
+              <details className="rt-ft">
+                <summary><span>All {role.bullets.length} results {CHEVRON}</span></summary>
+                <ul>{role.bullets.map(b => <li key={b.lead}><strong>{b.lead}</strong>{b.rest}</li>)}</ul>
+              </details>
+            )}
           </div>
         </div>
       </div>

@@ -2,28 +2,60 @@
    index numeral, the rubber stamp straddling the right edge, ruled points, result chips. */
 
 .cf-files{margin:0;padding:0;list-style:none;display:grid;gap:20px}
-.cf-file{--stamp:#B24A26;position:relative;display:grid;grid-template-columns:132px minmax(0,1fr);
-  gap:6px 24px;border:1px solid var(--lineS);border-radius:10px;background:var(--surf);
+.cf-file{--stamp:#B24A26;position:relative;display:grid;grid-template-columns:minmax(218px,242px) minmax(0,1fr);
+  gap:10px 30px;border:1px solid var(--lineS);border-radius:10px;background:var(--surf);
   padding:24px 26px 20px 26px;box-shadow:0 1px 0 var(--press),0 20px 30px -24px rgba(23,19,14,.5);
   transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
 [data-theme="dark"] .cf-file{--stamp:#E08A5E;box-shadow:0 1px 0 rgba(0,0,0,.4),0 22px 32px -24px rgba(0,0,0,.85)}
 html.motion-ok .cf-file:hover{transform:translateY(-3px);box-shadow:0 1px 0 var(--press),0 28px 40px -22px rgba(23,19,14,.55)}
-html.motion-ok .cf-file .cf-stamp{opacity:0}
-html.motion-ok .cf-file.in .cf-stamp{animation:cfSlam .55s var(--settle) .4s both}
-@keyframes cfSlam{0%{opacity:0;transform:rotate(-7deg) scale(2.1)}55%{opacity:.95}100%{opacity:.92;transform:rotate(-7deg) scale(1)}}
+html.motion-ok .cfdoc-stamp{opacity:0}
+html.motion-ok .cfdoc-paper.st ~ .cfdoc-stamp{animation:cfSlam .55s var(--settle) both}
+@keyframes cfSlam{0%{opacity:0;transform:rotate(-6deg) scale(2.1)}55%{opacity:.95}100%{opacity:.92;transform:rotate(-6deg) scale(1)}}
 html.motion-ok .cf-chip{opacity:0;translate:0 8px;transition:opacity .45s var(--ease),translate .45s var(--ease)}
 html.motion-ok .cf-file.in .cf-chip{opacity:1;translate:0 0}
 html.motion-ok .cf-file.in .cf-chip:nth-child(1){transition-delay:.55s}
 html.motion-ok .cf-file.in .cf-chip:nth-child(2){transition-delay:.68s}
 html.motion-ok .cf-file.in .cf-chip:nth-child(3){transition-delay:.81s}
 
-.cf-side{display:grid;justify-items:center;align-content:center;gap:10px;align-self:center}
-.cf-emb{display:grid;place-items:center;width:124px;height:124px;border:1px solid var(--lineS);border-radius:12px;background:var(--tint)}
-[data-theme="dark"] .cf-emb{background:color-mix(in oklab,var(--acc) 7%,var(--surf))}
-.cf-emb svg{width:86px;height:86px}
-.cf-num{font:700 clamp(30px,2.6vw,38px)/1 var(--fd);letter-spacing:-.02em;
-  color:transparent;-webkit-text-stroke:1.6px color-mix(in oklab,var(--acc) 55%,var(--lineS));user-select:none}
-[data-theme="dark"] .cf-num{-webkit-text-stroke-color:color-mix(in oklab,var(--acc) 60%,var(--lineS))}
+/* ── the file's paper: a compact self-animating report — rows stamp their verdicts, the
+   gauge fills, the rubber stamp lands on the bottom edge. AskCart-report DNA at file scale. ── */
+.cfdoc{position:relative;width:100%;align-self:center}
+.cfdoc-paper{position:relative;border:1px solid var(--lineS);border-radius:10px;background:var(--surf);
+  padding:13px 14px 16px;box-shadow:0 1px 0 var(--press),0 18px 28px -20px rgba(23,19,14,.5)}
+[data-theme="dark"] .cfdoc-paper{box-shadow:0 0 0 1px var(--line),0 18px 28px -20px rgba(0,0,0,.85)}
+html.motion-ok .cfdoc-paper{transition:transform .35s var(--ease)}
+html.motion-ok .cfdoc:hover .cfdoc-paper{transform:translateY(-3px)}
+.cfdoc-paper.shake{animation:cfdocShake .38s var(--ease)}
+@keyframes cfdocShake{20%{transform:translate(2px,2px) rotate(.3deg)}45%{transform:translate(-2px,1px) rotate(-.25deg)}70%{transform:translate(1px,-1px)}}
+.cfdoc-hd{display:flex;align-items:center;gap:9px;padding-bottom:10px;border-bottom:1px dashed var(--lineS)}
+.cfdoc-emb{width:30px;height:30px;flex:none;color:var(--accText)}
+.cfdoc-emb svg{width:100%;height:100%}
+.cfdoc-tt b{display:block;font:700 14px/1.15 var(--fd);letter-spacing:-.01em;color:var(--fg)}
+.cfdoc-tt small{display:block;margin-top:2px;font:500 9px/1.35 var(--fm);letter-spacing:.07em;text-transform:uppercase;color:var(--dimmer)}
+.cfdoc-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8.5px 0;border-bottom:1px solid var(--line)}
+.cfdoc-row span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12.5px;color:var(--fg);
+  opacity:0;transform:translateY(4px);transition:opacity .3s ease,transform .45s var(--ease)}
+.cfdoc-row.inj span{opacity:1;transform:none}
+.cfdoc-vd{flex:none;font:600 9.5px/1 var(--fm);font-style:normal;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--accText);border:1.5px solid currentColor;border-radius:4px;padding:4.5px 7px;white-space:nowrap;
+  opacity:0;rotate:-5deg;scale:1.5;transition:opacity .12s ease,scale .4s var(--settle),rotate .4s var(--settle)}
+.cfdoc-row.vrd .cfdoc-vd{opacity:1;scale:1}
+.cfdoc-gz{padding-top:11px;text-align:center}
+.cfdoc-gz svg{width:100px;height:54px;display:block;margin:0 auto}
+.cfdoc-gf{fill:none;stroke:var(--lineS);stroke-width:8;stroke-linecap:round}
+.cfdoc-gv{fill:none;stroke:var(--acc);stroke-width:8;stroke-linecap:round;
+  stroke-dasharray:var(--g) 100;transition:stroke-dasharray 1.1s var(--ease) .2s,filter .3s}
+.cfdoc-paper:not(.g) .cfdoc-gv{stroke-dasharray:0 100}
+.cfdoc:hover .cfdoc-gv{filter:drop-shadow(0 0 6px color-mix(in oklab,var(--acc) 70%,transparent))}
+.cfdoc-gz b{display:block;margin-top:5px;font:700 25px/1 var(--fd);letter-spacing:-.02em;color:var(--accText);font-variant-numeric:tabular-nums}
+.cfdoc-gz span{display:block;margin-top:4px;font:500 9.5px/1.45 var(--fm);letter-spacing:.02em;color:var(--dim);max-width:190px;margin-inline:auto}
+.cfdoc-stamp{position:absolute;right:6px;bottom:-15px;display:grid;justify-items:center;gap:2px;
+  transform:rotate(-6deg);color:var(--stamp);pointer-events:none;white-space:nowrap;
+  font:700 12px/1 var(--fm);letter-spacing:.12em;text-transform:uppercase;
+  border:2px solid currentColor;outline:1px solid currentColor;outline-offset:2px;
+  border-radius:4px;padding:6px 9px;opacity:.92;background:var(--surf)}
+[data-theme="dark"] .cfdoc-stamp{background:var(--surf)}
+@media (prefers-reduced-motion:reduce){.cfdoc-vd{opacity:1;rotate:0deg;scale:1}.cfdoc-row span{opacity:1;transform:none}}
 
 /* ── the emblems ── */
 .cf-file[data-emb="everyday"] .cf-emb{color:var(--accText)}
@@ -80,40 +112,25 @@ html.motion-ok .cf-file.in .cf-bud{animation:cfBud .9s var(--ease) 1.05s both}
 @keyframes cfDot{0%,100%{transform:translateY(0);opacity:.55}50%{transform:translateY(-9px);opacity:0}}
 @media (prefers-reduced-motion:reduce){.cf-dia-shine,.cf-scan{opacity:0}.cf-spark{opacity:.9}}
 
-.cf-stamp{position:absolute;top:20px;right:-13px;transform:rotate(-7deg);color:var(--stamp);
-  opacity:1;
-  font:700 12.5px/1 var(--fm);letter-spacing:.13em;text-transform:uppercase;
-  border:2px solid currentColor;outline:1px solid currentColor;outline-offset:3px;
-  border-radius:4px;padding:8px 11px;opacity:.92;pointer-events:none;white-space:nowrap;background:var(--surf)}
-
 .cf-main{min-width:0}
-.cf-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:3px 14px;padding-right:130px}
+.cf-head{display:flex;align-items:baseline;flex-wrap:wrap;gap:3px 14px}
 .cf-head h3{margin:0;font:700 26px/1.15 var(--fd);letter-spacing:-.02em}
 .cf-meta{font:500 12px/1.5 var(--fm);color:var(--dim);letter-spacing:.02em}
 .cf-ctx{margin:4px 0 12px;font:500 11px/1.4 var(--fm);color:var(--dimmer);text-transform:uppercase;letter-spacing:.1em}
-.cf-body{display:grid;grid-template-columns:minmax(0,1fr) 188px;gap:20px;align-items:center}
 .cf-points{margin:0 0 14px;padding:0;list-style:none;display:grid;gap:8px;max-width:66ch}
 .cf-points li{position:relative;padding-left:19px;font-size:14.5px;line-height:1.55;color:var(--fg)}
 .cf-points li::before{content:"";position:absolute;left:2px;top:.64em;width:9px;height:2px;background:var(--acc)}
 
-.cf-proof{display:grid;justify-items:center;gap:4px;align-self:center;min-width:172px;padding:14px 16px 12px;
-  border:1px solid var(--lineS);border-radius:10px;background:var(--tint);text-align:center}
-[data-theme="dark"] .cf-proof{background:color-mix(in oklab,var(--acc) 6%,var(--surf))}
-.cf-gauge{width:118px;height:62px;display:block}
-.cf-gf{fill:none;stroke:var(--lineS);stroke-width:8;stroke-linecap:round}
-.cf-gv{fill:none;stroke:var(--acc);stroke-width:8;stroke-linecap:round;
-  stroke-dasharray:var(--g) 100;transition:stroke-dasharray 1.25s var(--ease) .35s,filter .3s}
-html.motion-ok .cf-file:not(.in) .cf-gv{stroke-dasharray:0 100}
-.cf-file:hover .cf-gv{filter:drop-shadow(0 0 6px color-mix(in oklab,var(--acc) 70%,transparent))}
-.cf-proof-num{font:700 30px/1 var(--fd);letter-spacing:-.02em;color:var(--accText);font-variant-numeric:tabular-nums;margin-top:2px}
-.cf-proof-lab{font:500 10px/1.45 var(--fm);letter-spacing:.02em;color:var(--dim)}
-@media (max-width:900px){.cf-body{grid-template-columns:1fr}.cf-proof{justify-items:start;text-align:left;flex-direction:row;align-items:center}}
 
 .cf-foot{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding-top:13px;border-top:1px dashed var(--lineS)}
 .cf-chip{display:inline-flex;align-items:baseline;gap:7px;border:1px solid var(--lineS);border-radius:8px;padding:6px 11px;background:var(--tint)}
 .cf-chip b{font:600 13.5px/1 var(--fm);letter-spacing:-.01em}
 .cf-chip span{font-size:11.5px;color:var(--dim)}
 .cf-foot .btn{margin-left:auto}
+.cf-chip-deck{cursor:pointer;text-decoration:none;color:inherit;transition:border-color .25s,background-color .25s}
+.cf-chip-deck svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round;flex:none}
+.cf-chip-deck b{font-weight:600;font-size:12px}
+.cf-chip-deck:hover{border-color:var(--acc);background:color-mix(in oklab,var(--acc) 8%,var(--tint))}
 .btn.sm{padding:10px 14px;font-size:13.5px;border-radius:9px}
 
 /* aggregates in the section header's fact column */
@@ -122,14 +139,8 @@ html.motion-ok .cf-file:not(.in) .cf-gv{stroke-dasharray:0 100}
 .cf-aggs b{font:600 12px/1 var(--fm);color:var(--fg)}
 
 @media (max-width:640px){
-  .cf-file{grid-template-columns:1fr;padding:20px 18px 18px}
-  .cf-side{justify-items:start}
-  .cf-emb{width:104px;height:104px}
-  .cf-emb svg{width:72px;height:72px}
-  .cf-num{font-size:30px}
-  .cf-proof{width:100%}
-  .cf-stamp{position:static;display:inline-block;margin:0 0 14px;transform:rotate(-2deg);right:auto}
-  .cf-head{padding-right:0}
+  .cf-file{grid-template-columns:1fr;padding:20px 18px 26px}
+  .cfdoc{width:min(300px,100%)}
   .cf-head h3{width:100%}
   .cf-foot .btn{margin-left:0;width:100%;justify-content:center}
 }

@@ -177,7 +177,7 @@ export default function DataLedger() {
       <div className="sec wrap">
         <SectionHeader
           id="data"
-          label="Data"
+          label="Data Projects"
           variant="sm"
           title="Four ledgers, one method."
           meta={['4 data projects · SQL + Python', 'From viral videos to loan books']}

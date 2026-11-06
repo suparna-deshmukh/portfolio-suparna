@@ -17,8 +17,8 @@ export const ASK_OWN_MESSAGE = "Hi Suparna, I'd like to hear about your corporat
 export const NAV_SECTIONS = [
   { id: 'experience', label: 'Experience' },
   { id: 'projects', label: 'Projects' },
-  { id: 'corporate', label: 'Corporate' },
-  { id: 'data', label: 'Data' },
+  { id: 'corporate', label: 'Corporate Projects' },
+  { id: 'data', label: 'Data Projects' },
   { id: 'about', label: 'About' },
   { id: 'contact', label: 'Contact' },
 ] as const
@@ -61,13 +61,15 @@ export interface Company {
   sector: string
   /** product = the two product roles, industry = the rotations page */
   group?: 'product' | 'industry'
+  /** standout role: rendered larger, with the full results list inline (no dropdown) */
+  featured?: boolean
   roles: Role[]
 }
 
 // Bullet copy is from the resume (source of truth for numbers).
 export const EXPERIENCE: Company[] = [
   {
-    id: 'risa', name: 'RISA Labs', monogram: 'RL', city: 'Bengaluru', years: "'26 to now", metric: '500 hrs/wk', metricCaption: 'saved across 200 users by Status Tracking', summary: 'Associate Product Manager Intern · AI Workflows for US Healthcare', sector: 'Healthcare AI', group: 'product',
+    id: 'risa', name: 'RISA Labs', monogram: 'RL', city: 'Bengaluru', years: "'26 to now", metric: '500 hrs/wk', metricCaption: 'saved across 200 users by Status Tracking', summary: 'Associate Product Manager Intern · AI Workflows for US Healthcare', sector: 'Healthcare AI', group: 'product', featured: true,
     roles: [
       { title: 'Associate Product Manager Intern', meta: 'Jul 2026 to Present · Healthcare AI · Bengaluru',
         hero: { value: '500 hrs/wk', label: 'saved across 200 users' },
@@ -170,6 +172,10 @@ export interface Corporate {
   stamp: string
   /** the proof panel: the big number, what it measured, and how far the gauge fills (0-100) */
   proof: { value: string; label: string; gauge: number }
+  /** the animated mini-doc beside the file: its paper type, the rows that get stamped, the stamp's word */
+  doc: { type: string; stampWord: string; rows: { label: string; verdict: string }[] }
+  /** the deck / report this engagement produced */
+  deck?: { label: string; href: string }
   points: string[]
   chips: Stat[]
   ask: string
@@ -180,6 +186,12 @@ export const CORPORATE: Corporate[] = [
     id: 'everyday', name: 'Everyday Diamonds', role: 'Team Lead · GTM and Series A Fundraising', context: '180 Degrees Consulting engagement · Bengaluru',
     where: 'Bengaluru', when: 'Aug 2024 – Sept 2024', stamp: '$2.5M raised',
     proof: { value: '$2.5M', label: 'Series A raised from All In Capital, first store launched', gauge: 100 },
+    doc: { type: 'Term sheet', stampWord: 'Series A', rows: [
+      { label: 'Pricing & unit model', verdict: 'SIGNED' },
+      { label: 'Series A deck v3', verdict: 'SHARED' },
+      { label: 'First store, Bengaluru', verdict: 'LAUNCHED' },
+    ] },
+    deck: { label: 'Series A deck', href: '#' },
     points: [
       'Modeled profitability, pricing and financial projections; built the 4-year expansion roadmap and the Series A deck that aided a $2.5M raise from All In Capital.',
       'Formulated the offline expansion strategy for 5 stores across India — and the first one launched in Bengaluru.',
@@ -191,6 +203,12 @@ export const CORPORATE: Corporate[] = [
     id: 'fedaykin', name: 'Fedaykin AV', role: 'GTM Strategy Consultant', context: 'Independent consulting engagement',
     where: 'Remote', when: 'Jul 2024 – Aug 2024', stamp: '30% unit economics',
     proof: { value: '30%', label: 'unit economics improved across specs, ops and annotation costs', gauge: 30 },
+    doc: { type: 'Pricing audit', stampWord: 'Unit economics', rows: [
+      { label: 'Competitor benchmarks', verdict: 'DONE' },
+      { label: 'Annotation cost audit', verdict: '−30%' },
+      { label: '950-client B2B sizing', verdict: 'SIZED' },
+    ] },
+    deck: { label: 'Project report', href: '#' },
     points: [
       'Formulated the GTM strategy via market research, competitor analysis and a refined product-market fit for stronger positioning.',
       'Optimized the pricing strategy across technical specs, operations and annotation costs, improving unit economics by 30%.',
@@ -203,6 +221,11 @@ export const CORPORATE: Corporate[] = [
     id: 'kri' + 'she', name: 'KriSHE Carbon', role: 'Team Lead · GTM and Fundraising', context: '180 Degrees Consulting engagement · Gurugram',
     where: 'Gurugram', when: 'Jul 2025 – Aug 2025', stamp: '₹12.5L grants',
     proof: { value: '₹12.5L', label: 'in grants enabled via the deck and biochar model', gauge: 100 },
+    doc: { type: 'Grant review', stampWord: 'Grants', rows: [
+      { label: 'Investor deck & model', verdict: 'PITCHED' },
+      { label: 'Biochar impact metrics', verdict: 'VERIFIED' },
+      { label: '20+ high-fit buyers', verdict: 'MAPPED' },
+    ] },
     points: [
       'Built the investor pitch deck and financial projections; a scalable biochar model and impact metrics enabled ₹12.5L in grants.',
       'Ran carbon market and buyer research; developed the positioning and sales narrative, identifying 20+ high-fit opportunities.',
@@ -228,10 +251,10 @@ export const EDUCATION = {
   classYear: 'Class of 2027',
 }
 
-export const ACHIEVEMENTS: { rank: string; of: string; name: string; note: string; crest: { text: string; color: string } }[] = [
-  { rank: 'Top 8', of: '9,000+', name: "Accenture Strategy Connect '25", note: 'GenAI in supply chain, India', crest: { text: 'A', color: '#E2401B' } },
-  { rank: 'Top 5', of: '2,500+', name: "IIMA Fintech Frontier '24", note: '0→1 product design and GTM', crest: { text: 'IIM', color: '#1F4E8C' } },
-  { rank: 'Top 10%', of: '270', name: "NextLeap PM Fellowship '26", note: 'Guided AI search for Google Photos', crest: { text: 'N', color: '#0E9F8A' } },
+export const ACHIEVEMENTS: { rank: string; of: string; name: string; note: string; crest: { text: string; color: string }; deck?: { label: string; href: string } }[] = [
+  { rank: 'Top 8', of: '9,000+', name: "Accenture Strategy Connect '25", note: 'GenAI in supply chain, India', crest: { text: 'A', color: '#E2401B' }, deck: { label: 'Case deck', href: '#' } },
+  { rank: 'Top 5', of: '2,500+', name: "IIMA Fintech Frontier '24", note: '0→1 product design and GTM', crest: { text: 'IIM', color: '#1F4E8C' }, deck: { label: 'Case deck', href: '#' } },
+  { rank: 'Top 10%', of: '270', name: "NextLeap PM Fellowship '26", note: 'Guided AI search for Google Photos', crest: { text: 'N', color: '#0E9F8A' }, deck: { label: 'Project deck', href: '#' } },
 ]
 
 export const CONSULTATHON_URL = 'https://unstop.com/competitions/consultathon-50-bits-pilani-k-k-birla-goa-campus-1674892'

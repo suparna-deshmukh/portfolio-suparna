@@ -3,23 +3,21 @@
 import '../about.css'
 import { useEffect, useRef } from 'react'
 import { ACHIEVEMENTS, EDUCATION, POSITIONS } from '../lib/site'
-import { useInViewOnce } from '../lib/hooks'
 import CountUp from './CountUp'
 import SectionHeader from './SectionHeader'
 import { CurrentlyTicker } from './AboutExtras'
 
-/** The placement bar: the tick marks where the batch stood in May '26, the fill grows to today. */
-function PlacementBar() {
-  const ref = useRef<HTMLDivElement>(null)
-  const seen = useInViewOnce(ref, 0.4)
+/**
+ * A field of square tiles that fill in one by one when the panel enters view —
+ * the cohort placed, the project board run. Each tile stands for a block of the number.
+ */
+function TileField({ count, cols, caption, label }: { count: number; cols: number; caption: string; label: string }) {
   return (
-    <div ref={ref} className={`ab-bar${seen ? ' in' : ''}`} role="img" aria-label="Batch placement rate, from 58 percent in May 2026 to 85 percent five months later">
-      <div className="ab-bar-lab"><span>Batch placement rate</span><CountUp text="58% → 85%" /></div>
-      <div className="ab-bar-track">
-        <span className="ab-bar-fill" aria-hidden="true" />
-        <span className="ab-bar-tick" aria-hidden="true" />
+    <div className="ab-tiles" role="img" aria-label={label}>
+      <div className="ab-tiles-grid" style={{ ['--cols' as string]: cols }} aria-hidden="true">
+        {Array.from({ length: count }).map((_, i) => <i key={i} style={{ ['--i' as string]: i }} />)}
       </div>
-      <div className="ab-bar-scale" aria-hidden="true"><i>May &apos;26 · 58%</i><i>today · 85%</i></div>
+      <span>{caption}</span>
     </div>
   )
 }
@@ -60,8 +58,12 @@ function Positions() {
               <b>{p.title}</b><span>{p.org}</span><em>{p.when}</em>
             </header>
             <p>{p.blurb}</p>
-            {p.team && <TeamDots count={p.team.count} label={p.team.label} />}
-            {p.id === 'placement' && <PlacementBar />}
+            {p.id === 'consult'
+              ? <TileField count={16} cols={4} caption="16 projects · 45 consultants" label="16 projects run across 45 consultants" />
+              : p.team && <TeamDots count={p.team.count} label={p.team.label} />}
+            {p.id === 'placement' && (
+              <TileField count={24} cols={12} caption="each tile = 10 students · 240 placed" label="240 students placed, one tile per ten students" />
+            )}
             {p.id === 'consult' && <SponsorMarquee />}
             {p.stats.length > 0 && (
               <dl className="ab-stats">
@@ -102,6 +104,11 @@ function Positions() {
               <b>{a.rank} <i>of {a.of}</i></b>
               <span className="ab-hn-name">{a.name}</span>
               <span>{a.note}</span>
+              {a.deck && (
+                <a className="ab-hn-deck" href={a.deck.href} target="_blank" rel="noopener noreferrer">
+                  {a.deck.label} <span aria-hidden="true">↗</span>
+                </a>
+              )}
             </li>
           ))}
         </ol>
@@ -130,8 +137,8 @@ export default function About() {
           label="About"
           variant="serif"
           title="The person behind the work."
-          meta={['Associate Product Manager at RISA Labs', 'Bengaluru']}
-          aside={<CurrentlyTicker facts={['Associate Product Manager at RISA Labs', 'AI workflows for US healthcare', 'Placement Coordinator at BITS Goa', 'Consultathon: ₹17L sponsorships, 3,200 registrations', 'Building AskCart']} />}
+          meta={['Associate Product Manager intern at RISA Labs', 'Bengaluru']}
+          aside={<CurrentlyTicker facts={['Associate Product Manager intern at RISA Labs', 'AI workflows for US healthcare', 'Placement Coordinator at BITS Goa', 'Consultathon: ₹17L sponsorships, 3,200 registrations', 'Building AskCart']} />}
         />
         <div className="ab-spread">
           <div className="ab-page ab-l">

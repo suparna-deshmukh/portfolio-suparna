@@ -41,15 +41,15 @@ export default function HeroExhibit() {
           <small>Finance minor · Class of 2027</small>
         </a>
 
-        <div className="ex-note ex-n1">
+        <div className="ex-note ex-n1" style={{ ['--d' as string]: 1.25, ['--rot' as string]: '-2deg' }}>
           <span className="ex-note-num">Top 8</span>
           <span className="ex-note-lab">of 9,000+ · Accenture Strategy ’25</span>
         </div>
-        <div className="ex-note ex-n2">
-          <span className="ex-note-num">240</span>
-          <span className="ex-note-lab">students placed · 58% → 85%</span>
+        <div className="ex-note ex-n2" style={{ ['--d' as string]: 1.05, ['--rot' as string]: '1.6deg' }}>
+          <span className="ex-note-num">Placement Coordinator</span>
+          <span className="ex-note-lab">BITS Goa · 2026 batch</span>
         </div>
-        <div className="ex-note ex-n3">
+        <div className="ex-note ex-n3" style={{ ['--d' as string]: 1.35, ['--rot' as string]: '-1.2deg' }}>
           <span className="ex-note-num">$2.5M</span>
           <span className="ex-note-lab">Series A · 180DC, Everyday Diamonds</span>
         </div>

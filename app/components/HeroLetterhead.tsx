@@ -15,9 +15,9 @@ interface Row {
 }
 
 const ROWS: Row[] = [
-  { label: 'Currently', value: 'Associate Product Manager at RISA Labs', detail: 'AI workflows, US healthcare', stack: true, live: true },
-  { label: 'Building', value: 'AskCart', detail: 'guided AI search, personal build', live: true },
-  { label: 'Placements', value: 'Placement Coordinator at BITS Goa', detail: '240 placed · batch 58% → 85%', live: true, stack: true },
+  { label: 'Currently', value: 'Associate Product Manager intern at RISA Labs', detail: 'AI workflows, US healthcare', stack: true },
+  { label: 'Building', value: 'AskCart', detail: 'guided AI search, personal build' },
+  { label: 'Placements', value: 'Placement Coordinator at BITS Goa', detail: '240 placed · batch 58% → 85%', stack: true },
 ]
 
 const LINKS = [
