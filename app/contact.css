@@ -2,6 +2,9 @@
 
 #contact .here{margin-top:14px}
 #contact .phone{margin:12px 0 0;font:500 13.5px/1.4 var(--fm);letter-spacing:.05em;color:var(--dim)}
+#contact .phone-reveal{background:none;border:none;padding:0;margin:0;font:inherit;letter-spacing:inherit;color:var(--dim);cursor:pointer;
+  text-decoration:underline dotted;text-underline-offset:3px}
+#contact .phone-reveal:hover,#contact .phone-reveal:focus-visible{color:var(--fg)}
 
 /* ── profile cards ── */
 #contact .pcs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:20px;padding-top:18px;border-top:1px solid var(--lineS)}

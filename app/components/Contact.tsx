@@ -2,7 +2,7 @@
 
 import '../contact.css'
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react'
-import { EMAIL, PHONE, SOCIALS } from '../lib/site'
+import { CONTACT_EMAIL, PHONE, PHONE_TEL, SOCIALS } from '../lib/site'
 import { istTime, useVisibleLoop } from '../lib/hooks'
 import SectionHeader from './SectionHeader'
 import ContactThreads from './ContactThreads'
@@ -32,6 +32,7 @@ export default function Contact({ footer }: { footer?: ReactNode }) {
   const [status, setStatus] = useState<Status>('idle')
   const [sentPreview, setSentPreview] = useState('')
   const [copied, setCopied] = useState(false)
+  const [phoneShown, setPhoneShown] = useState(false)
   const [now, setNow] = useState('')
   const formRef = useRef<HTMLFormElement>(null)
   const sectionRef = useRef<HTMLElement>(null)
@@ -67,7 +68,7 @@ export default function Contact({ footer }: { footer?: ReactNode }) {
   }
 
   const copyEmail = async () => {
-    try { await navigator.clipboard.writeText(EMAIL) } catch { /* clipboard blocked; still confirm */ }
+    try { await navigator.clipboard.writeText(CONTACT_EMAIL) } catch { /* clipboard blocked; still confirm */ }
     setCopied(true)
     window.setTimeout(() => setCopied(false), COPIED_MS)
   }
@@ -123,11 +124,23 @@ export default function Contact({ footer }: { footer?: ReactNode }) {
         <div className="ct">
           <div>
             <div className="mail">
-              <a className="addr" href={`mailto:${EMAIL}`}>{EMAIL}</a>
-              <button className={`copyb${copied ? ' done' : ''}`} type="button" onClick={copyEmail}>{copied ? 'Copied' : 'Copy email'}</button>
+              {CONTACT_EMAIL ? (
+                <>
+                  <a className="addr" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+                  <button className={`copyb${copied ? ' done' : ''}`} type="button" onClick={copyEmail}>{copied ? 'Copied' : 'Copy email'}</button>
+                </>
+              ) : (
+                <span className="addr">Email me via the form — I reply to everything.</span>
+              )}
             </div>
-            <p className="phone">{PHONE} · Bengaluru, IN</p>
+            <p className="phone">
+              {phoneShown
+                ? <a href={PHONE_TEL}>{PHONE}</a>
+                : <button type="button" className="phone-reveal" onClick={() => setPhoneShown(true)} aria-label="Show phone number">Show number</button>}
+              {' '}· Bengaluru, IN
+            </p>
             <span className="sr" aria-live="polite">{copied ? 'Email address copied' : ''}</span>
+            <noscript>{CONTACT_EMAIL && <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>}</noscript>
             <p className="here"><i aria-hidden="true" />It&apos;s <span className="num" suppressHydrationWarning>{now || '--:--'}</span> in Bengaluru right now.</p>
             <SocialCards />
           </div>
@@ -137,8 +150,9 @@ export default function Contact({ footer }: { footer?: ReactNode }) {
               <div className="sent on" role="status">
                 <span className="tick">✓</span>
                 <span>
-                  Sent: <q>“{sentPreview}…”</q><br />I&apos;ll reply from {EMAIL}.
-                  <span className="also">Until then <a href={SOCIALS.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href={SOCIALS.x} target="_blank" rel="noopener noreferrer">X ↗</a></span>
+                  Sent: <q>“{sentPreview}…”</q><br />
+                  {CONTACT_EMAIL ? <>I&apos;ll reply from {CONTACT_EMAIL}.</> : <>I&apos;ll get back to you here.</>}
+                  <span className="also">Until then <a href={SOCIALS.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>{SOCIALS.x && <a href={SOCIALS.x} target="_blank" rel="noopener noreferrer">X ↗</a>}</span>
                 </span>
               </div>
             ) : (
@@ -166,7 +180,8 @@ export default function Contact({ footer }: { footer?: ReactNode }) {
                 <div className="row">
                   {status === 'failed' && (
                     <span className="fail" role="alert">
-                      Your message didn&apos;t send, but it&apos;s still here. <button type="button" className="retry" onClick={() => submit()}>Try again</button>, or email <a href={`mailto:${EMAIL}`}>{EMAIL}</a>.
+                      Your message didn&apos;t send, but it&apos;s still here. <button type="button" className="retry" onClick={() => submit()}>Try again</button>
+                      {CONTACT_EMAIL && <> or email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</>}
                     </span>
                   )}
                   <button className="btn" type="submit" disabled={status === 'sending'}>{status === 'sending' ? 'Sending…' : 'Send message'}</button>

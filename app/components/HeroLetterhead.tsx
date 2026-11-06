@@ -1,6 +1,6 @@
 'use client'
 
-import { SOCIALS, PHONE } from '../lib/site'
+import { SOCIALS } from '../lib/site'
 import { m } from '../lib/metrics'
 
 // Hero left column: the name set as an engineering title block — a name plate, then ruled rows
@@ -59,7 +59,6 @@ export default function HeroLetterhead() {
           <a className="btn ghost" href="#contact">Let&apos;s talk</a>
         </div>
         <p className="tb-links">
-          <span>{PHONE}</span>
           {LINKS.map(l => <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer">{l.label} <span aria-hidden="true">↗</span></a>)}
         </p>
       </div>

@@ -3,8 +3,19 @@ import { m } from './metrics'
 import { PROJECTS } from './content'
 
 export const RESUME_URL = '/Suparna-Deshmukh-Resume.pdf' // generated: scripts/build-resume-pdf.mjs
+/** Institute address — the form's fallback recipient only; never displayed until a professional address arrives (P0-4). */
 export const EMAIL = 'f20230611@goa.bits-pilani.ac.in'
+/**
+ * The public contact email. Suparna's professional address via NEXT_PUBLIC_CONTACT_EMAIL
+ * (Section 7, item 4) — empty until she supplies it, and while empty the site shows no
+ * email at all (hidden, not stubbed). The form still works; the API falls back to the
+ * institute address server-side only.
+ */
+export const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? ''
+/** Display form of the phone, and the tel: target. The number is tap-to-reveal on Contact,
+  *  and the raw digits never appear in static HTML (P0-4). */
 export const PHONE = '+91 89569 67964'
+export const PHONE_TEL = 'tel:+918956967964'
 export const GITHUB_USER = 'suparna-deshmukh'
 
 export const SOCIALS = {

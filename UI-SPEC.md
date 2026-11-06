@@ -593,9 +593,16 @@ curves, 9s alternate drift; paused off-screen). Header label "Contact", title
 "Let's talk.".
 
 ### 12.1 Left (direct lines)
-* Email `f20230611@goa.bits-pilani.ac.in` (mailto) + **Copy email** button
-  ("Copied" state, 1.6s, sr-only live region).
-* Phone: `+91 89569 67964 · Bengaluru, IN`.
+* **Email (P0-4):** renders only when `NEXT_PUBLIC_CONTACT_EMAIL` is set
+  (`CONTACT_EMAIL` in `site.ts`) — mailto link + **Copy email** button ("Copied"
+  state, 1.6s, sr-only live region) + a `<noscript>` mailto fallback. Until the
+  professional address arrives the block shows the neutral line "Email me via the
+  form — I reply to everything." (hidden, not stubbed — the form still works and
+  the API falls back to the institute address server-side only).
+* **Phone (P0-4):** tap-to-reveal. Static HTML shows `Show number · Bengaluru, IN`
+  (a plain mono button, `.phone-reveal`); clicking swaps in the `tel:` link
+  `+91 89569 67964`. The raw digits never appear in the initial SSR HTML, and the
+  phone number is gone from the hero (`HeroLetterhead` no longer imports `PHONE`).
 * "It's --:-- in Bengaluru right now." (30s tick).
 * **SocialCards**: LinkedIn + GitHub cards; the GitHub card renders a live
   **contribution graph** (`GitHubGraph`, data from `/api/github`).
@@ -744,6 +751,8 @@ numbers); case bodies in `app/lib/content.ts`. Known placeholders:
 | item | where | status |
 |---|---|---|
 | Resume | `RESUME_URL` → `/Suparna-Deshmukh-Resume.pdf` | done — served from `public/`, generated from `/resume`; header + social card use a download icon |
+| Professional email | `NEXT_PUBLIC_CONTACT_EMAIL` (env, `.env.example` documents it) | hidden — pending Suparna (Section 7 #4); site shows no email until set. `/resume` + the generated PDF intentionally keep the institute address (faithful resume artifact) |
+| Phone display | `PHONE` / `PHONE_TEL` in `site.ts` | done — tap-to-reveal on Contact only; hero phone removed; raw digits absent from home static HTML (verified: 0 hits) |
 | "My part" lines | `CORPORATE[*].myPart` | hidden — pending Suparna's one-liners (P0-3) |
 | 96.7% eval numerator | `METRICS['ac-eval']` (`needsReview`) | as-is + dev warning — pending Suparna |
 | LinkedIn URL | `SOCIALS.linkedin` | set — **confirm** |
