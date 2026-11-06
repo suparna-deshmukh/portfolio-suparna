@@ -3,7 +3,9 @@
 import '../corporate.css'
 import { useCallback, useEffect, useRef } from 'react'
 import { CORPORATE, CORPORATE_AGG, PREFILL_EVENT, type Corporate } from '../lib/site'
+import { m } from '../lib/metrics'
 import CountUp from './CountUp'
+import MetricTip from './MetricTip'
 import SectionHeader from './SectionHeader'
 import { usePrefersReducedMotion, useVisibleLoop } from '../lib/hooks'
 
@@ -115,7 +117,7 @@ function CorporateDoc({ c, index }: { c: Corporate; index: number }) {
 
   return (
     <div ref={ref} className="cfdoc" role="img"
-      aria-label={`${c.doc.type} for ${c.name}: ${c.doc.rows.map(r => `${r.label} — ${r.verdict}`).join(', ')}. Proof: ${c.proof.value} ${c.proof.label}.`}>
+      aria-label={`${c.doc.type} for ${c.name}: ${c.doc.rows.map(r => `${r.label} — ${r.verdict}`).join(', ')}. Proof: ${c.proof.value} ${c.proof.label}.${c.proofMetric ? ` ${m(c.proofMetric).source}, as of ${m(c.proofMetric).asOf}.` : ''}`}>
       <div ref={paper} className="cfdoc-paper g st">
         <div className="cfdoc-hd">
           <span className="cfdoc-emb" aria-hidden="true">{EMBLEMS[c.id]}</span>
@@ -132,7 +134,9 @@ function CorporateDoc({ c, index }: { c: Corporate; index: number }) {
             <path className="cfdoc-gf" d="M10 60 a50 50 0 0 1 100 0" />
             <path className="cfdoc-gv" d="M10 60 a50 50 0 0 1 100 0" style={{ ['--g' as string]: c.proof.gauge }} />
           </svg>
-          <b><CountUp text={c.proof.value} /></b>
+          <b>{c.proofMetric
+            ? <MetricTip id={c.proofMetric} focusable={false}><CountUp text={c.proof.value} /></MetricTip>
+            : <CountUp text={c.proof.value} />}</b>
           <span>{c.proof.label}</span>
         </div>
       </div>

@@ -1,6 +1,8 @@
 import { PROJECTS } from '../lib/content'
 import SectionHeader from './SectionHeader'
 import CountUp from './CountUp'
+import MetricTip from './MetricTip'
+import { m } from '../lib/metrics'
 import AskCartReport from './AskCartReport'
 import ResearchBoard from './ResearchBoard'
 import ViewTransitionLink from './ViewTransitionLink'
@@ -10,7 +12,7 @@ import { SortingDots } from './ProjectSignatures'
 
 const liveHost = (url?: string | null) => (url ? url.replace(/^https?:\/\//, '') : '')
 
-interface Stat { value: string; label: string; hot?: boolean }
+interface Stat { id?: string; value: string; label: string; hot?: boolean }
 
 interface CaseProps {
   variant: 'tm' | 'fl'
@@ -46,7 +48,14 @@ function Case({ variant, id, index, refs, slug, title, summary, liveUrl, links, 
         </h3>
         {statsLabel && <p className="lab stats-lab">{statsLabel}</p>}
         <div className="stats">
-          {stats.map(s => <div key={s.label}><CountUp text={s.value} className={s.hot ? 'hot' : undefined} /><span>{s.label}</span></div>)}
+          {stats.map(s => (
+            <div key={s.label}>
+              {s.id
+                ? <MetricTip id={s.id}><CountUp text={s.value} className={s.hot ? 'hot' : undefined} /></MetricTip>
+                : <CountUp text={s.value} className={s.hot ? 'hot' : undefined} />}
+              <span>{s.label}</span>
+            </div>
+          ))}
         </div>
         <p>{summary}</p>
         <p className="stack-ln">{stack}</p>
@@ -105,11 +114,7 @@ export default function Projects() {
               links={askcart.links}
               stack="Next.js · SQL · Python · ML · Gemini API"
               statsLabel="From the MVP"
-              stats={[
-                { value: '8%', label: 'null results, down from 27.3% (n=150)' },
-                { value: '96.7%', label: 'RAG eval pass rate (n=113)' },
-                { value: '78.7%', label: 'resolved within 2 follow-ups', hot: true },
-              ]}
+              stats={(askcart.stats ?? []).map(s => ({ id: s.id, value: m(s.id).shown, label: s.label, hot: s.hot }))}
               media={<AskCartReport />}
             />
           )}
@@ -126,11 +131,7 @@ export default function Projects() {
               links={research.links}
               stack="n8n · Ollama (Llama 3) · Python · REST APIs"
               statsLabel="One run"
-              stats={[
-                { value: '500+', label: 'pain points aggregated', hot: true },
-                { value: '28', label: 'nodes in the workflow' },
-                { value: '70%', label: 'research-to-spec time cut' },
-              ]}
+              stats={(research.stats ?? []).map(s => ({ id: s.id, value: m(s.id).shown, label: s.label, hot: s.hot }))}
               media={<ResearchBoard />}
               signature={<SortingDots />}
             />

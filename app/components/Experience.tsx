@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { EXPERIENCE, type Company } from '../lib/site'
 import SectionHeader from './SectionHeader'
 import CountUp from './CountUp'
+import MetricTip from './MetricTip'
 
 /** The reading line: a station is current while it crosses the band 40% to 45% down the viewport. */
 const READING_LINE = '-40% 0px -55% 0px'
@@ -48,7 +49,9 @@ function Station({ c, index, now }: { c: Company; index: number; now: boolean })
           <section className="rt-role">
             <span className="rt-dates">{stopDates(role.meta, c.city)}</span>
             <h4>{role.title}</h4>
-            <div className="rt-big"><CountUp text={role.hero.value} /><span>{role.hero.label}</span></div>
+            <div className="rt-big">{role.heroMetric
+              ? <MetricTip id={role.heroMetric}><CountUp text={role.hero.value} /></MetricTip>
+              : <CountUp text={role.hero.value} />}<span>{role.hero.label}</span></div>
             <p className="rt-how">{role.how}</p>
           </section>
           <div>

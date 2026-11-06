@@ -1,6 +1,7 @@
 'use client'
 
 import { SOCIALS, PHONE } from '../lib/site'
+import { m } from '../lib/metrics'
 
 // Hero left column: the name set as an engineering title block — a name plate, then ruled rows
 // for the current work and the education, and the foot with CTAs and direct lines.
@@ -17,7 +18,7 @@ interface Row {
 const ROWS: Row[] = [
   { label: 'Currently', value: 'Associate Product Manager intern at RISA Labs', detail: 'AI workflows, US healthcare', stack: true },
   { label: 'Building', value: 'AskCart', detail: 'guided AI search, personal build' },
-  { label: 'Placements', value: 'Placement Coordinator at BITS Goa', detail: '240 placed · batch 58% → 85%', stack: true },
+  { label: 'Placements', value: 'Placement Coordinator at BITS Goa', detail: `${m('pc-placed').shown} placed · batch ${m('pc-rate').shown.replace('→', ' → ')}`, stack: true },
 ]
 
 const LINKS = [

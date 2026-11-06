@@ -2,6 +2,8 @@
 
 import '../hero-right.css'
 import AskCartPhone from './AskCartPhone'
+import MetricTip from './MetricTip'
+import { m } from '../lib/metrics'
 
 /**
  * The hero's right hand: an annotated exhibit. Four objects pinned loose on the cross-grid — the ID
@@ -21,11 +23,11 @@ export default function HeroExhibit() {
           <span className="ex-bcode" aria-hidden="true" />
         </a>
 
-        <a className="ex-ob ex-risa" href="#experience-risa" style={{ ['--d' as string]: 1.45, ['--rot' as string]: '3deg' }} aria-label="RISA Labs — 500 hours a week saved across 200 users">
+        <a className="ex-ob ex-risa" href="#experience-risa" style={{ ['--d' as string]: 1.45, ['--rot' as string]: '3deg' }} aria-label={`RISA Labs — ${m('risa-hours').num} hours a week saved across ${m('risa-users').shown} users. ${m('risa-hours').source}, as of ${m('risa-hours').asOf}`}>
           <span className="ex-risa-hd"><b>RISA Labs</b><small>APM intern · now</small></span>
-          <span className="ex-risa-big">500<i> hrs/wk</i></span>
-          <span className="ex-risa-sub">saved across 200 users · Status Tracking 0→1</span>
-          <span className="ex-risa-sub">118 payers · 75% coverage / 96% precision</span>
+          <MetricTip id="risa-hours" className="block" focusable={false}><span className="ex-risa-big">{m('risa-hours').num}<i> hrs/wk</i></span></MetricTip>
+          <span className="ex-risa-sub">saved across {m('risa-users').shown} users · Status Tracking 0→1</span>
+          <span className="ex-risa-sub">{m('risa-payers').shown} payers · {m('risa-coverage').shown} coverage / {m('risa-precision').shown} precision</span>
         </a>
 
         <a className="ex-ob ex-phone" href="/projects/askcart" style={{ ['--d' as string]: 0.7, ['--rot' as string]: '2.5deg' }}>
@@ -42,15 +44,15 @@ export default function HeroExhibit() {
         </a>
 
         <div className="ex-note ex-n1" style={{ ['--d' as string]: 1.25, ['--rot' as string]: '-2deg' }}>
-          <span className="ex-note-num">Top 8</span>
-          <span className="ex-note-lab">of 9,000+ · Accenture Strategy ’25</span>
+          <MetricTip id="acc-rank" className="block"><span className="ex-note-num">{m('acc-rank').shown}</span></MetricTip>
+          <span className="ex-note-lab">of {m('acc-of').shown} · Accenture Strategy ’25</span>
         </div>
         <div className="ex-note ex-n2" style={{ ['--d' as string]: 1.05, ['--rot' as string]: '1.6deg' }}>
           <span className="ex-note-num">Placement Coordinator</span>
           <span className="ex-note-lab">BITS Goa · 2026 batch</span>
         </div>
         <div className="ex-note ex-n3" style={{ ['--d' as string]: 1.35, ['--rot' as string]: '-1.2deg' }}>
-          <span className="ex-note-num">$2.5M</span>
+          <MetricTip id="ed-raise" className="block"><span className="ex-note-num">{m('ed-raise').shown}</span></MetricTip>
           <span className="ex-note-lab">Series A · 180DC, Everyday Diamonds</span>
         </div>
 

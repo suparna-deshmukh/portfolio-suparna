@@ -53,13 +53,16 @@ app/
   tailwind.css               (utility base only)
   lib/
     site.ts                  ALL home data: EXPERIENCE, CORPORATE, POSITIONS, ACHIEVEMENTS,
-                             EDUCATION, NAV_SECTIONS, SOCIALS, LOG, EMAIL/PHONE, URLs
-    content.ts               PROJECTS (full case bodies), NOW
+                             EDUCATION, NAV_SECTIONS, SOCIALS, LOG, EMAIL/PHONE, URLs,
+                             DATA_LEDGERS (data projects)
+    metrics.ts               METRICS registry: every printed number, once, with source + asOf;
+                             m(id) lookup, assertMetrics() dev-time rate check
+    content.ts               PROJECTS (full case bodies, stats ids), NOW
     posts.ts                 case/post helpers, readMinutes, dev-only assertExcerpts
     hooks.ts                 usePrefersReducedMotion, useVisibleLoop, useInViewOnce,
                              useSectionArrival, useBandPause, istTime, SECTION_EVENT
   components/
-    Header.tsx  FloatNav.tsx  PageMotion.tsx  SectionHeader.tsx  SecRef.tsx  CountUp.tsx
+    Header.tsx  FloatNav.tsx  PageMotion.tsx  SectionHeader.tsx  SecRef.tsx  CountUp.tsx  MetricTip.tsx
     Hero.tsx  HeroLetterhead.tsx  HeroExhibit.tsx  AskCartPhone.tsx
     Experience.tsx
     Projects.tsx  VisibleCard.tsx  ProjectIndex.tsx  ProjectSignatures.tsx
@@ -488,6 +491,9 @@ Mobile ≤640: one column, doc capped 300px.
 
 ## 10. Data Projects (`DataLedger.tsx`)
 
+Data lives in `site.ts` as `DATA_LEDGERS` (title, where, two points, result, tech);
+headline figures are read from the `METRICS` registry by id (`resultMetric`).
+
 Header `sm`: "Four ledgers, one method." + "4 data projects · SQL + Python" / "From
 viral videos to loan books". `.dl-grid` = 2×2 (18px gap; 1-col mobile).
 
@@ -662,7 +668,42 @@ portal, `z` above everything.
 
 ---
 
-## 17. Content sources & TODOs
+## 17. Metrics registry & hover proof
+
+`app/lib/metrics.ts` is the single home for every number printed on the site:
+
+* `METRICS` — `Record<id, Metric>`; each `Metric` has `shown` (exactly what the UI
+  prints), optional `num`/`den` (when it is a rate), optional `n` (sample size),
+  `unit`, `source` and `asOf`.
+* `m(id)` — lookup; throws in dev on an unknown id.
+* `assertMetrics()` — runs at module load in dev: for rate metrics carrying both
+  `num` and `den` (unit `'%'`), `num/den` must equal `shown` within 0.05 pp or the
+  dev build throws. Range values (e.g. `pc-rate` "58%→85%") carry no `num`/`den`.
+  Metrics flagged `needsReview` (currently `ac-eval`, 96.7% with n=113 — true
+  numerator pending from Suparna) print a loud dev-console warning and stay as-is
+  until confirmed.
+
+Consumers read by id — no stat literal in components:
+* `site.ts`: EXPERIENCE `metric`/`hero`/`results`, CORPORATE `stamp`/`proof`/`chips`,
+  `CORPORATE_AGG`, `ACHIEVEMENTS` rank/of, `POSITIONS` stats/team, `DATA_LEDGERS`.
+* `content.ts` `PROJECTS[*].stats` (ids); `Projects.tsx` resolves via `m()`.
+* `AskCartReport` (`SCORE`, `n`, narrowed-SKU line), `ResearchBoard` (`TOP_MENTIONS`),
+  `HeroExhibit` (RISA card, Top 8 and $2.5M notes), `HeroLetterhead` (placements row).
+
+**`MetricTip`** (`components/MetricTip.tsx`, `.mtip` in globals.css): a hover and
+focus bubble above a headline stat showing `n=… · as of …` (bold) and the source
+(dim, mono 11px). Tabbable (`tabIndex 0`) so the proof is keyboard reachable; the
+same text is carried in the wrapper `aria-label`, the bubble is `aria-hidden`.
+`focusable={false}` where the stat sits inside a link or a `role="img"` figure
+(hero RISA card, corporate mini-doc proof) — the proof then travels in the
+container's `aria-label` instead. Applied to: hero exhibit (`risa-hours`,
+`acc-rank`, `ed-raise`), Experience `.rt-big` (via `role.heroMetric`), project case
+stats (via `stats[].id`), corporate proof (via `proofMetric`), data-ledger results
+(via `resultMetric`), About `.ab-stats` (via `Stat.metric`).
+
+---
+
+## 18. Content sources & TODOs
 
 All home copy/numbers live in `app/lib/site.ts` (resume is the source of truth for
 numbers); case bodies in `app/lib/content.ts`. Known placeholders:
@@ -670,6 +711,7 @@ numbers); case bodies in `app/lib/content.ts`. Known placeholders:
 | item | where | status |
 |---|---|---|
 | Resume link | `RESUME_URL` | `#` — TODO |
+| 96.7% eval numerator | `METRICS['ac-eval']` (`needsReview`) | as-is + dev warning — pending Suparna |
 | LinkedIn URL | `SOCIALS.linkedin` | set — **confirm** |
 | X handle | `SOCIALS.x` | empty (card hidden until set) |
 | Vercel live + PRD links | `PROJECTS[*].links` | `#` ×4 — TODO |

@@ -3,15 +3,17 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react'
 import { usePrefersReducedMotion, useVisibleLoop } from '../lib/hooks'
 import FitStage from './FitStage'
+import { m } from '../lib/metrics'
 
 interface Mode { name: string; tool: string; agent: string; missed: boolean }
 
 // The three failure modes the MVP evals exercise: each one the pipeline is designed to catch,
-// so every verdict is CAUGHT — the eval suite guards search, RAG and UX at 96.7% pass (n=113).
+// so every verdict is CAUGHT — the eval suite guards search, RAG and UX (pass rate and sample
+// size come from the metrics registry, as of the MVP evals).
 const MODES: Mode[] = [
   { name: 'vague_intent', tool: 'results: 0', agent: 'asks 1 follow-up question', missed: false },
   { name: 'hinglish_query', tool: '\u201Csneekrs red\u201D', agent: 'embedding fallback \u00B7 top-3 hit', missed: false },
-  { name: 'missing_context', tool: 'filters: none', agent: 'guided narrowing \u2192 12 SKUs', missed: false },
+  { name: 'missing_context', tool: 'filters: none', agent: `guided narrowing \u2192 ${m('ac-narrow').shown} SKUs`, missed: false },
 ]
 
 const STEP = { inject: 0, answer: 520, verdict: 1040 }
@@ -21,7 +23,7 @@ const STAMP_AT = 5500
 const SHAKE_MS = 550
 const LOOP_MS = 9500
 const TRACK_PX = 420
-const SCORE = 96.7
+const SCORE = parseFloat(m('ac-eval').shown)
 
 const search = (<><circle cx="11" cy="11" r="7" /><path d="m20 20-3.8-3.8" /></>)
 
@@ -87,7 +89,7 @@ export default function AskCartReport() {
   }
 
   return (
-    <div ref={ref} role="img" aria-label="Animated AskCart search quality report: three search failure modes from the MVP evals, all caught, with an eval pass rate of 96.7, green">
+    <div ref={ref} role="img" aria-label={`Animated AskCart search quality report: three search failure modes from the MVP evals, all caught, with an eval pass rate of ${SCORE}, green`}>
       <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
         <filter id="tr-ink" x="-10%" y="-10%" width="120%" height="120%">
           <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="8" result="t" />
@@ -101,7 +103,7 @@ export default function AskCartReport() {
           <div ref={paper} className={`tr-paper g st${counts ? ' cnt' : ''}`} style={{ ['--tw' as string]: `${TRACK_PX}px` } as CSSProperties}>
             <div className="tr-hd">
               <div><b>AskCart</b><small>Search quality report · MVP evals</small></div>
-              <span className="sc">eval suite · n=113<br />every mode caught</span>
+              <span className="sc">eval suite · n={m('ac-eval').n}<br />every mode caught</span>
             </div>
             {MODES.map((m, i) => (
               <div key={m.name} ref={el => { rows.current[i] = el }} className="tr-row inj ans vrd" onPointerEnter={() => replay(i)}>

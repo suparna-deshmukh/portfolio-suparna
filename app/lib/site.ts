@@ -1,4 +1,5 @@
 // Site-wide constants and section data that is not part of the posts/projects content.
+import { m } from './metrics'
 
 export const RESUME_URL = '#' // TODO: paste the resume link (Drive/website)
 export const EMAIL = 'f20230611@goa.bits-pilani.ac.in'
@@ -39,8 +40,8 @@ export const LOG: LogEntry[] = [
 
 export interface Bullet { lead: string; rest: string }
 /** One proof figure: the number and what it measures. */
-export interface Stat { value: string; label: string }
-interface RoleBase { title: string; meta: string; bullets: Bullet[] }
+export interface Stat { value: string; label: string; /** metric registry id behind the figure; components attach a hover proof when present */ metric?: string }
+interface RoleBase { title: string; meta: string; bullets: Bullet[]; /** metric registry id for the headline figure */ heroMetric?: string }
 /**
  * A role with its proof pulled out of the bullets: `hero` is the headline, `how` is the verbatim `rest`
  * of the hero bullet, `results` are the other figures. Every number comes from a bullet. A `pending`
@@ -69,16 +70,17 @@ export interface Company {
 // Bullet copy is from the resume (source of truth for numbers).
 export const EXPERIENCE: Company[] = [
   {
-    id: 'risa', name: 'RISA Labs', monogram: 'RL', city: 'Bengaluru', years: "'26 to now", metric: '500 hrs/wk', metricCaption: 'saved across 200 users by Status Tracking', summary: 'Associate Product Manager Intern · AI Workflows for US Healthcare', sector: 'Healthcare AI', group: 'product', featured: true,
+    id: 'risa', name: 'RISA Labs', monogram: 'RL', city: 'Bengaluru', years: "'26 to now", metric: m('risa-hours').shown, metricCaption: 'saved across 200 users by Status Tracking', summary: 'Associate Product Manager Intern · AI Workflows for US Healthcare', sector: 'Healthcare AI', group: 'product', featured: true,
     roles: [
       { title: 'Associate Product Manager Intern', meta: 'Jul 2026 to Present · Healthcare AI · Bengaluru',
-        hero: { value: '500 hrs/wk', label: 'saved across 200 users' },
+        heroMetric: 'risa-hours',
+        hero: { value: m('risa-hours').shown, label: 'saved across 200 users' },
         how: 'by owning Status Tracking 0→1: 90k-order SQL analysis, user research, user stories, PRDs (v0 to v1), HLD and dev-testing.',
         results: [
-          { value: '75% / 96%', label: 'coverage / precision across 118 payers' },
-          { value: '92%', label: 'accuracy on the Vapi calling MVP' },
-          { value: '2x', label: 'QC throughput on the unified UI' },
-          { value: '87%', label: 'precision on Pulse auto-RCA' },
+          { value: `${m('risa-coverage').shown} / ${m('risa-precision').shown}`, label: 'coverage / precision across 118 payers', metric: 'risa-precision' },
+          { value: m('risa-vapi').shown, label: 'accuracy on the Vapi calling MVP', metric: 'risa-vapi' },
+          { value: m('risa-qc').shown, label: 'QC throughput on the unified UI', metric: 'risa-qc' },
+          { value: m('risa-pulse').shown, label: 'precision on Pulse auto-RCA', metric: 'risa-pulse' },
         ],
         bullets: [
           { lead: '200 users save 500 hrs/wk', rest: ' by owning Status Tracking 0→1: 90k-order SQL analysis, user research, user stories, PRDs (v0 to v1), HLD and dev-testing.' },
@@ -93,14 +95,15 @@ export const EXPERIENCE: Company[] = [
     ],
   },
   {
-    id: 'investmates', name: 'InvestMates', monogram: 'IM', city: 'Seattle (Remote)', years: "'25", metric: '25%', metricCaption: 'homepage CTR lift from the revamp A/B test', summary: 'Product Manager (Part-time) · AI Wealth Management for NRIs', sector: 'FinTech · Wealth', group: 'product',
+    id: 'investmates', name: 'InvestMates', monogram: 'IM', city: 'Seattle (Remote)', years: "'25", metric: m('im-ctr').shown, metricCaption: 'homepage CTR lift from the revamp A/B test', summary: 'Product Manager (Part-time) · AI Wealth Management for NRIs', sector: 'FinTech · Wealth', group: 'product',
     roles: [{ title: 'Product Manager (Part-time)', meta: 'Jul 2025 to Sept 2025 · FinTech · Seattle (Remote)',
-      hero: { value: '25%', label: 'homepage CTR lift' },
+      heroMetric: 'im-ctr',
+      hero: { value: m('im-ctr').shown, label: 'homepage CTR lift' },
       how: 'by authoring PRDs for the homepage revamp and AI portfolio health, A/B tested (n=4200, p<0.05).',
       results: [
-        { value: '20%', label: 'longer sessions' },
-        { value: '18%', label: 'drop-offs cut by lifecycle campaigns' },
-        { value: '+3 pp', label: 'D7 retention' },
+        { value: m('im-sessions').shown, label: 'longer sessions', metric: 'im-sessions' },
+        { value: m('im-dropoff').shown, label: 'drop-offs cut by lifecycle campaigns', metric: 'im-dropoff' },
+        { value: m('im-d7').shown, label: 'D7 retention', metric: 'im-d7' },
       ],
       bullets: [
         { lead: 'Lifted homepage CTR 25%, sessions 20%', rest: ' by authoring PRDs for the homepage revamp and AI portfolio health, ran A/B test (n=4200, p<0.05).' },
@@ -108,14 +111,15 @@ export const EXPERIENCE: Company[] = [
       ] }],
   },
   {
-    id: 'suzlon', name: 'Suzlon Group', monogram: 'SZ', city: 'Pune', years: "'25", metric: '66%', metricCaption: 'reporting time cut by automated pipelines', summary: 'Summer Intern (Team Lead) · Renewable Energy', sector: 'Renewable Energy', group: 'industry',
-    roles: [
-      { title: 'Summer Intern (Team Lead)', meta: 'May 2025 to Jul 2025 · Renewable energy · Pune',
-        hero: { value: '66%', label: 'reporting time cut' },
+    id: 'suzlon', name: 'Suzlon Group', monogram: 'SZ', city: 'Pune', years: "'25", metric: m('szl-report').shown, metricCaption: 'reporting time cut by automated pipelines', summary: 'Summer Intern (Team Lead) · Renewable Energy', sector: 'Renewable Energy', group: 'industry',
+      roles: [
+        { title: 'Summer Intern (Team Lead)', meta: 'May 2025 to Jul 2025 · Renewable energy · Pune',
+        heroMetric: 'szl-report',
+        hero: { value: m('szl-report').shown, label: 'reporting time cut' },
         how: 'by automating 20 data pipelines with n8n, AI agents and IMAP email parsing.',
         results: [
-          { value: '8-state', label: 'CSR analysis led as team lead' },
-          { value: '20', label: 'data pipelines automated' },
+          { value: m('szl-states').shown, label: 'CSR analysis led as team lead', metric: 'szl-states' },
+          { value: m('szl-pipelines').shown, label: 'data pipelines automated', metric: 'szl-pipelines' },
         ],
         bullets: [
           { lead: 'Led 5 interns on an 8-state CSR analysis', rest: ' with Excel and VBA; built and presented Power BI KPI dashboards and PPTs to leadership.' },
@@ -124,14 +128,15 @@ export const EXPERIENCE: Company[] = [
     ],
   },
   {
-    id: 'chimera', name: 'Chimera VC', monogram: 'CV', city: 'Singapore (Remote)', years: "'25", metric: '$5M', metricCaption: 'pipeline built · 3 term sheets · 2 investments', summary: 'Investment Analyst Intern · Gaming Venture Capital', sector: 'Venture Capital', group: 'industry',
-    roles: [
-      { title: 'Investment Analyst Intern', meta: 'Mar 2025 to May 2025 · Gaming venture capital · Singapore (Remote)',
-        hero: { value: '$5M', label: 'pipeline built' },
+    id: 'chimera', name: 'Chimera VC', monogram: 'CV', city: 'Singapore (Remote)', years: "'25", metric: m('ch-pipeline').shown, metricCaption: 'pipeline built · 3 term sheets · 2 investments', summary: 'Investment Analyst Intern · Gaming Venture Capital', sector: 'Venture Capital', group: 'industry',
+      roles: [
+        { title: 'Investment Analyst Intern', meta: 'Mar 2025 to May 2025 · Gaming venture capital · Singapore (Remote)',
+        heroMetric: 'ch-pipeline',
+        hero: { value: m('ch-pipeline').shown, label: 'pipeline built' },
         how: 'by vetting 10 early-stage startups on benchmarks, traction and CAC/LTV, co-authoring 7 memos.',
         results: [
-          { value: '3', label: 'term sheets driven' },
-          { value: '2', label: 'closed investments' },
+          { value: m('ch-sheets').shown, label: 'term sheets driven', metric: 'ch-sheets' },
+          { value: m('ch-deals').shown, label: 'closed investments', metric: 'ch-deals' },
         ],
         bullets: [
           { lead: 'Vetted 10 early-stage gaming startups', rest: ' on benchmarks, traction and CAC/LTV; co-authored 7 memos and sourced 2 leads.' },
@@ -141,14 +146,15 @@ export const EXPERIENCE: Company[] = [
     ],
   },
   {
-    id: 'primewealth', name: 'PrimeWealth', monogram: 'PW', city: 'Pune (Remote)', years: "'24 to '25", metric: '33%', metricCaption: 'AUM lift, US NRI market entry', summary: 'GTM Intern · Wealth Management, US Expansion', sector: 'Wealth Management', group: 'industry',
-    roles: [
-      { title: 'GTM Intern', meta: 'Dec 2024 to Mar 2025 · Wealth management, US expansion · Pune (Remote)',
-        hero: { value: '33%', label: 'AUM lift' },
+    id: 'primewealth', name: 'PrimeWealth', monogram: 'PW', city: 'Pune (Remote)', years: "'24 to '25", metric: m('pw-aum').shown, metricCaption: 'AUM lift, US NRI market entry', summary: 'GTM Intern · Wealth Management, US Expansion', sector: 'Wealth Management', group: 'industry',
+      roles: [
+        { title: 'GTM Intern', meta: 'Dec 2024 to Mar 2025 · Wealth management, US expansion · Pune (Remote)',
+        heroMetric: 'pw-aum',
+        hero: { value: m('pw-aum').shown, label: 'AUM lift' },
         how: 'by identifying US NRI pain points, sizing SAM/SOM and refining PMF for market entry.',
         results: [
-          { value: '40%', label: 'inbound leads up' },
-          { value: '50%', label: 'AUM growth in the scenario model' },
+          { value: m('pw-leads').shown, label: 'inbound leads up', metric: 'pw-leads' },
+          { value: m('pw-model').shown, label: 'AUM growth in the scenario model', metric: 'pw-model' },
         ],
         bullets: [
           { lead: 'Helped lift AUM 33%', rest: ' by identifying US NRI pain points, sizing SAM/SOM, refining PMF and building the market entry strategy.' },
@@ -172,6 +178,8 @@ export interface Corporate {
   stamp: string
   /** the proof panel: the big number, what it measured, and how far the gauge fills (0-100) */
   proof: { value: string; label: string; gauge: number }
+  /** metric registry id for the proof figure, for the hover proof */
+  proofMetric?: string
   /** the animated mini-doc beside the file: its paper type, the rows that get stamped, the stamp's word */
   doc: { type: string; stampWord: string; rows: { label: string; verdict: string }[] }
   /** the deck / report this engagement produced */
@@ -184,8 +192,9 @@ export interface Corporate {
 export const CORPORATE: Corporate[] = [
   {
     id: 'everyday', name: 'Everyday Diamonds', role: 'Team Lead · GTM and Series A Fundraising', context: '180 Degrees Consulting engagement · Bengaluru',
-    where: 'Bengaluru', when: 'Aug 2024 – Sept 2024', stamp: '$2.5M raised',
-    proof: { value: '$2.5M', label: 'Series A raised from All In Capital, first store launched', gauge: 100 },
+    where: 'Bengaluru', when: 'Aug 2024 – Sept 2024', stamp: `${m('ed-raise').shown} raised`,
+    proof: { value: m('ed-raise').shown, label: 'Series A raised from All In Capital, first store launched', gauge: 100 },
+    proofMetric: 'ed-raise',
     doc: { type: 'Term sheet', stampWord: 'Series A', rows: [
       { label: 'Pricing & unit model', verdict: 'SIGNED' },
       { label: 'Series A deck v3', verdict: 'SHARED' },
@@ -196,13 +205,14 @@ export const CORPORATE: Corporate[] = [
       'Modeled profitability, pricing and financial projections; built the 4-year expansion roadmap and the Series A deck that aided a $2.5M raise from All In Capital.',
       'Formulated the offline expansion strategy for 5 stores across India — and the first one launched in Bengaluru.',
     ],
-    chips: [{ value: '$2.5M', label: 'Series A, All In Capital' }, { value: '5', label: 'store expansion roadmap' }],
+    chips: [{ value: m('ed-raise').shown, label: 'Series A, All In Capital', metric: 'ed-raise' }, { value: m('ed-stores').shown, label: 'store expansion roadmap', metric: 'ed-stores' }],
     ask: "Hi Suparna, I'd like to hear about the Everyday Diamonds Series A work.",
   },
   {
     id: 'fedaykin', name: 'Fedaykin AV', role: 'GTM Strategy Consultant', context: 'Independent consulting engagement',
-    where: 'Remote', when: 'Jul 2024 – Aug 2024', stamp: '30% unit economics',
-    proof: { value: '30%', label: 'unit economics improved across specs, ops and annotation costs', gauge: 30 },
+    where: 'Remote', when: 'Jul 2024 – Aug 2024', stamp: `${m('fa-unit').shown} unit economics`,
+    proof: { value: m('fa-unit').shown, label: 'unit economics improved across specs, ops and annotation costs', gauge: 30 },
+    proofMetric: 'fa-unit',
     doc: { type: 'Pricing audit', stampWord: 'Unit economics', rows: [
       { label: 'Competitor benchmarks', verdict: 'DONE' },
       { label: 'Annotation cost audit', verdict: '−30%' },
@@ -214,13 +224,14 @@ export const CORPORATE: Corporate[] = [
       'Optimized the pricing strategy across technical specs, operations and annotation costs, improving unit economics by 30%.',
       'Curated a database of 950 potential AV clients and ran a bottom-up B2B market sizing to inform a scalable business model.',
     ],
-    chips: [{ value: '30%', label: 'unit economics' }, { value: '950', label: 'client database' }],
+    chips: [{ value: m('fa-unit').shown, label: 'unit economics', metric: 'fa-unit' }, { value: m('fa-clients').shown, label: 'client database', metric: 'fa-clients' }],
     ask: "Hi Suparna, I'd like to hear about the Fedaykin AV GTM strategy work.",
   },
   {
     id: 'kri' + 'she', name: 'KriSHE Carbon', role: 'Team Lead · GTM and Fundraising', context: '180 Degrees Consulting engagement · Gurugram',
-    where: 'Gurugram', when: 'Jul 2025 – Aug 2025', stamp: '₹12.5L grants',
-    proof: { value: '₹12.5L', label: 'in grants enabled via the deck and biochar model', gauge: 100 },
+    where: 'Gurugram', when: 'Jul 2025 – Aug 2025', stamp: `${m('kc-grants').shown} grants`,
+    proof: { value: m('kc-grants').shown, label: 'in grants enabled via the deck and biochar model', gauge: 100 },
+    proofMetric: 'kc-grants',
     doc: { type: 'Grant review', stampWord: 'Grants', rows: [
       { label: 'Investor deck & model', verdict: 'PITCHED' },
       { label: 'Biochar impact metrics', verdict: 'VERIFIED' },
@@ -230,15 +241,15 @@ export const CORPORATE: Corporate[] = [
       'Built the investor pitch deck and financial projections; a scalable biochar model and impact metrics enabled ₹12.5L in grants.',
       'Ran carbon market and buyer research; developed the positioning and sales narrative, identifying 20+ high-fit opportunities.',
     ],
-    chips: [{ value: '₹12.5L', label: 'grants enabled' }, { value: '20+', label: 'high-fit opportunities' }],
+    chips: [{ value: m('kc-grants').shown, label: 'grants enabled', metric: 'kc-grants' }, { value: m('kc-buyers').shown, label: 'high-fit opportunities', metric: 'kc-buyers' }],
     ask: "Hi Suparna, I'd like to hear about the KriSHE Carbon fundraising work.",
   },
 ]
 
 export const CORPORATE_AGG: Stat[] = [
-  { value: '$2.5M', label: 'Series A raised' },
-  { value: '₹12.5L', label: 'grants enabled' },
-  { value: '30%', label: 'unit economics' },
+  { value: m('ed-raise').shown, label: 'Series A raised', metric: 'ed-raise' },
+  { value: m('kc-grants').shown, label: 'grants enabled', metric: 'kc-grants' },
+  { value: m('fa-unit').shown, label: 'unit economics', metric: 'fa-unit' },
 ]
 
 // ── About page: education, skills, honors ──
@@ -252,9 +263,9 @@ export const EDUCATION = {
 }
 
 export const ACHIEVEMENTS: { rank: string; of: string; name: string; note: string; crest: { text: string; color: string }; deck?: { label: string; href: string } }[] = [
-  { rank: 'Top 8', of: '9,000+', name: "Accenture Strategy Connect '25", note: 'GenAI in supply chain, India', crest: { text: 'A', color: '#E2401B' }, deck: { label: 'Case deck', href: '#' } },
-  { rank: 'Top 5', of: '2,500+', name: "IIMA Fintech Frontier '24", note: '0→1 product design and GTM', crest: { text: 'IIM', color: '#1F4E8C' }, deck: { label: 'Case deck', href: '#' } },
-  { rank: 'Top 10%', of: '270', name: "NextLeap PM Fellowship '26", note: 'Guided AI search for Google Photos', crest: { text: 'N', color: '#0E9F8A' }, deck: { label: 'Project deck', href: '#' } },
+  { rank: m('acc-rank').shown, of: m('acc-of').shown, name: "Accenture Strategy Connect '25", note: 'GenAI in supply chain, India', crest: { text: 'A', color: '#E2401B' }, deck: { label: 'Case deck', href: '#' } },
+  { rank: m('iima-rank').shown, of: m('iima-of').shown, name: "IIMA Fintech Frontier '24", note: '0→1 product design and GTM', crest: { text: 'IIM', color: '#1F4E8C' }, deck: { label: 'Case deck', href: '#' } },
+  { rank: m('nl-rank').shown, of: m('nl-of').shown, name: "NextLeap PM Fellowship '26", note: 'Guided AI search for Google Photos', crest: { text: 'N', color: '#0E9F8A' }, deck: { label: 'Project deck', href: '#' } },
 ]
 
 export const CONSULTATHON_URL = 'https://unstop.com/competitions/consultathon-50-bits-pilani-k-k-birla-goa-campus-1674892'
@@ -276,35 +287,103 @@ export const POSITIONS: Position[] = [
   {
     id: 'placement', org: 'BITS Goa', title: 'Placement Coordinator', when: 'May 2026 – Present',
     blurb: 'Selected 1 of 8 out of 1,000+ students. Leads campus placements and corporate outreach for the 2026 batch, end-to-end, with a 25-member team.',
-    team: { count: 25, label: 'team led end-to-end' },
+    team: { count: m('pc-team').num ?? 25, label: 'team led end-to-end' },
     stats: [
-      { value: '58%→85%', label: 'batch placement in 5 months' },
-      { value: '240', label: 'students placed' },
-      { value: '25', label: 'team led end-to-end' },
+      { value: m('pc-rate').shown, label: 'batch placement in 5 months', metric: 'pc-rate' },
+      { value: m('pc-placed').shown, label: 'students placed', metric: 'pc-placed' },
+      { value: m('pc-team').shown, label: 'team led end-to-end', metric: 'pc-team' },
     ],
     chips: [{ text: '1 of 8 selected' }, { text: 'Project SYNERGY approved · 3 campuses' }],
   },
   {
     id: 'consult', org: '180 Degrees Consulting', title: 'Director', when: 'May 2025 – Jun 2026',
     blurb: 'Youngest Director: 45 consultants across 16 projects, driving 30% YoY revenue growth. Awarded “Best Consultant” as a sophomore.',
-    team: { count: 16, label: 'projects run across 45 consultants' },
+    team: { count: m('dc-projects').num ?? 16, label: 'projects run across 45 consultants' },
     stats: [
-      { value: '₹17L', label: 'Consultathon sponsorships' },
-      { value: '3,200', label: 'Consultathon registrations' },
-      { value: '30%', label: 'YoY revenue growth' },
-      { value: '50K+', label: 'course impressions, 85% retention' },
+      { value: m('dc-sponsor').shown, label: 'Consultathon sponsorships', metric: 'dc-sponsor' },
+      { value: m('dc-reg').shown, label: 'Consultathon registrations', metric: 'dc-reg' },
+      { value: m('dc-rev').shown, label: 'YoY revenue growth', metric: 'dc-rev' },
+      { value: m('dc-courses').shown, label: 'course impressions, 85% retention', metric: 'dc-courses' },
     ],
     chips: [{ text: 'Best Consultant' }, { text: 'Consultathon — sponsored by Uplearn by Upstox, NextLeap, The MBA Edge & more · on Unstop', href: CONSULTATHON_URL }],
   },
   {
     id: 'cel', org: 'Center for Entrepreneurial Leadership', title: 'Creative Director', when: 'May 2025 – Jun 2026',
     blurb: "Coalescence'24: secured 40+ founders, investors and partners — including Ankur Warikoo and UTI. Led a 20-member team across marketing and operations; 400K+ impressions and ₹10L+ revenue.",
-    team: { count: 20, label: 'team across marketing and operations' },
+    team: { count: m('cel-team').num ?? 20, label: 'team across marketing and operations' },
     stats: [
-      { value: '40+', label: 'founders and investors' },
-      { value: '400K+', label: 'impressions' },
-      { value: '₹10L+', label: 'event revenue' },
+      { value: m('cel-founders').shown, label: 'founders and investors', metric: 'cel-founders' },
+      { value: m('cel-impr').shown, label: 'impressions', metric: 'cel-impr' },
+      { value: m('cel-rev').shown, label: 'event revenue', metric: 'cel-rev' },
     ],
     chips: [],
+  },
+]
+
+// ── Data projects: the four ledger cards. Headline figures read from the metrics registry;
+//    the pointer text stays verbatim from the resume. ──
+export interface DataLedger {
+  n: string
+  title: string
+  where: string
+  points: string[]
+  result: string
+  /** metric registry id behind the result figure (hover proof) */
+  resultMetric: string
+  resLabel: string
+  tech: string
+}
+export const DATA_LEDGERS: DataLedger[] = [
+  {
+    n: '01',
+    title: 'Content Virality Prediction & Segmentation',
+    where: `YouTube Trending dataset · ${m('d1-videos').shown} videos`,
+    points: [
+      'Built NLP features from titles and tags; applied K-means to segment 200K+ videos into archetypes by views and engagement.',
+      'Trained an XGBoost classifier predicting trending content at 82% AUC; surfaced the key drivers for content decisions via SHAP.',
+    ],
+    result: `${m('d1-auc').shown} AUC`,
+    resultMetric: 'd1-auc',
+    resLabel: 'trending-content classifier',
+    tech: 'SQL · Python · scikit-learn · XGBoost',
+  },
+  {
+    n: '02',
+    title: 'Mutual Fund Activation & Retention',
+    where: `Synthetic/AMFI investment data · ${m('d2-users').shown} users`,
+    points: [
+      'Queried investment data via SQL; segmented 50K users by activation stages and constructed detailed 90-day retention cohort views.',
+      'Identified dormant user personas using RFM analysis; proposed re-engagement features backed by cohort-driven insights.',
+    ],
+    result: m('d2-users').shown,
+    resultMetric: 'd2-users',
+    resLabel: 'users · 90-day retention cohorts',
+    tech: 'SQL · Python · Excel',
+  },
+  {
+    n: '03',
+    title: 'Growth Attribution & CAC Optimization',
+    where: `Neobank fintech · ${m('d3-records').shown} campaign records`,
+    points: [
+      'Trained XGBoost on 45K neobank campaign records; used SHAP to attribute conversions across 5 digital and direct channels.',
+      'Identified the top acquisition signals per channel; built an AI reallocation model reducing simulated CAC by 28% across the channel mix.',
+    ],
+    result: m('d3-cac').shown,
+    resultMetric: 'd3-cac',
+    resLabel: 'simulated CAC, AI reallocation',
+    tech: 'Python · scikit-learn · SHAP · SQL',
+  },
+  {
+    n: '04',
+    title: 'Loan Risk Segmentation & Default Prediction',
+    where: `LendingClub dataset · ${m('d4-records').shown} loan records`,
+    points: [
+      'Queried 100K+ loan records via SQL; segmented users into 5 risk profiles using structured RFM-style feature analysis.',
+      'Built a logistic regression model to predict defaults; mapped risk segments to product features and targeted UX interventions.',
+    ],
+    result: m('d4-records').shown,
+    resultMetric: 'd4-records',
+    resLabel: 'records → 5 risk profiles',
+    tech: 'SQL · Python · scikit-learn',
   },
 ]

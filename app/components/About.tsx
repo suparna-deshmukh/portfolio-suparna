@@ -4,6 +4,7 @@ import '../about.css'
 import { useEffect, useRef } from 'react'
 import { ACHIEVEMENTS, EDUCATION, POSITIONS } from '../lib/site'
 import CountUp from './CountUp'
+import MetricTip from './MetricTip'
 import SectionHeader from './SectionHeader'
 import { CurrentlyTicker } from './AboutExtras'
 
@@ -78,7 +79,9 @@ function Positions() {
             {p.stats.length > 0 && (
               <dl className="ab-stats">
                 {p.stats.map(s => (
-                  <div key={s.label}><CountUp text={s.value} /><span>{s.label}</span></div>
+                  <div key={s.label}>{s.metric
+                    ? <MetricTip id={s.metric}><CountUp text={s.value} /></MetricTip>
+                    : <CountUp text={s.value} />}<span>{s.label}</span></div>
                 ))}
               </dl>
             )}

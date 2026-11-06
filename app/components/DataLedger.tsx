@@ -3,57 +3,9 @@
 import { useEffect, useRef } from 'react'
 import SectionHeader from './SectionHeader'
 import CountUp from './CountUp'
-
-const LEDGERS = [
-  {
-    n: '01',
-    title: 'Content Virality Prediction & Segmentation',
-    where: 'YouTube Trending dataset · 200K+ videos',
-    points: [
-      'Built NLP features from titles and tags; applied K-means to segment 200K+ videos into archetypes by views and engagement.',
-      'Trained an XGBoost classifier predicting trending content at 82% AUC; surfaced the key drivers for content decisions via SHAP.',
-    ],
-    result: '82% AUC',
-    resLabel: 'trending-content classifier',
-    tech: 'SQL · Python · scikit-learn · XGBoost',
-  },
-  {
-    n: '02',
-    title: 'Mutual Fund Activation & Retention',
-    where: 'Synthetic/AMFI investment data · 50K users',
-    points: [
-      'Queried investment data via SQL; segmented 50K users by activation stages and constructed detailed 90-day retention cohort views.',
-      'Identified dormant user personas using RFM analysis; proposed re-engagement features backed by cohort-driven insights.',
-    ],
-    result: '50K',
-    resLabel: 'users · 90-day retention cohorts',
-    tech: 'SQL · Python · Excel',
-  },
-  {
-    n: '03',
-    title: 'Growth Attribution & CAC Optimization',
-    where: 'Neobank fintech · 45K campaign records',
-    points: [
-      'Trained XGBoost on 45K neobank campaign records; used SHAP to attribute conversions across 5 digital and direct channels.',
-      'Identified the top acquisition signals per channel; built an AI reallocation model reducing simulated CAC by 28% across the channel mix.',
-    ],
-    result: '−28%',
-    resLabel: 'simulated CAC, AI reallocation',
-    tech: 'Python · scikit-learn · SHAP · SQL',
-  },
-  {
-    n: '04',
-    title: 'Loan Risk Segmentation & Default Prediction',
-    where: 'LendingClub dataset · 100K+ loan records',
-    points: [
-      'Queried 100K+ loan records via SQL; segmented users into 5 risk profiles using structured RFM-style feature analysis.',
-      'Built a logistic regression model to predict defaults; mapped risk segments to product features and targeted UX interventions.',
-    ],
-    result: '100K+',
-    resLabel: 'records → 5 risk profiles',
-    tech: 'SQL · Python · scikit-learn',
-  },
-]
+import MetricTip from './MetricTip'
+import { DATA_LEDGERS } from '../lib/site'
+import { m } from '../lib/metrics'
 
 const COHORT_ROWS = [1, 0.92, 0.97, 0.9, 1, 0.95]
 
@@ -75,7 +27,7 @@ function LedgerVis({ n }: { n: string }) {
         <path className="line" pathLength="100" d="M10 50 L44 46 L74 48 L104 42 L134 38 L158 32 L176 26 L208 8 L228 30 L256 38 L290 44" />
         <circle className="peak" cx="208" cy="8" r="3" />
         <text className="cap" x="208" y="5" textAnchor="middle">spike → trend</text>
-        <text className="cap" x="292" y="62" textAnchor="end">82% AUC classifier</text>
+        <text className="cap" x="292" y="62" textAnchor="end">{m('d1-auc').shown} AUC classifier</text>
       </svg>
     )
   }
@@ -183,7 +135,7 @@ export default function DataLedger() {
           meta={['4 data projects · SQL + Python', 'From viral videos to loan books']}
         />
         <div className="dl-grid" ref={gridRef} aria-label="Data projects">
-          {LEDGERS.map(l => (
+          {DATA_LEDGERS.map(l => (
             <article key={l.n} className="dl-card">
               <span className="dl-num" aria-hidden="true">{l.n}</span>
               <header className="dl-head">
@@ -196,7 +148,7 @@ export default function DataLedger() {
               </ul>
               <footer className="dl-foot">
                 <span className="dl-tech">{l.tech}</span>
-                <span className="dl-res"><CountUp text={l.result} /><small>{l.resLabel}</small></span>
+                <span className="dl-res"><MetricTip id={l.resultMetric}><CountUp text={l.result} /></MetricTip><small>{l.resLabel}</small></span>
               </footer>
             </article>
           ))}

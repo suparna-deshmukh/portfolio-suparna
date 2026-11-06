@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, type CSSProperties, type PointerEvent } from 'react'
 import { usePrefersReducedMotion, useVisibleLoop } from '../lib/hooks'
 import FitStage from './FitStage'
+import { m } from '../lib/metrics'
 
 type Src = 'call' | 'slack' | 'jira'
 
@@ -30,7 +31,7 @@ const SORTED_MS = 4700
 const FIRST_HOLD_MS = 2600
 const COUNT_MS = 600
 const RESUME_MS = 450
-const TOP_MENTIONS = 7
+const TOP_MENTIONS = m('ra-mentions').num ?? 7
 
 const v = (name: string, value: string | number) => ({ [`--${name}`]: value })
 
