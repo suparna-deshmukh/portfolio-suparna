@@ -1161,3 +1161,45 @@ html.motion-off .disc-body{transition:none}
 .dl-grid[data-hl="analysis"] .dl-card .dl-vis{opacity:1}
 .dl-grid[data-hl="result"] .dl-card .dl-res{opacity:1}
 .dl-asidetx{margin:0;font-size:12.5px;line-height:1.55;color:var(--dim);max-width:34ch}
+
+/* ── P1-1 · phones stop scaling content (≤640). The fixed-size FitStage figures reflow into
+   native layouts instead of shrinking below the 11px floor: the AskCart report becomes stacked
+   rows, the research board a notes grid with the ranked themes below. Same timeline engine,
+   same finished first frame; loops keep running off-screen-paused as before. */
+@media (max-width:639px){
+  .fit{height:auto!important}
+  .fit>.stage{position:relative;top:0;left:0;width:100%!important;height:auto!important;transform:none!important}
+
+  .tr{position:relative;inset:auto}
+  .tr-paper{position:relative;inset:auto;padding-bottom:128px} /* band for the 116px proof stamp */
+  .tr-row{grid-template-columns:minmax(0,1fr) auto;gap:7px 10px}
+  .tr-row .chip{grid-column:1/-1}
+  .tr-row .ln2{grid-column:1}
+  .tr-row .vd{grid-column:2;align-self:center}
+  .tr-row .ln2 span{white-space:normal;overflow:visible}
+  .tr-row .ln2 b{overflow:visible;text-overflow:clip}
+  .tr-gz .mark{left:96.7%}
+  .tr-paper.g .mark{transform:none}
+  .tr-stamp{right:14px;bottom:8px}
+
+  .fb{position:relative;inset:auto;display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px;overflow:visible}
+  .fb-note{position:static;width:auto;transform:none!important;translate:0 0!important}
+  .fb-threads{display:none}
+  .fb-rows{position:static;grid-column:1/-1;display:flex;flex-direction:column;gap:10px}
+  .fb-rw{position:static;width:auto;height:auto;opacity:1!important;transform:none!important}
+  .fb-rw .bar i{transform:scaleX(var(--w))!important}
+  .fb-rw .hl::before{clip-path:inset(0)!important}
+  .fb-cap{position:static;grid-column:1/-1;opacity:1!important;margin-top:2px}
+}
+
+/* ── P1-3 · 44px hit areas. Small interactive controls keep their visual size but extend an
+   invisible target with ::after (never enlarging the design). */
+.disc-btn,.dl-mstep,.cfdoc-replay,.ys-item,.ys-dot,.secref,.themebtn{position:relative}
+.disc-btn::after,.dl-mstep::after,.cfdoc-replay::after,.ys-item::after,.ys-dot::after,.secref::after,.themebtn::after{content:"";position:absolute;inset:-14px}
+nav.fnav a::after{content:"";position:absolute;inset:0 -6px -8px}
+
+/* ── P1-10 · forced colors: when the OS flattens the palette, keep the paper's structure. */
+@media (forced-colors:active){
+  a{text-decoration:underline}
+  .ex-ob,.ex-note,.rt-card,.case,.rcard,.disc,.ys,.stamp,.dl-card,.tr-paper,.fb,.tb{border:1px solid CanvasText}
+}

@@ -1,6 +1,4 @@
-'use client'
-
-import { SOCIALS } from '../lib/site'
+import { HERO_LINE, SOCIALS } from '../lib/site'
 import { m } from '../lib/metrics'
 
 // Hero left column: the name set as an engineering title block — a name plate, then ruled rows
@@ -44,6 +42,7 @@ export default function HeroLetterhead() {
           </svg>
         </span>
       </div>
+      <p className="tb-line">{HERO_LINE}</p>
       <dl className="tb-rows">
         {ROWS.map((r, i) => (
           <div key={r.label} className={['tb-row', r.live && 'live', r.stack && 'stack'].filter(Boolean).join(' ')} style={{ ['--i' as string]: i }}>

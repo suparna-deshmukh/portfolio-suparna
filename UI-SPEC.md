@@ -53,9 +53,13 @@ app/
   lib/
     site.ts                  ALL home data: EXPERIENCE, CORPORATE, POSITIONS, ACHIEVEMENTS,
                              EDUCATION, NAV_SECTIONS, SOCIALS, LOG, EMAIL/PHONE, URLs,
-                             DATA_LEDGERS (data projects)
+                             DATA_LEDGERS (data projects), HERO_LINE, CORPORATE_LEDE,
+                             METHOD_STEPS, ATTRIBUTION_LEGEND; link() render guard,
+                             assertNoDeadLinks() + assertSections() dev assertions
     metrics.ts               METRICS registry: every printed number, once, with source + asOf;
                              m(id) lookup, assertMetrics() dev-time rate check
+    timeline.ts              useTimeline: declarative steps, finished first frame,
+                             visibility/tab pause, loop?: false (play-once), tl.replay()
     resume.ts                RESUME copy — only home for /resume and the PDF; assertResume()
                              house-style lint (125-char lines, banned symbols, **bold**)
     content.ts               PROJECTS (full case bodies, stats ids), NOW
@@ -64,6 +68,7 @@ app/
                              useSectionArrival, useBandPause, istTime, SECTION_EVENT
   components/
     Header.tsx  FloatNav.tsx  PageMotion.tsx  SectionHeader.tsx  SecRef.tsx  CountUp.tsx  MetricTip.tsx
+    Proof.tsx  Attribution.tsx  Disclosure.tsx  ProvenanceChip.tsx  YearStrip.tsx  Stamp.tsx
     Hero.tsx  HeroLetterhead.tsx  HeroExhibit.tsx  AskCartPhone.tsx
     Experience.tsx
     Projects.tsx  VisibleCard.tsx  ProjectIndex.tsx  ProjectSignatures.tsx
@@ -306,6 +311,9 @@ notes float on their own.)
 * **Name row**: `Suparna Deshmukh` (Fraunces 600, "Suparna" set distinct) + a circular
   **seal**: two concentric rings, circular text `SUPARNA DESHMUKH · PRODUCT · CLASS OF
   27 ·` on a text path, "SD" at center.
+* **Positioning line** (`.tb-line`, P2-1): `HERO_LINE` from `site.ts` —
+  "I build AI products for messy, high-stakes workflows, and measure what
+  changes." (Fraunces 500 17px; 15px ≤520). Static on first paint.
 * **Three ruled rows** (`.tb-row`, grid 84px | value | detail; dashed separators):
   | label | value | detail |
   |---|---|---|
@@ -314,8 +322,9 @@ notes float on their own.)
   | Placements | **Placement Coordinator at BITS Goa** | 240 placed · batch 58% → 85% |
   No "live" highlight styling on any row (removed on request).
 * **Foot**: primary btn "See the builds ↓" (`#projects`) + ghost "Let's talk"
-  (`#contact`); link line: `+91 89569 67964` · LinkedIn ↗ · (X hidden until handle
-  added) · GitHub ↗.
+  (`#contact`); link line: LinkedIn ↗ · (X hidden until handle added) ·
+  GitHub ↗. (The hero phone was removed in P0-4; the number is
+  tap-to-reveal on Contact only.)
 
 ### 6.3 Exhibit (`HeroExhibit.tsx`, `hero-right.css`)
 A 660×540 stage (`.ex-wrap`, aspect-locked) scaled by `--s = min(width/660, 1.15)`.
@@ -331,7 +340,7 @@ Objects (all links):
 | ID badge | 0/44 | 172w | 1.15 / −5° | photo `suparna-portrait.webp` (144×136, clip slot, barcode strip), name, "Associate Product Manager", "RISA Labs · Bengaluru" → `#about` |
 | AskCart phone | 386/16 | 248×474 | .7 / 2.5° | dark phone frame + island; **live loop** `AskCartPhone`: status bar, app header, typing caret in the search field, a guided-question card ("What's the budget?" chips) then a result list where the old "no results" becomes a guided re-run → `/projects/askcart` |
 | RISA stat card | 206/148 | 168w | 1.45 / 3° | accent top bar, "RISA Labs / APM intern · now", **500 hrs/wk** (27px), "saved across 200 users · Status Tracking 0→1", "118 payers · 75% coverage / 96% precision" → `#experience-risa` |
-| Campus card | 14/340 | 228w | .9 / −2° | `bits-goa-sketch.webp`, "BITS Pilani, Goa", "Electronics & Communication Engineering", "Finance minor · Class of 2027" → `#about` |
+| Campus card | 14/318 | 228w | .9 / −2° | `bits-goa-sketch.webp`, "BITS Pilani, Goa", `EDUCATION.branch` ("Electronics and Communication Engineering"), "Finance minor · Class of 2027" → `#about` |
 
 **Pinned notes** (`.ex-note`, taped `::before` tape tab, same parallax/hover/settle as
 objects — deliberately *not* static):
@@ -344,6 +353,13 @@ objects — deliberately *not* static):
 
 **Callouts** (SVG, dimension-drawing style): `01 · THE PERSON`, `02 · BITS PILANI, GOA`,
 `03 · RISA LABS`, `04 · ASKCart` — leader line + endpoint dot to each object.
+
+**Mobile desk (P1-1, ≤640).** The exhibit stops scaling (`transform:none`) and
+becomes a flex column: badge + RISA card side by side (equal height), the phone
+at native 248×474 centered, the three notes in `.ex-notes` — a horizontal
+scroll-snap strip (`scroll-snap-type:x mandatory`, 158px cards, next card
+peeks) — then the campus card full width. Callouts and parallax are off;
+`display:contents` on `.ex-notes` keeps the desktop layout untouched.
 
 `useVisibleLoop` on the hero pauses the phone loop + background off-screen.
 
@@ -478,150 +494,263 @@ its schedule in the background; leaving restores the current cycle phase.
 
 ## 9. Corporate Projects (`CorporateFiles.tsx`, `corporate.css`)
 
-`band-sand`. Header `xl`: "Corporate projects.", aside: "3 engagements" / "Two as team
-lead via 180 Degrees Consulting, one independent" + aggregate chips
-($2.5M Series A raised · ₹12.5L grants enabled · 30% unit economics).
+`band-sand`. Header `xl`: "Corporate projects." plus:
+* **Lede sentence** (`.cf-lede`, `CORPORATE_LEDE` in `site.ts`): one sentence
+  covering all three engagements and their outcomes. The old aggregate chip
+  row ($2.5M raised · ₹12.5L enabled · 30% unit economics) is gone — one
+  number, one encoding (S4).
+* **Attribution legend** (`.cf-legend`, `ATTRIBUTION_LEGEND`):
+  "led — … · built — … · contributed — … · supported — …".
 
-Three files (`ol.cf-files`, 20px gap). Each `.cf-file`: grid
-`[minmax(218,242)px | 1fr]`, gap 10/30, paper card, hover lift. Entrance: chips stagger
-in (.55/.68/.81s) when `.in` (IO .25).
+**Skim row + file tabs (C-3).** `.cf-tabs` — one folder tab (`.cf-tab`) per
+file: client name, engagement chip, one proof. Clicking scrolls to and opens
+the file (deep link `#corporate-<id>`; a matching hash opens that file).
+First file starts open. ≤900px the tabs wrap and the files become a stacked
+accordion (first open). All three files stay in the DOM at all times and are
+fully expanded with JS off.
 
-### 9.1 The mini-doc (left) — AskCart-report DNA at file scale
-Self-animating paper (`.cfdoc-paper`, 13/14/16 padding, border, shadow; hover lifts):
+Each file is an `<article className="cf-file">` in `ol.cf-files`, ordered by
+`rank` (newest first: KriSHE '25 → Everyday '24 → Fedaykin '24), two-column
+grid `[minmax(218,242)px | 1fr]`, with a **manila file tab** (`.cf-filetab`,
+clip-path trapezoid: "FILE 0N · year") along the top edge.
 
-* **hd**: 30px emblem + doc type + "file 0N · Company" (mono caps).
-* **3 rows** — label (12.5px) fades/slides in (`.inj`), then the **verdict chip** slams
-  (9.5px mono, 1.5px border, rotate −5°, scale 1.5→1, `--settle`):
-  | file | doc | rows (verdicts) |
-  |---|---|---|
-  | Everyday Diamonds | **Term sheet** | Pricing & unit model → SIGNED · Series A deck v3 → SHARED · First store, Bengaluru → LAUNCHED |
-  | Fedaykin AV | **Pricing audit** | Competitor benchmarks → DONE · Annotation cost audit → −30% · 950-client B2B sizing → SIZED |
-  | KriSHE Carbon | **Grant review** | Investor deck & model → PITCHED · Biochar impact metrics → VERIFIED · 20+ high-fit buyers → MAPPED |
-* **gauge**: 100×54 arc (`stroke-dasharray: var(--g) 100`, fills over 1.1s on `.g`),
-  then the **CountUp proof number** (25px accent) + label (9.5px).
-* **Stamp** — `<Stamp shape="rect">` hanging off the paper's bottom-right edge (right 6
-  / bottom −15), double border + offset outline, rotate −6°, tone via the file's
-  `--stamp` accent: proof value + word (**$2.5M / SERIES A**, **30% / UNIT
-  ECONOMICS**, **₹12.5L / GRANTS**). Slams with the shared `stampSlam` + paper shake
-  (.38s). Static final state shows it (base opacity .92).
-* Loop (timeline steps): rows 380/1500/2620 (+460ms verdicts), gauge 3750, stamp 4650,
-  **loop 8800ms**; first frame finished; visibility pause via `useTimeline`;
-  reduced-motion / Motion Off → static finished doc.
+### 9.1 Main-side anatomy (C-1) — identical across all three files
+1. **Eyebrow** (`.cf-eyebrow`): engagement chip (`.cf-via` — "180 DC · team
+   lead" or "Independent" via `.cf-via.ind`), dates, place.
+2. **Title** h3 + one-line **descriptor** of what the client does
+   (`descriptor?` — hidden until supplied, C1).
+3. **Ask / My part / Outcome** (`.cf-amo`): three short labelled lines; each
+   block hidden when empty (all pending — C3).
+4. **Proof row**: `<Proof>` chips with `<Attribution>` markers, max 3.
+5. **Evidence**: `<DeckThumb>` only when a deck URL exists (none yet; the
+   KriSHE file will show none).
+6. **Actions**: "Ask me about it →" (`contact:prefill` with a file-specific
+   question, see §12.3) + a `Details` `<Disclosure>` holding the `points`
+   list.
 
-### 9.2 Emblems (30px in doc headers; full-size animations)
-* **Diamond** (Everyday): outline brilliant-cut + glow pulse (3.2s), clipped shine
-  sweeps (2, staggered; 1.5s on hover), two sparks (3.2s cycle).
-* **AV lane** (Fedaykin): dashed lanes scroll (1.15s), two scan arcs ripple (2.4s,
-  staggered .4), car bobs (2.4s; 1.2s on hover), two blips pop (2.4s cycle, staggered).
-* **Sprout** (KriSHE): soil, stem grows (scaleY), two leaves unfurl (.7s @ .7/.9s), bud
-  pops, four dots rise and fade (3.4s cycle).
+### 9.2 The mini-doc (left) — play-once, finished frame (C-2)
+Self-contained paper (`.cfdoc-paper`) with the 30px emblem, doc type,
+"file 0N · Company", three `label → verdict` rows, and a hanging
+`<Stamp shape="rect">` (double border + offset outline, rotate −6°, slams with
+the shared `stampSlam` + paper shake).
 
-### 9.3 Main side (right)
-h3 (26px) + meta line (`role · when · where`), context line (mono caps), points list
-(ruled, 14.5px, accent dash), then foot: result chips (staggered) + **deck chip**
-(doc icon, label, ↗; hover accent) + **"Ask me about it →"** ghost btn — dispatches
-`contact:prefill` with a role-specific question (see §12.3).
+* **Verdict vocabulary.** Rows use *deliverable verbs* — `BUILT`, `DRAFTED`,
+  `PITCHED`, `SIZED`, `MAPPED`, `SHARED`, `DONE` (current set: Everyday
+  BUILT/DRAFTED/BUILT · Fedaykin DONE/BUILT/SIZED · KriSHE
+  PITCHED/BUILT/MAPPED). *Outcome words* (`SIGNED`, `LAUNCHED`, `VERIFIED`, a percentage)
+  are allowed only when the row carries `evidence` (≥20 chars) and
+  `attribution` in data — currently none does, so every visible verdict is a
+  deliverable verb. `assertSections()` enforces this in dev.
+* **Attribution marker** (`.cfdoc-rowattr`): the row's verb prints small next
+  to the verdict.
+* **No gauges for money.** The old 100×54 arcs are gone: a gauge may exist
+  only for a true ratio with a stated denominator. The proof number (CountUp,
+  25px accent) stands alone, with an `<Attribution>` below it
+  (`.cfdoc-attr`).
+* **Stamps** say what she can defend (C-4): `$2.5M / SERIES A AIDED`,
+  `30% / PRICING AUDIT DONE`, `₹12.5L / GRANTS PURSUED`. Fedaykin's −30%
+  basis (modeled vs measured, against which baseline) is pending; until
+  confirmed the chip keeps the number with an honest qualifier.
+* **Motion.** The doc plays **once** on entering view (`useTimeline` with
+  `{ loop: false }`): rows 380/1500/2620 ms, verdicts +460 ms, proof 3750 ms,
+  stamp 4650 ms, shake 450 ms — then it rests on the finished frame. Replay
+  on hover, focus, tap, or the **Replay** button (`.cfdoc-replay`, top-right,
+  revealed on hover/focus, 44px hit area). Reduced motion / Motion Off:
+  finished frame only, no replay.
 
-**Claim wording (P0-3):** stamps and proof labels use verifiable, project-level
-outcome verbs ("Series A aided", "unit economics lifted via pricing", "grants
-enabled") so nothing reads larger than Suparna's role. A `myPart?: string` field
-renders a "My part" line (`.cf-mypart`, accented left rule) directly under the
-context line — currently undefined on all three files, hidden until Suparna
-supplies her one-liners (Section 7 item 5).
+### 9.3 Emblems
+30px header marks only (diamond / AV lane / sprout); they animate once on
+first view and on hover/focus, static otherwise. The unused full-size emblem
+CSS and keyframes were deleted (C-5).
 
-| file | stamp | proof (gauge) | points | chips | deck |
-|---|---|---|---|---|---|
-| Everyday Diamonds (Bengaluru, Aug–Sep '24) | Series A aided | $2.5M (100) "Series A aided, All In Capital — first store launched" | 2 | $2.5M Series A, All In Capital · 5 store expansion roadmap | Series A deck (hidden until URL) |
-| Fedaykin AV (Remote, Jul–Aug '24) | Unit economics +30% | 30% (30) "unit economics lifted via pricing, across specs, ops and annotation costs" | 3 | 30% unit economics · 950 client database | Project report (hidden until URL) |
-| KriSHE Carbon (Gurugram, Jul–Aug '25) | ₹12.5L grants enabled | ₹12.5L (100) "in grants enabled via the deck and biochar model" | 2 | ₹12.5L grants enabled · 20+ high-fit opportunities | — |
+### 9.4 Data and claims
+* `CORPORATE` uses the typed schema from §20 (`engagement`, `rows` with
+  `attribution`/`evidence`, `proof`, `chips`, `points`, `deck`,
+  `askPrefill`, `rank`).
+* `assertSections()` (dev, module load): an outcome-word verdict needs
+  evidence + attribution; visible deck hrefs may not be `#`/empty; rate
+  proofs must reproduce `shown` within 0.05.
+* The header sub-line states which engagement is independent (Fedaykin) and
+  which go through 180 Degrees Consulting (Everyday, KriSHE).
 
-Mobile ≤640: one column, doc capped 300px.
+| file (display order) | engagement | stamp | proof line |
+|---|---|---|---|
+| KriSHE Carbon (no 3, Jul–Aug '25, Gurugram) | 180 DC · team lead | ₹12.5L / GRANTS PURSUED | ₹12.5L grants pursued via deck and biochar model |
+| Everyday Diamonds (no 1, Aug–Sep '24, Bengaluru) | 180 DC · team lead | $2.5M / SERIES A AIDED | $2.5M Series A aided, All In Capital |
+| Fedaykin AV (no 2, Jul–Aug '24, Remote) | Independent | 30% / PRICING AUDIT DONE | 30% annotation-cost reduction found (basis pending) |
+
+**Mobile ≤640 (C-7).** File tab stays on top; doc (max 300px, centered)
+first, then Ask / My part / Outcome, proof, deck, actions; verdict chips and
+stamp text ≥ 11px; accordion with the first file open.
 
 ---
 
 ## 10. Data Projects (`DataLedger.tsx`)
 
-Data lives in `site.ts` as `DATA_LEDGERS` (title, where, two points, result, tech);
-headline figures are read from the `METRICS` registry by id (`resultMetric`).
+Data lives in `site.ts` as `DATA_LEDGERS` — the typed schema from §20:
+`provenance?`, `finding?`, `points`, `result`/`resultMetric`/`resLabel`,
+`kind` (`outcome | modeled | measured | scale`), `figure { type, status }`,
+`tech`, `links?`, `detail?`; headline figures read from the `METRICS`
+registry by id (`resultMetric`). Order is by `rank`
+(PM relevance, D-6): Mutual Fund → Growth Attribution → Content Virality →
+Loan Risk.
 
-Header `sm`: "Four ledgers, one method." + "4 data projects · SQL + Python" / "From
-viral videos to loan books". `.dl-grid` = 2×2 (18px gap; 1-col mobile).
+Header `sm`: "Four ledgers, one method." + **method strip** (`.dl-msteps`,
+`METHOD_STEPS` = Question · Data · Analysis · Result): four labelled steps
+shared by every card. Hovering (or keyboard-focusing) a step dims the
+non-matching blocks in every card (`.dl-grid[data-hl]`, focus parity) — the
+"one method" claim made visible (D-3). `.dl-grid` = 2×2 (18px gap; 1 column
+mobile).
 
-Each **ledger card**: ruled paper (rule every 32px), **red margin line** at 26px
-(light `#B24A26` / dark `#E08A5E`), file number top-right (mono), padding-left 44px.
-Head: h3 (19.5px Fraunces) + `where` line; one **infographic** (`.dl-vis`, 300×64 SVG,
-animates in on `.in`, all with hover states); two points; bottom-right **result
-figure** (Fraunces) + resLabel; tech line.
+Each **ledger card** (`.dl-card`): ruled paper (rule every 32px), **red
+margin line** at 26px, file number top-right, padding-left 44px (36px ≤640).
+Anatomy (D-2), identical for all four:
+1. **Head**: h3 (19.5px Fraunces) + `where` line + **ProvenanceChip**
+   (`Public data` / `Synthetic data` / `Client data` / `Illustrative`, 11px
+   mono, distinct outline).
+2. **Finding line** (Fraunces 17–19px) — the "so what", leading with the
+   insight; hidden until supplied (all four pending — D1).
+3. **Figure** (`.dl-vis`): the same four visual ideas (spike line, cohort
+   heatmap, channel bars, risk donut) rebuilt as `width:100%` SVGs with a
+   `viewBox` — no more 300px graphics scaling down to ~80% on phones; label
+   text ≥ 11px effective at 320–1440 (D-5). All four are currently
+   `status: 'illustrative'` and carry a corner **Illustrative** tag; their
+   hard-coded arrays stay out of any claim until real exports from the
+   notebooks arrive (D4). Hover isolations (heatmap rows, bars, donut
+   segments) have focus/tap equivalents.
+4. **Question and Approach**: two short labelled lines (replace the two
+   generic points); hidden until supplied.
+5. **Result block**: `<Proof>` with qualifier; the label is driven by
+   `kind` — **Result** (`outcome`, e.g. 82% AUC), **Modeled** (`modeled`,
+   e.g. the −28% CAC simulation), **Scale** (`scale` — dataset sizes are no
+   longer labelled "Result").
+6. **Tech chips** (SQL, Python, …).
+7. **Links row**: `Repo ↗` / `Notebook ↗` via `link()` — hidden until
+   supplied (D5).
+8. **`Method and limits`** `<Disclosure>`: method bullets, one real chart
+   (≤15 KB SVG with text alternative), "what this would inform at a product
+   company", limits — hidden while empty (D6).
 
-| # | project | where | result | infographic |
+| file | project (display order) | provenance chip | result (kind) | figure (status) |
 |---|---|---|---|---|
-| 01 | Content Virality Prediction & Segmentation | YouTube Trending · 200K+ videos | 82% AUC | spike line + area fill (trend spike) |
-| 02 | Mutual Fund Activation & Retention | Synthetic/AMFI · 50K users | 50K | 90-day **cohort heatmap** (rows [1,.92,.97,.9,1,.95]; row hover isolates; 2 dormant cells get pulsing rings) |
-| 03 | Growth Attribution & CAC Optimization | Neobank · 45K campaigns | −28% | 5 **channel bars** with labels (hover highlights) |
-| 04 | Loan Risk Segmentation & Default Prediction | LendingClub · 100K+ records | 100K+ | 5-segment **risk donut** + legend (hover thickens segment) |
+| 02 | Mutual Fund Activation & Retention (rank 1) | Synthetic data (AMFI-style) | 50K users (Scale) | cohort heatmap (illustrative) |
+| 03 | Growth Attribution & CAC Optimization (rank 2) | — (chip hidden, pending D2) | −28% CAC (Modeled) | channel bars (illustrative) |
+| 01 | Content Virality Prediction & Segmentation (rank 3) | Public data (YouTube Trending) | 82% AUC (Result) | spike line (illustrative) |
+| 04 | Loan Risk Segmentation & Default Prediction (rank 4) | Public data (LendingClub) | 100K+ records (Scale) | risk donut (illustrative) |
+
+`assertSections()` (dev, see §20): `kind` is mandatory; an unconfirmed
+provenance must use an `illustrative` figure; visible links may not be `#`.
+
+**Mobile ≤640 (D-7).** One column; figure full width; links row wraps;
+disclosure full width; all text ≥ 11px at 320.
 
 ---
 
 ## 11. About — "The person behind the work." (`About.tsx`, `about.css`)
 
-Background: slow **aurora** — two blurred 46vw blobs (accent + sage) drifting 16/19s.
-Header `serif`, meta ["Associate Product Manager intern at RISA Labs", "Bengaluru"],
-aside = **CurrentlyTicker**: rotating fact line (APM intern · AI workflows for US
-healthcare · Placement Coordinator at BITS Goa · Consultathon: ₹17L sponsorships,
-3,200 registrations · Building AskCart).
+Background: slow **aurora** — two 46vw radial-gradient blobs (accent + sage)
+drifting 16/19s. Header `serif`, meta ["Associate Product Manager intern at
+RISA Labs", "Bengaluru"], aside = **CurrentlyTicker**: rotating fact line
+(APM intern · AI workflows for US healthcare · Placement Coordinator at BITS
+Goa · Consultathon: ₹17L sponsorships, 3,200 registrations · Building
+AskCart).
 
 ### 11.1 The spread (`.ab-spread`)
 A shadowed sheet: **25/75** — left `minmax(0,1fr)`, right `minmax(0,3fr)`
-(`--pageX:32px` inner padding; page-edge gradients; folio labels "Suparna Deshmukh"
-/ "Bengaluru" bottom corners). Mobile ≤1024: one column, reading order
-quote → bio → positions → education.
+(`--pageX:32px` inner padding; page-edge gradients; folio labels "Suparna
+Deshmukh" / "Bengaluru" bottom corners). ≤1024: one column; **mobile/tablet
+reading order is quote → bio → Education → positions → honors** (E-4: the
+credential surfaces early in recruiter scan order).
 
 **Left page**
-* **Pull quote** (Fraunces 30–38px, accent opening quote): "The best product decisions
-  come from people, not dashboards."
-* **Bio** (2 paragraphs, 60px drop cap on "I"): ECE + Finance minor at BITS Goa;
-  drifted into product because the questions were never only about the tech; now APM at
-  RISA Labs; outside work leads campus placements and a 45-consultant practice.
-* **Education diploma card** (`.ab-edu`): 56px building crest (SVG), "Education" label,
-  **BITS Pilani, Goa Campus**, "B.E. (Hons.) Electronics and Communication
-  Engineering", meta line **plain text** (no pills): "Minor in Finance — Class of
-  2027". No grades anywhere.
+* **Pull quote** (Fraunces 30–38px, accent opening quote): "The best product
+  decisions come from people, not dashboards."
+* **Bio** (2 paragraphs, 60px drop cap on "I"): ECE + Finance minor at BITS
+  Goa; drifted into product because the questions were never only about the
+  tech; now APM at RISA Labs; outside work leads campus placements and a
+  45-consultant practice.
+* **Education card** (`.ab-edu`, `id="education"`) — a credential, not a
+  diploma (E-1): 56px building crest (custom drawing, never the institute's
+  official logo), "Education" label, **BITS Pilani, Goa Campus**, "B.E.
+  (Hons.) Electronics and Communication Engineering" (one `EDUCATION`
+  constant, shared with the hero campus card and the JSON-LD — E-5; "and",
+  never "&"), "Minor in Finance" on its own line (em dash removed), a
+  programme dates line (`2023 – 2027`, shown only when confirmed — E1), and
+  a round **CLASS OF 2027 seal** — `<Stamp shape="round" tone="ink">` that
+  presses once on first view (`useTimeline`, `loop: false`; reduced motion /
+  Motion Off: already pressed). No grades anywhere (existing decision).
+* **Coursework and academic highlights** `<Disclosure>` (E-2): up to three
+  groups of index-card tags (`Engineering core` / `Finance minor` /
+  `Product-relevant`) + `Academic highlights` + a one-line bridge sentence —
+  all hidden while empty (nothing supplied yet).
+* **YearStrip** (E-3, `.ys`): "Four years at a glance" — a compact 2023–2027
+  strip built **entirely from `site.ts` data**: lane 1 Study (continuous
+  bar), lane 2 Consulting (KriSHE '25, Everyday '24, Fedaykin '24 from
+  `CORPORATE`), lane 3 Positions (the three `POSITIONS`), lane 4 Honors (the
+  three `ACHIEVEMENTS`). Items are anchors linking to their sections;
+  overlaps are visible (honest workload). Keyboard navigable; ≤640 it stacks
+  into a vertical year list.
 
 **Right page** — "Positions of responsibility / 3 roles · BITS Goa"
 
-`.ab-panels`: **2 columns** on desktop (placement + director side by side), CEL card
-spans full width below.
+`.ab-panels`: the three `.ab-panel` `<article>`s in one panel anatomy
+(R-1), identical across panels:
+1. **Eyebrow** (`.ab-eyebrow`): `POSITION 0N`, organisation, dates, `NOW`
+   chip (`.ab-now`) when current.
+2. **Role title** h3.
+3. **Scope line** (`.ab-scope`, one line).
+4. **Headline `<Proof>`** (`.ab-headline`) — one number with qualifier, read
+   from `METRICS` (R-1 defaults): Placement = `pc-rate` 58% → 85% batch
+   placement; Director = `dc-sponsor` ₹17L Consultathon sponsorships; CEL =
+   the main Coalescence '24 reach figure (its labels pending — R4).
+5. **What I did**: up to 3 lines (`didLines?`, with `<Attribution>`) — hidden
+   while empty (R2).
+6. **One signature visual (R-2)** — Placement: **OfferStamps** (below);
+   Director: **16-tile project shelf** (`.ab-tiles`, fill-in stagger,
+   caption "16 projects · 45 consultants"); Creative Director: none.
+   TeamDots were removed — a number is never encoded as dots *and* printed as
+   a stat in the first screenful (S4).
+7. **Chips** (`.ab-chips`): max 2 (e.g. "1 of 8 selected", "Project
+   SYNERGY"), plus the `.ab-note` one-line plain explanation for SYNERGY
+   (R5).
+8. **`More detail` `<Disclosure>`** (`.ab-disc`): secondary stats as the
+   `.ab-stats` grid (number + labelled line, each number a `MetricTip`), the
+   sponsor line, team structure (pending R8).
 
-1. **Placement Coordinator** (BITS Goa · May 2026 – Present) — featured (accent border
-   + 3px inset bar). Blurb (1 of 8 out of 1,000+; 25-member team). Then:
-   * **TeamDots (25)** — 8px dots light up one by one (30ms stagger; hover pulse),
-     "25 · team led end-to-end".
-   * **OfferStamps** — the placement ledger: **six `<Stamp shape="offer" tone="ok">`
-     "OFFER" marks** (11px mono, 1.5px border, rough-ink mask, alternating tilt
-     −2.2°/+1.6°) that settle in one by one (scale 1.5→1, `--settle`, 140ms stagger
-     via `--i`) — caption "1 stamp = 40 students · 240 placed". (Replaces the earlier
-     batch-rate bar and 24-tile grid.)
-   * Stats: 58%→85% batch placement in 5 months · 240 students placed · 25 team.
-   * Chips: "1 of 8 selected" · "Project SYNERGY approved · 3 campuses".
-2. **Director** (180 Degrees Consulting · May 2025 – Jun 2026). Blurb (youngest
-   Director; 45 consultants; 16 projects; 30% YoY; Best Consultant sophomore). Then:
-   * **Project shelf (16)** — compact 8×2 board of 12px tiles filling in (42ms
-     stagger), "16 projects · 45 consultants". (Shortened on request.)
-   * **SponsorMarquee** — Uplearn by Upstox · NextLeap · Unstop · The MBA Edge,
-     24s loop with faded mask.
-   * Stats: ₹17L Consultathon sponsorships · 3,200 registrations · 30% YoY revenue
-     growth · 50K+ course impressions (85% retention).
-   * Chips: "Best Consultant" · "Consultathon — sponsored by … · on Unstop ↗"
-     (real Unstop link).
-3. **Creative Director** (Center for Entrepreneurial Leadership · May 2025 – Jun 2026)
-   — full width, short: Coalescence'24 blurb (40+ founders/investors incl. Ankur
-   Warikoo & UTI), TeamDots (20), stats 40+ / 400K+ / ₹10L+.
+* **OfferStamps (R-3)**: the placement ledger — `<Stamp shape="offer"
+  tone="ok">` "OFFER" marks, **one per 40 students**: count =
+  `floor(placed / 40)`, plus a **partial stamp** (`.ab-offer.partial`, half
+  height) when `placed` is not a multiple of 40 — currently exactly 6 × 40 =
+  240. The stamps are decorative (`role="img"` wrapper; the caption carries
+  the information: "1 stamp = 40 students · 240 placed", count from
+  `METRICS`). Cohort check: 85% with 240 placed implies ≈ 282 — to be stored
+  in `METRICS` and asserted once Suparna confirms the true cohort (R1).
+* **Sponsors (R-4)**: static text (`.ab-sponsors`): "Consultathon sponsors:
+  Uplearn by Upstox, NextLeap, Unstop, The MBA Edge" — the 24s marquee was
+  removed (WCAG 2.2.2). The real Unstop link chip remains.
 
-**Honors** (`.ab-honors`) — label "Honors / case competitions and fellowships"; three
-cards (18px padding, 54px crests — double ring + monogram: **A** `#E2401B`,
-**IIM** `#1F4E8C`, **N** `#0E9F8A`): rank (19.5px, "Top 8 *of 9,000+*"), name, note,
-and a **deck chip** (Case deck ↗ / Case deck ↗ / Project deck ↗ — `href="#"` TODOs).
-Hover: lift + crest tilt (−6°). Mobile: 1 column, crest left / text right.
+**Honors** (`.ab-honors`) — rebuilt for credibility (R-6): three cards,
+strongest first. Each: neutral monogram crest (double ring + monogram; no
+recreation of any organisation's logo), **result line** (Fraunces 19.5px,
+from `METRICS` — e.g. "Top 8 *of 9,000+*"), competition name, **organiser
+and year** (now stated on all three), one line on what it was, `My team and
+role` when supplied. Evidence: `<DeckThumb>` when a deck exists (none yet —
+the deck chips render nothing while `href` is empty); optional `Verify ↗`
+link to the organiser's results page (pending). Hover: lift + crest tilt
+(−6°), with focus parity. IIM and NextLeap render only the fields they have
+today (rank + organiser + year + note) — no fabricated detail (R6).
+
+| card | result | organiser · year |
+|---|---|---|
+| Accenture Strategy Connect '25 | Top 8 of 9,000+ | Accenture · 2025 |
+| IIMA Fintech Frontier '24 | (rank from `iima-rank`; fuller wording pending R6) | IIM Ahmedabad · 2024 |
+| NextLeap PM Fellowship '26 | (from `nl-rank`; pending R6) | NextLeap · 2026 |
+
+**Right-page responsive (R-7).** ≥1280: panels side by side only when each
+is ≥ 360px wide, otherwise stacked; CEL full width below. 1024–1279: single
+column. ≤1024: one page, panels full width, honors in a single column
+(crest left, text right). ≤640: headline 36px, OfferStamps wrap into rows of
+three, disclosure full width, all text ≥ 11px.
 
 ---
 
@@ -714,12 +843,46 @@ portal, `z` above everything.
 
 | bp | what changes |
 |---|---|
-| 1024 | About spread on/off (2-col → stacked single page, 2-col bio columns ≤1024) |
-| 900 | corporate body grid collapses (doc over text) |
-| 760 | scroll-padding 56px; About single-column order (quote→bio→positions→edu); stats 2-col; honors 1-col (crest left); About bio 1-col |
-| 640 | FloatNav phone behaviors (auto-hide on scroll down); corporate files 1-col, doc max 300px; header compacts |
+| 1280 | About panels side by side only when each is ≥ 360px wide (R-7) |
+| 1024 | About spread → one page; bio 2 columns; header drops the location pill |
+| 900 | corporate: tab row wraps, files → stacked accordion (first open); route manifest becomes static; hero grid → one column |
+| 760 | scroll-padding 56px (56px phone header); FloatNav phone behaviors |
+| 640 | **Mobile composition (P1-1)** — see below; header compacts: Resume text hidden (icon kept), "Let's talk" and the theme toggle stay |
 | 500 (height) | FloatNav hidden on landscape phones |
-| 390 | header wordmark → "SD" monogram; hero exhibit scales via `--s` |
+| 390 | header wordmark → "SD" monogram |
+| 320 | verified: no horizontal scroll anywhere; all visible text ≥ 11px effective (`qa:fonts`) |
+
+**Mobile composition (P1-1, ≤640)**
+* **Hero desk** (`hero-right.css`): the exhibit stops using `--s` scaling and
+  becomes a purpose-built vertical desk — ID badge and RISA stat card side by
+  side (equal height), the AskCart phone at native 248×474 centered (no
+  scaled-down text; phone-mock labels raised to the 11px floor), the pinned
+  notes as a **horizontal scroll-snap strip** with a peek of the next card
+  (`.ex-notes`, `scroll-snap-type:x mandatory`), the campus card last;
+  callouts (`.ex-calls`) and pointer parallax are off; the one-time settle-in
+  still plays.
+* **FitStage un-scale** (`globals.css`): the fixed-size case figures reflow
+  instead of shrinking. `.fit`/`.stage` become fluid; the AskCart report
+  stacks its rows (chip full width, verdict right) and reserves a 128px band
+  under the gauge for the 116px proof stamp; the research board becomes a
+  2-column notes grid with the ranked themes stacked below (bars forced to
+  their final widths, thread overlay hidden, caption static). Same timeline
+  engine, same loop timings, same finished first frame.
+* **Corporate** (C-7): accordion mode, doc max 300px centered.
+* **Data** (D-7): one column, figure full width, links wrap, disclosure full
+  width.
+
+* **Manifest cap (P1-2):** at ≥901px the sticky `.rt-man` gets
+  `max-height:calc(100dvh - 120px); overflow:auto` so it never exceeds a
+  short laptop viewport (700px-tall screens). A sticky horizontal chip rail
+  was the brief's option; the capped static manifest is the shipped, simpler
+  deviation (documented).
+* **44px hit areas (P1-3):** `.disc-btn`, `.dl-mstep`, `.cfdoc-replay`,
+  `.ys-item`, `.ys-dot`, `.secref`, `.themebtn` get an invisible `::after`
+  target (`inset:-14px`) — visuals unchanged; FloatNav links get an extended
+  target. The route **flight card now also appears on keyboard focus** of a
+  manifest row (focus parity; the card stays `aria-hidden` — the station
+  carries the content).
 
 `.wrap` max 1440; section padding `--s-sec`.
 
@@ -843,6 +1006,32 @@ tl.inCycle          // true only while a replay cycle is running
   the display without stopping the schedule).
 * Paper shake is tied to the cycle, not the static frame: `.st.shake` is applied only
   while `inCycle && has('stamp')`, so the finished first frame never shakes.
+
+### 16.4 Text-size floor and QA harness (P1-4)
+
+Hard rule: **no visible text under 11px effective** — font-size × cumulative
+transform scale × (for SVG text) viewBox ratio — at the hard viewports
+1440, 1280, 390, 360, 320; informational text should be ≥ 12px.
+
+`scripts/qa-fonts.mjs` (`npm run qa-fonts`) audits the rendered DOM over
+CDP (fresh Chrome profile, motion forced off): it walks every text node
+(including SVG `<text>`), computes the effective size, and skips
+`aria-hidden` subtrees, `display:none` / `visibility:hidden`, `opacity:0`
+and zero-size boxes. It first scrolls the page in 600px steps to mount the
+IO-gated figures, then polls for them. `--hard` selects the fail widths;
+`QA_W` filters the matrix (default: all of 1440→320).
+
+Contract:
+* Base sizes that would dip under the floor once scaled are raised in CSS
+  (phone-mock labels 9.5→11px; `.rt-div` 11px; `.ab-team` 11px; `.fb-note`
+  13.5px/74px so its 0.82 sort scale clears 11.07px; the four `dl-vis`
+  SVG label viewBoxes rebuilt so their labels clear the floor at 320).
+* The 640–1024 band keeps the scaled stage per the P1-2 table; sub-11px
+  text there is a **documented warn**, not a hard fail, until a tablet
+  composition lands.
+* `useTimeline` `steps` arrays must be **module-level constants**: an inline
+  array gets a new identity every render, which re-triggers the IO effect
+  into an infinite update loop (found while wiring the Education seal).
 
 ---
 
@@ -990,3 +1179,92 @@ no component-level metadata.
 * `app/not-found.tsx` — blank sheet + slammed `RETURN TO SENDER` ink stamp,
   clear path home + Contact link (`.nf-stamp` in `globals.css`).
 * `app/error.tsx` (client) — `VOID` stamp + "Reset" button.
+
+---
+
+## 20. Sections-brief building blocks (`Proof`, `Attribution`, `Disclosure`, `ProvenanceChip`, `YearStrip`)
+
+The sections upgrade brief (Corporate / Data / Education / Positions /
+Honors) landed with six shared pieces; later site-wide versions replace
+them without rewrites (same names, same props).
+
+* **`<Proof>`** (`components/Proof.tsx`) — a wrapper over `MetricTip`: a big
+  figure plus a qualifier (denominator, baseline, period, sample size)
+  revealed on hover, focus and tap — keyboard reachable, `aria-describedby`;
+  reads from `METRICS` by id when one exists.
+* **`<Attribution>`** (`components/Attribution.tsx`) — a small mono glyph +
+  word beside outcomes: `led`, `built`, `contributed`, `supported`; ≥ 11px;
+  never color alone. The legend prints once per section
+  (`ATTRIBUTION_LEGEND`).
+* **`<Disclosure>`** (`components/Disclosure.tsx`) — accessible expand /
+  collapse: button with `aria-expanded` / `aria-controls`, region labelled;
+  the body always stays in the DOM (collapsed with
+  `grid-template-rows: 0fr → 1fr`, no layout JS; Motion Off kills the
+  transition); **SSR renders expanded** so no-JS and crawlers see
+  everything; state persists per instance in `sessionStorage`.
+* **`<ProvenanceChip>`** (`components/ProvenanceChip.tsx`) — `Public data` /
+  `Synthetic data` / `Client data` / `Illustrative`, 11px mono, distinct
+  outline; renders nothing without a value.
+* **`<YearStrip>`** (`components/YearStrip.tsx`) — the four-lane 2023–2027
+  strip (§11.1), built only from `site.ts` data, clamped so items never
+  overflow the track, each item an anchor into its section.
+* **`assertSections()`** (`site.ts`, dev, module load — runs alongside
+  `assertNoDeadLinks()`): throws when a corporate file has ≠3 rows, a row
+  lacks `attribution`, an **outcome-word verdict** (regex: starts with a
+  number/`+`, or `SIGNED|LAUNCHED|VERIFIED`) lacks ≥20 chars of `evidence`,
+  a rate proof does not reproduce `shown` within 0.05, a visible deck href
+  is dead, a data ledger lacks `kind`, an unconfirmed provenance carries a
+  `real`-status figure, a position lacks a headline metric, or an honor
+  lacks its result or organiser.
+
+**Wording ladder** (sections brief, Appendix B). Owned end to end →
+`led` / ran / owned; produced the artifact herself → `built` / drafted /
+modeled / wrote; part of a team effort → `contributed to` / worked on;
+assisted the owner → `supported` / helped prepare. Banned on the live page
+unless she personally owns the outcome: "raised", "enabled", "secured".
+Pattern for client/team outcomes: *[verb she can defend] + [artifact].
+[client or team outcome, attributed.]*
+
+**Motion policy for these sections (X-6).** No endless loops in §9–§11:
+corporate mini-docs, the Education seal and the tile shelf play **once** on
+entering view (`useTimeline` with `loop: false`) and rest on the finished
+frame; replay on hover, focus, tap, or the Replay button (44px). Reduced
+motion / Motion Off: finished frame only. (The hero case figures keep their
+site-wide loops, off-screen paused — that is the site-wide brief's policy,
+not the sections brief's.)
+
+---
+
+## 21. Site-wide batch (P1-1 / P1-2 / P1-3 / P1-10 / P2-1 / P2-5 / P3-6)
+
+* **P2-1 · hero positioning line.** `HERO_LINE` in `site.ts` (option A from
+  the brief): "I build AI products for messy, high-stakes workflows, and
+  measure what changes." — rendered as `.tb-line` under the nameplate
+  (Fraunces 17px; 15px ≤520). Every clause is provable from the page.
+* **P1-1 · mobile compositions.** Hero desk and FitStage un-scale — §15.
+  Hero phone-mock text raised to the 11px floor at native size; phone link
+  gained an `aria-label` ("AskCart — guided AI search, personal build").
+* **P1-2 · manifest cap.** §15.
+* **P1-3 · touch targets + hover parity.** §15 (44px hit areas, flight-card
+  focus parity).
+* **P1-10 · a11y quicks.** The `p99` keyguard ignores form fields and
+  modifier keys; About stats use a plain `.ab-stats` div (invalid `dl`
+  children removed); a minimal `@media (forced-colors:active)` block keeps
+  the paper legible when the OS flattens the palette (underlined links, 1px
+  `CanvasText` borders on the main surfaces); `.acp-app small` contrast
+  raised (Lighthouse `color-contrast`). Post-fix Lighthouse mobile:
+  **accessibility 100, best practices 100, SEO 100**; the remaining
+  documented gap is performance (simulated LCP — see §16.2) and a deep
+  axe pass across all routes.
+* **P2-5 · honest p99.** `P99Panel` reports **TTFB, FCP, LCP, CLS and
+  transferred KB** — all real browser measurements (Navigation Timing,
+  `paint`, `largest-contentful-paint`, `layout-shift` observers with
+  `buffered: true`); nothing simulated. The keyguard and the panel render
+  nothing until opened.
+* **P3-6 · security headers.** `next.config.mjs` `headers()`:
+  `Referrer-Policy: strict-origin-when-cross-origin`,
+  `X-Content-Type-Options: nosniff`,
+  `Permissions-Policy: camera=(), microphone=(), geolocation=()`,
+  `Content-Security-Policy: frame-ancestors 'none'` (verified on the wire).
+  A full CSP ships Report-Only first, once the inline pre-paint theme
+  script carries a hash or nonce.

@@ -10,6 +10,10 @@
 .rt-man{position:sticky;top:96px;border:1px solid var(--lineS);border-radius:12px;background:var(--surf);
   padding:18px 16px 14px;box-shadow:0 1px 0 var(--press),0 20px 30px -24px rgba(23,19,14,.5)}
 [data-theme="dark"] .rt-man{box-shadow:0 0 0 1px var(--line),0 20px 30px -24px rgba(0,0,0,.8)}
+/* P1-2: on short viewports (700px laptops) the sticky manifest must never exceed the fold. */
+@media (min-width:901px){
+  .rt-man{max-height:calc(100dvh - 120px);overflow:auto;overscroll-behavior:contain}
+}
 .rt-man header{display:flex;align-items:center;gap:9px;padding:0 8px 12px;border-bottom:2px solid var(--fg)}
 .rt-man header b{font:700 13px/1 var(--fm);letter-spacing:.14em;text-transform:uppercase}
 .rt-man header small{margin-left:auto;font:500 12px/1 var(--fm);color:var(--dim)}

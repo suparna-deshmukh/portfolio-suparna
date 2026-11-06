@@ -175,6 +175,30 @@ export default function Experience() {
 
   const shownCard = card !== null ? STOPS[card] : null
 
+  // P1-3: keyboard parity for the hover-only flight card. Focusing a manifest row shows the
+  // same card beside it; blurring out of the manifest hides it. The card stays aria-hidden —
+  // the station cards carry the real content for screen readers.
+  const onRowFocus = (e: React.FocusEvent<HTMLElement>) => {
+    const row = (e.target as HTMLElement).closest('a[data-row]') as HTMLElement | null
+    const box = routeRef.current
+    const fl = floatRef.current
+    if (!row || !box || !fl) return
+    const r = box.getBoundingClientRect()
+    const rr = row.getBoundingClientRect()
+    const x = Math.max(0, Math.min(r.width - 300, rr.right - r.left + 14))
+    const y = rr.top - r.top + rr.height / 2
+    fl.dataset.xy = `${x}:${y}`
+    fl.dataset.idx = String(row.dataset.row)
+    fl.style.left = `${x}px`
+    fl.style.top = `${y}px`
+    setCard(Number(row.dataset.row))
+  }
+  const onRowBlur = (e: React.FocusEvent<HTMLElement>) => {
+    const next = e.relatedTarget as HTMLElement | null
+    if (next && routeRef.current?.querySelector('.rt-man')?.contains(next)) return
+    setCard(null)
+  }
+
   return (
     <section className="band" id="experience">
       <div className="sec wrap sec-headonly">
@@ -193,7 +217,7 @@ export default function Experience() {
           onPointerMove={e => { pointer.current = [e.clientX, e.clientY]; updateCard() }}
           onPointerLeave={() => { pointer.current = null; setCard(null) }}
         >
-          <nav className="rt-man" aria-label="Route manifest">
+          <nav className="rt-man" aria-label="Route manifest" onFocus={onRowFocus} onBlur={onRowBlur}>
             <header>
               {COMPASS}
               <b>Route manifest</b>

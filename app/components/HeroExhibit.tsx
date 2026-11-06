@@ -6,6 +6,7 @@ import Image from 'next/image'
 import AskCartPhone from './AskCartPhone'
 import MetricTip from './MetricTip'
 import { m } from '../lib/metrics'
+import { EDUCATION } from '../lib/site'
 
 /**
  * The hero's right hand: an annotated exhibit. Four objects pinned loose on the cross-grid — the ID
@@ -32,19 +33,14 @@ export default function HeroExhibit() {
           <span className="ex-risa-sub">{m('risa-payers').shown} payers · {m('risa-coverage').shown} coverage / {m('risa-precision').shown} precision</span>
         </a>
 
-        <Link className="ex-ob ex-phone" href="/projects/askcart" style={{ ['--d' as string]: 0.7, ['--rot' as string]: '2.5deg' }}>
+        <Link className="ex-ob ex-phone" href="/projects/askcart" style={{ ['--d' as string]: 0.7, ['--rot' as string]: '2.5deg' }} aria-label="AskCart — guided AI search, personal build">
           <span className="ex-island" aria-hidden="true" />
           <span className="acp-frame"><AskCartPhone /></span>
         </Link>
 
-        <a className="ex-ob ex-campus" href="#about" style={{ ['--d' as string]: 0.9, ['--rot' as string]: '-2deg' }} aria-label="BITS Pilani, Goa — ECE with a Finance minor, class of 2027">
-          <span className="ex-clip" aria-hidden="true" />
-          <Image src="/images/hero/bits-goa-sketch.webp" alt="Sketch of the BITS Pilani Goa campus" width={228} height={137} priority />
-          <b>BITS Pilani, Goa</b>
-          <small>Electronics & Communication Engineering</small>
-          <small>Finance minor · Class of 2027</small>
-        </a>
-
+        {/* P1-1: on phones the pinned notes become a horizontal scroll-snap strip, so they
+            share one wrapper (display:contents on desktop); the campus card follows them. */}
+        <div className="ex-notes">
         <div className="ex-note ex-n1" style={{ ['--d' as string]: 1.25, ['--rot' as string]: '-2deg' }}>
           <MetricTip id="acc-rank" className="block"><span className="ex-note-num">{m('acc-rank').shown}</span></MetricTip>
           <span className="ex-note-lab">of {m('acc-of').shown} · Accenture Strategy ’25</span>
@@ -57,6 +53,16 @@ export default function HeroExhibit() {
           <MetricTip id="ed-raise" className="block"><span className="ex-note-num">{m('ed-raise').shown}</span></MetricTip>
           <span className="ex-note-lab">Series A · 180DC, Everyday Diamonds</span>
         </div>
+        </div>
+
+        <a className="ex-ob ex-campus" href="#about" style={{ ['--d' as string]: 0.9, ['--rot' as string]: '-2deg' }} aria-label="BITS Pilani, Goa — ECE with a Finance minor, class of 2027">
+          <span className="ex-clip" aria-hidden="true" />
+          <Image src="/images/hero/bits-goa-sketch.webp" alt="Sketch of the BITS Pilani Goa campus" width={228} height={137} priority />
+          <b>BITS Pilani, Goa</b>
+          <small>{EDUCATION.branch}</small>
+          <small>Finance minor · Class of 2027</small>
+        </a>
+
 
         <svg className="ex-calls" viewBox="0 0 660 540" aria-hidden="true">
           <g>

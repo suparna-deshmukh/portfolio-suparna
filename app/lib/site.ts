@@ -35,6 +35,11 @@ export const SOCIALS = {
   x: '', // TODO: add the X handle; the X card stays hidden until it does
 }
 
+/* P2-1: the one-sentence positioning line under the hero nameplate (option A from the
+   improvement brief). Every clause is provable from the page: AI products (RISA, AskCart),
+   high-stakes (US healthcare), measurement (evals, placement readings). */
+export const HERO_LINE = 'I build AI products for messy, high-stakes workflows, and measure what changes.'
+
 /**
  * A link only renders when it has a real destination. Empty or '#' URLs stay hidden until
  * Suparna supplies them (no dead ends on a portfolio). Dev-time, assertNoDeadLinks crawls
@@ -351,6 +356,7 @@ export const CORPORATE_AGG: Stat[] = [
 export const EDUCATION = {
   school: 'BITS Pilani, Goa Campus',
   degree: 'B.E. (Hons.) Electronics and Communication Engineering',
+  branch: 'Electronics and Communication Engineering',
   minor: 'Minor in Finance',
   when: 'Aug 2023 – May 2027',
   classYear: 'Class of 2027',

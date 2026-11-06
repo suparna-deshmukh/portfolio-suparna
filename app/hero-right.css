@@ -38,7 +38,7 @@
 .acp-bat i{display:block;width:70%;height:100%;background:rgba(21,33,26,.6);border-radius:1px}
 .acp-app{display:flex;align-items:baseline;gap:7px;margin:10px 0 8px}
 .acp-app b{font:700 17px/1 var(--fd);letter-spacing:-.02em}
-.acp-app small{font:500 9.5px/1 var(--fm);letter-spacing:.1em;text-transform:uppercase;color:rgba(21,33,26,.55)}
+.acp-app small{font:500 11px/1 var(--fm);letter-spacing:.08em;text-transform:uppercase;color:rgba(21,33,26,.75)}
 .acp-field{display:flex;align-items:center;gap:8px;border:1.5px solid rgba(21,33,26,.25);border-radius:999px;padding:8px 12px;font-size:12.5px}
 .acp-field svg{width:13px;height:13px;flex:none;color:rgba(21,33,26,.55)}
 .acp-q{white-space:nowrap;overflow:hidden}
@@ -51,7 +51,7 @@
 .acp-card small{font:500 13px/1 var(--fm);letter-spacing:.12em;text-transform:uppercase;color:rgba(23,126,91,.85)}
 .acp-card b{font:600 13px/1.25 var(--fb)}
 .acp-opts{display:flex;gap:5px;margin-top:3px}
-.acp-opts i{font:500 9.5px/1 var(--fm);font-style:normal;border:1px solid rgba(21,33,26,.25);border-radius:999px;padding:4px 8px;color:rgba(21,33,26,.75)}
+.acp-opts i{font:500 11px/1 var(--fm);font-style:normal;border:1px solid rgba(21,33,26,.25);border-radius:999px;padding:4px 8px;color:rgba(21,33,26,.75)}
 .acp-opts i.pick{background:#177E5B;border-color:#177E5B;color:#F4FAF7}
 
 .acp-res{margin-top:10px;display:grid;gap:7px;opacity:0;translate:0 6px;transition:opacity .45s ease .12s,translate .45s var(--ease) .12s}
@@ -86,6 +86,7 @@
 
 /* pinned stat notes: the profile's standout numbers, taped into the gap.
    They ride the same pointer parallax, hover lift and settle-in as the exhibit objects. */
+.ex-notes{display:contents}
 .ex-note{position:absolute;width:132px;background:var(--surf);border:1px solid var(--lineS);border-radius:8px;
   padding:9px 10px 8px;box-shadow:0 14px 24px -16px rgba(23,19,14,.5);
   transform:rotate(var(--rot,0deg)) translate3d(calc(var(--mx,0) * var(--d,1) * 12px),calc(var(--my,0) * var(--d,1) * 8px),0);
@@ -120,6 +121,26 @@ html.motion-ok .hero.paused .acp-caret,html.motion-ok .hero.paused .ex-ob{animat
 
 @media (max-width:899px){
   .ex-wrap{width:100%}
+}
+
+/* P1-1 · mobile desk (≤640): the exhibit stops scaling with --s and becomes a purpose-built
+   vertical composition — ID badge and RISA stat side by side (equal height), the AskCart phone
+   at native size (no scaled-down text), the pinned notes as a scroll-snap strip with a peek of
+   the next card, the campus card last. Callouts and pointer parallax are desktop-only; the
+   one-time settle-in still plays. */
+@media (max-width:639px){
+  .ex-wrap{width:100%;aspect-ratio:auto}
+  .exhibit{position:relative;width:auto;height:auto;transform:none;display:flex;flex-wrap:wrap;gap:12px;align-items:stretch}
+  .ex-ob,.ex-note{position:relative;inset:auto;transform:none}
+  .ex-badge{width:calc(50% - 6px);padding-top:26px}
+  .ex-risa{width:calc(50% - 6px)}
+  .ex-phone{width:min(78vw,248px);height:auto;aspect-ratio:248/474;margin-inline:auto}
+  .ex-notes{display:flex;gap:10px;width:100%;overflow-x:auto;scroll-snap-type:x mandatory;
+    padding:2px 2px 6px;scrollbar-width:none;scroll-padding-inline:2px}
+  .ex-notes::-webkit-scrollbar{display:none}
+  .ex-note{width:auto;flex:0 0 158px;scroll-snap-align:start}
+  .ex-campus{width:100%}
+  .ex-calls{display:none}
 }
 @media (prefers-reduced-motion:reduce){
   .ex-ob,.ex-calls g,.acp-caret{animation:none}

@@ -91,16 +91,16 @@ function Positions() {
             )}
             {p.stats.length > 0 && (
               <Disclosure label="More detail" className="ab-disc">
-                <dl className="ab-stats">
+                <div className="ab-stats">
                   {p.stats.map(s => (
                     <div key={s.label}>
                       {s.metric
                         ? <MetricTip id={s.metric} focusable={false}><CountUp text={s.value} /></MetricTip>
                         : <CountUp text={s.value} />}
                       <span>{s.label}</span>
-                    </div>
-                  ))}
-                </dl>
+                  </div>
+                ))}
+                </div>
               </Disclosure>
             )}
           </article>
