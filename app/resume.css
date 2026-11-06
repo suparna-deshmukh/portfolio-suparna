@@ -1,7 +1,7 @@
 /* /resume — one clean A4 sheet, high contrast, print-first. @page margin is 0 so the
    sheet's own padding sets the margins; the target is exactly one printed A4 page.
    Type scale is tuned so a line holds about 125 characters. */
-.rpage{min-height:100dvh;background:var(--bg);display:flex;flex-direction:column;align-items:center;padding:48px 16px 64px}
+.rpage{min-height:100vh;min-height:100dvh;background:var(--bg);display:flex;flex-direction:column;align-items:center;padding:48px 16px 64px}
 .r-sheet{width:210mm;background:#FFFFFF;color:#16181A;padding:9mm 11mm 8mm;
   font:400 8.3pt/1.16 var(--fb);
   box-shadow:0 1px 2px rgba(0,0,0,.12),0 28px 60px -28px rgba(0,0,0,.5)}

@@ -36,12 +36,18 @@
   --fb:var(--font-satoshi),system-ui,-apple-system,"Segoe UI",sans-serif;
   --fm:var(--font-dm-mono),ui-monospace,monospace;
   --r:14px;--rS:8px;--ease:cubic-bezier(.16,1,.3,1);
-  --settle:linear(0,.34 8%,.76 16%,.97 26%,1.035 35%,1.01 47%,1);
+  --settle:cubic-bezier(.34,1.56,.64,1);
+  /* linear() timing where the browser can parse it (P1-11); the cubic-bezier above is the fallback */
   --pad:clamp(20px,5vw,64px);--sec:clamp(80px,10vw,128px);
   /* spacing roles */
   --s-sec:clamp(64px,7vw,96px);--s-head:clamp(20px,2vw,28px);--s-group:24px;--s-tight:12px;
   /* type roles */
   --t-xl:clamp(40px,4.8vw,64px);--t-l:clamp(30px,3.2vw,42px);--t-m:28px;--t-s:22px;--t-lead:17px;--t-body:16.5px;--t-meta:12.5px;
+}
+@supports (transition-timing-function: linear(0, 1)) {
+  :root {
+    --settle:linear(0,.34 8%,.76 16%,.97 26%,1.035 35%,1.01 47%,1);
+  }
 }
 *{--accSoft:color-mix(in oklab,var(--acc) 10%,transparent);--accB:color-mix(in oklab,var(--acc) 30%,transparent);--glow:0 0 18px color-mix(in oklab,var(--acc) 22%,transparent),0 0 6px color-mix(in oklab,var(--acc) 12%,transparent)}
 *,*::before,*::after{box-sizing:border-box}

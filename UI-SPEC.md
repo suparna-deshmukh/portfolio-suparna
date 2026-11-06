@@ -715,6 +715,21 @@ portal, `z` above everything.
 * `.paused` class stops all off-screen CSS loops (bands, hero, contact threads).
 * Fonts: Fraunces (local variable woff2) + Satoshi (local woff2), both
   `adjustFontFallback`; DM Mono via `next/font/google`. All `swap`.
+* **Browser support** (last 2 of Chrome/Edge/Firefox/Safari, iOS Safari 16.4+):
+  * `--settle` falls back to `cubic-bezier(.34,1.56,.64,1)` where
+    `linear()` timing is unparseable, via
+    `@supports (transition-timing-function: linear(0, 1))`.
+  * `100dvh` (resume page) is preceded by a `100vh` fallback.
+  * `@property` registrations (`--pjbg/--pjacc/--tra/--trb`): base rules already
+    carry the concrete values (e.g. `#projects` sets `--pjbg:var(--pj-tm)`), so
+    without registration the states render correctly and only the *interpolation*
+    (color fades, count-up) degrades to instant — a finished first frame either way.
+  * `:has()` usage (section-header grid, contact form state, About layout) is
+    supported by every browser in the matrix (Firefox 121+, Safari 15.4+);
+    unparseable `:has()` rules are simply dropped, and each has a plain fallback
+    layout.
+  * `document.startViewTransition` is feature-detected in `Header` and
+    `ViewTransitionLink`; fallback is instant apply / CSS-only transition.
 
 ---
 
