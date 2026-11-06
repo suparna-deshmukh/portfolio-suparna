@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import localFont from 'next/font/local'
-import { DM_Mono, Fraunces } from 'next/font/google'
+import { DM_Mono } from 'next/font/google'
 import './tailwind.css'
 import './globals.css'
 import Header from './components/Header'
@@ -9,12 +9,15 @@ import P99Panel from './components/P99Panel'
 import { ViewTransitionResolver } from './components/ViewTransitionLink'
 import { SITE_URL } from './lib/site'
 
-const clash = Fraunces({
-  subsets: ['latin'],
-  weight: ['500', '600', '700'],
-  style: ['normal', 'italic'],
-  variable: '--font-clash',
+// Display face is self-hosted (no build-time network dependency). No italic face is used
+// anywhere, so only the normal variable axis is shipped (P1-8).
+const display = localFont({
+  src: [
+    { path: './fonts/fraunces/Fraunces-Latin-Variable-Normal.woff2', weight: '100 900' },
+  ],
+  variable: '--font-display-var',
   display: 'swap',
+  adjustFontFallback: 'Arial',
 })
 
 const satoshi = localFont({
@@ -67,7 +70,7 @@ const themeScript = `(function(){try{var t=localStorage.getItem('theme');if(t!==
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-theme="light" suppressHydrationWarning className={`${clash.variable} ${satoshi.variable} ${dmMono.variable}`}>
+    <html lang="en" data-theme="light" suppressHydrationWarning className={`${display.variable} ${satoshi.variable} ${dmMono.variable}`}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>

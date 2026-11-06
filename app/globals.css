@@ -31,7 +31,8 @@
 [data-theme="dark"]{--gh1:color-mix(in oklab,var(--acc) 25%,transparent);--gh2:color-mix(in oklab,var(--acc) 50%,transparent);--gh3:color-mix(in oklab,var(--acc) 75%,transparent);--gh4:var(--acc)}
 /* shared, theme independent */
 :root{
-  --fd:var(--font-clash),var(--font-satoshi),system-ui,sans-serif;
+  --fd:var(--font-display-var),var(--font-satoshi),system-ui,sans-serif;
+  font-optical-sizing:auto; /* Fraunces opsz axis follows element size */
   --fb:var(--font-satoshi),system-ui,-apple-system,"Segoe UI",sans-serif;
   --fm:var(--font-dm-mono),ui-monospace,monospace;
   --r:14px;--rS:8px;--ease:cubic-bezier(.16,1,.3,1);

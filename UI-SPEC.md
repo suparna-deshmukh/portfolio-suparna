@@ -94,9 +94,16 @@ public/images/…              hero portrait, campus sketch, project covers
 
 | Token | Font | Notes |
 |---|---|---|
-| `--fd` (display) | **Fraunces** (Google; 500/600/700 + italic, `--font-clash`) | section titles, big numbers, name, quotes |
+| `--fd` (display) | **Fraunces** (self-hosted variable woff2, weights 100–900 declared, `--font-display-var`; no italic — none is used) | section titles, big numbers, name, quotes |
 | `--fb` (body) | **Satoshi** (local woff2: 400/500/700) | all body copy, buttons |
 | `--fm` (mono) | **DM Mono** (400/500) | labels, metrics, chips, meta, clocks |
+
+* All faces load via `next/font` with `display: swap`; the two local faces use
+  `adjustFontFallback` (measured against Arial) so swap causes no layout shift.
+  `font-optical-sizing: auto` on `:root` drives Fraunces' opsz axis.
+* Licensing: see `LICENSES.md` (all three are OFL 1.1). The static
+  `Fraunces-Latin-600*.ttf` / `Satoshi-*.ttf` instances exist only for
+  `next/og` (see §19).
 
 Type roles: `--t-xl: clamp(40px,4.8vw,64px)`, `--t-l: clamp(30px,3.2vw,42px)`,
 `--t-m: 28px`, `--t-s: 22px`, `--t-lead: 17px`, `--t-body: 16.5px` (body line-height 1.6),
@@ -706,7 +713,8 @@ portal, `z` above everything.
 * No scroll listeners where avoidable (sentinel IO for header, cached geometry +
   transforms for the route trail, rAF-throttled pointer handlers).
 * `.paused` class stops all off-screen CSS loops (bands, hero, contact threads).
-* Fonts: Fraunces + DM Mono (Google, swap), Satoshi local woff2 (swap).
+* Fonts: Fraunces (local variable woff2) + Satoshi (local woff2), both
+  `adjustFontFallback`; DM Mono via `next/font/google`. All `swap`.
 
 ---
 
