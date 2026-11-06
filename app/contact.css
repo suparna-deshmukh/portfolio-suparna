@@ -6,6 +6,9 @@
   text-decoration:underline dotted;text-underline-offset:3px}
 #contact .phone-reveal:hover,#contact .phone-reveal:focus-visible{color:var(--fg)}
 
+/* Honeypot (P0-5): visually hidden, out of the tab order; bots that fill it get a silent success. */
+#contact .hp{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
 /* ── profile cards ── */
 #contact .pcs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:20px;padding-top:18px;border-top:1px solid var(--lineS)}
 #contact .pc{position:relative;display:flex;flex-direction:column;gap:10px;min-width:0;padding:13px 15px;border-radius:12px;border:1px solid var(--lineS);background:color-mix(in oklab,#14231C 88%,transparent);color:var(--fg);text-decoration:none;

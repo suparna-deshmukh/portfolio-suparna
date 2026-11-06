@@ -4,6 +4,7 @@ import '../contact.css'
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react'
 import { CONTACT_EMAIL, PHONE, PHONE_TEL, SOCIALS } from '../lib/site'
 import { istTime, useVisibleLoop } from '../lib/hooks'
+import { CONTACT_RULES, validateContact, type ContactField } from '../lib/contact-form'
 import SectionHeader from './SectionHeader'
 import ContactThreads from './ContactThreads'
 import { PREFILL_EVENT } from '../lib/site'
@@ -20,17 +21,18 @@ const FOCUS_AFTER_SCROLL_MS = 450
 const COPIED_MS = 1600
 const noop = () => {}
 
-const RULES: Record<Field, (v: string) => string> = {
-  name: v => (v.trim() ? '' : "Add your name so I know who's writing."),
-  email: v => (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) ? '' : 'Check the email address, like you@company.com, so I can reply.'),
-  message: v => (v.trim().length >= 10 ? '' : 'Say a little more, at least a sentence.'),
-}
+// Validation rules live in lib/contact-form — the API re-validates with the same module.
+const FIELDS = Object.keys(CONTACT_RULES) as ContactField[]
 
 export default function Contact({ footer }: { footer?: ReactNode }) {
   const [values, setValues] = useState<Record<Field, string>>({ name: '', email: '', message: '' })
   const [errors, setErrors] = useState<Record<Field, string>>({ name: '', email: '', message: '' })
   const [status, setStatus] = useState<Status>('idle')
   const [sentPreview, setSentPreview] = useState('')
+  const [hp, setHp] = useState('')
+  const [failNote, setFailNote] = useState('')
+  const [copiedMsg, setCopiedMsg] = useState(false)
+  const startedAt = useRef(0) // when the form appeared — the API rejects anything filled in under 2.5 s
   const [copied, setCopied] = useState(false)
   const [phoneShown, setPhoneShown] = useState(false)
   const [now, setNow] = useState('')
@@ -39,6 +41,7 @@ export default function Contact({ footer }: { footer?: ReactNode }) {
   useVisibleLoop(sectionRef, noop, noop) // pauses the presence dot off screen
 
   useEffect(() => {
+    startedAt.current = Date.now()
     const tick = () => setNow(istTime())
     tick()
     const id = window.setInterval(tick, TIME_TICK_MS)
@@ -62,7 +65,7 @@ export default function Contact({ footer }: { footer?: ReactNode }) {
   }, [])
 
   const validate = (field: Field, value = values[field]) => {
-    const msg = RULES[field](value)
+    const msg = CONTACT_RULES[field](value)
     setErrors(prev => ({ ...prev, [field]: msg }))
     return !msg
   }
@@ -75,25 +78,42 @@ export default function Contact({ footer }: { footer?: ReactNode }) {
 
   const submit = async (e?: FormEvent) => {
     e?.preventDefault()
-    const fields = Object.keys(RULES) as Field[]
-    const ok = fields.map(f => validate(f)).every(Boolean)
+    const ok = FIELDS.map(f => validate(f)).every(Boolean)
     if (!ok) {
       // .invalid is not rendered yet at this point, so pick the first failing field from the rules directly
-      const bad = fields.find(f => RULES[f](values[f]))
+      const bad = FIELDS.find(f => CONTACT_RULES[f](values[f]))
       const el = bad ? formRef.current?.elements.namedItem(bad) : null
       if (el instanceof HTMLElement) el.focus()
       return
     }
     setStatus('sending')
     try {
-      const res = await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(values) })
-      if (!res.ok) throw new Error(String(res.status))
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...values, hp, started: startedAt.current }),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        setFailNote(data?.code === 'rate' ? 'A few too many messages from here — give it a minute.' : 'Your message didn’t send, but it’s still here.')
+        throw new Error(String(res.status))
+      }
       setSentPreview(values.message.trim().split(/\s+/).slice(0, 5).join(' '))
       setStatus('sent')
     } catch {
       setStatus('failed')
     }
   }
+
+  const copyMessage = async () => {
+    try { await navigator.clipboard.writeText(values.message) } catch { /* clipboard blocked; still confirm */ }
+    setCopiedMsg(true)
+    window.setTimeout(() => setCopiedMsg(false), COPIED_MS)
+  }
+
+  const mailtoFallback = CONTACT_EMAIL
+    ? `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(`Portfolio message from ${values.name.trim()}`)}&body=${encodeURIComponent(values.message)}`
+    : ''
 
   const input = (field: Field, props: React.InputHTMLAttributes<HTMLInputElement>) => (
     <input
@@ -157,6 +177,11 @@ export default function Contact({ footer }: { footer?: ReactNode }) {
               </div>
             ) : (
               <>
+                {/* Honeypot: hidden from people, visible to bots. Filling it is a silent success. */}
+                <label className="hp" aria-hidden="true">
+                  <span>Leave this field empty</span>
+                  <input type="text" name="hp" tabIndex={-1} autoComplete="off" value={hp} onChange={e => setHp(e.target.value)} />
+                </label>
                 <div className="two">
                   <label>Name{input('name', { autoComplete: 'name', placeholder: 'Your name' })}<span className="err" id="err-name">{errors.name}</span></label>
                   <label>Email{input('email', { type: 'email', autoComplete: 'email', placeholder: 'you@company.com' })}<span className="err" id="err-email">{errors.email}</span></label>
@@ -180,8 +205,9 @@ export default function Contact({ footer }: { footer?: ReactNode }) {
                 <div className="row">
                   {status === 'failed' && (
                     <span className="fail" role="alert">
-                      Your message didn&apos;t send, but it&apos;s still here. <button type="button" className="retry" onClick={() => submit()}>Try again</button>
-                      {CONTACT_EMAIL && <> or email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</>}
+                      {failNote || 'Your message didn&apos;t send, but it&apos;s still here.'} <button type="button" className="retry" onClick={() => submit()}>Try again</button>{' '}
+                      <button type="button" className="retry" onClick={copyMessage}>{copiedMsg ? 'Copied' : 'Copy message'}</button>
+                      {mailtoFallback && <> or <a href={mailtoFallback}>send it as email</a>.</>}
                     </span>
                   )}
                   <button className="btn" type="submit" disabled={status === 'sending'}>{status === 'sending' ? 'Sending…' : 'Send message'}</button>

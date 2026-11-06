@@ -609,16 +609,30 @@ curves, 9s alternate drift; paused off-screen). Header label "Contact", title
 * Handwritten **Signature** flourish.
 
 ### 12.2 Form (light sheet on the dark desk)
-Fields: Name (grid 2-col with Email) + Message textarea. Validation (inline, on
-submit; first invalid field focused):
-* name: non-empty — "Add your name so I know who's writing."
-* email: regex — "Check the email address, like you@company.com, so I can reply."
-* message: ≥10 chars — "Say a little more, at least a sentence."
+Fields: Name (grid 2-col with Email) + Message textarea, plus a **honeypot**
+(`.hp`, visually hidden, `tabIndex=-1`, `autocomplete=off`; filling it returns a
+silent success and nothing is sent or logged). Validation (inline, on submit;
+first invalid field focused) lives in `app/lib/contact-form.ts` — the **API
+re-validates with the same module** so client and server can never disagree:
+name non-empty, email regex, message ≥10 chars.
 
-Submit → `POST /api/contact`; states: idle → **Sending…** (disabled) → **sent**
-(✓ card: "Thanks — your message is in…" + preview of first 5 words + "Until then
-LinkedIn ↗ / X ↗") or **failed** (message preserved: "Your message didn't send, but
-it's still here. Try again, or email …").
+Submit → `POST /api/contact` with `{ name, email, message, hp, started }`
+(`started` = epoch ms when the form appeared). Server-side (P0-5,
+`app/api/contact/route.ts`): 10 KB body cap → parse → honeypot → **per-IP token
+bucket** (sha256-hashed IP, 5/hour, 429 + `Retry-After`) → validation → **≥2.5 s
+fill time** → Resend via `RESEND_API_KEY` with an 8 s timeout. Response contract:
+`200 {ok:true}` · `400 {ok:false, code:'invalid', fields?|error}` · `429 {ok:false,
+code:'rate'}` + Retry-After · `502 {ok:false, code:'provider'}` · `500 {ok:false,
+code:'unknown'}`. No stack traces in responses; logs carry metadata only, never
+the message body. Without a key: production returns 502, dev appends to
+`.contact-outbox.jsonl` (gitignored) so local form mail is inspectable.
+
+UI states: idle → **Sending…** (disabled) → **sent** (✓ card: preview of first 5
+words + "I'll get back to you here." / "I'll reply from …" + "Until then
+LinkedIn ↗ / X ↗") or **failed** (message preserved, rate-specific line when
+`code:'rate'`; actions: **Try again**, **Copy message** (clipboard, "Copied" for
+1.6 s), and a **prefilled `mailto:` fallback** — rendered only when
+`CONTACT_EMAIL` is set).
 
 ### 12.3 Prefill
 * `contact:prefill` CustomEvent — every "Ask me about it" button (corporate) and
