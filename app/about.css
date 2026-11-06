@@ -60,7 +60,7 @@ html.motion-ok #about .ab-panel:hover{transform:translateY(-2px);box-shadow:0 18
 #about .ab-panel.in .ab-team i{background:var(--acc);box-shadow:0 0 7px color-mix(in oklab,var(--acc) 45%,transparent)}
 html.motion-ok #about .ab-panel:hover .ab-team i{animation:abDot 1.8s ease-in-out infinite;animation-delay:calc(var(--i) * 45ms)}
 @keyframes abDot{50%{transform:scale(1.55)}}
-#about .ab-team span{margin-left:9px;font:500 9.5px/1.5 var(--fm);letter-spacing:.07em;text-transform:uppercase;color:var(--dimmer);white-space:nowrap}
+#about .ab-team span{margin-left:9px;font:500 11px/1.5 var(--fm);letter-spacing:.07em;text-transform:uppercase;color:var(--dimmer);white-space:nowrap}
 @media (prefers-reduced-motion:reduce){#about .ab-team i{transition:none}}
 
 /* the cohort / project board: tiles that fill in one by one */
@@ -70,7 +70,7 @@ html.motion-ok #about .ab-panel:hover .ab-team i{animation:abDot 1.8s ease-in-ou
   transition:background .45s ease,box-shadow .45s ease;transition-delay:calc(var(--i) * 42ms)}
 #about .ab-panel.in .ab-tiles-grid i{background:var(--acc);box-shadow:0 0 6px color-mix(in oklab,var(--acc) 45%,transparent)}
 html.motion-ok #about .ab-panel:hover .ab-tiles-grid i{animation:abDot 1.8s ease-in-out infinite;animation-delay:calc(var(--i) * 45ms)}
-#about .ab-tiles > span{display:block;margin-top:9px;font:500 10px/1.4 var(--fm);letter-spacing:.06em;text-transform:uppercase;color:var(--dimmer)}
+#about .ab-tiles > span{display:block;margin-top:9px;font:500 11px/1.4 var(--fm);letter-spacing:.06em;text-transform:uppercase;color:var(--dimmer)}
 @media (prefers-reduced-motion:reduce){#about .ab-tiles-grid i{transition:none}}
 
 /* the placement ledger: rubber-stamped offers that slam in one by one, one stamp per 40 students */
@@ -79,7 +79,7 @@ html.motion-ok #about .ab-panel:hover .ab-tiles-grid i{animation:abDot 1.8s ease
   transition:opacity .12s ease,transform .5s var(--settle);
   transition-delay:calc(var(--i, 0) * 140ms)}
 #about .ab-panel.in .ab-offers .stamp{opacity:.92;transform:rotate(var(--stamp-rot)) scale(1)}
-#about .ab-offers span{width:100%;margin-top:3px;font:500 10px/1.4 var(--fm);letter-spacing:.06em;text-transform:uppercase;color:var(--dimmer)}
+#about .ab-offers span{width:100%;margin-top:3px;font:500 11px/1.4 var(--fm);letter-spacing:.06em;text-transform:uppercase;color:var(--dimmer)}
 @media (prefers-reduced-motion:reduce){#about .ab-offers .stamp{transition:none;opacity:.92;transform:rotate(var(--stamp-rot))}}
 
 /* sponsor marquee */
@@ -87,7 +87,7 @@ html.motion-ok #about .ab-panel:hover .ab-tiles-grid i{animation:abDot 1.8s ease
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 7% 93%,transparent);
   mask-image:linear-gradient(90deg,transparent,#000 7% 93%,transparent)}
 #about .ab-marq-in{display:flex;width:max-content;animation:abMarq 24s linear infinite}
-#about .ab-marq-in span{font:600 10.5px/1 var(--fm);letter-spacing:.09em;text-transform:uppercase;color:var(--dim);white-space:nowrap;padding-right:30px}
+#about .ab-marq-in span{font:600 11.5px/1 var(--fm);letter-spacing:.09em;text-transform:uppercase;color:var(--dim);white-space:nowrap;padding-right:30px}
 #about .ab-marq-in span::after{content:"✦";margin-left:30px;color:var(--acc);letter-spacing:0}
 @keyframes abMarq{to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){#about .ab-marq-in{animation:none}}
@@ -106,13 +106,13 @@ html.motion-ok #about .ab-honors li:hover{transform:translateY(-3px);box-shadow:
 #about .ab-honors .ab-hn-name{font:600 12.5px/1.3 var(--fb);color:var(--fg)}
 #about .ab-honors li > span:last-of-type{font-size:11.5px;line-height:1.4;color:var(--dim)}
 #about .ab-hn-deck{justify-self:start;display:inline-flex;align-items:center;gap:5px;margin-top:2px;
-  font:600 10.5px/1 var(--fm);letter-spacing:.05em;text-transform:uppercase;color:var(--accText);
+  font:600 11.5px/1 var(--fm);letter-spacing:.05em;text-transform:uppercase;color:var(--accText);
   border:1px solid color-mix(in oklab,var(--acc) 45%,var(--lineS));border-radius:999px;padding:5px 10px;
   text-decoration:none;transition:background-color .25s}
 #about .ab-hn-deck:hover{background:color-mix(in oklab,var(--acc) 10%,transparent)}
 
 /* folios */
-#about .ab-folio{position:absolute;bottom:10px;font:500 10px/1 var(--fm);letter-spacing:.1em;text-transform:uppercase;color:var(--dimmer);pointer-events:none}
+#about .ab-folio{position:absolute;bottom:10px;font:500 11px/1 var(--fm);letter-spacing:.1em;text-transform:uppercase;color:var(--dimmer);pointer-events:none}
 #about .ab-l .ab-folio{left:var(--pageX)}
 #about .ab-r .ab-folio{right:var(--pageX)}
 

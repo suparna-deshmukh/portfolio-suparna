@@ -202,19 +202,19 @@ html.motion-ok .sh .w{transition:transform .6s var(--ease);transition-delay:calc
 .dl-vis .g{stroke:var(--line);stroke-width:1}
 .dl-vis .line{fill:none;stroke:var(--acc);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .dl-vis .peak{fill:var(--acc);opacity:.9}
-.dl-vis .cap{font:500 8.5px var(--fm);letter-spacing:.09em;text-transform:uppercase;fill:var(--dimmer)}
+.dl-vis .cap{font:500 10.5px var(--fm);letter-spacing:.09em;text-transform:uppercase;fill:var(--dimmer)}
 .dl-vis .heat rect{fill:var(--acc);opacity:var(--o,1)}
 .dl-vis .ring{fill:none;stroke:var(--dlRed);stroke-width:1.5}
 .dl-vis.v1{color:var(--acc)}
 .dl-vis .area{fill:url(#dlArea);opacity:0;transition:opacity .9s ease .9s}
 html.motion-ok .dl-card.in .area{opacity:1}
-.dl-vis .rowlab{font:500 6.5px var(--fm);fill:var(--dimmer)}
+.dl-vis .rowlab{font:500 8.5px var(--fm);fill:var(--dimmer)}
 .dl-vis .ringlab{fill:var(--dlRed)}
 .dl-vis .heat .crow{transition:opacity .25s}
 .dl-vis .heat:hover .crow{opacity:.35}
 .dl-vis .heat .crow:hover{opacity:1}
 .dl-vis .barg{cursor:default}
-.dl-vis .barlab{font:600 7.5px var(--fm);fill:var(--dim);opacity:.6;transition:opacity .2s,fill .2s}
+.dl-vis .barlab{font:600 9.5px var(--fm);fill:var(--dim);opacity:.6;transition:opacity .2s,fill .2s}
 .dl-vis .barg:hover .barlab{opacity:1;fill:var(--fg)}
 .dl-vis .barg:hover .bar{fill:var(--acc)}
 .dl-vis .seg{transition:stroke-width .25s var(--ease),stroke-opacity .25s,stroke-dasharray 1s var(--ease)}
@@ -224,8 +224,8 @@ html.motion-ok .dl-card.in .area{opacity:1}
 .dl-vis .donutbg{stroke:var(--lineS)}
 .dl-vis .seg{stroke:var(--acc);stroke-dasharray:var(--len) 100}
 .dl-vis .mid{font:700 17px/1 var(--fd);fill:var(--fg)}
-.dl-vis .midcap{font:500 6.5px var(--fm);letter-spacing:.16em;text-transform:uppercase;fill:var(--dimmer)}
-.dl-vis .leg text{font:500 8px var(--fm);fill:var(--dim)}
+.dl-vis .midcap{font:500 8.5px var(--fm);letter-spacing:.08em;text-transform:uppercase;fill:var(--dimmer)}
+.dl-vis .leg text{font:500 10.5px var(--fm);fill:var(--dim)}
 .dl-vis .legdot{fill:var(--acc)}
 html.motion-ok .dl-vis .line{stroke-dasharray:100;stroke-dashoffset:100;transition:stroke-dashoffset 1.3s var(--ease) .1s}
 html.motion-ok .dl-card.in .line{stroke-dashoffset:0}
@@ -250,8 +250,16 @@ html.motion-ok .dl-card.in .seg{stroke-dasharray:var(--len) 100}
 .dl-res b{font:700 26px/1 var(--fd);letter-spacing:-.02em;color:var(--accText);white-space:nowrap}
 .dl-res small{font-size:11px;line-height:1.35;color:var(--dim)}
 @media (max-width:900px){.dl-grid{grid-template-columns:1fr}}
+/* P1-4: data figures keep >=11px effective on the narrow single-column layout */
+@media (max-width:900px){
+  .dl-vis .cap{font-size:13px}
+  .dl-vis .rowlab{font-size:10.5px}
+  .dl-vis .barlab{font-size:12px}
+  .dl-vis .midcap{font-size:11px}
+  .dl-vis .leg text{font-size:13px}
+}
 /* experience toc: product / industry dividers */
-.toc-div{display:block;font:500 10.5px/1 var(--fm);letter-spacing:.16em;text-transform:uppercase;color:var(--dimmer);padding:14px 0 6px;border-top:1px dashed var(--hair)}
+.toc-div{display:block;font:500 11px/1 var(--fm);letter-spacing:.16em;text-transform:uppercase;color:var(--dimmer);padding:14px 0 6px;border-top:1px dashed var(--hair)}
 .toc-div:first-child{border-top:0;padding-top:0}
 /* four-role rotations page: 2x2 grid keeps the second row clean */
 .bd-cols>section:nth-child(3){border-left:0;padding-left:0;border-top:1px solid var(--rule);padding-top:22px;margin-top:22px}
@@ -593,14 +601,14 @@ html.motion-ok .case-tm.paused::before,html.motion-ok .case-tm.paused .tm-field 
 /* Filtr board: scattered notes thread together, then sort into a ranked answer */
 .fb{position:absolute;inset:0;border-radius:var(--r);overflow:hidden;border:1px solid var(--lineS);--note:color-mix(in oklab,var(--pa) 62%,#FFF8E1);--noteInk:#2A1D00;
   background:radial-gradient(color-mix(in oklab,var(--paText) 26%,transparent) 1px,transparent 1.4px) 0 0/18px 18px,color-mix(in oklab,var(--pa) 12%,var(--surf))}
-.fb-note{position:absolute;left:0;top:0;width:170px;height:66px;padding:9px 11px 8px;border-radius:5px;background:var(--note);color:var(--noteInk);font:500 12.5px/1.3 var(--fb);
+.fb-note{position:absolute;left:0;top:0;width:170px;height:74px;padding:9px 11px 8px;border-radius:5px;background:var(--note);color:var(--noteInk);font:500 13.5px/1.3 var(--fb);
   box-shadow:0 1px 1px rgba(23,19,14,.26),0 10px 16px -8px rgba(23,19,14,.5);transform-origin:0 0;z-index:var(--z,1);
   --x:var(--x0);--y:var(--y0);--rot:var(--r0);--sc:1;
   transform:translate(var(--x),var(--y)) rotate(var(--rot)) scale(var(--sc));translate:calc(var(--px,0) * var(--d,8) * 1px) calc(var(--py,0) * var(--d,8) * 1px);
   transition:transform .85s var(--settle),translate .3s var(--ease);transition-delay:calc(var(--i) * 50ms),0s}
 .fb.sorted .fb-note{--x:var(--x1);--y:var(--y1);--rot:0deg;--sc:.82;translate:0 0}
 .fb-note::before{content:"";position:absolute;left:50%;top:-7px;width:44px;height:14px;margin-left:-22px;background:color-mix(in oklab,var(--fg) 24%,transparent);rotate:-3deg}
-.fb-note small{display:flex;align-items:center;gap:5px;margin-bottom:3px;font:500 10px/1 var(--fm);letter-spacing:.07em;text-transform:uppercase;color:rgba(42,29,0,.66)}
+.fb-note small{display:flex;align-items:center;gap:5px;margin-bottom:3px;font:500 13.5px/1 var(--fm);letter-spacing:.07em;text-transform:uppercase;color:rgba(42,29,0,.66)}
 .fb-note svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .fb-threads{position:absolute;inset:0;pointer-events:none;z-index:7}
 .fb-threads path{fill:none;stroke:var(--paText);stroke-width:2;stroke-linecap:round;opacity:0}
@@ -619,8 +627,8 @@ html.motion-ok .case-tm.paused::before,html.motion-ok .case-tm.paused .tm-field 
 .fb-rw .bar{position:relative;flex:1;height:7px;border-radius:9px;background:color-mix(in oklab,var(--fg) 10%,var(--surf));overflow:hidden}
 .fb-rw .bar i{position:absolute;inset:0;background:var(--pa);transform-origin:left;transform:scaleX(0);transition:transform .2s}
 .fb.sorted .fb-rw .bar i{transform:scaleX(var(--w));transition:transform .75s var(--settle);transition-delay:calc(var(--i) * 100ms + 330ms)}
-.fb-rw .n{font:500 12.5px/1 var(--fm);color:var(--dim);white-space:nowrap;min-width:78px;text-align:right}
-.fb-rw .imp{font:600 10.5px/1 var(--fm);letter-spacing:.06em;text-transform:uppercase;padding:4px 7px;border-radius:999px;border:1px solid;white-space:nowrap}
+.fb-rw .n{font:500 14px/1 var(--fm);color:var(--dim);white-space:nowrap;min-width:78px;text-align:right}
+.fb-rw .imp{font:600 13.5px/1 var(--fm);letter-spacing:.06em;text-transform:uppercase;padding:4px 7px;border-radius:999px;border:1px solid;white-space:nowrap}
 .fb-rw .imp.h{color:var(--err)}.fb-rw .imp.m{color:var(--paText)}.fb-rw .imp.l{color:var(--dim);border-color:var(--lineS)}
 .fb-rw.redact .tx,.fb-rw.redact .n{filter:blur(3.5px);opacity:.5;user-select:none}
 .fb-rw .hl{position:relative;z-index:0}
@@ -630,7 +638,7 @@ html.motion-ok .case-tm.paused::before,html.motion-ok .case-tm.paused .tm-field 
 .fb-stamp b{font-family:var(--fd);letter-spacing:.1em}
 .fb.sorted{animation:fbThud .3s var(--ease) 1.2s}
 @keyframes fbThud{30%{transform:translateY(2px)}}
-.fb-cap{position:absolute;left:12px;bottom:10px;font:500 11.5px/1 var(--fm);letter-spacing:.04em;color:var(--dim);opacity:0}
+.fb-cap{position:absolute;left:12px;bottom:10px;font:500 13.5px/1 var(--fm);letter-spacing:.04em;color:var(--dim);opacity:0}
 .fb.sorted .fb-cap{opacity:1;transition:opacity .4s .7s}
 /* ToolMonkey report: three injected failures, a verdict each, then the health score is stamped */
 @property --tra{syntax:"<integer>";inherits:false;initial-value:0}
@@ -646,12 +654,12 @@ html.motion-ok .case-tm.paused::before,html.motion-ok .case-tm.paused .tm-field 
 @keyframes trShake{20%{transform:translate(2px,3px) rotate(.3deg)}45%{transform:translate(-2px,1px) rotate(-.25deg)}70%{transform:translate(1px,-1px)}}
 .tr-hd{display:flex;align-items:center;gap:10px;padding-bottom:12px;border-bottom:1px dashed var(--lineS)}
 .tr-hd b{font:700 15px/1.1 var(--fd);color:var(--fg)}
-.tr-hd small{display:block;font:400 12px/1.2 var(--fm);color:var(--dim);margin-top:3px}
-.tr-hd .sc{margin-left:auto;font:500 11.5px/1.3 var(--fm);color:var(--dim);text-align:right}
+.tr-hd small{display:block;font:400 14px/1.2 var(--fm);color:var(--dim);margin-top:3px}
+.tr-hd .sc{margin-left:auto;font:500 13.5px/1.3 var(--fm);color:var(--dim);text-align:right}
 .tr-row{display:grid;grid-template-columns:132px minmax(0,1fr) 92px;gap:12px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}
-.tr-row .chip{display:inline-flex;align-items:center;gap:7px;font:500 11.5px/1 var(--fm);color:var(--fg);padding:6px 8px;border:1px solid var(--lineS);border-radius:7px;background:color-mix(in oklab,var(--pa) 8%,var(--surf));white-space:nowrap}
+.tr-row .chip{display:inline-flex;align-items:center;gap:7px;font:500 13.5px/1 var(--fm);color:var(--fg);padding:6px 8px;border:1px solid var(--lineS);border-radius:7px;background:color-mix(in oklab,var(--pa) 8%,var(--surf));white-space:nowrap}
 .tr-row .chip svg{width:13px;height:13px;fill:none;stroke:var(--pa);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.tr-row .ln2{display:flex;flex-direction:column;gap:3px;font:400 12px/1.35 var(--fm);min-width:0}
+.tr-row .ln2{display:flex;flex-direction:column;gap:3px;font:400 14px/1.35 var(--fm);min-width:0}
 .tr-row .ln2 span{display:flex;gap:8px;color:var(--dim);white-space:nowrap;overflow:hidden;opacity:0;transform:translateY(5px);transition:opacity .35s,transform .5s var(--ease)}
 .tr-row .ln2 em{font-style:normal;color:var(--dimmer);min-width:34px}
 .tr-row .ln2 b{font-weight:500;color:var(--fg);overflow:hidden;text-overflow:ellipsis}
@@ -663,9 +671,9 @@ html.motion-ok .case-tm.paused::before,html.motion-ok .case-tm.paused .tm-field 
 .tr-row .vd.miss{color:var(--err)}.tr-row .vd.hit{color:var(--fg)}
 .tr-row.vrd .vd{opacity:1;scale:1;transition:opacity .15s,scale .45s var(--settle)}
 .tr-gz{padding-top:12px}
-.tr-gz .gl{display:flex;justify-content:space-between;align-items:baseline;font:500 11.5px/1 var(--fm);letter-spacing:.06em;text-transform:uppercase;color:var(--dim);margin-bottom:9px}
-.tr-gz .gl b{font:600 15px/1 var(--fm);letter-spacing:0;color:var(--fg);font-variant-numeric:tabular-nums}
-.tr-gz .zone{font:500 11px var(--fm);letter-spacing:.08em;color:var(--paText)}
+.tr-gz .gl{display:flex;justify-content:space-between;align-items:baseline;font:500 13.5px/1 var(--fm);letter-spacing:.06em;text-transform:uppercase;color:var(--dim);margin-bottom:9px}
+.tr-gz .gl b{font:600 17px/1 var(--fm);letter-spacing:0;color:var(--fg);font-variant-numeric:tabular-nums}
+.tr-gz .zone{font:500 13px var(--fm);letter-spacing:.08em;color:var(--paText)}
 .tr-gz .track{position:relative;height:10px;border-radius:9px;background:linear-gradient(90deg,var(--err) 0 50%,var(--pa-fl) 50% 80%,color-mix(in oklab,var(--fg) 50%,var(--surf)) 80% 100%)}
 .tr-gz .track::after{content:"";position:absolute;inset:0;border-radius:inherit;background:var(--surf2);transform-origin:right;transition:transform .85s var(--settle)}
 .tr-gz .mark{position:absolute;top:-5px;left:0;width:3px;height:20px;border-radius:2px;background:var(--fg);box-shadow:0 0 0 2px var(--surf);transition:transform .85s var(--settle)}
@@ -707,7 +715,7 @@ html.motion-ok .tr-paper.st.shake{animation:trShake .55s var(--ease)}
 .an .ruler li{position:relative;height:6px;border-radius:3px;background:var(--line)}
 .an .ruler li a{position:absolute;inset:-6px 0;display:block}
 .an .ruler li::after{content:"";position:absolute;inset:0;border-radius:3px;background:var(--acc);pointer-events:none}
-.an .ruler li span{position:absolute;left:0;top:18px;white-space:nowrap;font:500 10.5px/1 var(--fm);color:var(--dimmer);opacity:0;transition:opacity .2s;pointer-events:none}
+.an .ruler li span{position:absolute;left:0;top:18px;white-space:nowrap;font:500 12px/1 var(--fm);color:var(--dimmer);opacity:0;transition:opacity .2s;pointer-events:none}
 .an .ruler li:hover span,.an .ruler li a:focus-visible span{opacity:1}
 .an .ruler li:hover::after{background:var(--accText)}
 /* later labels hang left from their segment's right edge, so they never run off the page */
@@ -718,7 +726,7 @@ html.motion-ok .tr-paper.st.shake{animation:trShake .55s var(--ease)}
 .an .act small{font:500 11px/1.3 var(--fm);letter-spacing:.06em;text-transform:uppercase;color:var(--dimmer)}
 .an .margin{padding:30px 18px 20px 30px;display:flex;flex-direction:column;gap:20px}
 .an .note{position:relative}
-.an .note b{display:block;margin-bottom:5px;font:500 10.5px/1 var(--fm);letter-spacing:.1em;text-transform:uppercase;color:var(--accText)}
+.an .note b{display:block;margin-bottom:5px;font:500 11.5px/1 var(--fm);letter-spacing:.1em;text-transform:uppercase;color:var(--accText)}
 .an .note p{margin:0;font:500 14.9px/1.3 var(--fb);color:var(--dim)}
 .an .note svg{position:absolute;left:-30px;top:2px;width:26px;height:18px;overflow:visible}
 .an .note path{fill:none;stroke:var(--acc);stroke-width:1.4;stroke-linecap:round;stroke-dasharray:40}

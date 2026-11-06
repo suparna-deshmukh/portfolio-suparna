@@ -12,20 +12,20 @@
 [data-theme="dark"] .rt-man{box-shadow:0 0 0 1px var(--line),0 20px 30px -24px rgba(0,0,0,.8)}
 .rt-man header{display:flex;align-items:center;gap:9px;padding:0 8px 12px;border-bottom:2px solid var(--fg)}
 .rt-man header b{font:700 13px/1 var(--fm);letter-spacing:.14em;text-transform:uppercase}
-.rt-man header small{margin-left:auto;font:500 10.5px/1 var(--fm);color:var(--dim)}
+.rt-man header small{margin-left:auto;font:500 12px/1 var(--fm);color:var(--dim)}
 .rt-compass{width:19px;height:19px;flex:none;color:var(--accText);fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .rt-man ol{margin:0;padding:0;list-style:none}
-.rt-div{display:flex;align-items:center;gap:8px;font:600 9.5px/1 var(--fm);letter-spacing:.18em;text-transform:uppercase;color:var(--accText);padding:12px 8px 5px}
+.rt-div{display:flex;align-items:center;gap:8px;font:600 11px/1 var(--fm);letter-spacing:.18em;text-transform:uppercase;color:var(--accText);padding:12px 8px 5px}
 .rt-div::after{content:"";flex:1;height:1px;background:var(--lineS)}
 .rt-man a{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:2px 10px;align-items:center;padding:11px 8px 10px;border-radius:8px;text-decoration:none;color:inherit;transition:background-color .2s}
 .rt-man a:hover{background:var(--tint)}
 .rt-man a.on{background:color-mix(in oklab,var(--acc) 9%,var(--surf))}
-.rt-st{font:700 10px/1 var(--fm);letter-spacing:.08em;color:var(--accText);border:1px solid var(--lineS);border-radius:999px;padding:3.5px 8px;white-space:nowrap}
+.rt-st{font:700 11px/1 var(--fm);letter-spacing:.08em;color:var(--accText);border:1px solid var(--lineS);border-radius:999px;padding:3.5px 8px;white-space:nowrap}
 .rt-man .n{display:flex;flex-wrap:wrap;align-items:center;gap:3px 8px;min-width:0;font:600 14px/1.25 var(--fb);letter-spacing:-.01em}
 /* the sector chip takes the whole second line, so name and metric can never collide */
-.rt-man .n em{width:100%;font:500 8.5px/1 var(--fm);font-style:normal;letter-spacing:.09em;text-transform:uppercase;color:var(--dim);border:1px dashed var(--lineS);border-radius:999px;padding:3.5px 7px;white-space:nowrap}
+.rt-man .n em{width:100%;font:500 11px/1 var(--fm);font-style:normal;letter-spacing:.09em;text-transform:uppercase;color:var(--dim);border:1px dashed var(--lineS);border-radius:999px;padding:3.5px 7px;white-space:nowrap}
 .rt-man .m{font:600 12.5px/1 var(--fm);font-variant-numeric:tabular-nums;white-space:nowrap}
-.rt-man .y{font:500 10.5px/1 var(--fm);color:var(--dimmer);white-space:nowrap}
+.rt-man .y{font:500 12px/1 var(--fm);color:var(--dimmer);white-space:nowrap}
 .rt-man .k{grid-column:1/-1;margin-top:3px;font-size:12px;line-height:1.35;color:var(--dim)}
 
 /* ── the road and its stations ── */
@@ -100,7 +100,7 @@ html.motion-ok .rt-big b::after{transition:transform .8s var(--ease) .15s}
 .rt-flag{display:inline-flex;align-items:center;margin-left:12px;padding:3px 9px 4px;border-radius:999px;
   border:1px solid color-mix(in oklab,var(--acc) 50%,transparent);
   background:color-mix(in oklab,var(--acc) 10%,transparent);
-  font:700 10px/1 var(--fm);letter-spacing:.08em;text-transform:uppercase;color:var(--accText);transform:translateY(-2px)}
+  font:700 11.5px/1 var(--fm);letter-spacing:.08em;text-transform:uppercase;color:var(--accText);transform:translateY(-2px)}
 .rt-stn.featured .rt-role h4{font-size:20px}
 .rt-stn.featured .rt-big b{font-size:58px}
 .rt-stn.featured .rt-big>span{font-size:16.5px}
@@ -139,7 +139,7 @@ html.motion-ok .rt-stn.in .rt-ft{animation:rtFtIn .45s var(--ease) .65s both}
   .rt-man .k{display:none}
   .rt-stops{padding-left:56px}
   .rt-stops::before{left:17px}
-  .rt-node{left:-56px;width:38px;height:38px;top:16px;font-size:10px}
+  .rt-node{left:-56px;width:38px;height:38px;top:16px;font-size:11px}
   .rt-body{grid-template-columns:1fr;gap:16px}
   .rt-big b{font-size:38px}
   .rt-stn.featured .rt-card{padding:22px 20px}

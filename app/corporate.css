@@ -28,12 +28,12 @@ html.motion-ok .cfdoc-paper.st.shake{animation:cfdocShake .38s var(--ease)}
 .cfdoc-emb{width:30px;height:30px;flex:none;color:var(--accText)}
 .cfdoc-emb svg{width:100%;height:100%}
 .cfdoc-tt b{display:block;font:700 14px/1.15 var(--fd);letter-spacing:-.01em;color:var(--fg)}
-.cfdoc-tt small{display:block;margin-top:2px;font:500 9px/1.35 var(--fm);letter-spacing:.07em;text-transform:uppercase;color:var(--dimmer)}
+.cfdoc-tt small{display:block;margin-top:2px;font:500 11px/1.35 var(--fm);letter-spacing:.07em;text-transform:uppercase;color:var(--dimmer)}
 .cfdoc-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8.5px 0;border-bottom:1px solid var(--line)}
 .cfdoc-row span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12.5px;color:var(--fg);
   opacity:0;transform:translateY(4px);transition:opacity .3s ease,transform .45s var(--ease)}
 .cfdoc-row.inj span{opacity:1;transform:none}
-.cfdoc-vd{flex:none;font:600 9.5px/1 var(--fm);font-style:normal;letter-spacing:.09em;text-transform:uppercase;
+.cfdoc-vd{flex:none;font:600 11px/1 var(--fm);font-style:normal;letter-spacing:.09em;text-transform:uppercase;
   color:var(--accText);border:1.5px solid currentColor;border-radius:4px;padding:4.5px 7px;white-space:nowrap;
   opacity:0;rotate:-5deg;scale:1.5;transition:opacity .12s ease,scale .4s var(--settle),rotate .4s var(--settle)}
 .cfdoc-row.vrd .cfdoc-vd{opacity:1;scale:1}
@@ -45,7 +45,7 @@ html.motion-ok .cfdoc-paper.st.shake{animation:cfdocShake .38s var(--ease)}
 .cfdoc-paper:not(.g) .cfdoc-gv{stroke-dasharray:0 100}
 .cfdoc:hover .cfdoc-gv{filter:drop-shadow(0 0 6px color-mix(in oklab,var(--acc) 70%,transparent))}
 .cfdoc-gz b{display:block;margin-top:5px;font:700 25px/1 var(--fd);letter-spacing:-.02em;color:var(--accText);font-variant-numeric:tabular-nums}
-.cfdoc-gz span{display:block;margin-top:4px;font:500 9.5px/1.45 var(--fm);letter-spacing:.02em;color:var(--dim);max-width:190px;margin-inline:auto}
+.cfdoc-gz span{display:block;margin-top:4px;font:500 11px/1.45 var(--fm);letter-spacing:.02em;color:var(--dim);max-width:190px;margin-inline:auto}
 .cf-file .stamp.cfdoc-stamp{position:absolute;right:6px;bottom:-15px;--stamp-c:var(--stamp)}
 @media (prefers-reduced-motion:reduce){.cfdoc-vd{opacity:1;rotate:0deg;scale:1}.cfdoc-row span{opacity:1;transform:none}}
 

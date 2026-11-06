@@ -42,10 +42,10 @@
 
 .stamp-txt{display:grid;justify-items:center;gap:2px}
 .stamp-txt b{font:700 12px/1 var(--fm);letter-spacing:.12em;text-transform:uppercase}
-.stamp-txt i{font:500 9.5px/1 var(--fm);font-style:normal;letter-spacing:.1em;text-transform:uppercase}
+.stamp-txt i{font:500 11px/1 var(--fm);font-style:normal;letter-spacing:.1em;text-transform:uppercase}
 /* round is the big proof stamp: oversized numeral + spaced caption */
 .stamp--round .stamp-txt b{font:700 30px/1 var(--fd);letter-spacing:-.02em;text-transform:none}
-.stamp--round .stamp-txt i{letter-spacing:.2em;margin-top:5px;font-size:10.5px}
+.stamp--round .stamp-txt i{letter-spacing:.2em;margin-top:5px;font-size:13.5px}
 /* offer is a small inline chip */
 .stamp--offer .stamp-txt b{font-size:11px;letter-spacing:.14em}
 .stamp--offer.stamp--md .stamp-txt b{font-size:12px}

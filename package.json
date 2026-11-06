@@ -7,7 +7,8 @@
     "build": "NEXT_DIST_DIR=.next-build next build",
     "start": "NEXT_DIST_DIR=.next-build next start",
     "lint": "next lint",
-    "check": "tsc --noEmit && eslint . && node scripts/check-resume.mjs"
+    "check": "tsc --noEmit && eslint . && node scripts/check-resume.mjs",
+    "qa:fonts": "node scripts/qa-fonts.mjs"
   },
   "dependencies": {
     "next": "^16.4.5",

@@ -21,7 +21,7 @@
   background:color-mix(in oklab,var(--fg) 14%,transparent);border:1px solid var(--lineS)}
 .ex-badge img{display:block;width:100%;aspect-ratio:144/136;object-fit:cover;border-radius:7px}
 .ex-badge b{display:block;margin-top:9px;font:700 14.5px/1.2 var(--fb);letter-spacing:-.01em}
-.ex-badge small{display:block;font:500 10px/1.5 var(--fm);color:var(--dim)}
+.ex-badge small{display:block;font:500 13.5px/1.5 var(--fm);color:var(--dim)}
 .ex-bcode{display:block;height:12px;margin-top:8px;border-radius:1px;opacity:.55;
   background:repeating-linear-gradient(90deg,currentColor 0 2px,transparent 2px 5px,currentColor 5px 6px,transparent 6px 9px,currentColor 9px 12px,transparent 12px 15px)}
 
@@ -48,7 +48,7 @@
 .acp-card{margin-top:10px;border:1.5px dashed rgba(23,126,91,.5);background:rgba(23,126,91,.06);border-radius:10px;padding:9px 11px;
   display:grid;gap:4px;opacity:0;translate:0 6px;transition:opacity .45s ease,translate .45s var(--ease)}
 .acp-card.on{opacity:1;translate:0 0}
-.acp-card small{font:500 8.5px/1 var(--fm);letter-spacing:.12em;text-transform:uppercase;color:rgba(23,126,91,.85)}
+.acp-card small{font:500 13px/1 var(--fm);letter-spacing:.12em;text-transform:uppercase;color:rgba(23,126,91,.85)}
 .acp-card b{font:600 13px/1.25 var(--fb)}
 .acp-opts{display:flex;gap:5px;margin-top:3px}
 .acp-opts i{font:500 9.5px/1 var(--fm);font-style:normal;border:1px solid rgba(21,33,26,.25);border-radius:999px;padding:4px 8px;color:rgba(21,33,26,.75)}
@@ -56,33 +56,33 @@
 
 .acp-res{margin-top:10px;display:grid;gap:7px;opacity:0;translate:0 6px;transition:opacity .45s ease .12s,translate .45s var(--ease) .12s}
 .acp-res.on{opacity:1;translate:0 0}
-.acp-res > small{font:500 8.5px/1 var(--fm);letter-spacing:.12em;text-transform:uppercase;color:rgba(21,33,26,.5)}
+.acp-res > small{font:500 13px/1 var(--fm);letter-spacing:.12em;text-transform:uppercase;color:rgba(21,33,26,.5)}
 .acp-row{display:flex;align-items:center;gap:9px;border-top:1px solid rgba(21,33,26,.1);padding-top:7px}
 .acp-th{flex:none;width:30px;height:22px;border-radius:5px;background:linear-gradient(135deg,rgba(23,126,91,.35),rgba(23,126,91,.12))}
 .acp-row span{display:grid;min-width:0}
 .acp-row b{font:600 11.5px/1.25 var(--fb)}
-.acp-row small{font:500 10px/1.4 var(--fm);color:rgba(21,33,26,.6)}
-.acp-row em{margin-left:auto;font:600 10px/1 var(--fm);font-style:normal;color:#B24A26;white-space:nowrap}
+.acp-row small{font:500 13px/1.4 var(--fm);color:rgba(21,33,26,.6)}
+.acp-row em{margin-left:auto;font:600 13px/1 var(--fm);font-style:normal;color:#B24A26;white-space:nowrap}
 
 /* the RISA stat card */
 .ex-risa{left:206px;top:148px;width:168px;background:var(--surf);border:1px solid var(--lineS);border-radius:10px;
   padding:13px 14px 12px;box-shadow:0 22px 34px -20px rgba(23,19,14,.5)}
 [data-theme="dark"] .ex-risa{box-shadow:0 0 0 1px var(--line),0 22px 34px -20px rgba(0,0,0,.8)}
 .ex-risa::before{content:"";position:absolute;top:0;left:14px;right:14px;height:3px;background:var(--acc);border-radius:0 0 2px 2px}
-.ex-risa-hd{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.ex-risa-hd{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
 .ex-risa-hd b{font:700 12.5px/1.2 var(--fb)}
-.ex-risa-hd small{font:500 8px/1.3 var(--fm);letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-align:right}
+.ex-risa-hd small{font:500 11px/1.3 var(--fm);letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
 .ex-risa-big{display:block;margin-top:9px;font:700 27px/1 var(--fd);letter-spacing:-.02em;color:var(--accText)}
 .ex-risa-big i{font-style:normal;font-size:14px}
-.ex-risa-sub{display:block;margin-top:5px;font:500 9.5px/1.45 var(--fm);color:var(--dim)}
+.ex-risa-sub{display:block;margin-top:5px;font:500 11px/1.45 var(--fm);color:var(--dim)}
 
 /* the BITS Goa campus card */
-.ex-campus{left:14px;top:340px;width:228px;background:var(--surf);border:1px solid var(--lineS);border-radius:10px;
-  padding:22px 12px 10px;box-shadow:0 22px 34px -20px rgba(23,19,14,.5)}
+.ex-campus{left:14px;top:318px;width:228px;background:var(--surf);border:1px solid var(--lineS);border-radius:10px;
+  padding:16px 12px 8px;box-shadow:0 22px 34px -20px rgba(23,19,14,.5)}
 [data-theme="dark"] .ex-campus{box-shadow:0 0 0 1px var(--line),0 22px 34px -20px rgba(0,0,0,.8)}
 .ex-campus img{display:block;width:100%;aspect-ratio:188/113;object-fit:cover;border-radius:5px}
-.ex-campus b{display:block;margin-top:7px;font:700 12.5px/1.2 var(--fb)}
-.ex-campus small{display:block;font:500 9.5px/1.5 var(--fm);color:var(--dim)}
+.ex-campus b{display:block;margin-top:5px;font:700 12.5px/1.2 var(--fb)}
+.ex-campus small{display:block;font:500 11px/1.5 var(--fm);color:var(--dim)}
 
 /* pinned stat notes: the profile's standout numbers, taped into the gap.
    They ride the same pointer parallax, hover lift and settle-in as the exhibit objects. */
@@ -95,7 +95,7 @@
 .ex-note::before{content:"";position:absolute;top:-6px;left:50%;width:28px;height:11px;translate:-50% 0;rotate:-2deg;
   background:color-mix(in oklab,var(--acc) 28%,rgba(255,255,255,.55));opacity:.9}
 .ex-note-num{display:block;font:700 16px/1 var(--fd);letter-spacing:-.01em;color:var(--accText)}
-.ex-note-lab{display:block;margin-top:4px;font:500 8.5px/1.4 var(--fm);letter-spacing:.02em;color:var(--dim)}
+.ex-note-lab{display:block;margin-top:4px;font:500 13px/1.4 var(--fm);letter-spacing:.02em;color:var(--dim)}
 .ex-n1{left:252px;top:318px}
 .ex-n2{left:252px;top:396px}
 .ex-n3{left:252px;top:472px}
@@ -107,7 +107,7 @@ html.motion-ok .ex-n3{animation-delay:1.35s}
 
 /* dimension-style callouts */
 .ex-calls{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
-.ex-calls text{font:500 10.5px var(--fm);letter-spacing:.1em;fill:var(--dim)}
+.ex-calls text{font:500 13px var(--fm);letter-spacing:.1em;fill:var(--dim)}
 .ex-calls text .ix{fill:var(--accText);font-weight:700}
 .ex-calls path{fill:none;stroke:var(--lineS);stroke-width:1;stroke-dasharray:3 3}
 .ex-calls circle{fill:var(--acc)}
