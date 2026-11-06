@@ -224,90 +224,121 @@ export const EXPERIENCE: Company[] = [
 
 // ── Corporate practice: the consulting files, separate from personal builds ──
 
+export type Attribution = 'led' | 'built' | 'contributed' | 'supported'
+/** Wording ladder legend, shown once per section (Appendix B of the sections brief). */
+export const ATTRIBUTION_LEGEND = 'led — I owned it end to end · built — I produced the artifact · contributed — part of a team effort · supported — I assisted the owner'
+
+export interface CorporateRow { label: string; verdict: string; attribution: Attribution; evidence?: string }
 export interface Corporate {
   id: string
+  no: number
   name: string
-  role: string
-  context: string
-  where: string
+  /** one line on what the client does — hidden until supplied (input C1) */
+  descriptor?: string
+  engagement: { via: '180DC' | 'independent'; role: string }
   when: string
-  /** the rubber stamp: the one number the file is remembered for */
-  stamp: string
-  /** the proof panel: the big number, what it measured, and how far the gauge fills (0-100) */
-  proof: { value: string; label: string; gauge: number }
-  /** metric registry id for the proof figure, for the hover proof */
-  proofMetric?: string
-  /**
-   * One line, in Suparna's words: what *she* did on this engagement (P0-3). Renders only
-   * when present — the copy is pending from her, and until then the claim wording below
-   * is kept verifiable at the project level ("aided", "enabled").
-   */
+  where: string
+  /** Ask / My part / Outcome lines — hidden until supplied in Suparna's words (inputs C3) */
+  askLine?: string
   myPart?: string
-  /** the animated mini-doc beside the file: its paper type, the rows that get stamped, the stamp's word */
-  doc: { type: string; stampWord: string; rows: { label: string; verdict: string }[] }
-  /** the deck / report this engagement produced */
-  deck?: { label: string; href: string }
+  outcome?: string
+  /** exactly three stamped rows; outcome words (SIGNED/LAUNCHED/VERIFIED/a bare percent)
+      require 20+ chars of evidence — otherwise assertSections throws (input C4) */
+  rows: CorporateRow[]
+  /** the one number the file is remembered for. No gauge for money values (C-2). */
+  proof: { value: string; label: string }
+  proofMetric?: string
+  /** attribution for the headline number */
+  proofAttribution: Attribution
+  doc: { type: string; stampWord: string }
+  /** the rubber stamp — never a claim larger than her role (input C6) */
+  stamp: string
+  deck?: { label: string; href?: string; thumb?: string }
   points: string[]
-  chips: Stat[]
+  chips: (Stat & { attribution: Attribution })[]
   ask: string
 }
 
 export const CORPORATE: Corporate[] = [
   {
-    id: 'everyday', name: 'Everyday Diamonds', role: 'Team Lead · GTM and Series A Fundraising', context: '180 Degrees Consulting engagement · Bengaluru',
-    where: 'Bengaluru', when: 'Aug 2024 – Sept 2024', stamp: 'Series A aided',
-    proof: { value: m('ed-raise').shown, label: 'Series A aided, All In Capital — first store launched', gauge: 100 },
+    id: 'everyday', no: 1, name: 'Everyday Diamonds',
+    engagement: { via: '180DC', role: 'Team Lead · GTM and Series A Fundraising' },
+    when: 'Aug 2024 – Sept 2024', where: 'Bengaluru',
+    rows: [
+      { label: 'Profitability and pricing model', verdict: 'BUILT', attribution: 'built' },
+      { label: 'Series A deck', verdict: 'DRAFTED', attribution: 'built' },
+      { label: '5-store expansion strategy', verdict: 'BUILT', attribution: 'led' },
+    ],
+    proof: { value: m('ed-raise').shown, label: 'Series A the deck helped close, All In Capital — first store then launched' },
     proofMetric: 'ed-raise',
-    doc: { type: 'Term sheet', stampWord: 'Series A', rows: [
-      { label: 'Profitability & pricing model', verdict: 'BUILT' },
-      { label: 'Series A deck', verdict: 'SHARED' },
-      { label: 'First store, Bengaluru', verdict: 'LAUNCHED' },
-    ] },
-    deck: { label: 'Series A deck', href: '#' },
+    proofAttribution: 'built',
+    doc: { type: 'Term sheet', stampWord: 'Series A' },
+    stamp: 'Series A aided',
+    deck: { label: 'Series A deck', href: '' },
     points: [
       'Modeled profitability, pricing and financial projections; built the 4-year expansion roadmap and the Series A deck that aided a $2.5M raise from All In Capital.',
       'Formulated the offline expansion strategy for 5 stores across India — and the first one launched in Bengaluru.',
     ],
-    chips: [{ value: m('ed-raise').shown, label: 'Series A, All In Capital', metric: 'ed-raise' }, { value: m('ed-stores').shown, label: 'store expansion roadmap', metric: 'ed-stores' }],
+    chips: [
+      { value: m('ed-raise').shown, label: 'Series A, All In Capital', metric: 'ed-raise', attribution: 'built' },
+      { value: m('ed-stores').shown, label: 'store expansion roadmap', metric: 'ed-stores', attribution: 'led' },
+    ],
     ask: "Hi Suparna, I'd like to hear about the Everyday Diamonds Series A work.",
   },
   {
-    id: 'fedaykin', name: 'Fedaykin AV', role: 'GTM Strategy Consultant', context: 'Independent consulting engagement',
-    where: 'Remote', when: 'Jul 2024 – Aug 2024', stamp: 'Unit economics +30%',
-    proof: { value: m('fa-unit').shown, label: 'unit economics lifted via pricing, across specs, ops and annotation costs', gauge: 30 },
+    id: 'fedaykin', no: 2, name: 'Fedaykin AV',
+    engagement: { via: 'independent', role: 'GTM Strategy Consultant' },
+    when: 'Jul 2024 – Aug 2024', where: 'Remote',
+    rows: [
+      { label: 'Competitor benchmarks', verdict: 'DONE', attribution: 'built' },
+      { label: 'Pricing and unit-economics model', verdict: 'BUILT', attribution: 'built' },
+      { label: '950-client B2B sizing', verdict: 'SIZED', attribution: 'led' },
+    ],
+    proof: { value: m('fa-unit').shown, label: 'unit economics lift found by the pricing audit, across specs, ops and annotation costs — modeled, basis pending confirmation' },
     proofMetric: 'fa-unit',
-    doc: { type: 'Pricing audit', stampWord: 'Unit economics', rows: [
-      { label: 'Competitor benchmarks', verdict: 'DONE' },
-      { label: 'Unit economics via pricing', verdict: '+30%' },
-      { label: '950-client B2B sizing', verdict: 'SIZED' },
-    ] },
-    deck: { label: 'Project report', href: '#' },
+    proofAttribution: 'built',
+    doc: { type: 'Pricing audit', stampWord: 'Unit economics' },
+    stamp: 'Pricing audit done',
+    deck: { label: 'Project report', href: '' },
     points: [
       'Formulated the GTM strategy via market research, competitor analysis and a refined product-market fit for stronger positioning.',
       'Optimized the pricing strategy across technical specs, operations and annotation costs, improving unit economics by 30%.',
       'Curated a database of 950 potential AV clients and ran a bottom-up B2B market sizing to inform a scalable business model.',
     ],
-    chips: [{ value: m('fa-unit').shown, label: 'unit economics', metric: 'fa-unit' }, { value: m('fa-clients').shown, label: 'client database', metric: 'fa-clients' }],
+    chips: [
+      { value: m('fa-unit').shown, label: 'unit economics (pricing audit)', metric: 'fa-unit', attribution: 'built' },
+      { value: m('fa-clients').shown, label: 'client database', metric: 'fa-clients', attribution: 'led' },
+    ],
     ask: "Hi Suparna, I'd like to hear about the Fedaykin AV GTM strategy work.",
   },
   {
-    id: 'kri' + 'she', name: 'KriSHE Carbon', role: 'Team Lead · GTM and Fundraising', context: '180 Degrees Consulting engagement · Gurugram',
-    where: 'Gurugram', when: 'Jul 2025 – Aug 2025', stamp: `${m('kc-grants').shown} grants enabled`,
-    proof: { value: m('kc-grants').shown, label: 'in grants enabled via the deck and biochar model', gauge: 100 },
+    id: 'kri' + 'she', no: 3, name: 'KriSHE Carbon',
+    engagement: { via: '180DC', role: 'Team Lead · GTM and Fundraising' },
+    when: 'Jul 2025 – Aug 2025', where: 'Gurugram',
+    rows: [
+      { label: 'Investor deck and model', verdict: 'PITCHED', attribution: 'built' },
+      { label: 'Biochar impact metrics', verdict: 'BUILT', attribution: 'built' },
+      { label: '20+ high-fit buyers', verdict: 'MAPPED', attribution: 'led' },
+    ],
+    proof: { value: m('kc-grants').shown, label: 'in grants the deck and biochar model pursued, with the client team' },
     proofMetric: 'kc-grants',
-    doc: { type: 'Grant review', stampWord: 'Grants', rows: [
-      { label: 'Investor deck & model', verdict: 'PITCHED' },
-      { label: 'Biochar impact metrics', verdict: 'VERIFIED' },
-      { label: '20+ high-fit buyers', verdict: 'MAPPED' },
-    ] },
+    proofAttribution: 'built',
+    doc: { type: 'Grant review', stampWord: 'Grants' },
+    stamp: 'Grants pursued',
     points: [
       'Built the investor pitch deck and financial projections; a scalable biochar model and impact metrics enabled ₹12.5L in grants.',
       'Ran carbon market and buyer research; developed the positioning and sales narrative, identifying 20+ high-fit opportunities.',
     ],
-    chips: [{ value: m('kc-grants').shown, label: 'grants enabled', metric: 'kc-grants' }, { value: m('kc-buyers').shown, label: 'high-fit opportunities', metric: 'kc-buyers' }],
+    chips: [
+      { value: m('kc-grants').shown, label: 'grants pursued, with the client team', metric: 'kc-grants', attribution: 'built' },
+      { value: m('kc-buyers').shown, label: 'high-fit opportunities', metric: 'kc-buyers', attribution: 'led' },
+    ],
     ask: "Hi Suparna, I'd like to hear about the KriSHE Carbon fundraising work.",
   },
 ]
+
+/** The single header sentence that replaces the aggregate chips (C-4). */
+export const CORPORATE_LEDE = 'Three client engagements: two 180 Degrees Consulting team leads and one independent file. Every file ends in a deck, and every number on it is one I can defend.'
 
 export const CORPORATE_AGG: Stat[] = [
   { value: m('ed-raise').shown, label: 'Series A raised', metric: 'ed-raise' },
@@ -323,84 +354,156 @@ export const EDUCATION = {
   minor: 'Minor in Finance',
   when: 'Aug 2023 – May 2027',
   classYear: 'Class of 2027',
+  classOf: 2027,
+  from: 2023,
 }
 
-export const ACHIEVEMENTS: { rank: string; of: string; name: string; note: string; crest: { text: string; color: string }; deck?: { label: string; href: string } }[] = [
-  { rank: m('acc-rank').shown, of: m('acc-of').shown, name: "Accenture Strategy Connect '25", note: 'GenAI in supply chain, India', crest: { text: 'A', color: '#E2401B' }, deck: { label: 'Case deck', href: '#' } },
-  { rank: m('iima-rank').shown, of: m('iima-of').shown, name: "IIMA Fintech Frontier '24", note: '0→1 product design and GTM', crest: { text: 'IIM', color: '#1F4E8C' }, deck: { label: 'Case deck', href: '#' } },
-  { rank: m('nl-rank').shown, of: m('nl-of').shown, name: "NextLeap PM Fellowship '26", note: 'Guided AI search for Google Photos', crest: { text: 'N', color: '#0E9F8A' }, deck: { label: 'Project deck', href: '#' } },
+export interface Honor {
+  rank: string
+  of: string
+  name: string
+  note: string
+  organiser: string
+  year: number
+  crest: { text: string; color: string }
+  deck?: { label: string; href?: string }
+}
+export const ACHIEVEMENTS: Honor[] = [
+  { rank: m('acc-rank').shown, of: m('acc-of').shown, name: "Accenture Strategy Connect '25", note: 'GenAI in supply chain, India', organiser: 'Accenture', year: 2025, crest: { text: 'A', color: '#E2401B' }, deck: { label: 'Case deck', href: '' } },
+  { rank: m('iima-rank').shown, of: m('iima-of').shown, name: "IIMA Fintech Frontier '24", note: '0→1 product design and GTM', organiser: 'Indian Institute of Management Ahmedabad', year: 2024, crest: { text: 'IIM', color: '#1F4E8C' }, deck: { label: 'Case deck', href: '' } },
+  { rank: m('nl-rank').shown, of: m('nl-of').shown, name: "NextLeap PM Fellowship '26", note: 'Guided AI search for Google Photos', organiser: 'NextLeap', year: 2026, crest: { text: 'N', color: '#0E9F8A' }, deck: { label: 'Project deck', href: '' } },
 ]
 
 export const CONSULTATHON_URL = 'https://unstop.com/competitions/consultathon-50-bits-pilani-k-k-birla-goa-campus-1674892'
 
 export interface Position {
   id: string
+  no: number
   org: string
   title: string
   when: string
+  current?: boolean
+  /** one line: selection and team size (the scope) */
   blurb: string
-  /** the people behind the role, shown as a team that lights up */
-  team?: { count: number; label: string }
+  /** the one headline figure for the panel (R-1 default) */
+  headline: { metric: string; label: string }
+  /** static sponsor line — replaces the marquee (R-4) */
+  sponsors?: string[]
+  /** one plain line for Project SYNERGY (R-5) */
+  noteLine?: string
+  /** secondary stats, shown in the More detail disclosure only (R-2) */
   stats: Stat[]
-  chips: { text: string; href?: string }[]
+  chips: { text: string; href?: string; metric?: string }[]
 }
 
 /** Positions of responsibility, as the highlights of the college years. */
 export const POSITIONS: Position[] = [
   {
-    id: 'placement', org: 'BITS Goa', title: 'Placement Coordinator', when: 'May 2026 – Present',
+    id: 'placement', no: 1, org: 'BITS Goa', title: 'Placement Coordinator', when: 'May 2026 – Present', current: true,
     blurb: 'Selected 1 of 8 out of 1,000+ students. Leads campus placements and corporate outreach for the 2026 batch, end-to-end, with a 25-member team.',
-    team: { count: m('pc-team').num ?? 25, label: 'team led end-to-end' },
+    headline: { metric: 'pc-rate', label: 'batch placement, May to October 2026' },
+    noteLine: 'Project SYNERGY: a phased proposal to centralize placement and internship drives across the three BITS campuses — approved.',
     stats: [
-      { value: m('pc-rate').shown, label: 'batch placement in 5 months', metric: 'pc-rate' },
       { value: m('pc-placed').shown, label: 'students placed', metric: 'pc-placed' },
       { value: m('pc-team').shown, label: 'team led end-to-end', metric: 'pc-team' },
     ],
-    chips: [{ text: '1 of 8 selected' }, { text: 'Project SYNERGY approved · 3 campuses' }],
-  },
-  {
-    id: 'consult', org: '180 Degrees Consulting', title: 'Director', when: 'May 2025 – Jun 2026',
-    blurb: 'Youngest Director: 45 consultants across 16 projects, driving 30% YoY revenue growth. Awarded “Best Consultant” as a sophomore.',
-    team: { count: m('dc-projects').num ?? 16, label: 'projects run across 45 consultants' },
-    stats: [
-      { value: m('dc-sponsor').shown, label: 'Consultathon sponsorships', metric: 'dc-sponsor' },
-      { value: m('dc-reg').shown, label: 'Consultathon registrations', metric: 'dc-reg' },
-      { value: m('dc-rev').shown, label: 'YoY revenue growth', metric: 'dc-rev' },
-      { value: m('dc-courses').shown, label: 'course impressions, 85% retention', metric: 'dc-courses' },
+    chips: [
+      { text: '1 of 8 selected', metric: 'pc-select' },
+      { text: 'Project SYNERGY approved · 3 campuses' },
     ],
-    chips: [{ text: 'Best Consultant' }, { text: 'Consultathon — sponsored by Uplearn by Upstox, NextLeap, The MBA Edge & more · on Unstop', href: CONSULTATHON_URL }],
   },
   {
-    id: 'cel', org: 'Center for Entrepreneurial Leadership', title: 'Creative Director', when: 'May 2025 – Jun 2026',
-    blurb: "Coalescence'24: secured 40+ founders, investors and partners — including Ankur Warikoo and UTI. Led a 20-member team across marketing and operations; 400K+ impressions and ₹10L+ revenue.",
-    team: { count: m('cel-team').num ?? 20, label: 'team across marketing and operations' },
+    id: 'consult', no: 2, org: '180 Degrees Consulting', title: 'Director', when: 'May 2025 – Jun 2026',
+    blurb: '45 consultants across 16 projects, 30% YoY revenue growth (club year over prior year). Awarded “Best Consultant” as a sophomore.',
+    headline: { metric: 'dc-sponsor', label: 'Consultathon sponsorships, 3,200 registrations' },
+    sponsors: ['Uplearn by Upstox', 'NextLeap', 'Unstop', 'The MBA Edge'],
     stats: [
-      { value: m('cel-founders').shown, label: 'founders and investors', metric: 'cel-founders' },
-      { value: m('cel-impr').shown, label: 'impressions', metric: 'cel-impr' },
+      { value: m('dc-reg').shown, label: 'Consultathon registrations', metric: 'dc-reg' },
+      { value: m('dc-rev').shown, label: 'club YoY revenue growth', metric: 'dc-rev' },
+      { value: m('dc-courses').shown, label: 'course impressions · 85% retention', metric: 'dc-courses' },
+    ],
+    chips: [{ text: 'Best Consultant' }, { text: 'Consultathon on Unstop', href: CONSULTATHON_URL }],
+  },
+  {
+    id: 'cel', no: 3, org: 'Center for Entrepreneurial Leadership', title: 'Creative Director', when: 'May 2025 – Jun 2026',
+    blurb: "Coalescence'24: 40+ founders, investors and partners on stage — including Ankur Warikoo and UTI. Led a 20-member team across marketing and operations.",
+    headline: { metric: 'cel-impr', label: "Coalescence'24 impressions" },
+    stats: [
+      { value: m('cel-founders').shown, label: 'founders, investors and partners secured', metric: 'cel-founders' },
       { value: m('cel-rev').shown, label: 'event revenue', metric: 'cel-rev' },
+      { value: m('cel-team').shown, label: 'team across marketing and operations', metric: 'cel-team' },
     ],
     chips: [],
   },
 ]
 
 // ── Data projects: the four ledger cards. Headline figures read from the metrics registry;
-//    the pointer text stays verbatim from the resume. ──
+//    the pointer text stays verbatim from the resume. Sections brief D-1: provenance,
+//    result kind (outcome / modeled / measured / scale) and figure status are asserted. ──
+export type Provenance = 'public' | 'synthetic' | 'client'
+export type ResultKind = 'outcome' | 'modeled' | 'measured' | 'scale'
 export interface DataLedger {
   n: string
+  rank: number
   title: string
   where: string
+  /** where the data came from; undefined until confirmed → chip hidden, figure tagged Illustrative (D2) */
+  provenance?: Provenance
+  /** the one-sentence finding (input D1) — hidden until supplied */
+  finding?: string
   points: string[]
   result: string
   /** metric registry id behind the result figure (hover proof) */
   resultMetric: string
   resLabel: string
+  /** drives the label: Result / Modeled / Scale (D-1) */
+  kind: ResultKind
+  figure: { type: 'spike' | 'heatmap' | 'bars' | 'donut'; status: 'real' | 'illustrative' }
   tech: string
+  links?: { repo?: string; notebook?: string }
+  detail?: { method?: string[]; informs?: string; limits?: string }
 }
 export const DATA_LEDGERS: DataLedger[] = [
   {
+    n: '02',
+    rank: 1,
+    title: 'Mutual Fund Activation & Retention',
+    where: `Synthetic/AMFI investment data · ${m('d2-users').shown} users`,
+    provenance: 'synthetic',
+    points: [
+      'Queried investment data via SQL; segmented 50K users by activation stages and constructed detailed 90-day retention cohort views.',
+      'Identified dormant user personas using RFM analysis; proposed re-engagement features backed by cohort-driven insights.',
+    ],
+    result: m('d2-users').shown,
+    resultMetric: 'd2-users',
+    resLabel: 'users segmented into 90-day retention cohorts',
+    kind: 'scale',
+    figure: { type: 'heatmap', status: 'illustrative' },
+    tech: 'SQL · Python · Excel',
+  },
+  {
+    n: '03',
+    rank: 2,
+    title: 'Growth Attribution & CAC Optimization',
+    where: `Neobank fintech · ${m('d3-records').shown} campaign records`,
+    provenance: undefined, // source not yet confirmed (input D2)
+    points: [
+      'Trained XGBoost on 45K neobank campaign records; used SHAP to attribute conversions across 5 digital and direct channels.',
+      'Identified the top acquisition signals per channel; built an AI reallocation model reducing simulated CAC by 28% across the channel mix.',
+    ],
+    result: m('d3-cac').shown,
+    resultMetric: 'd3-cac',
+    resLabel: 'simulated CAC under AI reallocation of the channel mix',
+    kind: 'modeled',
+    figure: { type: 'bars', status: 'illustrative' },
+    tech: 'Python · scikit-learn · SHAP · SQL',
+  },
+  {
     n: '01',
+    rank: 3,
     title: 'Content Virality Prediction & Segmentation',
     where: `YouTube Trending dataset · ${m('d1-videos').shown} videos`,
+    provenance: 'public',
     points: [
       'Built NLP features from titles and tags; applied K-means to segment 200K+ videos into archetypes by views and engagement.',
       'Trained an XGBoost classifier predicting trending content at 82% AUC; surfaced the key drivers for content decisions via SHAP.',
@@ -408,47 +511,65 @@ export const DATA_LEDGERS: DataLedger[] = [
     result: `${m('d1-auc').shown} AUC`,
     resultMetric: 'd1-auc',
     resLabel: 'trending-content classifier',
+    kind: 'outcome',
+    figure: { type: 'spike', status: 'illustrative' },
     tech: 'SQL · Python · scikit-learn · XGBoost',
   },
   {
-    n: '02',
-    title: 'Mutual Fund Activation & Retention',
-    where: `Synthetic/AMFI investment data · ${m('d2-users').shown} users`,
-    points: [
-      'Queried investment data via SQL; segmented 50K users by activation stages and constructed detailed 90-day retention cohort views.',
-      'Identified dormant user personas using RFM analysis; proposed re-engagement features backed by cohort-driven insights.',
-    ],
-    result: m('d2-users').shown,
-    resultMetric: 'd2-users',
-    resLabel: 'users · 90-day retention cohorts',
-    tech: 'SQL · Python · Excel',
-  },
-  {
-    n: '03',
-    title: 'Growth Attribution & CAC Optimization',
-    where: `Neobank fintech · ${m('d3-records').shown} campaign records`,
-    points: [
-      'Trained XGBoost on 45K neobank campaign records; used SHAP to attribute conversions across 5 digital and direct channels.',
-      'Identified the top acquisition signals per channel; built an AI reallocation model reducing simulated CAC by 28% across the channel mix.',
-    ],
-    result: m('d3-cac').shown,
-    resultMetric: 'd3-cac',
-    resLabel: 'simulated CAC, AI reallocation',
-    tech: 'Python · scikit-learn · SHAP · SQL',
-  },
-  {
     n: '04',
+    rank: 4,
     title: 'Loan Risk Segmentation & Default Prediction',
     where: `LendingClub dataset · ${m('d4-records').shown} loan records`,
+    provenance: 'public',
     points: [
       'Queried 100K+ loan records via SQL; segmented users into 5 risk profiles using structured RFM-style feature analysis.',
       'Built a logistic regression model to predict defaults; mapped risk segments to product features and targeted UX interventions.',
     ],
     result: m('d4-records').shown,
     resultMetric: 'd4-records',
-    resLabel: 'records → 5 risk profiles',
+    resLabel: 'records segmented into 5 risk profiles',
+    kind: 'scale',
+    figure: { type: 'donut', status: 'illustrative' },
     tech: 'SQL · Python · scikit-learn',
   },
 ]
+/** The method strip (D-3): the four labelled steps shared by every card. */
+export const METHOD_STEPS = ['Question', 'Data', 'Analysis', 'Result']
 
-if (process.env.NODE_ENV !== "production") assertNoDeadLinks()
+/** Sections-brief assertions (X-1): dev-only, throws on indefensible data. */
+export function assertSections() {
+  const problems: string[] = []
+  const OUTCOME = /(^\+?\d|SIGNED|LAUNCHED|VERIFIED)/
+  for (const c of CORPORATE) {
+    if (c.rows.length !== 3) problems.push(`CORPORATE[${c.id}]: expected exactly 3 rows`)
+    for (const r of c.rows) {
+      if (!r.attribution) problems.push(`CORPORATE[${c.id}].row "${r.label}": missing attribution`)
+      if (OUTCOME.test(r.verdict) && (!r.evidence || r.evidence.length < 20)) {
+        problems.push(`CORPORATE[${c.id}].row "${r.label}": outcome verdict "${r.verdict}" without 20+ chars of evidence`)
+      }
+    }
+    if (c.proofMetric) {
+      const mt = m(c.proofMetric)
+      if (mt.num != null && mt.den != null && Math.abs(mt.num / mt.den * 100 - parseFloat(mt.shown)) >= 0.05) {
+        problems.push(`CORPORATE[${c.id}].proof: ${mt.num}/${mt.den} does not reproduce ${mt.shown}`)
+      }
+    }
+    if (c.deck?.href && !link(c.deck.href)) problems.push(`CORPORATE[${c.id}].deck: dead href`)
+  }
+  for (const d of DATA_LEDGERS) {
+    if (!d.kind) problems.push(`DATA_LEDGERS[${d.n}]: missing result kind`)
+    if (d.provenance === undefined && d.figure.status !== 'illustrative') {
+      problems.push(`DATA_LEDGERS[${d.n}]: unconfirmed provenance must use an illustrative figure`)
+    }
+  }
+  for (const p of POSITIONS) {
+    if (!p.headline?.metric) problems.push(`POSITIONS[${p.id}]: missing headline metric`)
+  }
+  for (const a of ACHIEVEMENTS) {
+    if (!a.rank || !a.organiser) problems.push(`ACHIEVEMENTS[${a.name}]: missing result or organiser`)
+    if (a.deck?.href && !link(a.deck.href)) problems.push(`ACHIEVEMENTS[${a.name}].deck: dead href`)
+  }
+  if (problems.length) throw new Error(`[sections] ${problems.join('; ')}`)
+}
+
+if (process.env.NODE_ENV !== "production") { assertNoDeadLinks(); assertSections() }

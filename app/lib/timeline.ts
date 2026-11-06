@@ -14,6 +14,8 @@ export interface TlStep {
 export interface TimelineHandle {
   /** True while a replay cycle is running (false in the finished first frame and off-screen). */
   readonly inCycle: boolean
+  /** replay the choreography once on demand (hover/focus/tap/Replay button) */
+  replay: () => void
   /** True if the named step has fired in the current cycle. Always true in the final state. */
   has: (name: string) => boolean
 }
@@ -31,12 +33,13 @@ export function useTimeline<T extends HTMLElement>(
   ref: RefObject<T | null>,
   steps: readonly TlStep[],
   loopMs: number,
-  opts: { initialHoldMs?: number } = {},
+  opts: { initialHoldMs?: number; loop?: boolean } = {},
 ): TimelineHandle {
   // `steps` is a module-level constant at every call site, so these are stable per mount
   const sorted = useMemo(() => steps.slice().sort((a, b) => a.at - b.at), [steps])
   const finalSet = useMemo(() => new Set(sorted.map(s => s.name)), [sorted])
   const holdMs = opts.initialHoldMs ?? 0
+  const loop = opts.loop ?? true
   const [fired, setFired] = useState<ReadonlySet<string>>(() => finalSet)
   const [inCycle, setInCycle] = useState(false)
   const timers = useRef<number[]>([])
@@ -59,9 +62,11 @@ export function useTimeline<T extends HTMLElement>(
     setFired(new Set())
     setInCycle(true)
     for (const step of sorted) later(() => setFired(prev => new Set(prev).add(step.name)), step.at)
-    // eslint-disable-next-line react-hooks/immutability -- self-recursive loop callback
-    later(cycle, loopMs)
-  }, [sorted, loopMs, clear, later])
+    if (loop) {
+      // eslint-disable-next-line react-hooks/immutability -- self-recursive loop callback
+      later(cycle, loopMs)
+    }
+  }, [sorted, loopMs, clear, later, loop])
 
   const start = useCallback(() => {
     if (still) { setFired(finalSet); return }
@@ -98,5 +103,13 @@ export function useTimeline<T extends HTMLElement>(
 
   useEffect(() => stop, [stop])
 
-  return { inCycle, has: (name: string) => fired.has(name) }
+  /** Replay the choreography once, on demand (hover/focus/tap/Replay button). No-ops while still. */
+  const replay = useCallback(() => {
+    if (still || !ref.current) return
+    running.current = true
+    clear()
+    later(cycle, 0)
+  }, [still, clear, later, cycle, ref])
+
+  return { inCycle, has: (name: string) => fired.has(name), replay }
 }

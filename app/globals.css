@@ -1117,3 +1117,47 @@ html.vt-nav::view-transition-old(root){animation-direction:reverse}
 .mtip-b i{display:block;font-style:normal}
 .mtip:hover .mtip-b,.mtip:focus-visible .mtip-b{opacity:1;transform:translateX(-50%) translateY(0)}
 @media (prefers-reduced-motion:reduce){.mtip-b{transition:none}}
+
+/* ── sections brief shared blocks (X-2..X-5) ── */
+/* Disclosure: the body is always in the DOM (no-JS and crawlers see it expanded);
+   collapsed with grid rows; state persists per instance in sessionStorage */
+.disc{border-top:1px dashed var(--lineS);margin-top:12px}
+.disc-btn{display:flex;width:100%;align-items:center;justify-content:space-between;gap:10px;padding:11px 2px;background:none;border:0;
+  cursor:pointer;color:var(--accText);font:600 12px/1 var(--fm);letter-spacing:.06em;text-transform:uppercase;text-align:left}
+.disc-btn:hover{color:var(--fg)}
+.disc-btn svg{width:11px;height:11px;flex:none;transition:transform .3s var(--ease)}
+.disc[data-open="1"] .disc-btn svg{transform:rotate(180deg)}
+.disc-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s var(--ease)}
+.disc[data-open="1"] .disc-body{grid-template-rows:1fr}
+.disc-inner{overflow:hidden;min-height:0}
+html.motion-off .disc-body{transition:none}
+@media (prefers-reduced-motion:reduce){.disc-body{transition:none}}
+/* Attribution marker: word plus glyph, never color alone */
+.attr{display:inline-flex;align-items:center;gap:4px;font:500 11px/1 var(--fm);letter-spacing:.04em;color:var(--dimmer)}
+.attr i{font-style:normal;color:var(--accText);font-size:10px}
+/* Proof: figure + kind label + attribution on one baseline */
+.proof{display:inline-flex;align-items:baseline;gap:8px}
+.proof-kind{font:600 11px/1 var(--fm);letter-spacing:.08em;text-transform:uppercase;color:var(--dim);
+  border:1px dashed var(--lineS);border-radius:999px;padding:3.5px 8px}
+/* Provenance chip */
+.prov{display:inline-block;margin-left:8px;font:600 11px/1 var(--fm);letter-spacing:.05em;text-transform:uppercase;color:var(--dim);
+  border:1px solid var(--lineS);border-radius:999px;padding:3.5px 8px;white-space:nowrap}
+/* Data ledger: illustrative tag, result kind, method strip */
+.dl-ill{position:absolute;top:12px;right:16px;z-index:2;font:600 11px/1 var(--fm);letter-spacing:.08em;text-transform:uppercase;
+  color:var(--dimmer);border:1px dashed var(--lineS);border-radius:4px;padding:4px 7px;rotate:2.5deg;background:var(--surf)}
+.dl-reskind{font:600 11px/1 var(--fm);font-style:normal;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);
+  border:1px dashed var(--lineS);border-radius:999px;padding:3.5px 8px;margin-right:8px}
+.dl-find{margin:10px 0 0;font:500 17px/1.35 var(--fd);letter-spacing:-.01em;color:var(--fg);max-width:52ch}
+.dl-method{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 16px}
+.dl-mstep{font:600 11.5px/1 var(--fm);letter-spacing:.09em;text-transform:uppercase;color:var(--dim);background:none;
+  border:1px solid var(--lineS);border-radius:999px;padding:7px 12px;cursor:pointer;transition:color .2s,border-color .2s,background-color .2s}
+.dl-mstep:hover,.dl-mstep:focus-visible{color:var(--accText);border-color:color-mix(in oklab,var(--acc) 45%,var(--lineS));background:color-mix(in oklab,var(--acc) 8%,transparent)}
+.dl-grid[data-hl="question"] .dl-card :is(.dl-head h3,.dl-where,.dl-vis,.dl-res),
+.dl-grid[data-hl="data"] .dl-card :is(.dl-head h3,.dl-where,.dl-vis,.dl-res),
+.dl-grid[data-hl="analysis"] .dl-card :is(.dl-head h3,.dl-where,.dl-vis,.dl-res),
+.dl-grid[data-hl="result"] .dl-card :is(.dl-head h3,.dl-where,.dl-vis,.dl-res){opacity:.3;transition:opacity .25s}
+.dl-grid[data-hl="question"] .dl-card .dl-head h3{opacity:1}
+.dl-grid[data-hl="data"] .dl-card .dl-where{opacity:1}
+.dl-grid[data-hl="analysis"] .dl-card .dl-vis{opacity:1}
+.dl-grid[data-hl="result"] .dl-card .dl-res{opacity:1}
+.dl-asidetx{margin:0;font-size:12.5px;line-height:1.55;color:var(--dim);max-width:34ch}

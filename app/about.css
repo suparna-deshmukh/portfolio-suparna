@@ -53,15 +53,7 @@ html.motion-ok #about .ab-panel:hover{transform:translateY(-2px);box-shadow:0 18
 #about .ab-chips li{font:500 11px/1.4 var(--fm);letter-spacing:.02em;color:var(--dim);border:1px dashed var(--lineS);border-radius:999px;padding:4px 10px;text-align:left}
 #about .ab-chips a{color:var(--accText);text-decoration:underline;text-decoration-color:var(--acc);text-underline-offset:2px}
 
-/* team dots: the people behind the role, lighting up one by one */
-#about .ab-team{margin-top:11px;display:flex;flex-wrap:wrap;gap:5px;align-items:center}
-#about .ab-team i{width:8px;height:8px;border-radius:50%;background:var(--lineS);
-  transition:background .5s ease,box-shadow .5s ease;transition-delay:calc(var(--i) * 30ms)}
-#about .ab-panel.in .ab-team i{background:var(--acc);box-shadow:0 0 7px color-mix(in oklab,var(--acc) 45%,transparent)}
-html.motion-ok #about .ab-panel:hover .ab-team i{animation:abDot 1.8s ease-in-out infinite;animation-delay:calc(var(--i) * 45ms)}
 @keyframes abDot{50%{transform:scale(1.55)}}
-#about .ab-team span{margin-left:9px;font:500 11px/1.5 var(--fm);letter-spacing:.07em;text-transform:uppercase;color:var(--dimmer);white-space:nowrap}
-@media (prefers-reduced-motion:reduce){#about .ab-team i{transition:none}}
 
 /* the cohort / project board: tiles that fill in one by one */
 #about .ab-tiles{margin-top:12px;padding:12px 13px 10px;border:1px solid var(--lineS);border-radius:10px;background:var(--tint)}
@@ -82,15 +74,6 @@ html.motion-ok #about .ab-panel:hover .ab-tiles-grid i{animation:abDot 1.8s ease
 #about .ab-offers span{width:100%;margin-top:3px;font:500 11px/1.4 var(--fm);letter-spacing:.06em;text-transform:uppercase;color:var(--dimmer)}
 @media (prefers-reduced-motion:reduce){#about .ab-offers .stamp{transition:none;opacity:.92;transform:rotate(var(--stamp-rot))}}
 
-/* sponsor marquee */
-#about .ab-marq{margin-top:12px;overflow:hidden;border:1px dashed var(--lineS);border-radius:999px;padding:9px 0;
-  -webkit-mask-image:linear-gradient(90deg,transparent,#000 7% 93%,transparent);
-  mask-image:linear-gradient(90deg,transparent,#000 7% 93%,transparent)}
-#about .ab-marq-in{display:flex;width:max-content;animation:abMarq 24s linear infinite}
-#about .ab-marq-in span{font:600 11.5px/1 var(--fm);letter-spacing:.09em;text-transform:uppercase;color:var(--dim);white-space:nowrap;padding-right:30px}
-#about .ab-marq-in span::after{content:"✦";margin-left:30px;color:var(--acc);letter-spacing:0}
-@keyframes abMarq{to{transform:translateX(-50%)}}
-@media (prefers-reduced-motion:reduce){#about .ab-marq-in{animation:none}}
 
 /* honors: the medal shelf */
 #about .ab-honors{margin-top:16px;padding-top:14px;border-top:1px solid var(--lineS)}
@@ -145,8 +128,8 @@ html.motion-ok #about .ab-honors li:hover{transform:translateY(-3px);box-shadow:
   #about .ab-folio{display:none}
   #about .ab-pq{order:1}
   #about .ab-bio{order:2;column-count:2;column-gap:24px;column-rule:1px solid var(--line)}
-  #about .ab-read{order:3;margin-top:16px;padding-top:12px;border-top:1px solid var(--lineS)}
-  #about .ab-edu{order:4;margin-top:16px}
+  #about .ab-read{order:4;margin-top:16px;padding-top:12px;border-top:1px solid var(--lineS)}
+  #about #education{order:3;margin-top:16px}
 }
 @media (max-width:760px){
   #about .ab-spread{padding:20px 18px 22px}
@@ -168,4 +151,53 @@ html.motion-ok #about .ab-honors li:hover{transform:translateY(-3px);box-shadow:
   [data-theme="dark"] #about .ab-l{background:linear-gradient(270deg,rgba(0,0,0,.42),transparent 48px),radial-gradient(110% 70% at 0 0,color-mix(in oklab,var(--acc) 6%,transparent),transparent 65%),var(--surf)}
   [data-theme="dark"] #about .ab-r{background:linear-gradient(90deg,rgba(0,0,0,.48),transparent 48px),var(--surf)}
   [data-theme="dark"] #about .ab-r::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1px;background:rgba(244,239,231,.05)}
+}
+
+/* ── sections brief R-1: one panel anatomy, one headline ── */
+#about .ab-eyebrow{margin:0 0 8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  font:600 11px/1 var(--fm);letter-spacing:.1em;text-transform:uppercase;color:var(--dimmer)}
+#about .ab-now{font:700 11px/1 var(--fm);letter-spacing:.08em;color:var(--accText);
+  border:1px solid color-mix(in oklab,var(--acc) 50%,transparent);border-radius:999px;padding:3px 8px;background:color-mix(in oklab,var(--acc) 10%,transparent)}
+#about .ab-scope{margin:10px 0 0;font-size:13px;line-height:1.5;color:var(--dim);max-width:58ch}
+#about .ab-headline{margin:12px 0 0;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+#about .ab-headline > :first-child{font:700 34px/1 var(--fd);letter-spacing:-.02em;color:var(--accText);font-variant-numeric:tabular-nums}
+#about .ab-headline span{font:500 11.5px/1.4 var(--fm);color:var(--dim);max-width:30ch}
+#about .ab-note{margin:10px 0 0;font-size:12px;line-height:1.5;color:var(--dim);max-width:58ch}
+#about .ab-sponsors{margin:10px 0 0;font:500 11.5px/1.5 var(--fm);color:var(--dim)}
+#about .ab-hn-org{font:600 11.5px/1.3 var(--fm);letter-spacing:.03em;color:var(--dimmer)}
+#about .ab-disc{margin-top:12px;border-top:1px dashed var(--lineS)}
+/* education: the CLASS OF 2027 seal presses once (E-1) */
+#about .ab-edu{position:relative}
+#about .ab-seal{position:absolute;right:6px;top:-14px;z-index:3}
+#about .ab-edu-when{display:block;margin-top:6px;font:500 11.5px/1.3 var(--fm);letter-spacing:.04em;color:var(--dimmer)}
+/* four years at a glance (E-3) */
+.ys{margin-top:20px;border:1px solid var(--lineS);border-radius:10px;background:var(--surf2);padding:12px 14px 12px}
+.ys-years{display:flex;margin-left:88px;justify-content:space-between}
+.ys-years div{display:grid;grid-template-columns:repeat(5,1fr);width:100%}
+.ys-years span{font:500 11px/1 var(--fm);letter-spacing:.04em;color:var(--dimmer)}
+.ys-years span:not(:first-child){justify-self:end}
+.ys-lanes{margin-top:8px;display:grid;gap:7px}
+.ys-lane{display:flex;align-items:center;gap:0}
+.ys-lab{width:88px;flex:none;font:600 11px/1 var(--fm);font-style:normal;letter-spacing:.08em;text-transform:uppercase;color:var(--dimmer)}
+.ys-track{position:relative;flex:1;height:20px}
+.ys-bar{position:absolute;top:2px;height:16px;border-radius:4px;
+  background:color-mix(in oklab,var(--acc) 26%,transparent);border:1px solid color-mix(in oklab,var(--acc) 42%,transparent)}
+.ys-item{position:absolute;top:0;height:19px;display:inline-flex;align-items:center;padding:0 7px;border-radius:5px;
+  font:500 11px/1 var(--fm);color:var(--fg);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  transition:filter .2s}
+.ys-c{background:color-mix(in oklab,var(--acc) 14%,var(--surf));border:1px solid color-mix(in oklab,var(--acc) 35%,var(--lineS))}
+.ys-p{background:var(--tint);border:1px solid var(--lineS);margin-top:0}
+.ys-lane:nth-child(3) .ys-track{transform:translateY(1px)}
+.ys-item:hover,.ys-item:focus-visible{filter:brightness(1.06);outline:2px solid var(--focus);outline-offset:1px}
+.ys-dot{position:absolute;top:0;height:19px;display:inline-flex;align-items:center;gap:5px;padding:0 6px;
+  font:500 11px/1 var(--fm);color:var(--dim);text-decoration:none;translate:-4px 0}
+.ys-dot i{width:7px;height:7px;flex:none;border-radius:50%;background:var(--acc)}
+.ys-dot:hover,.ys-dot:focus-visible{color:var(--fg)}
+@media (max-width:640px){
+  .ys-lane{flex-direction:column;align-items:stretch;gap:5px}
+  .ys-lab{width:auto;margin-bottom:2px}
+  .ys-track{display:flex;flex-direction:column;gap:5px;height:auto}
+  .ys-bar,.ys-item{position:static;width:100%;height:auto;padding:5px 8px}
+  .ys-dot{position:static;translate:none;padding:5px 0}
+  .ys-dot i{display:none}
 }

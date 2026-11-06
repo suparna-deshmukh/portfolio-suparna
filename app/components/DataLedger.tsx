@@ -2,9 +2,11 @@
 
 import { useEffect, useRef } from 'react'
 import SectionHeader from './SectionHeader'
+import ProvenanceChip from './ProvenanceChip'
+import Disclosure from './Disclosure'
 import CountUp from './CountUp'
 import MetricTip from './MetricTip'
-import { DATA_LEDGERS } from '../lib/site'
+import { METHOD_STEPS, DATA_LEDGERS  } from '../lib/site'
 import { m } from '../lib/metrics'
 
 const COHORT_ROWS = [1, 0.92, 0.97, 0.9, 1, 0.95]
@@ -134,23 +136,50 @@ export default function DataLedger() {
           variant="sm"
           title="Four ledgers, one method."
           meta={['4 data projects · SQL + Python', 'From viral videos to loan books']}
+          aside={
+            <p className="dl-asidetx">Same four steps in every card: ask a question, pull the data, analyze it, and let it inform a decision. Figures are illustrative sketches of the analysis until real exports are wired in.</p>
+          }
         />
+        <div className="dl-method" aria-label="The method shared by every ledger">
+          {METHOD_STEPS.map(st => (
+            <button key={st} type="button" className="dl-mstep" data-step={st.toLowerCase()}
+              onPointerEnter={() => gridRef.current?.setAttribute('data-hl', st.toLowerCase())}
+              onFocus={() => gridRef.current?.setAttribute('data-hl', st.toLowerCase())}
+              onPointerLeave={() => gridRef.current?.removeAttribute('data-hl')}
+              onBlur={() => gridRef.current?.removeAttribute('data-hl')}
+              onClick={() => gridRef.current?.setAttribute('data-hl', st.toLowerCase())}>
+              {st}
+            </button>
+          ))}
+        </div>
         <div className="dl-grid" ref={gridRef} aria-label="Data projects">
-          {DATA_LEDGERS.map(l => (
+          {[...DATA_LEDGERS].sort((a, b) => a.rank - b.rank).map(l => (
             <article key={l.n} className="dl-card">
               <span className="dl-num" aria-hidden="true">{l.n}</span>
+              {l.figure.status === 'illustrative' && <span className="dl-ill">Illustrative</span>}
               <header className="dl-head">
                 <h3>{l.title}</h3>
-                <span className="dl-where">{l.where}</span>
+                <span className="dl-where">{l.where} <ProvenanceChip p={l.provenance} /></span>
               </header>
+              {l.finding && <p className="dl-find">{l.finding}</p>}
               <LedgerVis n={l.n} />
               <ul className="dl-points">
                 {l.points.map(p => <li key={p}>{p}</li>)}
               </ul>
               <footer className="dl-foot">
                 <span className="dl-tech">{l.tech}</span>
-                <span className="dl-res"><MetricTip id={l.resultMetric}><CountUp text={l.result} /></MetricTip><small>{l.resLabel}</small></span>
+                <span className="dl-res">
+                  <i className="dl-reskind">{l.kind === 'scale' ? 'Scale' : l.kind === 'modeled' ? 'Modeled' : 'Result'}</i>
+                  <MetricTip id={l.resultMetric}><CountUp text={l.result} /></MetricTip><small>{l.resLabel}</small>
+                </span>
               </footer>
+              {l.detail && (l.detail.method || l.detail.informs || l.detail.limits) && (
+                <Disclosure label={`Method and limits — ${l.title}`} className="dl-disc">
+                  <ul className="dl-method-b">{l.detail.method?.map(b => <li key={b}>{b}</li>)}</ul>
+                  {l.detail.informs && <p className="dl-informs">{l.detail.informs}</p>}
+                  {l.detail.limits && <p className="dl-limits">{l.detail.limits}</p>}
+                </Disclosure>
+              )}
             </article>
           ))}
         </div>

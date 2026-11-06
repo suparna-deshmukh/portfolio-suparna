@@ -2,13 +2,16 @@
 
 import '../corporate.css'
 import { useEffect, useRef } from 'react'
-import { CORPORATE, CORPORATE_AGG, PREFILL_EVENT, link, type Corporate } from '../lib/site'
+import { CORPORATE, CORPORATE_LEDE, ATTRIBUTION_LEGEND, PREFILL_EVENT, link, type Corporate } from '../lib/site'
 import { m } from '../lib/metrics'
 import CountUp from './CountUp'
 import Stamp from './Stamp'
 import MetricTip from './MetricTip'
 import SectionHeader from './SectionHeader'
 import { useTimeline, type TlStep } from '../lib/timeline'
+import { usePrefersReducedMotion } from '../lib/hooks'
+import Attribution from './Attribution'
+import Disclosure from './Disclosure'
 
 /** One animated emblem per engagement: diamond, autonomous vehicle, biochar sprout. */
 const KRI = 'kri' + 'she'
@@ -68,7 +71,6 @@ const EMBLEMS: Record<string, React.ReactNode> = {
 
 const ROW_AT = [380, 1500, 2620]
 const VERDICT_AT = 460
-const GAUGE_AT = 3750
 const STAMP_AT = 4650
 const LOOP_MS = 8800
 const DOC_STEPS: TlStep[] = [
@@ -76,7 +78,6 @@ const DOC_STEPS: TlStep[] = [
     { at: ROW_AT[i], name: `row${i}.inj` },
     { at: ROW_AT[i] + VERDICT_AT, name: `row${i}.vrd` },
   ]),
-  { at: GAUGE_AT, name: 'gauge' },
   { at: STAMP_AT, name: 'stamp' },
 ]
 
@@ -85,35 +86,41 @@ const DOC_STEPS: TlStep[] = [
  * the proof gauge filling, then the rubber stamp landing on the bottom edge. Loops while
  * in view; the first paint is the finished document.
  */
-function CorporateDoc({ c, index }: { c: Corporate; index: number }) {
+function CorporateDoc({ c }: { c: Corporate }) {
   const ref = useRef<HTMLDivElement>(null)
-  const tl = useTimeline(ref, DOC_STEPS, LOOP_MS, { initialHoldMs: LOOP_MS - STAMP_AT })
+  const reduced = usePrefersReducedMotion()
+  const tl = useTimeline(ref, DOC_STEPS, LOOP_MS, { initialHoldMs: LOOP_MS - STAMP_AT, loop: false })
   const replaying = tl.inCycle && tl.has('stamp')
 
   return (
     <div ref={ref} className="cfdoc" role="img"
-      aria-label={`${c.doc.type} for ${c.name}: ${c.doc.rows.map(r => `${r.label} — ${r.verdict}`).join(', ')}. Proof: ${c.proof.value} ${c.proof.label}.${c.proofMetric ? ` ${m(c.proofMetric).source}, as of ${m(c.proofMetric).asOf}.` : ''}`}>
-      <div className={`cfdoc-paper${tl.has('gauge') ? ' g' : ''}${replaying ? ' st shake' : tl.has('stamp') ? ' st' : ''}`}>
+      aria-label={`${c.doc.type} for ${c.name}: ${c.rows.map(r => `${r.label} — ${r.verdict}`).join(', ')}. Proof: ${c.proof.value} ${c.proof.label}.${c.proofMetric ? ` ${m(c.proofMetric).source}, as of ${m(c.proofMetric).asOf}.` : ''}`}
+      onPointerEnter={() => { if (!reduced) tl.replay() }}
+      onFocus={() => { if (!reduced) tl.replay() }}
+      onClick={() => tl.replay()}
+    >
+        <div className={`cfdoc-paper${replaying ? ' st shake' : tl.has('stamp') ? ' st' : ''}`}>
         <div className="cfdoc-hd">
           <span className="cfdoc-emb" aria-hidden="true">{EMBLEMS[c.id]}</span>
-          <span className="cfdoc-tt"><b>{c.doc.type}</b><small>file 0{index + 1} · {c.name}</small></span>
+          <span className="cfdoc-tt"><b>{c.doc.type}</b><small>file {String(c.no).padStart(2, '0')} · {c.name}</small></span>
         </div>
-        {c.doc.rows.map((r, i) => (
-          <div key={r.label} className={`cfdoc-row${tl.has(`row${i}.inj`) ? ' inj' : ''}${tl.has(`row${i}.vrd`) ? ' vrd' : ''}`}>
+        {c.rows.map((r, i) => (
+          <div key={r.label} className={`cfdoc-row${tl.has(`row${i}.inj`) ? ' inj' : ''}${tl.has(`row${i}.vrd`) ? ' vrd' : ''}`} title={r.evidence}>
             <span>{r.label}</span>
             <em className="cfdoc-vd ink-rect">{r.verdict}</em>
+            <i className="cfdoc-rowattr" aria-hidden="true">{r.attribution}</i>
           </div>
         ))}
         <div className="cfdoc-gz">
-          <svg viewBox="0 0 120 64" aria-hidden="true">
-            <path className="cfdoc-gf" d="M10 60 a50 50 0 0 1 100 0" />
-            <path className="cfdoc-gv" d="M10 60 a50 50 0 0 1 100 0" style={{ ['--g' as string]: c.proof.gauge }} />
-          </svg>
           <b>{c.proofMetric
             ? <MetricTip id={c.proofMetric} focusable={false}><CountUp text={c.proof.value} /></MetricTip>
             : <CountUp text={c.proof.value} />}</b>
           <span>{c.proof.label}</span>
+          <Attribution a={c.proofAttribution} className="cfdoc-attr" />
         </div>
+        <button type="button" className="cfdoc-replay" aria-label={`Replay the ${c.doc.type} animation`} onClick={() => tl.replay()}>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10a8 8 0 0 1 14-4l-4 4" /><path d="M20 14a8 8 0 0 1-14 4l4-4" /><path d="M4 4v6h6M20 20v-6h-6" /></svg>
+        </button>
       </div>
       <Stamp
         shape="rect" tone="ink" size="md" rot={-6}
@@ -128,8 +135,8 @@ function CorporateDoc({ c, index }: { c: Corporate; index: number }) {
 
 /**
  * Corporate projects as stamped files: one wide sheet per engagement. The left hand is a
- * self-animating paper (term sheet, pricing audit, grant review) that re-stamps its proof;
- * the right hand is the engagement's story and the deck it produced.
+ * self-stamping paper (term sheet, pricing audit, grant review) that plays once and rests;
+ * the right hand is the engagement's story: eyebrow, title, proofs and the details.
  */
 export default function Corporate() {
   useEffect(() => {
@@ -143,10 +150,7 @@ export default function Corporate() {
     return () => io.disconnect()
   }, [])
 
-  const meta: [string, string] = [
-    `${CORPORATE.length} engagements · GTM and fundraising`,
-    'Everyday Diamonds · Fedaykin AV · KriSHE Carbon',
-  ]
+  const year = (when: string) => when.slice(-4)
   return (
     <section className="band band-sand" id="corporate">
       <div className="sec wrap">
@@ -155,37 +159,74 @@ export default function Corporate() {
           label="Corporate Projects"
           variant="xl"
           title="Corporate projects."
-          meta={meta}
+          meta={[
+            `${CORPORATE.length} client engagements · GTM and fundraising`,
+            'Two team-lead files via 180 Degrees Consulting, one independent',
+          ]}
           aside={
             <>
-              <b>{CORPORATE.length} engagements</b>
-              <span>Two as team lead via 180 Degrees Consulting, one independent</span>
-              <div className="cf-aggs">
-                {CORPORATE_AGG.map(s => <span key={s.label}><b>{s.value}</b>{s.label}</span>)}
-              </div>
+              <b className="cf-lede">{CORPORATE_LEDE}</b>
+              <p className="cf-legend">{ATTRIBUTION_LEGEND}</p>
             </>
           }
         />
+        <ol className="cf-tabs" aria-label="Corporate project files">
+          {CORPORATE.map(c => (
+            <li key={c.id}>
+              <a href={`#corporate-${c.id}`} className="cf-tab" data-emb={c.id}>
+                <i aria-hidden="true">{EMBLEMS[c.id]}</i>
+                <span>
+                  <b>{c.name}</b>
+                  <em>{c.engagement.via === '180DC' ? '180 DC' : 'Independent'} · {year(c.when)}</em>
+                </span>
+                <u><b>{c.proof.value}</b><span>{c.proofAttribution}</span></u>
+              </a>
+            </li>
+          ))}
+        </ol>
         <ol className="cf-files" aria-label="Corporate projects">
-          {CORPORATE.map((c, i) => (
-            <li key={c.id} className="cf-file" data-emb={c.id}>
-              <CorporateDoc c={c} index={i} />
+          {CORPORATE.map(c => (
+            <li key={c.id} className="cf-file" id={`corporate-${c.id}`} data-emb={c.id}>
+              <span className="cf-filetab" aria-hidden="true">
+                FILE {String(c.no).padStart(2, '0')} · {c.engagement.via === '180DC' ? '180 DC' : 'Independent'} · {year(c.when)}
+              </span>
+              <CorporateDoc c={c} />
               <div className="cf-main">
+                <p className="cf-eyebrow">
+                  <span className={`cf-via${c.engagement.via === 'independent' ? ' ind' : ''}`}>
+                    {c.engagement.via === '180DC' ? '180 Degrees Consulting · team lead' : 'Independent engagement'}
+                  </span>
+                  {c.when} · {c.where}
+                </p>
                 <div className="cf-head">
                   <h3>{c.name}</h3>
-                  <span className="cf-meta">{c.role} · {c.when} · {c.where}</span>
+                  <span className="cf-role">{c.engagement.role}</span>
                 </div>
-                <p className="cf-ctx">{c.context}</p>
-                {c.myPart && <p className="cf-mypart"><b>My part</b> {c.myPart}</p>}
-                <ul className="cf-points">
-                  {c.points.map(pt => <li key={pt}>{pt}</li>)}
-                </ul>
-                <div className="cf-foot">
+                {c.descriptor && <p className="cf-desc">{c.descriptor}</p>}
+                {(c.askLine || c.myPart || c.outcome) && (
+                  <dl className="cf-amo">
+                    {c.askLine && <div><dt>Ask</dt><dd>{c.askLine}</dd></div>}
+                    {c.myPart && <div><dt>My part</dt><dd>{c.myPart}</dd></div>}
+                    {c.outcome && <div><dt>Outcome</dt><dd>{c.outcome}</dd></div>}
+                  </dl>
+                )}
+                <div className="cf-proof">
                   {c.chips.map(ch => (
-                    <span key={ch.label} className="cf-chip"><b>{ch.value}</b><span>{ch.label}</span></span>
+                    <span key={ch.label} className="cf-chip">
+                      <b>{ch.metric ? <MetricTip id={ch.metric} focusable={false}><CountUp text={ch.value} /></MetricTip> : ch.value}</b>
+                      <span>{ch.label}</span>
+                      <Attribution a={ch.attribution} />
+                    </span>
                   ))}
+                </div>
+                <Disclosure label={`Details — ${c.name}`} className="cf-disc">
+                  <ul className="cf-points">
+                    {c.points.map(pt => <li key={pt}>{pt}</li>)}
+                  </ul>
+                </Disclosure>
+                <div className="cf-foot">
                   {c.deck && link(c.deck.href) && (
-                    <a key={c.deck.label} className="cf-chip cf-chip-deck" href={c.deck.href} target="_blank" rel="noopener noreferrer">
+                    <a className="cf-chip cf-chip-deck" href={c.deck.href} target="_blank" rel="noopener noreferrer">
                       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z" /><path d="M14 3v5h5" /><path d="M10 13h6M10 17h6" /></svg>
                       <span>{c.deck.label}</span><b aria-hidden="true">↗</b>
                     </a>
