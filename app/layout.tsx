@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from 'next'
 import localFont from 'next/font/local'
 import './globals.css'
+import './typography.css'
+import './micro-interactions.css'
+import './print.css'
 import Header from './components/Header'
 import FloatNav from './components/FloatNav'
 import { LazyP99Panel } from './components/lazy'
@@ -80,6 +83,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" data-theme="light" suppressHydrationWarning className={`${display.variable} ${satoshi.variable} ${dmMono.variable}`}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        {/* P3-4: no-JS fallbacks — the JS-only exhibit fit gets a static scale, and the
+            JS-only controls (theme/motion toggles, p99 hint) are removed so nothing dead renders. */}
+        <noscript>
+          <style>{`
+            @media (min-width:640px){.exhibit{transform:scale(.74)!important;transform-origin:50% 0}}
+            .themebtn,.p99 .kb,.kb{display:none}
+          `}</style>
+        </noscript>
       </head>
       <body>
         <a className="skip" href="#content">Skip to content</a>

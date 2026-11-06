@@ -1,0 +1,13 @@
+/* ── P3-1 · typography details. Balance on headings, pretty on body lines,
+   hanging punctuation on the pull quote, tabular numerals where figures align.
+   Fraunces ships without italic, so there is no italic usage to reconcile. */
+
+h1,h2,h3,h4{text-wrap:balance}
+p,li,dd{ text-wrap:pretty }
+.prose p{orphans:3;widows:3}
+
+#about .ab-pq{hanging-punctuation:first}
+
+.ab-stats b,.ex-note-num,.fb-rw .n,.cfdoc-gz b{font-variant-numeric:tabular-nums}
+
+/* mono label scale: uppercase, 0.06–0.14em tracking (existing tokens unchanged) */

@@ -39,7 +39,8 @@ Local only — **no git remote exists; never push.** Dev server: port **3210**
 
 ```
 app/
-  layout.tsx                 fonts, metadata, Header, FloatNav, P99Panel, ViewTransitionResolver
+  layout.tsx                 fonts, metadata, Header, FloatNav, P99Panel, ViewTransitionResolver,
+                             noscript fallbacks (exhibit fit + JS-only controls)
   page.tsx                   home section order
   globals.css                tokens, chrome, bands, section header, cases, report/board, ledgers
   hero-left.css              hero title block (name plate + rows)
@@ -50,6 +51,9 @@ app/
   contact.css                contact night desk + form
   endpull.css                page curl
   topnav.css                 float nav pill
+  typography.css             P3-1: balance/pretty/hanging-punctuation/tabular-nums
+  micro-interactions.css     P3-2: press, underline draw, chip ink-sweep, toast offset, focus ring
+  print.css                  P3-4: full-site print stylesheet (chrome off, one column, disclosures open)
   lib/
     site.ts                  ALL home data: EXPERIENCE, CORPORATE, POSITIONS, ACHIEVEMENTS,
                              EDUCATION, NAV_SECTIONS, SOCIALS, LOG, EMAIL/PHONE, URLs,
@@ -1268,3 +1272,53 @@ not the sections brief's.)
   `Content-Security-Policy: frame-ancestors 'none'` (verified on the wire).
   A full CSP ships Report-Only first, once the inline pre-paint theme
   script carries a hash or nonce.
+
+---
+
+## 22. P3 polish (typography, micro-interactions, print & no-JS)
+
+### 22.1 Typography (`app/typography.css`, P3-1)
+* `text-wrap: balance` on h1–h4; `text-wrap: pretty` on paragraphs and list items;
+  `orphans:3; widows:3` in `.prose`.
+* `hanging-punctuation: first` on the About pull quote (`.ab-pq`) — progressive
+  enhancement, no layout impact where unsupported.
+* `font-variant-numeric: tabular-nums` where figures align in columns: `.ab-stats b`,
+  `.ex-note-num`, `.fb-rw .n`, `.cfdoc-gz b`.
+* Fraunces ships without italic — there is no italic usage to reconcile.
+
+### 22.2 Micro-interaction catalogue (`app/micro-interactions.css`, P3-2)
+Defined once, applied everywhere; every effect gated on `html.motion-ok`, so with
+Motion Off or no JS the state changes instantly but nothing is lost:
+* **press** — `.cf-tab` and `.themebtn` dip 1px on `:active` (`.btn` keeps its own press).
+* **link underline draw** — `.tb-links a::after` accent bar draws left→right on hover
+  and `:focus-visible`; the static underline always remains, so links stay
+  distinguishable without hover.
+* **chip ink-spread** — `.cf-tab` hover tint sweeps in from the left
+  (`background-size: 0% → 100%`). The corporate.css hover rule deliberately sets only
+  `transform`/`border-color` so the sweep survives the cascade.
+* **copy feedback** — the SecRef toast is the single copy-feedback voice; below 900px
+  it sits 108px above the bottom edge so it never collides with the phone FloatNav pill.
+* **one focus ring** — `outline-offset: 3px` on exhibit objects and form fields, matching
+  the global 2px `var(--focus)` ring.
+
+### 22.3 Print (`app/print.css`, P3-4)
+The whole site prints as clean one-column content:
+* Chrome removed: header, FloatNav, skip link, p99 panel/hint, hero callouts, route
+  trail/train, EndPull page curl, SecRef chips.
+* Bands, cards and papers lose backgrounds, shadows and rotation (`.cfdoc`, `.rcard`,
+  `.ex-ob`, `.ab-panel`, `.dl-card` un-rotate); the exhibit and FitStage figures un-scale.
+* Disclosures print expanded (`.disc-body{display:block; grid-row:span 99}`); stamps
+  print at full opacity with `mix-blend-mode:normal`.
+* Verified: `printToPDF` of `/` → `docs/qa-shots/fq-print-home.pdf`; the resume route
+  keeps its A4 `@page` rules (it is the print-first page).
+
+### 22.4 No-JS fallbacks (P3-4)
+* All content renders from SSR: disclosures expanded, every figure on its finished
+  frame, no spinners.
+* `<noscript><style>` in `layout.tsx`: at ≥640px the hero exhibit gets a static
+  `scale(.74)` (the JS fit pass never runs) and JS-only controls are removed
+  (`.themebtn`, the `p99` hint chip) so nothing dead renders.
+* Contact degrades to a `mailto:` link (`noscript` in `Contact.tsx`).
+* Verified through a script-stripping proxy at 1280/1024/390: no horizontal overflow,
+  all disclosures expanded, corporate rows/stamps, YearStrip and hero all rendered
+  (`docs/qa-shots/nojs-*.png`).

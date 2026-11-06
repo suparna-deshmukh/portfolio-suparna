@@ -1,0 +1,28 @@
+/* ── P3-2 · micro-interaction catalogue. Defined once, applied everywhere.
+   Every transition is gated on html.motion-ok — without JS or with Motion Off
+   the effects apply instantly but never stop working. */
+
+/* press: tab-like controls dip 1px (.btn already has its own press) */
+html.motion-ok .cf-tab,html.motion-ok .themebtn{transition-property:transform,border-color,background-size,box-shadow}
+.cf-tab:active,.themebtn:active{transform:translateY(1px)}
+
+/* link underline draw: the static underline stays (links must stay
+   distinguishable); an accent bar draws in over it on hover/focus */
+.tb-links a{position:relative}
+.tb-links a::after{content:"";position:absolute;left:0;right:0;bottom:-3px;height:2px;background:var(--accText);transform:scaleX(0);transform-origin:left}
+html.motion-ok .tb-links a::after{transition:transform .3s var(--ease)}
+.tb-links a:hover::after,.tb-links a:focus-visible::after{transform:scaleX(1)}
+
+/* chip ink-spread: the hover tint sweeps in from the left (folder tabs).
+   Pairs with the corporate.css hover rule, whose background shorthand was
+   split off so the sweep (background-size) survives the cascade. */
+.cf-tab{background-image:linear-gradient(var(--tint),var(--tint));background-repeat:no-repeat;background-position:0 0;background-size:0% 100%}
+html.motion-ok .cf-tab{transition:transform .3s var(--ease),border-color .25s,background-size .35s var(--ease)}
+.cf-tab:hover{background-size:100% 100%}
+
+/* copy feedback: the SecRef toast is the single copy-feedback voice;
+   it clears the phone FloatNav pill */
+@media (max-width:899px){.toast{bottom:108px}}
+
+/* one focus ring: 2px var(--focus), 3px offset, everywhere */
+.ex-ob:focus-visible,.form input:focus-visible,.form textarea:focus-visible{outline-offset:3px}

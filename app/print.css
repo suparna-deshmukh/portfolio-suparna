@@ -1,0 +1,30 @@
+/* ── P3-4 · print: the whole site prints as clean one-column content.
+   No chrome, no motion states, disclosures expanded, papers un-rotated. */
+@media print{
+  .hdr,.fnav,.skip,.p99,.p99-hint,.hbg,.ex-calls,.rt-trail,.rt-train,.float,
+  .ind,.endpull,.page-curl,.hctas .btn.ghost,.secref{display:none!important}
+  html{scroll-behavior:auto}
+  body{background:#fff!important;color:#141414!important}
+  .band,.wrap,section,article{background:transparent!important;box-shadow:none!important}
+  *{box-shadow:none!important;text-shadow:none!important;animation:none!important;transition:none!important}
+  a{color:#141414;text-decoration:underline}
+  .rt{display:block}
+  .rt-man{position:static;max-height:none;overflow:visible}
+  .rt-stops{padding-left:48px}
+  .rt-stn{break-inside:avoid;margin-bottom:24px}
+  .ab-spread{display:block}
+  .ab-page{min-height:0}
+  .case{display:block}
+  .cf-file{display:block}
+  .cfdoc,.cf-main{float:none;width:100%}
+  .rcard,.ex-ob,.ex-note,.ab-panel,.dl-card,.cf-file{transform:none!important;rotate:none!important}
+  .exhibit{transform:none}
+  .fit{height:auto!important}
+  .fit>.stage{position:static;transform:none}
+  .disc-body{display:block!important;grid-row:span 99}
+  .disc{display:block}
+  .stamp{mix-blend-mode:normal;opacity:1}
+  .fb-note{transform:none;translate:0 0}
+  .fb-rw{opacity:1;transform:none}
+  img{break-inside:avoid}
+}
