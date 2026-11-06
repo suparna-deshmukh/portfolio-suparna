@@ -295,9 +295,11 @@ About · Contact (nav + headers + toasts all share these strings from `NAV_SECTI
 Grid: left letterhead (`.hd-left`), right exhibit (`.hd-right`).
 
 ### 6.1 Background (`.hbg`)
-Three drifting glow blobs (52/40/48vw, accent/sage tints), a 56px engineering grid
-(radial-masked, slow 52s pan), and SVG-turbulence **grain** (multiply; dark: screen +
-invert). All paused off-screen. (The old flowing "roadmap" curves were removed — the
+Three drifting glow shapes (52/44/30vw, accent/sage/fg tints) — `radial-gradient`
+backgrounds, **no `filter: blur()`** (P1-6, §16.1). A 56px engineering grid
+(radial-masked, slow 52s pan), and a pre-baked **noise tile**
+`/images/noise-128.webp` (5.3 KB seamless, multiply; dark: screen + invert).
+All paused off-screen. (The old flowing "roadmap" curves were removed — the
 notes float on their own.)
 
 ### 6.2 Letterhead (`HeroLetterhead.tsx`, `hero-left.css`)

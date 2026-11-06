@@ -91,6 +91,12 @@ input,textarea{caret-color:var(--acc)}
 
 /* ── bands: each home section has its own surface; the page scrolls normally ── */
 .band{position:relative;background:var(--bg);color:var(--fg)}
+/* P1-6: scope layout/style to each band (no `paint` — the ::before/::after auras
+   intentionally overflow the band box). */
+main>section.band{contain:layout style}
+/* Below-the-fold bands skip rendering until near the viewport. The hero (LCP) and the
+   experience road (its trail needs live geometry) stay fully rendered. */
+#about,#corporate,#data,#contact{content-visibility:auto;contain-intrinsic-size:auto 1200px}
 .band-sand{--bg:var(--surf2)}
 .band-sand .form{--surf:var(--surf)}
 /* Contact, C1 "after hours": warm black with orange threads. Text tokens re-scoped for the dark surface in both themes. */
@@ -138,12 +144,12 @@ input,textarea{caret-color:var(--acc)}
 /* Experience: ledger paper. Rules every 28px and a double vertical rule at 72%. */
 #experience::before{inset:0;background-image:linear-gradient(90deg,transparent calc(72% - 4px),var(--line) calc(72% - 4px),var(--line) calc(72% - 3px),transparent calc(72% - 3px),transparent 72%,var(--line) 72%,var(--line) calc(72% + 1px),transparent calc(72% + 1px)),repeating-linear-gradient(180deg,transparent 0 27px,var(--line) 27px 28px)}
 /* Writing: paper grain over a warm apricot desk. */
-#writing::before{inset:0;opacity:.16;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+#writing::before{inset:0;opacity:.5;mix-blend-mode:multiply;background-image:url('/images/noise-128.webp');background-size:128px}
 [data-theme="dark"] #writing::before{mix-blend-mode:screen;opacity:.08;filter:invert(1)}
 /* About: a slow warm aurora of two blurred blobs. */
-#about::before,#about::after{width:46vw;height:46vw;max-width:640px;max-height:640px;border-radius:50%;filter:blur(36px)}
-#about::before{left:-8vw;top:8%;background:color-mix(in oklab,var(--acc) 24%,transparent);animation:auroraA 16s ease-in-out infinite alternate}
-#about::after{right:-6vw;bottom:-10%;background:color-mix(in oklab,#7FA98F 30%,transparent);animation:auroraB 19s ease-in-out infinite alternate}
+#about::before,#about::after{width:46vw;height:46vw;max-width:640px;max-height:640px;border-radius:50%}
+#about::before{left:-8vw;top:8%;background:radial-gradient(closest-side,color-mix(in oklab,var(--acc) 24%,transparent),transparent 70%);animation:auroraA 16s ease-in-out infinite alternate}
+#about::after{right:-6vw;bottom:-10%;background:radial-gradient(closest-side,color-mix(in oklab,#7FA98F 30%,transparent),transparent 70%);animation:auroraB 19s ease-in-out infinite alternate}
 [data-theme="dark"] #about::before,[data-theme="dark"] #about::after{opacity:.6}
 @keyframes auroraA{to{transform:translate(10vw,6vh)}}
 @keyframes auroraB{to{transform:translate(-8vw,-8vh)}}
@@ -284,10 +290,10 @@ html.motion-ok .dl-card.in .seg{stroke-dasharray:var(--len) 100}
 
 /* background: drifting warm gradients, a dot grid, flowing lines and paper grain */
 .hbg{position:absolute;inset:0;z-index:0;pointer-events:none}
-.hbg-glow{position:absolute;border-radius:50%;filter:blur(60px)}
-.hbg-glow.g1{width:52vw;height:52vw;left:-14vw;top:-18vw;background:color-mix(in oklab,var(--acc) 26%,transparent);animation:hg1 22s ease-in-out infinite alternate}
-.hbg-glow.g2{width:44vw;height:44vw;right:-10vw;bottom:-22vw;background:color-mix(in oklab,#7FA98F 34%,transparent);animation:hg2 26s ease-in-out infinite alternate}
-.hbg-glow.g3{width:30vw;height:30vw;left:42%;top:30%;background:color-mix(in oklab,var(--fg) 6%,transparent);animation:hg3 30s ease-in-out infinite alternate}
+.hbg-glow{position:absolute;border-radius:50%}
+.hbg-glow.g1{width:52vw;height:52vw;left:-14vw;top:-18vw;background:radial-gradient(closest-side,color-mix(in oklab,var(--acc) 26%,transparent),transparent 72%);animation:hg1 22s ease-in-out infinite alternate}
+.hbg-glow.g2{width:44vw;height:44vw;right:-10vw;bottom:-22vw;background:radial-gradient(closest-side,color-mix(in oklab,#7FA98F 34%,transparent),transparent 72%);animation:hg2 26s ease-in-out infinite alternate}
+.hbg-glow.g3{width:30vw;height:30vw;left:42%;top:30%;background:radial-gradient(closest-side,color-mix(in oklab,var(--fg) 6%,transparent),transparent 72%);animation:hg3 30s ease-in-out infinite alternate}
 [data-theme="dark"] .hbg-glow{opacity:.55}
 @keyframes hg1{to{transform:translate(8vw,6vw)}}
 @keyframes hg2{to{transform:translate(-10vw,-6vw)}}
@@ -295,8 +301,8 @@ html.motion-ok .dl-card.in .seg{stroke-dasharray:var(--len) 100}
 .hbg-grid{position:absolute;inset:0;mask-image:radial-gradient(ellipse 70% 70% at 30% 40%,#000 20%,transparent 75%);-webkit-mask-image:radial-gradient(ellipse 70% 70% at 30% 40%,#000 20%,transparent 75%)}
 .hbg-grid::before{content:"";position:absolute;inset:-56px 0 0 -56px;background-image:linear-gradient(to right,color-mix(in oklab,var(--fg) 7%,transparent) 1px,transparent 1px),linear-gradient(to bottom,color-mix(in oklab,var(--fg) 7%,transparent) 1px,transparent 1px);background-size:56px 56px;animation:gridpan 52s linear infinite}
 @keyframes gridpan{to{transform:translate(22px,44px)}}
-.hbg-grain{position:absolute;inset:0;opacity:.14;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
-[data-theme="dark"] .hbg-grain{mix-blend-mode:screen;opacity:.06;filter:invert(1)}
+.hbg-grain{position:absolute;inset:0;opacity:.5;mix-blend-mode:multiply;background-image:url('/images/noise-128.webp');background-size:128px}
+[data-theme="dark"] .hbg-grain{mix-blend-mode:screen;opacity:.12;filter:invert(1)}
 .hero.paused .hbg *,.hero.paused .hbg-grid::before{animation-play-state:paused}
 
 /* layout: name + line + CTAs left, the desk right */
@@ -635,9 +641,9 @@ html.motion-ok .case-tm.paused::before,html.motion-ok .case-tm.paused .tm-field 
 .tr-paper{position:absolute;inset:0;border-radius:var(--r);padding:16px 18px;background:var(--surf);border:1px solid var(--lineS);overflow:hidden;transition:transform .5s var(--ease);
   box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 2px 3px rgba(23,19,14,.16),0 22px 34px -18px rgba(23,19,14,.5)}
 [data-theme="dark"] .tr-paper{box-shadow:0 1px 0 rgba(255,255,255,.05) inset,0 22px 34px -18px rgba(0,0,0,.7)}
-.tr-paper::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;mix-blend-mode:multiply;
-  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 .35  0 0 0 0 .25  0 0 0 0 .15  0 0 0 .22 0'/></filter><rect width='160' height='160' filter='url(%23g)'/></svg>")}
-[data-theme="dark"] .tr-paper::after{mix-blend-mode:screen;opacity:.16}
+.tr-paper::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.6;mix-blend-mode:multiply;
+  background-image:url('/images/noise-128.webp');background-size:128px}
+[data-theme="dark"] .tr-paper::after{mix-blend-mode:screen;opacity:.12;filter:invert(1)}
 .tr-paper.shake{animation:trShake .38s var(--ease)}
 @keyframes trShake{20%{transform:translate(2px,3px) rotate(.3deg)}45%{transform:translate(-2px,1px) rotate(-.25deg)}70%{transform:translate(1px,-1px)}}
 .tr-hd{display:flex;align-items:center;gap:10px;padding-bottom:12px;border-bottom:1px dashed var(--lineS)}
