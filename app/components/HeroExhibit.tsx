@@ -64,26 +64,26 @@ export default function HeroExhibit() {
         </a>
 
 
-        <svg className="ex-calls" viewBox="0 0 660 540" aria-hidden="true">
+        <svg className="ex-calls" viewBox="0 0 660 580" aria-hidden="true">
           <g>
-            <text x="14" y="30"><tspan className="ix">01</tspan> · THE PERSON</text>
-            <path d="M 150 26 L 108 46" />
-            <circle cx="108" cy="46" r="3.2" />
+            <text x="14" y="14"><tspan className="ix">01</tspan> · THE PERSON</text>
+            <path d="M 150 10 L 108 24" />
+            <circle cx="106" cy="26" r="3.2" />
           </g>
           <g>
-            <text x="14" y="326"><tspan className="ix">02</tspan> · BITS PILANI, GOA</text>
-            <path d="M 178 322 L 102 344" />
-            <circle cx="102" cy="344" r="3.2" />
+            <text x="14" y="362"><tspan className="ix">02</tspan> · BITS PILANI, GOA</text>
+            <path d="M 180 358 L 104 376" />
+            <circle cx="102" cy="378" r="3.2" />
           </g>
           <g>
-            <text x="206" y="120"><tspan className="ix">03</tspan> · RISA LABS</text>
-            <path d="M 248 126 L 268 150" />
-            <circle cx="268" cy="150" r="3.2" />
+            <text x="206" y="28"><tspan className="ix">03</tspan> · RISA LABS</text>
+            <path d="M 250 32 L 264 44" />
+            <circle cx="266" cy="46" r="3.2" />
           </g>
           <g>
-            <text x="206" y="92"><tspan className="ix">04</tspan> · ASKCart</text>
-            <path d="M 264 88 L 382 76" />
-            <circle cx="384" cy="76" r="3.2" />
+            <text x="400" y="12"><tspan className="ix">04</tspan> · ASKCart</text>
+            <path d="M 442 16 L 410 26" />
+            <circle cx="408" cy="28" r="3.2" />
           </g>
         </svg>
       </div>

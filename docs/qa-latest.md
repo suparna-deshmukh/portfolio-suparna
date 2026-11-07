@@ -95,3 +95,34 @@ Captured on the final build after the a11y pass (motion off, fresh profile):
   `--stamp: #963A18`, `--dimmer` `.70`). Same composition; only the ink is one
   step deeper so the 92 %-opacity stamp text clears 4.5:1. Dark-mode stamp
   (`#E08A5E`) is unchanged — `corp-file-1440-dark.png`.
+
+## 13. Hero spacing pass (visual QA fix)
+
+User report: letterhead crowded under the header ("0 margin"), exhibit cards
+too close. Measured (stage-space, 1366×768, pre-fix): RISA→phone **−3 px
+overlap**, RISA→n1 **−36 px**, n1→n2 **−20 px**, n2→n3 **−18 px**,
+badge→campus **−42 px**; letterhead top gap only 36 px.
+
+Fixes:
+* `.hd-in` padding-top 84 → 108 px; `align-items:start` under
+  `(min-width:900px) and (max-height:760px)` so short laptops keep ≥44 px of
+  air under the header.
+* Exhibit stage 660×540 → 660×580; cards re-anchored (badge 0/20, RISA 206/36,
+  phone 400/16, campus 2/349, notes 246/258–362–466); note padding 9/8 → 7/6.
+* `ex-calls` SVG re-anchored to the new frame (viewBox 660×580).
+
+Verified post-fix (stage-space, identical at every width): badge→RISA 15.9,
+RISA→phone 10.7, badge→campus 12.8, RISA→n1 15.6, n1→n2 10.4, n2→n3 13.4,
+campus→n1 10.5, n1→phone 10.3. Letterhead top gap: 60 px @1366×768,
+56 px @1280×800, 44 px @1024×768, 114 px @1440×900, 40 px @390 (mobile layout
+unchanged).
+
+Evidence: `hero-1366-before.png` vs `hero-1366-after-light.png` /
+`hero-1366-after-dark.png`; plus `hero-1440-after-dark.png`,
+`hero-390-after-light.png`, `hero-390-after-dark.png`.
+
+Re-verified after rebuild: `npm run check` green (only the expected
+`ac-eval` needsReview note); `qa:fonts` PASS at hard viewports (no text below
+11 px); horizontal overflow 0 at 320 and 2560; axe-core 0 violations on `/`
+light + dark; 0 console errors/warnings. All 7 home sections re-shot at
+1440 light+dark and 390 light — no rendering regressions.

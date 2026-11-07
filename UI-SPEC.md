@@ -302,6 +302,9 @@ About · Contact (nav + headers + toasts all share these strings from `NAV_SECTI
 ## 6. Hero (`#hero`)
 
 Grid: left letterhead (`.hd-left`), right exhibit (`.hd-right`).
+`.hd-in` pads `108px` top / `104px` bottom; below 760px viewport height (desktop
+widths) it pins `align-items:start` so the letterhead keeps ≥44px of air under the
+fixed header instead of crowding it.
 
 ### 6.1 Background (`.hbg`)
 Three drifting glow shapes (52/44/30vw, accent/sage/fg tints) — `radial-gradient`
@@ -331,7 +334,7 @@ notes float on their own.)
   tap-to-reveal on Contact only.)
 
 ### 6.3 Exhibit (`HeroExhibit.tsx`, `hero-right.css`)
-A 660×540 stage (`.ex-wrap`, aspect-locked) scaled by `--s = min(width/660, 1.15)`.
+A 660×580 stage (`.ex-wrap`, aspect-locked) scaled by `--s = min(width/660, 1.15)`.
 **Pointer parallax**: `pointermove` over the column writes `--mx/--my` (rAF); every
 object transforms `rotate(var(--rot)) translate3d(--mx·d·12px, --my·d·8px, 0)`,
 `d` = per-object depth; hover lifts `translate:0 -5px`; each object "settles" in
@@ -341,22 +344,28 @@ Objects (all links):
 
 | object | pos (x/y) | size | depth/rot | content → target |
 |---|---|---|---|---|
-| ID badge | 0/44 | 172w | 1.15 / −5° | photo `suparna-portrait.webp` (144×136, clip slot, barcode strip), name, "Associate Product Manager", "RISA Labs · Bengaluru" → `#about` |
-| AskCart phone | 386/16 | 248×474 | .7 / 2.5° | dark phone frame + island; **live loop** `AskCartPhone`: status bar, app header, typing caret in the search field, a guided-question card ("What's the budget?" chips) then a result list where the old "no results" becomes a guided re-run → `/projects/askcart` |
-| RISA stat card | 206/148 | 168w | 1.45 / 3° | accent top bar, "RISA Labs / APM intern · now", **500 hrs/wk** (27px), "saved across 200 users · Status Tracking 0→1", "118 payers · 75% coverage / 96% precision" → `#experience-risa` |
-| Campus card | 14/318 | 228w | .9 / −2° | `bits-goa-sketch.webp`, "BITS Pilani, Goa", `EDUCATION.branch` ("Electronics and Communication Engineering"), "Finance minor · Class of 2027" → `#about` |
+| ID badge | 0/20 | 172w | 1.15 / −5° | photo `suparna-portrait.webp` (144×136, clip slot, barcode strip), name, "Associate Product Manager", "RISA Labs · Bengaluru" → `#about` |
+| AskCart phone | 400/16 | 248×474 | .7 / 2.5° | dark phone frame + island; **live loop** `AskCartPhone`: status bar, app header, typing caret in the search field, a guided-question card ("What's the budget?" chips) then a result list where the old "no results" becomes a guided re-run → `/projects/askcart` |
+| RISA stat card | 206/36 | 168w | 1.45 / 3° | accent top bar, "RISA Labs / APM intern · now", **500 hrs/wk** (27px), "saved across 200 users · Status Tracking 0→1", "118 payers · 75% coverage / 96% precision" → `#experience-risa` |
+| Campus card | 2/349 | 228w | .9 / −2° | `bits-goa-sketch.webp`, "BITS Pilani, Goa", `EDUCATION.branch` ("Electronics and Communication Engineering"), "Finance minor · Class of 2027" → `#about` |
 
 **Pinned notes** (`.ex-note`, taped `::before` tape tab, same parallax/hover/settle as
 objects — deliberately *not* static):
 
 | note | pos | depth/rot | num | label |
 |---|---|---|---|---|
-| n1 | 252/318 | 1.25 / −2° | **Top 8** | of 9,000+ · Accenture Strategy '25 |
-| n2 | 252/396 | 1.05 / 1.6° | **Placement Coordinator** | BITS Goa · 2026 batch |
-| n3 | 252/472 | 1.35 / −1.2° | **$2.5M** | Series A · 180DC, Everyday Diamonds |
+| n1 | 246/258 | 1.25 / −2° | **Top 8** | of 9,000+ · Accenture Strategy '25 |
+| n2 | 246/362 | 1.05 / 1.6° | **Placement Coordinator** | BITS Goa · 2026 batch |
+| n3 | 246/466 | 1.35 / −1.2° | **$2.5M** | Series A · 180DC, Everyday Diamonds |
 
-**Callouts** (SVG, dimension-drawing style): `01 · THE PERSON`, `02 · BITS PILANI, GOA`,
-`03 · RISA LABS`, `04 · ASKCart` — leader line + endpoint dot to each object.
+**Callouts** (SVG, dimension-drawing style, `viewBox 0 0 660 580`): `01 · THE PERSON`,
+`02 · BITS PILANI, GOA`, `03 · RISA LABS`, `04 · ASKCart` — leader line + endpoint
+dot to each object.
+
+**Spacing rule (visual QA pass):** every card pair keeps ≥14px of clear gap in the
+finished (static) frame — badge→campus, RISA→phone, RISA→n1, note→note — with the
+badge's rotated corner allowed to sit over the campus card top (pinned-loose
+aesthetic).
 
 **Mobile desk (P1-1, ≤640).** The exhibit stops scaling (`transform:none`) and
 becomes a flex column: badge + RISA card side by side (equal height), the phone
