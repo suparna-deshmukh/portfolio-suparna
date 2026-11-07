@@ -7,7 +7,7 @@
   --line:rgba(21,33,26,.09);--lineS:rgba(21,33,26,.16);--lineF:rgba(21,33,26,.04);
   --tint:rgba(21,33,26,.05);--press:rgba(21,33,26,.1);
   --acc:#177E5B;--accInk:#F4FAF7;--accText:#146248;
-  --err:#B3261E;--focus:#146248;
+  --err:#B3261E;--warn:#B45309;--focus:#146248;
   --gh0:#E1E8DF;--gh1:#C2DCC9;--gh2:#8FC3A6;--gh3:#4EA37C;--gh4:#1F8460;
   --navBg:rgba(255,255,255,.96);--navShadow:0 6px 26px rgba(0,0,0,.12),0 1px 4px rgba(0,0,0,.08);--navBorder:rgba(21,33,26,.08);
   --pillBg:#15211A;--pillInk:#F1F4EF;
@@ -21,7 +21,7 @@
   --line:rgba(236,243,238,.08);--lineS:rgba(236,243,238,.15);--lineF:rgba(236,243,238,.04);
   --tint:rgba(236,243,238,.07);--press:rgba(236,243,238,.15);
   --acc:#4FD3A0;--accInk:#0E1512;--accText:#4FD3A0;
-  --err:#FF8A6B;--focus:#4FD3A0;
+  --err:#FF8A6B;--warn:#FFC24A;--focus:#4FD3A0;
   --gh0:#1F2B24;
   --navBg:rgba(14,21,18,.94);--navShadow:0 0 0 1px rgba(236,243,238,.08),0 0 28px rgba(236,243,238,.1),0 10px 36px rgba(0,0,0,.42);--navBorder:rgba(236,243,238,.06);
   --pillBg:#4FD3A0;--pillInk:#0E1512;
@@ -208,13 +208,13 @@ html.motion-ok .sh .w{transition:transform .6s var(--ease);transition-delay:calc
 .dl-vis.v1{color:var(--acc)}
 .dl-vis .area{fill:url(#dlArea);opacity:0;transition:opacity .9s ease .9s}
 html.motion-ok .dl-card.in .area{opacity:1}
-.dl-vis .rowlab{font:500 8.5px var(--fm);fill:var(--dimmer)}
+.dl-vis .rowlab{font:500 10px var(--fm);fill:var(--dimmer)}
 .dl-vis .ringlab{fill:var(--dlRed)}
 .dl-vis .heat .crow{transition:opacity .25s}
 .dl-vis .heat:hover .crow{opacity:.35}
 .dl-vis .heat .crow:hover{opacity:1}
 .dl-vis .barg{cursor:default}
-.dl-vis .barlab{font:600 9.5px var(--fm);fill:var(--dim);opacity:.6;transition:opacity .2s,fill .2s}
+.dl-vis .barlab{font:600 11px var(--fm);fill:var(--dim);opacity:.75;transition:opacity .2s,fill .2s}
 .dl-vis .barg:hover .barlab{opacity:1;fill:var(--fg)}
 .dl-vis .barg:hover .bar{fill:var(--acc)}
 .dl-vis .seg{transition:stroke-width .25s var(--ease),stroke-opacity .25s,stroke-dasharray 1s var(--ease)}
@@ -230,7 +230,7 @@ html.motion-ok .dl-card.in .area{opacity:1}
 html.motion-ok .dl-vis .line{stroke-dasharray:100;stroke-dashoffset:100;transition:stroke-dashoffset 1.3s var(--ease) .1s}
 html.motion-ok .dl-card.in .line{stroke-dashoffset:0}
 html.motion-ok .dl-vis .peak{opacity:0;transition:opacity .3s ease 1.25s}
-html.motion-ok .dl-card.in .peak{opacity:.9;animation:dlPeak 2.4s ease-in-out 1.8s infinite}
+html.motion-ok .dl-card.in .peak{opacity:.9;animation:dlPeak 2.4s ease-in-out 1.8s 1}
 @keyframes dlPeak{50%{opacity:.3}}
 html.motion-ok .dl-vis .heat rect{opacity:0;transition:opacity .45s ease}
 html.motion-ok .dl-card.in .heat rect{opacity:var(--o,1)}
@@ -250,6 +250,10 @@ html.motion-ok .dl-card.in .seg{stroke-dasharray:var(--len) 100}
 .dl-res b{font:700 26px/1 var(--fd);letter-spacing:-.02em;color:var(--accText);white-space:nowrap}
 .dl-res small{font-size:11px;line-height:1.35;color:var(--dim)}
 @media (max-width:900px){.dl-grid{grid-template-columns:1fr}}
+@media (max-width:640px){
+  .dl-vis .cap,.dl-vis .rowlab,.dl-vis .barlab,.dl-vis .leg text{font-size:17px}
+  .dl-vis .mid{font-size:20px}
+}
 /* P1-4: data figures keep >=11px effective on the narrow single-column layout */
 @media (max-width:900px){
   .dl-vis .cap{font-size:13px}
@@ -676,14 +680,14 @@ html.motion-ok .case-tm.paused::before,html.motion-ok .case-tm.paused .tm-field 
 .tr-gz .gl{display:flex;justify-content:space-between;align-items:baseline;font:500 13.5px/1 var(--fm);letter-spacing:.06em;text-transform:uppercase;color:var(--dim);margin-bottom:9px}
 .tr-gz .gl b{font:600 17px/1 var(--fm);letter-spacing:0;color:var(--fg);font-variant-numeric:tabular-nums}
 .tr-gz .zone{font:500 13px var(--fm);letter-spacing:.08em;color:var(--paText)}
-.tr-gz .track{position:relative;height:10px;border-radius:9px;background:linear-gradient(90deg,var(--err) 0 50%,var(--pa-fl) 50% 80%,color-mix(in oklab,var(--fg) 50%,var(--surf)) 80% 100%)}
+.tr-gz .track{position:relative;height:10px;border-radius:9px;background:linear-gradient(90deg,var(--err) 0 40%,var(--warn) 40% 75%,var(--pa) 75% 100%)}
 .tr-gz .track::after{content:"";position:absolute;inset:0;border-radius:inherit;background:var(--surf2);transform-origin:right;transition:transform .85s var(--settle)}
 .tr-gz .mark{position:absolute;top:-5px;left:0;width:3px;height:20px;border-radius:2px;background:var(--fg);box-shadow:0 0 0 2px var(--surf);transition:transform .85s var(--settle)}
 .tr-paper.g .track::after{transform:scaleX(0)}
-.tr-paper.g .mark{transform:translateX(calc(var(--tw,420px) * .967))}
+.tr-paper.g .mark{transform:translateX(calc(var(--tw,420px) * .965))}
 .tr-paper.cnt .gl .v{counter-reset:a var(--tra) b var(--trb);font-size:0;transition:--tra .9s var(--ease),--trb .9s var(--ease)}
 .tr-paper.cnt .gl .v::before{content:counter(a) "." counter(b);font-size:15px}
-.tr-paper.cnt.g .gl .v{--tra:96;--trb:7}
+.tr-paper.cnt.g .gl .v{--tra:96;--trb:5}
 .tr-stamp{position:absolute;right:18px;bottom:14px}
 html.motion-ok .tr-paper.st.shake{animation:trShake .55s var(--ease)}
 @media (prefers-reduced-motion:reduce){.fb,.fb *,.tr-paper,.tr-paper *{transition:none!important;animation-duration:.01s!important;animation-delay:0s!important}}
@@ -1180,7 +1184,7 @@ html.motion-off .disc-body{transition:none}
   .tr-row .vd{grid-column:2;align-self:center}
   .tr-row .ln2 span{white-space:normal;overflow:visible}
   .tr-row .ln2 b{overflow:visible;text-overflow:clip}
-  .tr-gz .mark{left:96.7%}
+  .tr-gz .mark{left:96.5%}
   .tr-paper.g .mark{transform:none}
   .tr-stamp{right:14px;bottom:8px}
 

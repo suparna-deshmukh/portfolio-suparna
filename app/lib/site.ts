@@ -139,20 +139,20 @@ export const EXPERIENCE: Company[] = [
         hero: { value: m('risa-hours').shown, label: 'saved across 200 users' },
         how: 'by owning Status Tracking 0→1: 90k-order SQL analysis, user research, user stories, PRDs (v0 to v1), HLD and dev-testing.',
         results: [
-          { value: `${m('risa-coverage').shown} / ${m('risa-precision').shown}`, label: 'coverage / precision across 118 payers', metric: 'risa-precision' },
+          { value: `${m('risa-coverage').shown} / ${m('risa-precision').shown}`, label: 'order matching, coverage-first trade-off', metric: 'risa-precision' },
           { value: m('risa-vapi').shown, label: 'accuracy on the Vapi calling MVP', metric: 'risa-vapi' },
           { value: m('risa-qc').shown, label: 'QC throughput on the unified UI', metric: 'risa-qc' },
           { value: m('risa-pulse').shown, label: 'precision on Pulse auto-RCA', metric: 'risa-pulse' },
         ],
         bullets: [
-          { lead: '200 users save 500 hrs/wk', rest: ' by owning Status Tracking 0→1: 90k-order SQL analysis, user research, user stories, PRDs (v0 to v1), HLD and dev-testing.' },
-          { lead: '118 payers on a live 30-minute sync', rest: ' — docs pulled via portal APIs, bots and a fax API, then categorized and order-matched with a coverage-first trade-off: 75% coverage at 96% precision.' },
-          { lead: '92% accuracy on inquiry calls', rest: ' by building an agentic calling MVP on Vapi from 4 months of data, call checklists and configs; a 20-user pilot sped up testing.' },
-          { lead: '2x QC throughput, 40% faster error fixes', rest: ' — user interviews found QC juggling 4 platforms; prototyped and shipped a unified UI. 2500 orders/day.' },
-          { lead: '87% precision on auto-RCA', rest: ' — built Pulse, a RAG tool-calling auto-RCA tool with chatbot, eval-tested; flags 15 metric drops/day, 60% RCA coverage.' },
-          { lead: '60% fewer filing clicks', rest: ' — launched RISA Assist on the Chrome Store, a low-latency AI extension that parses portal HTML and auto-fills answers.' },
-          { lead: 'Saved $10K/yr, 60% step TAT cut', rest: ' — shipped Document Studio on standard APIs to fetch and process clinical docs; replaced Acrobat.' },
-          { lead: '30% time-per-order cut', rest: ' — revamped 4 key order UI steps for edge cases with tech, design and compliance via user research and Amplitude.' },
+          { lead: 'Status Tracking 0→1, owned end to end', rest: ' — 90k-order SQL analysis, user research, PRDs v0 to v1, HLD, dev-testing; 200 users save 350 hrs/wk.' },
+          { lead: '400 docs/day on a cron pipeline', rest: ' — bots, portal and fax APIs; order matching at 85% coverage, 96% precision, a coverage-first trade-off.' },
+          { lead: '92% accuracy on inquiry calls', rest: ' — agentic calling MVP on Vapi from 4 months of data; call checklists and configs, a 20-user pilot.' },
+          { lead: '2x QC throughput, 40% faster fixes', rest: ' — interviews found QC juggling 4 platforms; prototyped and shipped a unified UI, 2500 orders/day.' },
+          { lead: '87% precision on auto-RCA', rest: ' — built Pulse, a RAG tool-calling auto-RCA with chatbot; flags 15 metric drops/day, 60% coverage.' },
+          { lead: '60% faster portal filing', rest: ' — launched RISA Assist on the Chrome Store; parses portal HTML, auto-fills answers.' },
+          { lead: '$10K/yr saved, 70% step TAT cut', rest: ' — Document Studio on standard APIs fetches and processes clinical docs; replaced Acrobat.' },
+          { lead: '30% time-per-order cut', rest: ' — revamped 4 key UI steps for edge cases with tech, design and compliance, from user research and Amplitude.' },
         ] },
     ],
   },
@@ -168,7 +168,7 @@ export const EXPERIENCE: Company[] = [
         { value: m('im-d7').shown, label: 'D7 retention', metric: 'im-d7' },
       ],
       bullets: [
-        { lead: 'Lifted homepage CTR 25%, sessions 20%', rest: ' by authoring PRDs for the homepage revamp and AI portfolio health, ran A/B test (n=4200, p<0.05).' },
+        { lead: 'Lifted homepage CTR 25%, sessions 10%', rest: ' — authoring PRDs for the homepage revamp and AI portfolio health, A/B tested (n=4200, p<0.05).' },
         { lead: 'Cut drop-offs 18%, D7 retention up 3 pp', rest: ' by running cohort CleverTap lifecycle email and notification campaigns for 3k users on user funnel data.' },
       ] }],
   },
@@ -201,9 +201,9 @@ export const EXPERIENCE: Company[] = [
           { value: m('ch-deals').shown, label: 'closed investments', metric: 'ch-deals' },
         ],
         bullets: [
-          { lead: 'Vetted 10 early-stage gaming startups', rest: ' on benchmarks, traction and CAC/LTV; co-authored 7 memos and sourced 2 leads.' },
-          { lead: 'Drove 3 term sheets and 2 closed investments', rest: ' — key to the team’s $5M pipeline; shaped 4 additional deals through early-stage analysis.' },
-          { lead: 'Owned end-to-end due diligence', rest: ' and deal-flow management on Notion, running core workflows in a lean team of 4.' },
+          { lead: 'Co-authored 7 investment memos', rest: ' behind the $4M pipeline; enabled 3 term sheets and 2 investments.' },
+          { lead: 'Vetted 10 early-stage gaming startups', rest: ' on benchmarks, traction and CAC/LTV; owned end-to-end due diligence.' },
+          { lead: 'Ran deal flow in a lean team of 4', rest: ' — pipeline, term sheets and closed investments tracked end to end.' },
         ] },
     ],
   },
@@ -233,7 +233,7 @@ export type Attribution = 'led' | 'built' | 'contributed' | 'supported'
 /** Wording ladder legend, shown once per section (Appendix B of the sections brief). */
 export const ATTRIBUTION_LEGEND = 'led — I owned it end to end · built — I produced the artifact · contributed — part of a team effort · supported — I assisted the owner'
 
-export interface CorporateRow { label: string; verdict: string; attribution: Attribution; evidence?: string }
+export interface CorporateRow { label: string; attribution: Attribution; evidence?: string }
 export interface Corporate {
   id: string
   no: number
@@ -247,15 +247,14 @@ export interface Corporate {
   askLine?: string
   myPart?: string
   outcome?: string
-  /** exactly three stamped rows; outcome words (SIGNED/LAUNCHED/VERIFIED/a bare percent)
-      require 20+ chars of evidence — otherwise assertSections throws (input C4) */
+  /** exactly three deliverable lines — plain artifact statements, no verdict words */
   rows: CorporateRow[]
   /** the one number the file is remembered for. No gauge for money values (C-2). */
   proof: { value: string; label: string }
   proofMetric?: string
   /** attribution for the headline number */
   proofAttribution: Attribution
-  doc: { type: string; stampWord: string }
+  doc: { type: string }
   /** the rubber stamp — never a claim larger than her role (input C6) */
   stamp: string
   deck?: { label: string; href?: string; thumb?: string }
@@ -266,18 +265,42 @@ export interface Corporate {
 
 export const CORPORATE: Corporate[] = [
   {
-    id: 'everyday', no: 1, name: 'Everyday Diamonds',
+    id: 'kri' + 'she', no: 1, name: 'KriSHE Carbon',
+    engagement: { via: '180DC', role: 'Team Lead · GTM and Fundraising' },
+    when: 'Jul 2025 – Aug 2025', where: 'Gurugram',
+    rows: [
+      { label: 'Investor deck and model', attribution: 'built' },
+      { label: 'Biochar impact metrics', attribution: 'built' },
+      { label: '20+ high-fit buyers', attribution: 'led' },
+    ],
+    proof: { value: m('kc-grants').shown, label: 'in grants the deck and biochar model pursued, with the client team' },
+    proofMetric: 'kc-grants',
+    proofAttribution: 'built',
+    doc: { type: 'Grant review' },
+    stamp: 'Grants pursued',
+    points: [
+      'Built the investor pitch deck and financial projections; a scalable biochar model and impact metrics enabled ₹12.5L in grants.',
+      'Ran carbon market and buyer research; developed the positioning and sales narrative, identifying 20+ high-fit opportunities.',
+    ],
+    chips: [
+      { value: m('kc-grants').shown, label: 'grants pursued, with the client team', metric: 'kc-grants', attribution: 'built' },
+      { value: m('kc-buyers').shown, label: 'high-fit opportunities', metric: 'kc-buyers', attribution: 'led' },
+    ],
+    ask: "Hi Suparna, I'd like to hear about the KriSHE Carbon fundraising work.",
+  },
+  {
+    id: 'everyday', no: 2, name: 'Everyday Diamonds',
     engagement: { via: '180DC', role: 'Team Lead · GTM and Series A Fundraising' },
     when: 'Aug 2024 – Sept 2024', where: 'Bengaluru',
     rows: [
-      { label: 'Profitability and pricing model', verdict: 'BUILT', attribution: 'built' },
-      { label: 'Series A deck', verdict: 'DRAFTED', attribution: 'built' },
-      { label: '5-store expansion strategy', verdict: 'BUILT', attribution: 'led' },
+      { label: 'Profitability, pricing and projections model', attribution: 'built' },
+      { label: '4-year expansion roadmap, 5 stores', attribution: 'led' },
+      { label: 'Series A deck ($2.5M raise)', attribution: 'built' },
     ],
-    proof: { value: m('ed-raise').shown, label: 'Series A the deck helped close, All In Capital — first store then launched' },
+    proof: { value: m('ed-raise').shown, label: 'Series A the deck aided, All In Capital; first store launched' },
     proofMetric: 'ed-raise',
     proofAttribution: 'built',
-    doc: { type: 'Term sheet', stampWord: 'Series A' },
+    doc: { type: 'Series A deck' },
     stamp: 'Series A aided',
     deck: { label: 'Series A deck', href: '' },
     points: [
@@ -288,21 +311,21 @@ export const CORPORATE: Corporate[] = [
       { value: m('ed-raise').shown, label: 'Series A, All In Capital', metric: 'ed-raise', attribution: 'built' },
       { value: m('ed-stores').shown, label: 'store expansion roadmap', metric: 'ed-stores', attribution: 'led' },
     ],
-    ask: "Hi Suparna, I'd like to hear about the Everyday Diamonds Series A work.",
+    ask: "Hi Suparna, I'd like to hear about the Everyday Diamonds file: the pricing model, the 4-year expansion roadmap and how the Series A deck aided the $2.5M raise.",
   },
   {
-    id: 'fedaykin', no: 2, name: 'Fedaykin AV',
+    id: 'fedaykin', no: 3, name: 'Fedaykin AV',
     engagement: { via: 'independent', role: 'GTM Strategy Consultant' },
     when: 'Jul 2024 – Aug 2024', where: 'Remote',
     rows: [
-      { label: 'Competitor benchmarks', verdict: 'DONE', attribution: 'built' },
-      { label: 'Pricing and unit-economics model', verdict: 'BUILT', attribution: 'built' },
-      { label: '950-client B2B sizing', verdict: 'SIZED', attribution: 'led' },
+      { label: 'Competitor benchmarks', attribution: 'built' },
+      { label: 'Pricing and unit-economics model', attribution: 'built' },
+      { label: '950-client B2B sizing', attribution: 'led' },
     ],
     proof: { value: m('fa-unit').shown, label: 'unit economics lift found by the pricing audit, across specs, ops and annotation costs — modeled, basis pending confirmation' },
     proofMetric: 'fa-unit',
     proofAttribution: 'built',
-    doc: { type: 'Pricing audit', stampWord: 'Unit economics' },
+    doc: { type: 'Pricing audit' },
     stamp: 'Pricing audit done',
     deck: { label: 'Project report', href: '' },
     points: [
@@ -315,30 +338,6 @@ export const CORPORATE: Corporate[] = [
       { value: m('fa-clients').shown, label: 'client database', metric: 'fa-clients', attribution: 'led' },
     ],
     ask: "Hi Suparna, I'd like to hear about the Fedaykin AV GTM strategy work.",
-  },
-  {
-    id: 'kri' + 'she', no: 3, name: 'KriSHE Carbon',
-    engagement: { via: '180DC', role: 'Team Lead · GTM and Fundraising' },
-    when: 'Jul 2025 – Aug 2025', where: 'Gurugram',
-    rows: [
-      { label: 'Investor deck and model', verdict: 'PITCHED', attribution: 'built' },
-      { label: 'Biochar impact metrics', verdict: 'BUILT', attribution: 'built' },
-      { label: '20+ high-fit buyers', verdict: 'MAPPED', attribution: 'led' },
-    ],
-    proof: { value: m('kc-grants').shown, label: 'in grants the deck and biochar model pursued, with the client team' },
-    proofMetric: 'kc-grants',
-    proofAttribution: 'built',
-    doc: { type: 'Grant review', stampWord: 'Grants' },
-    stamp: 'Grants pursued',
-    points: [
-      'Built the investor pitch deck and financial projections; a scalable biochar model and impact metrics enabled ₹12.5L in grants.',
-      'Ran carbon market and buyer research; developed the positioning and sales narrative, identifying 20+ high-fit opportunities.',
-    ],
-    chips: [
-      { value: m('kc-grants').shown, label: 'grants pursued, with the client team', metric: 'kc-grants', attribution: 'built' },
-      { value: m('kc-buyers').shown, label: 'high-fit opportunities', metric: 'kc-buyers', attribution: 'led' },
-    ],
-    ask: "Hi Suparna, I'd like to hear about the KriSHE Carbon fundraising work.",
   },
 ]
 
@@ -362,6 +361,7 @@ export const EDUCATION = {
   classYear: 'Class of 2027',
   classOf: 2027,
   from: 2023,
+  grades: 'CGPA 7.35/10 · Finance GPA 8.8/10',
 }
 
 export interface Honor {
@@ -545,14 +545,10 @@ export const METHOD_STEPS = ['Question', 'Data', 'Analysis', 'Result']
 /** Sections-brief assertions (X-1): dev-only, throws on indefensible data. */
 export function assertSections() {
   const problems: string[] = []
-  const OUTCOME = /(^\+?\d|SIGNED|LAUNCHED|VERIFIED)/
   for (const c of CORPORATE) {
     if (c.rows.length !== 3) problems.push(`CORPORATE[${c.id}]: expected exactly 3 rows`)
     for (const r of c.rows) {
       if (!r.attribution) problems.push(`CORPORATE[${c.id}].row "${r.label}": missing attribution`)
-      if (OUTCOME.test(r.verdict) && (!r.evidence || r.evidence.length < 20)) {
-        problems.push(`CORPORATE[${c.id}].row "${r.label}": outcome verdict "${r.verdict}" without 20+ chars of evidence`)
-      }
     }
     if (c.proofMetric) {
       const mt = m(c.proofMetric)

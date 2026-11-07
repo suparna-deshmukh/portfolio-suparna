@@ -33,11 +33,11 @@ const M = (m: Metric) => m
 
 export const METRICS: Record<string, Metric> = {
   // ── Experience · RISA Labs ──
-  'risa-hours': M({ id: 'risa-hours', shown: '500 hrs/wk', num: 500, unit: 'hrs', source: 'RISA Labs — Status Tracking 0→1, 200 users', asOf: 'Oct 2026' }),
-  'risa-coverage': M({ id: 'risa-coverage', shown: '75%', num: 75, unit: '%', source: 'RISA Labs — order matching across 118 payers', asOf: 'Oct 2026' }),
-  'risa-precision': M({ id: 'risa-precision', shown: '96%', num: 96, unit: '%', source: 'RISA Labs — order matching across 118 payers', asOf: 'Oct 2026' }),
-  'risa-payers': M({ id: 'risa-payers', shown: '118', num: 118, unit: 'count', source: 'RISA Labs — payers on the 30-minute sync', asOf: 'Oct 2026' }),
-  'risa-vapi': M({ id: 'risa-vapi', shown: '92%', num: 92, unit: '%', source: 'RISA Labs — Vapi calling MVP, 20-user pilot', asOf: 'Oct 2026' }),
+  'risa-hours': M({ id: 'risa-hours', shown: '350 hrs/wk', num: 350, unit: 'hrs', source: 'RISA Labs — Status Tracking 0→1, 200 users', asOf: 'Nov 2026' }),
+  'risa-docs': M({ id: 'risa-docs', shown: '400', num: 400, unit: 'count', source: 'RISA Labs — docs/day via cron pipeline (bots, portal, fax APIs)', asOf: 'Nov 2026' }),
+  'risa-coverage': M({ id: 'risa-coverage', shown: '85%', num: 85, unit: '%', source: 'RISA Labs — order matching, coverage-first trade-off', asOf: 'Nov 2026' }),
+  'risa-precision': M({ id: 'risa-precision', shown: '96%', num: 96, unit: '%', source: 'RISA Labs — order matching, coverage-first trade-off', asOf: 'Nov 2026' }),
+    'risa-vapi': M({ id: 'risa-vapi', shown: '92%', num: 92, unit: '%', source: 'RISA Labs — Vapi calling MVP, 20-user pilot', asOf: 'Oct 2026' }),
   'risa-qc': M({ id: 'risa-qc', shown: '2x', num: 2, unit: 'x', source: 'RISA Labs — unified QC UI throughput', asOf: 'Oct 2026' }),
   'risa-pulse': M({ id: 'risa-pulse', shown: '87%', num: 87, unit: '%', source: 'RISA Labs — Pulse auto-RCA precision', asOf: 'Oct 2026' }),
   'risa-orders': M({ id: 'risa-orders', shown: '2500', num: 2500, unit: 'count', source: 'RISA Labs — orders/day at the unified QC UI', asOf: 'Oct 2026' }),
@@ -45,7 +45,7 @@ export const METRICS: Record<string, Metric> = {
 
   // ── Experience · InvestMates ──
   'im-ctr': M({ id: 'im-ctr', shown: '25%', num: 25, n: 4200, unit: '%', source: 'InvestMates — homepage revamp A/B test (p<0.05)', asOf: 'Sep 2025' }),
-  'im-sessions': M({ id: 'im-sessions', shown: '20%', num: 20, unit: '%', source: 'InvestMates — homepage revamp, session length', asOf: 'Sep 2025' }),
+  'im-sessions': M({ id: 'im-sessions', shown: '10%', num: 10, unit: '%', source: 'InvestMates — homepage revamp, session length', asOf: 'Sep 2025' }),
   'im-dropoff': M({ id: 'im-dropoff', shown: '18%', num: 18, unit: '%', source: 'InvestMates — CleverTap lifecycle campaigns, 3k users', asOf: 'Sep 2025' }),
   'im-d7': M({ id: 'im-d7', shown: '+3 pp', num: 3, unit: 'count', source: 'InvestMates — D7 retention, lifecycle campaigns', asOf: 'Sep 2025' }),
 
@@ -55,7 +55,7 @@ export const METRICS: Record<string, Metric> = {
   'szl-states': M({ id: 'szl-states', shown: '8-state', num: 8, unit: 'count', source: 'Suzlon — CSR analysis led as team lead', asOf: 'Jul 2025' }),
 
   // ── Experience · Chimera VC ──
-  'ch-pipeline': M({ id: 'ch-pipeline', shown: '$5M', num: 5, unit: '$', source: 'Chimera VC — deal pipeline (10 startups, 7 memos)', asOf: 'May 2025' }),
+  'ch-pipeline': M({ id: 'ch-pipeline', shown: '$4M', num: 4, unit: '$', source: 'Chimera VC — deal pipeline (10 startups, 7 memos)', asOf: 'May 2025' }),
   'ch-sheets': M({ id: 'ch-sheets', shown: '3', num: 3, unit: 'count', source: 'Chimera VC — term sheets driven', asOf: 'May 2025' }),
   'ch-deals': M({ id: 'ch-deals', shown: '2', num: 2, unit: 'count', source: 'Chimera VC — closed investments', asOf: 'May 2025' }),
   'ch-startups': M({ id: 'ch-startups', shown: '10', num: 10, unit: 'count', source: 'Chimera VC — early-stage gaming startups vetted', asOf: 'May 2025' }),
@@ -81,6 +81,7 @@ export const METRICS: Record<string, Metric> = {
   'pc-rate': M({ id: 'pc-rate', shown: '58%→85%', unit: '%', source: 'Placement Coordinator, BITS Goa — batch placement percentage, 58% at the May 2026 handover to 85% by October 2026', asOf: 'Oct 2026' }),
   'pc-team': M({ id: 'pc-team', shown: '25', num: 25, unit: 'count', source: 'Placement Coordinator, BITS Goa — team led end-to-end', asOf: 'Oct 2026' }),
   'pc-select': M({ id: 'pc-select', shown: '1 of 8', num: 1, den: 8, unit: 'count', source: 'Placement Coordinator selection, BITS Goa (1,000+ applicants)', asOf: 'May 2026' }),
+  'pc-pool': M({ id: 'pc-pool', shown: '1,000+', num: 1000, unit: 'count', source: 'Placement Coordinator selection pool, BITS Goa', asOf: 'May 2026' }),
   'dc-sponsor': M({ id: 'dc-sponsor', shown: '₹17L', num: 17, unit: '$', source: '180 Degrees Consulting — Consultathon sponsorships', asOf: 'Jun 2026' }),
   'dc-reg': M({ id: 'dc-reg', shown: '3,200', num: 3200, unit: 'count', source: '180 Degrees Consulting — Consultathon registrations', asOf: 'Jun 2026' }),
   'dc-rev': M({ id: 'dc-rev', shown: '30%', num: 30, unit: '%', source: '180 Degrees Consulting, BITS Goa — YoY revenue growth, 16 projects', asOf: 'Jun 2026' }),
@@ -112,7 +113,7 @@ export const METRICS: Record<string, Metric> = {
   // ── Projects · AskCart ──
   'ac-null': M({ id: 'ac-null', shown: '8%', num: 12, den: 150, n: 150, unit: '%', source: 'AskCart MVP — null search results after guided follow-up', asOf: 'Aug 2026' }),
   'ac-null-before': M({ id: 'ac-null-before', shown: '27.3%', num: 41, den: 150, n: 150, unit: '%', source: 'AskCart MVP — null search results before the guided flow', asOf: 'Aug 2026' }),
-  'ac-eval': M({ id: 'ac-eval', shown: '96.7%', n: 113, unit: '%', source: 'AskCart — eval suite over search, RAG and UX (numerator/denominator to be confirmed)', asOf: 'Aug 2026', needsReview: true }),
+  'ac-eval': M({ id: 'ac-eval', shown: '96.5%', num: 109, den: 113, n: 113, unit: '%', source: 'AskCart — eval suite over search, RAG and UX (109 of 113 passed)', asOf: 'Nov 2026' }),
   'ac-follow': M({ id: 'ac-follow', shown: '78.7%', num: 118, den: 150, n: 150, unit: '%', source: 'AskCart MVP — searches resolved within 2 follow-ups', asOf: 'Aug 2026' }),
   'ac-relevance': M({ id: 'ac-relevance', shown: '88%', num: 88, n: 100, unit: '%', source: 'AskCart — top-3 relevance, multilingual embedding fallback, 100-query eval', asOf: 'Aug 2026' }),
   'ac-reviews': M({ id: 'ac-reviews', shown: '94.6K', num: 94600, unit: 'count', source: 'AskCart — reviews mined via agentic extractor (Reddit, App Store, Play Store)', asOf: 'Aug 2026' }),

@@ -26,11 +26,12 @@ export default function HeroExhibit() {
           <span className="ex-bcode" aria-hidden="true" />
         </a>
 
-        <a className="ex-ob ex-risa" href="#experience-risa" style={{ ['--d' as string]: 1.45, ['--rot' as string]: '3deg' }} aria-label={`RISA Labs — ${m('risa-hours').num} hours a week saved across ${m('risa-users').shown} users. ${m('risa-hours').source}, as of ${m('risa-hours').asOf}`}>
+        <a className="ex-ob ex-risa" href="#experience-risa" style={{ ['--d' as string]: 1.45, ['--rot' as string]: '3deg' }} aria-label={`RISA Labs — ${m('risa-hours').num} hours a week saved across ${m('risa-users').shown} users; ${m('risa-docs').num} docs/day on a cron pipeline; order matching at ${m('risa-coverage').shown} coverage, ${m('risa-precision').shown} precision. ${m('risa-hours').source}, as of ${m('risa-hours').asOf}`}>
           <span className="ex-risa-hd"><b>RISA Labs</b><small>APM intern · now</small></span>
           <MetricTip id="risa-hours" className="block" focusable={false}><span className="ex-risa-big">{m('risa-hours').num}<i> hrs/wk</i></span></MetricTip>
           <span className="ex-risa-sub">saved across {m('risa-users').shown} users · Status Tracking 0→1</span>
-          <span className="ex-risa-sub">{m('risa-payers').shown} payers · {m('risa-coverage').shown} coverage / {m('risa-precision').shown} precision</span>
+          <span className="ex-risa-sub">{m('risa-docs').num} docs/day · cron pipeline</span>
+          <span className="ex-risa-sub">{m('risa-coverage').shown} coverage / {m('risa-precision').shown} precision · order matching</span>
         </a>
 
         <Link className="ex-ob ex-phone" href="/projects/askcart" style={{ ['--d' as string]: 0.7, ['--rot' as string]: '2.5deg' }} aria-label="AskCart — guided AI search, personal build">
@@ -64,16 +65,16 @@ export default function HeroExhibit() {
         </a>
 
 
-        <svg className="ex-calls" viewBox="0 0 660 580" aria-hidden="true">
+        <svg className="ex-calls" viewBox="0 0 660 610" aria-hidden="true">
           <g>
             <text x="14" y="14"><tspan className="ix">01</tspan> · THE PERSON</text>
             <path d="M 150 10 L 108 24" />
             <circle cx="106" cy="26" r="3.2" />
           </g>
           <g>
-            <text x="14" y="362"><tspan className="ix">02</tspan> · BITS PILANI, GOA</text>
-            <path d="M 180 358 L 104 376" />
-            <circle cx="102" cy="378" r="3.2" />
+            <text x="14" y="377"><tspan className="ix">02</tspan> · BITS PILANI, GOA</text>
+            <path d="M 180 373 L 104 391" />
+            <circle cx="102" cy="393" r="3.2" />
           </g>
           <g>
             <text x="206" y="28"><tspan className="ix">03</tspan> · RISA LABS</text>

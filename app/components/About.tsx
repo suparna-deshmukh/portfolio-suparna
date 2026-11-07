@@ -157,6 +157,7 @@ function Education() {
         <p className="lab">Education</p>
         <b>{EDUCATION.school}</b>
         <span>{EDUCATION.degree}</span>
+        {EDUCATION.grades && <span className="ab-edu-gpa">{EDUCATION.grades}</span>}
         <span className="ab-edu-meta"><em>{EDUCATION.minor}</em><i aria-hidden="true" /><em>{EDUCATION.classYear}</em></span>
         <span className="ab-edu-when">{EDUCATION.when}</span>
       </div>

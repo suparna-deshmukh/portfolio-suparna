@@ -35,6 +35,12 @@
 
 .r-print-hint{margin-top:6mm;font:500 11px/1.4 var(--fm);letter-spacing:.06em;color:#5F6F62;text-transform:uppercase}
 
+/* small screens: the A4 sheet is a print artifact, on phones it reflows to the viewport */
+@media (max-width:720px){
+  .rpage{padding:56px 14px 48px}
+  .r-sheet{width:auto;max-width:210mm;padding:7mm 7mm 6mm}
+  .r-ehd em{margin-left:0}
+}
 @page{size:A4;margin:0}
 @media print{
   body{background:#fff}

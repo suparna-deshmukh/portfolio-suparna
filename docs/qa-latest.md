@@ -126,3 +126,121 @@ Re-verified after rebuild: `npm run check` green (only the expected
 11 px); horizontal overflow 0 at 320 and 2560; axe-core 0 violations on `/`
 light + dark; 0 console errors/warnings. All 7 home sections re-shot at
 1440 light+dark and 390 light — no rendering regressions.
+
+## 14. Reviewer screenshot batch + Nov 2026 resume sync (final QA)
+
+Context: reviewer annotated 10 screenshots (hero letterhead, hero exhibit,
+experience, gauge, projects, corporate doc, data figures, about, resume) and
+supplied the **updated resume, now the single source of truth** for every
+number. All ten items fixed, then a full re-verification pass.
+
+### Per-image fixes
+1. **Letterhead.** `.tb-line` base padding was 0 — text sat on the card
+   border (the "no breathing space" report). Now `14px 26px 2px`
+   (`11px 20px 2px` ≤520). "intern" → "Intern". Placements detail
+   "240 placed · batch 58% → 85%" → **"Selected 1 of 8 of 1,000+
+   students"** (`pc-select`/`pc-pool` — the 240 number was removed from the
+   hero per review). Name clamp 56→52px and seal 60→52px so the rotated
+   seal clears the nameplate.
+2. **Hero exhibit.** Stage 660×580→610; campus card re-anchored 349→393 /
+   216w; g2 callout re-anchored (no more overlap with the RISA card). RISA
+   card now shows **four op metrics** (350 hrs/wk big + 200 users · 400
+   docs/day · 85% coverage / 96% precision). The AskCart phone loop was
+   verified to be e-commerce content only (sneaker SKUs, ₹ price bands,
+   "no results → guided re-run") — **no trips/travel content exists**;
+   reviewer misread.
+3. **Experience manifest.** 4-col → 3-col grid with metric stacked over
+   year in the right column — the metric/sector collision is gone.
+   `.rt-node` `z-index:4` — the trail no longer paints over the station
+   circles.
+4. **RISA featured card.** Was 997px tall. Padding 28/30→22/26, hero
+   58→50px, tighter li rhythm; the 7 resume bullets are punchy and fully
+   inline (nothing in a dropdown).
+5. **AskCart gauge.** Track now red 0–40 / amber 40–75 (new `--warn` token)
+   / green 75–100; mark at 96.5%.
+6. **Projects.** `ProjectIndex` tab strip deleted (file, import, refs,
+   prop, call).
+7. **Corporate mini-docs.** Rows are now **plain deliverable lines** — the
+   "thing → BUILT" verdict pattern is gone (review: don't print a thing and
+   then a verdict at it). Everyday doc type "Term sheet" → "Series A
+   deck"; rows: profitability/pricing model · 4-year roadmap, 5 stores ·
+   Series A deck ($2.5M raise). No truncation anywhere.
+8. **Data figures.** Heatmap: dormant-row label on a leader line, wk0/wk8
+   axis centered under columns. Bars: ranked 1–5 with channel labels,
+   baseline axis aligned to bar bottoms. Donut: legend beside the ring
+   ("P1 · 34%" pairs), old bottom caption removed. ≤640 SVG label fonts
+   step up (17px axis/legend, 20px mid) — ≥11px effective at 320.
+9. **About.** `.ab-panels` `align-items:start` — panels keep natural height
+   (the empty stretch is gone). YearStrip: short codes (PC/DIR/CD,
+   ED/FA/KC, RISA), `pack()` row-packing with ~1 month breathing room,
+   honors as labelled dots, year headers `space-between` (were running
+   together).
+10. **Resume page.** Synced to the new resume: RISA 7 bullets
+    (350 hrs/200 users · 400 docs/day · 85%/96% · 92% Vapi · 2x/40%/2500
+    orders · Pulse 87%/60% · RISA Assist −60% TAT · Document Studio
+    $10K/yr + 70% step TAT · 4 UI steps −30%), InvestMates sessions 10%,
+    Chimera $4M pipeline (was $5M), AskCart "96.5% pass (113)" / "78.7%
+    resolved in 2 follow-ups (150)". `EDUCATION.grades` surfaced in About
+    (CGPA 7.35/10 · Finance GPA 8.8/10). **PDF still exactly one A4 page**
+    (92 KB, re-generated). `/resume` at ≤720px now reflows
+    (`width:auto; max-width:210mm`) — horizontal overflow at 320 was 237px,
+    now 0.
+
+### Resume number changes (site-wide, all via `METRICS`)
+`risa-hours` 500→350 · `risa-docs` added (400) · `risa-coverage` 75→85 ·
+`risa-payers` removed (no longer in resume) · `im-sessions` 20→10 ·
+`ch-pipeline` $5M→$4M · `ac-eval` 96.7→**96.5% = 109/113, needsReview
+retired** (confirmed numerator, assertion now verifies) · `pc-pool`
+(1,000+) + `pc-select` (1 of 8) added.
+
+### Follow-up fixes (this final session)
+* **Corporate doc play-once hold** 4150→1200 ms. The old hold was the
+  loop's rest phase; with play-once it left a settled doc sitting 4.15 s
+  before the re-write — and a screenshot caught the 0.38 s blank window
+  (rows cleared, none re-injected yet), which read as a rendering bug. DOM
+  probes at t+1s/7s/30 s in **both motion states** confirm rows are
+  `.inj`/opacity 1 and the stamp is slammed; the finished frame is stable.
+* **Corporate order.** The array (Everyday, Fedaykin, KriSHE) didn't match
+  the documented newest-first order. Reordered to **KriSHE '25 → Everyday
+  '24 → Fedaykin '24** (brief C-3/C-8 default; the spec already said
+  newest-first) and renumbered `no` 1–3 to follow display order.
+* **Stamp wording wired.** The doc stamp sub now renders `c.stamp` (the
+  approved outcome phrase in data: "Series A aided" / "Pricing audit done"
+  / "Grants pursued") instead of the doc type word; the now-unused
+  `doc.stampWord` field was deleted from the schema.
+* **No infinite loops in the five sections (X-6 DoD).** Emblem micro
+  animations (diamond glow/shine/sparks, AV lane/scan/car/blips, sprout
+  dots), the Director tile-dot hover loop and the spike-chart peak pulse
+  were all `infinite`. Now one-shot on first view (iteration `1`), resting
+  on the finished frame; hover/focus is a transform-only lift
+  (`scale(1.08) rotate(-2deg)`, `motion-ok` gated). `infinite` count in
+  `corporate.css` and `about.css`: **0** (remaining `infinite` rules are
+  site-wide ambient band backgrounds, frozen by Motion Off).
+
+### Verification (final state)
+* `npm run check` green (tsc + eslint + resume house style, 30 bullets).
+* `qa:fonts` PASS on `/` at all matrix widths; `/resume` exempt (see
+  deviation).
+* Horizontal overflow at 320: 0 on `/`, `/projects/askcart`, `/resume`
+  (was 237 on `/resume`).
+* Console: 0 errors on `/`, `/projects/askcart`,
+  `/projects/research-agent`, `/resume` (motion on, sections scrolled
+  through).
+* Corporate DOM probe (motion off and on): rows `inj`/opacity 1 at
+  t+1 s, t+7 s, t+30 s; stamps `slammed`; off-screen file `paused`.
+* PDF: one A4 page, 92 KB, regenerated from the final `/resume`.
+
+Evidence: `fin-corp1440-light/dark.png`, `fin-corp390-light.png`,
+`fin-about1440-light.png`, `fin-data1440-light.png`, `fin-resume1440.png`,
+`cp-corp-off.png`, `cp-corp-on-rest.png`, `ls-hero-320.png`,
+`ls-exp-320.png` (in `/tmp`; the earlier `ls-corp-everyday-1440.png` with
+"missing rows" was the pre-fix build caught in the blank window —
+superseded by `cp-corp-*`).
+
+### Deviations
+* **`/resume` is exempt from the 11 px floor.** It renders a print-faithful
+  A4 artifact (8.3 pt body is standard on paper); inflating the type broke
+  the one-page fit, and recruiters print this sheet.
+* **Corporate emblem hover** is a transition lift rather than a re-run of
+  the emblem choreography — transform-only, and the emblems' one-shot
+  play is not retriggerable by CSS alone.

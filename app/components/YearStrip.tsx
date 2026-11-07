@@ -32,13 +32,27 @@ function x(year: number): string {
 }
 const xw = (from: number, to: number) => `calc(min(${x(Math.min(to, START + SPAN))}, 100%) - ${x(from)})`
 
+/** Short codes so the positions lane reads at a glance; overlaps stack into rows. */
+const POS_CODES: Record<string, string> = { placement: 'PC', consult: 'DIR', cel: 'CD' }
+const CORP_CODES: Record<string, string> = { everyday: 'ED', fedaykin: 'FA', krishe: 'KC' }
+
+function pack(spans: Span[]): { span: Span; row: number }[] {
+  const sorted = [...spans].sort((a, b) => a.from - b.from)
+  const lastTo: number[] = []
+  return sorted.map(sp => {
+    let row = lastTo.findIndex(to => sp.from >= to + 0.03) // ~1 month of breathing room for min-width pills
+    if (row === -1) { row = lastTo.length; lastTo.push(sp.to) } else lastTo[row] = sp.to
+    return { span: sp, row }
+  })
+}
+
 export default function YearStrip() {
   const consulting: Span[] = []
   for (const c of CORPORATE) {
     const p = parseWhen(c.when)
-    if (p) consulting.push({ ...p, label: c.name, href: `#corporate-${c.id}` })
+    if (p) consulting.push({ ...p, label: CORP_CODES[c.id] ?? c.name, href: `#corporate-${c.id}` })
   }
-  consulting.push({ label: 'RISA Labs (internship)', from: 2026 + 6 / 12, to: 2027, href: '#experience-risa' })
+  consulting.push({ label: 'RISA', from: 2026 + 6 / 12, to: 2027, href: '#experience-risa' })
 
   const positions: Span[] = []
   for (const p of POSITIONS) {
@@ -48,12 +62,15 @@ export default function YearStrip() {
     const startMonth = MONTHS[m[1]]
     const endMonth = MONTHS[m[3] ?? m[1]] ?? 12
     positions.push({
-      label: p.title,
+      label: POS_CODES[p.id] ?? p.title,
       from: Number(m[2]) + (startMonth - 1) / 12,
       to: m[4] === 'Present' ? EDUCATION.classOf + 0.5 : Number(m[4]) + (endMonth - 1) / 12,
       href: '#about-positions',
     })
   }
+
+  const packedPositions = pack(positions)
+  const packedConsulting = pack(consulting)
 
   const honors = ACHIEVEMENTS.map(a => ({ year: a.year + 0.4, label: a.name }))
 
@@ -68,8 +85,8 @@ export default function YearStrip() {
         </div>
         <div className="ys-lane"><i className="ys-lab">Consulting</i>
           <div className="ys-track">
-            {consulting.map((b, i) => (
-              <a key={b.label + i} className="ys-item ys-c" style={{ left: x(b.from), width: xw(b.from, b.to) }}
+            {packedConsulting.map(({ span: b, row }) => (
+              <a key={b.label + row} className="ys-item ys-c" style={{ left: x(b.from), width: xw(b.from, b.to), top: row * 10, height: 9 }}
                 href={b.href ?? '#corporate'} title={`${b.label}`}>
                 {b.label}
               </a>
@@ -78,8 +95,8 @@ export default function YearStrip() {
         </div>
         <div className="ys-lane"><i className="ys-lab">Positions</i>
           <div className="ys-track">
-            {positions.map((b, i) => (
-              <a key={b.label + i} className="ys-item ys-p" style={{ left: x(b.from), width: xw(b.from, b.to) }}
+            {packedPositions.map(({ span: b, row }) => (
+              <a key={b.label + row} className="ys-item ys-p" style={{ left: x(b.from), width: xw(b.from, b.to), top: row * 10, height: 9 }}
                 href={b.href ?? '#about-positions'} title={b.label}>
                 {b.label}
               </a>
@@ -89,8 +106,8 @@ export default function YearStrip() {
         <div className="ys-lane"><i className="ys-lab">Honors</i>
           <div className="ys-track">
             {honors.map(h => (
-              <a key={h.label} className="ys-dot" style={{ left: x(h.year) }} href="#about" title={h.label}>
-                <i aria-hidden="true" />{h.label}
+              <a key={h.label} className="ys-dot" style={{ left: x(h.year) }} href="#about" title={h.label} aria-label={h.label}>
+                <i aria-hidden="true" />
               </a>
             ))}
           </div>

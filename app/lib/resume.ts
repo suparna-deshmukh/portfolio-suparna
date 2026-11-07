@@ -31,19 +31,19 @@ export const RESUME = {
     {
       name: 'RISA Labs', role: 'Associate Product Manager Intern', when: 'Jul 2026 – Present', place: 'Bengaluru · AI Workflows for US Healthcare',
       bullets: [
-        'Owned **Status Tracking** 0→1 end to end: 90,000-order SQL analysis, user research, user stories, PRDs (v0 and v1), HLD and dev-testing; **200 users save 500 hrs/wk**',
-        'Ran a **live 30-minute sync** for **118 payers** via portal APIs, bots and fax API; coverage-first matching at **75% coverage, 96% precision**',
-        'Built an **agentic calling MVP on Vapi** for inquiry calls from 4 months of data and call checklists; 20-user pilot, **92% accuracy**',
+        'Owned **Status Tracking** 0→1: 90,000-order SQL analysis, user research, PRDs (v0 and v1), HLD and dev-testing; **200 users save 350 hrs/wk**',
+        'Designed a **cron pipeline for 400 docs/day** via bots, portal and fax APIs; order matching at **85% coverage, 96% precision** (coverage-first trade-off)',
+        'Built an **agentic calling MVP on Vapi** for inquiry calls from 4 months of data, call checklists and configs; 20-user pilot, **92% accuracy**',
         'Shipped a **unified QC UI** after user interviews found QC juggling 4 platforms: **2x throughput, 40% faster error fixes**, 2,500 orders/day',
         'Built **Pulse**, a RAG tool-calling auto-RCA tool with a chatbot, eval-tested: flags 15 metric drops/day at **87% precision**, 60% RCA coverage',
-        'Launched **RISA Assist** on the Chrome Store, a low-latency AI extension that parses portal HTML and auto-fills answers: **60% fewer filing clicks**',
-        'Shipped **Document Studio** on standard APIs to fetch and process clinical docs; replaced Acrobat, **saved $10K/yr**, cut step TAT 60%; revamped 4 key order UI steps with tech, design and compliance for a **30% time-per-order cut**',
+        'Launched **RISA Assist** on the Chrome Store: parses portal HTML and auto-fills answers, cutting **portal filing TAT 60%**',
+        'Shipped **Document Studio** on standard APIs to fetch and process clinical docs; replaced Acrobat, **saved $10K/yr, step TAT cut 70%**; revamped 4 key order UI steps with tech, design and compliance, **time-per-order cut 30%**',
       ],
     },
     {
       name: 'InvestMates', role: 'Product Manager (Part-time)', when: 'Jul 2025 – Sep 2025', place: 'Seattle, US (Remote) · AI Wealth Management for NRIs',
       bullets: [
-        'Authored PRDs for the homepage revamp and AI portfolio health; A/B tested (sample 4,200, p < 0.05): **CTR up 25%, sessions up 20%**',
+        'Authored PRDs for the homepage revamp and AI portfolio health; A/B tested (sample 4,200, p < 0.05): **homepage CTR up 25%, sessions up 10%**',
         'Ran CleverTap lifecycle email and notification campaigns for 3,000 users on funnel data: **drop-offs cut 18%, D7 retention up 3 pp**',
       ],
     },
@@ -57,7 +57,7 @@ export const RESUME = {
     {
       name: 'Chimera VC', role: 'Investment Analyst Intern', when: 'Mar 2025 – May 2025', place: 'Singapore (Remote) · Gaming Venture Capital',
       bullets: [
-        'Evaluated 10 early-stage gaming startups on benchmarks, traction and CAC/LTV; co-authored **7 investment memos**, building a **$5M pipeline**',
+        'Evaluated 10 early-stage gaming startups; co-authored **7 memos** for the **$4M pipeline**, enabling **3 term sheets, 2 investments**',
         'Drove **3 term sheets and 2 closed investments**; owned end-to-end due diligence and deal flow in a lean team of 4',
       ],
     },
@@ -74,7 +74,7 @@ export const RESUME = {
       bullets: [
         'Mined **94,600 reviews** via an agentic extractor (Reddit, App Store, Play Store APIs) and a 6-stage SQL pipeline; isolated **4 root causes**',
         'Interviewed 6 users; built a Vercel-deployed guided follow-up MVP over 36,000 Bayesian-rated SKUs: **null results down 27.3% to 8%** (150 sessions)',
-        'Embedding fallback for Hinglish and vague queries (**top-3 relevance 88%**); RAG chatbot, AI evals **96.7% pass**; **78.7% of searches resolved in 2 follow-ups**',
+        'Embedding fallback for vague queries (**top-3 88%**); RAG chatbot AI evals **96.5% pass (113)**; **78.7% resolved in 2 follow-ups (150)**',
       ],
     },
     {

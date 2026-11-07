@@ -7,7 +7,6 @@ import { link } from '../lib/site'
 import { LazyAskCartReport, LazyResearchBoard } from './lazy'
 import ViewTransitionLink from './ViewTransitionLink'
 import VisibleCard from './VisibleCard'
-import ProjectIndex, { type ProjectRef } from './ProjectIndex'
 import { SortingDots } from './ProjectSignatures'
 
 const liveHost = (url?: string | null) => (url ? url.replace(/^https?:\/\//, '') : '')
@@ -18,7 +17,6 @@ interface CaseProps {
   variant: 'tm' | 'fl'
   id: string
   index: number
-  refs: ProjectRef[]
   slug: string
   title: string
   summary: string
@@ -32,7 +30,7 @@ interface CaseProps {
   signature?: React.ReactNode
 }
 
-function Case({ variant, id, index, refs, slug, title, summary, liveUrl, links, stack, tag, statsLabel, stats, media, signature }: CaseProps) {
+function Case({ variant, id, index, slug, title, summary, liveUrl, links, stack, tag, statsLabel, stats, media, signature }: CaseProps) {
   const [name, sub] = title.split(': ')
   const href = `/projects/${slug}`
   return (
@@ -40,7 +38,6 @@ function Case({ variant, id, index, refs, slug, title, summary, liveUrl, links, 
       {signature}
       {variant === 'tm' && <span className="tm-field" aria-hidden="true"><i className="h" /><i className="d" /></span>}
       <div className="copy">
-        <ProjectIndex items={refs} current={id} />
         <h3 style={{ viewTransitionName: `case-title-${slug}` }}>
           <ViewTransitionLink href={href}>{name}</ViewTransitionLink>
           {tag && <span className="tag">{tag}</span>}
@@ -77,12 +74,6 @@ export default function Projects() {
   const askcart = PROJECTS.find(p => p.slug === 'askcart')
   const research = PROJECTS.find(p => p.slug === 'research-agent')
     const shipped = [askcart, research].filter(Boolean)
-    const refs: ProjectRef[] = [
-      ...(askcart ? [{ id: 'projects-askcart', name: askcart.title.split(': ')[0] }] : []),
-      ...(research ? [{ id: 'projects-research', name: research.title.split(': ')[0] }] : []),
-      { id: 'corporate', name: 'Corporate projects' },
-    ]
-
     const meta: [string, string] = [`${shipped.length} personal case studies`, 'Corporate projects right below']
 
   return (
@@ -106,7 +97,6 @@ export default function Projects() {
               variant="tm"
               id="projects-askcart"
               index={0}
-              refs={refs}
               slug={askcart.slug}
               title={askcart.title}
               summary="E-commerce search fails silently: when the catalog returns nothing, the shopper leaves. AskCart asks one narrow question instead — and the dead end becomes a conversation."
@@ -123,7 +113,6 @@ export default function Projects() {
               variant="fl"
               id="projects-research"
               index={1}
-              refs={refs}
               slug={research.slug}
               title={research.title}
               summary="Give it a topic: it mines Reddit and Hacker News, clusters the pain points, and hands back a ranked list plus a first draft of the PRD."

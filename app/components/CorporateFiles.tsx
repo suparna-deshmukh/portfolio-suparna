@@ -70,26 +70,22 @@ const EMBLEMS: Record<string, React.ReactNode> = {
 }
 
 const ROW_AT = [380, 1500, 2620]
-const VERDICT_AT = 460
 const STAMP_AT = 4650
 const LOOP_MS = 8800
 const DOC_STEPS: TlStep[] = [
-  ...[0, 1, 2].flatMap(i => [
-    { at: ROW_AT[i], name: `row${i}.inj` },
-    { at: ROW_AT[i] + VERDICT_AT, name: `row${i}.vrd` },
-  ]),
+  ...[0, 1, 2].map(i => ({ at: ROW_AT[i], name: `row${i}.inj` })),
   { at: STAMP_AT, name: 'stamp' },
 ]
 
 /**
- * The file's paper: a compact AskCart-report — rows whose verdicts slam in one by one,
- * the proof gauge filling, then the rubber stamp landing on the bottom edge. Loops while
- * in view; the first paint is the finished document.
+ * The file's paper: a compact report — the deliverable rows write in one by one, then the
+ * rubber stamp lands on the bottom edge. Plays once and rests; the first paint is the
+ * finished document.
  */
 function CorporateDoc({ c }: { c: Corporate }) {
   const ref = useRef<HTMLDivElement>(null)
   const reduced = usePrefersReducedMotion()
-  const tl = useTimeline(ref, DOC_STEPS, LOOP_MS, { initialHoldMs: LOOP_MS - STAMP_AT, loop: false })
+  const tl = useTimeline(ref, DOC_STEPS, LOOP_MS, { initialHoldMs: 1200, loop: false })
   const replaying = tl.inCycle && tl.has('stamp')
 
   return (
@@ -99,7 +95,7 @@ function CorporateDoc({ c }: { c: Corporate }) {
       onClick={() => tl.replay()}
     >
       <div className="cfdoc-fig" role="img"
-        aria-label={`${c.doc.type} for ${c.name}: ${c.rows.map(r => `${r.label} — ${r.verdict}`).join(', ')}. Proof: ${c.proof.value} ${c.proof.label}.${c.proofMetric ? ` ${m(c.proofMetric).source}, as of ${m(c.proofMetric).asOf}.` : ''}`}
+        aria-label={`${c.doc.type} for ${c.name}: ${c.rows.map(r => r.label).join(', ')}. Proof: ${c.proof.value} ${c.proof.label}.${c.proofMetric ? ` ${m(c.proofMetric).source}, as of ${m(c.proofMetric).asOf}.` : ''}`}
       >
         <div className={`cfdoc-paper${replaying ? ' st shake' : tl.has('stamp') ? ' st' : ''}`}>
         <div className="cfdoc-hd">
@@ -107,10 +103,8 @@ function CorporateDoc({ c }: { c: Corporate }) {
           <span className="cfdoc-tt"><b>{c.doc.type}</b><small>file {String(c.no).padStart(2, '0')} · {c.name}</small></span>
         </div>
         {c.rows.map((r, i) => (
-          <div key={r.label} className={`cfdoc-row${tl.has(`row${i}.inj`) ? ' inj' : ''}${tl.has(`row${i}.vrd`) ? ' vrd' : ''}`} title={r.evidence}>
+          <div key={r.label} className={`cfdoc-row${tl.has(`row${i}.inj`) ? ' inj' : ''}`} title={r.evidence}>
             <span>{r.label}</span>
-            <em className="cfdoc-vd ink-rect">{r.verdict}</em>
-            <i className="cfdoc-rowattr" aria-hidden="true">{r.attribution}</i>
           </div>
         ))}
         <div className="cfdoc-gz">
@@ -123,7 +117,7 @@ function CorporateDoc({ c }: { c: Corporate }) {
       </div>
       <Stamp
         shape="rect" tone="ink" size="md" rot={-6}
-        label={c.proof.value} sub={c.doc.stampWord}
+        label={c.proof.value} sub={c.stamp}
         slammed={tl.has('stamp')}
         decorative
         className="cfdoc-stamp timeline"

@@ -29,6 +29,7 @@
 #about .ab-edu .lab{margin:0 0 3px}
 #about .ab-edu b{font:600 16px/1.35 var(--fb);letter-spacing:-.01em}
 #about .ab-edu > .ab-edu-bd > span:not(.ab-edu-meta){font-size:13.5px;line-height:1.45;color:var(--dim)}
+#about .ab-edu-gpa{display:block;margin-top:4px;font:500 12px/1.4 var(--fm);letter-spacing:.02em;color:var(--dim)}
 #about .ab-edu-meta{display:flex;align-items:center;gap:10px;margin-top:5px;font:500 11px/1.4 var(--fm);letter-spacing:.03em;text-transform:uppercase;color:var(--dimmer)}
 #about .ab-edu-meta em{font-style:normal;color:var(--dim)}
 #about .ab-edu-meta i{flex:1;height:1px;background:var(--lineS)}
@@ -36,7 +37,7 @@
 /* positions of responsibility: stat panels, the first one featured */
 #about .ab-read .lab{margin:0 0 12px}
 #about .ab-read .lab span{text-transform:none;letter-spacing:.02em;color:var(--dimmer)}
-#about .ab-panels{display:grid;gap:12px}
+#about .ab-panels{display:grid;gap:14px;align-items:start}
 #about .ab-panel{position:relative;border:1px solid var(--lineS);border-radius:8px;padding:15px 18px 14px;background:var(--surf)}
 #about .ab-panel:first-child{border-color:color-mix(in oklab,var(--acc) 42%,var(--lineS));box-shadow:inset 3px 0 0 var(--acc)}
 html.motion-ok #about .ab-panel{transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
@@ -61,7 +62,7 @@ html.motion-ok #about .ab-panel:hover{transform:translateY(-2px);box-shadow:0 18
 #about .ab-tiles-grid i{height:12px;border-radius:2px;background:var(--surf2);
   transition:background .45s ease,box-shadow .45s ease;transition-delay:calc(var(--i) * 42ms)}
 #about .ab-panel.in .ab-tiles-grid i{background:var(--acc);box-shadow:0 0 6px color-mix(in oklab,var(--acc) 45%,transparent)}
-html.motion-ok #about .ab-panel:hover .ab-tiles-grid i{animation:abDot 1.8s ease-in-out infinite;animation-delay:calc(var(--i) * 45ms)}
+html.motion-ok #about .ab-panel:hover .ab-tiles-grid i{animation:abDot 1.8s ease-in-out 1;animation-delay:calc(var(--i) * 45ms)}
 #about .ab-tiles > span{display:block;margin-top:9px;font:500 11px/1.4 var(--fm);letter-spacing:.06em;text-transform:uppercase;color:var(--dimmer)}
 @media (prefers-reduced-motion:reduce){#about .ab-tiles-grid i{transition:none}}
 
@@ -172,28 +173,27 @@ html.motion-ok #about .ab-honors li:hover{transform:translateY(-3px);box-shadow:
 #about .ab-edu-when{display:block;margin-top:6px;font:500 11.5px/1.3 var(--fm);letter-spacing:.04em;color:var(--dimmer)}
 /* four years at a glance (E-3) */
 .ys{margin-top:20px;border:1px solid var(--lineS);border-radius:10px;background:var(--surf2);padding:12px 14px 12px}
-.ys-years{display:flex;margin-left:88px;justify-content:space-between}
-.ys-years div{display:grid;grid-template-columns:repeat(5,1fr);width:100%}
+.ys-years{display:flex;margin-left:88px}
+.ys-years div{display:flex;width:100%;justify-content:space-between}
 .ys-years span{font:500 11px/1 var(--fm);letter-spacing:.04em;color:var(--dimmer)}
-.ys-years span:not(:first-child){justify-self:end}
 .ys-lanes{margin-top:8px;display:grid;gap:7px}
 .ys-lane{display:flex;align-items:center;gap:0}
 .ys-lab{width:88px;flex:none;font:600 11px/1 var(--fm);font-style:normal;letter-spacing:.08em;text-transform:uppercase;color:var(--dimmer)}
 .ys-track{position:relative;flex:1;height:20px}
 .ys-bar{position:absolute;top:2px;height:16px;border-radius:4px;
   background:color-mix(in oklab,var(--acc) 26%,transparent);border:1px solid color-mix(in oklab,var(--acc) 42%,transparent)}
-.ys-item{position:absolute;top:0;height:19px;display:inline-flex;align-items:center;padding:0 7px;border-radius:5px;
+.ys-item{position:absolute;top:0;height:19px;display:inline-flex;align-items:center;padding:0 7px;border-radius:5px;min-width:12px;
   font:500 11px/1 var(--fm);color:var(--fg);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
   transition:filter .2s}
 .ys-c{background:color-mix(in oklab,var(--acc) 14%,var(--surf));border:1px solid color-mix(in oklab,var(--acc) 35%,var(--lineS))}
 .ys-p{background:var(--tint);border:1px solid var(--lineS);margin-top:0}
 .ys-lane:nth-child(3) .ys-track{transform:translateY(1px)}
 .ys-item:hover,.ys-item:focus-visible{filter:brightness(1.06);outline:2px solid var(--focus);outline-offset:1px}
-.ys-dot{position:absolute;top:0;height:19px;display:inline-flex;align-items:center;gap:5px;padding:0 6px;
-  font:500 11px/1 var(--fm);color:var(--dim);text-decoration:none;translate:-4px 0}
+.ys-dot{position:absolute;top:0;height:19px;display:inline-flex;align-items:center;padding:0 4px;text-decoration:none;translate:-4px 0}
 .ys-dot i{width:7px;height:7px;flex:none;border-radius:50%;background:var(--acc)}
 .ys-dot:hover,.ys-dot:focus-visible{color:var(--fg)}
 @media (max-width:640px){
+  .ys-years{margin-left:0}
   .ys-lane{flex-direction:column;align-items:stretch;gap:5px}
   .ys-lab{width:auto;margin-bottom:2px}
   .ys-track{display:flex;flex-direction:column;gap:5px;height:auto}

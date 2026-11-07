@@ -57,29 +57,31 @@ function LedgerVis({ n }: { n: string }) {
         <g className="heat">{rows}</g>
         <rect className="ring" x={34 + 6 * 28 - 1.5} y={8 + 3 * 10 - 1.5} width={27} height={10} rx={2.5} />
         <rect className="ring" x={34 + 7 * 28 - 1.5} y={8 + 4 * 10 - 1.5} width={27} height={10} rx={2.5} />
-        <text className="cap" x="34" y="76">wk 0</text>
-        <text className="cap" x={34 + 8 * 28} y="76" textAnchor="end">wk 8 &rarr;</text>
-        <text className="cap ringlab" x="318" y="47" textAnchor="end">dormant</text>
+        <line className="g" x1="257" y1="47" x2="263" y2="47" />
+        <text className="cap ringlab" x="266" y="50">dormant</text>
+        <text className="cap" x="46" y="76" textAnchor="middle">wk 0</text>
+        <text className="cap" x="268" y="76" textAnchor="middle">wk 8</text>
       </svg>
     )
   }
   if (n === '03') {
     const bars = [
-      { x: 24, h: 24, v: '24' }, { x: 72, h: 18, v: '18' }, { x: 120, h: 42, v: '42', hot: true },
-      { x: 168, h: 12, v: '12' }, { x: 216, h: 22, v: '22' },
+      { x: 24, h: 42, v: '42', hot: true, lab: '1' }, { x: 72, h: 24, v: '24', lab: '2' },
+      { x: 120, h: 22, v: '22', lab: '3' }, { x: 168, h: 18, v: '18', lab: '4' }, { x: 216, h: 12, v: '12', lab: '5' },
     ]
     return (
       <svg className="dl-vis v3" viewBox="0 0 300 80" aria-hidden="true">
-        <line className="g" x1="8" y1="70" x2="292" y2="70" />
-        <line className="g" x1="8" y1="47" x2="292" y2="47" />
+        <line className="g" x1="8" y1="66" x2="292" y2="66" />
+        <line className="g" x1="8" y1="44" x2="292" y2="44" />
         {bars.map((b, i) => (
           <g key={b.x} className="barg">
-            <rect className={`bar${b.hot ? ' hot' : ''}`} x={b.x} y={70 - b.h} width={30} height={b.h} rx={3}
+            <rect className={`bar${b.hot ? ' hot' : ''}`} x={b.x} y={66 - b.h} width={30} height={b.h} rx={3}
               style={{ transitionDelay: `${i * 120}ms` }} />
-            <text className="barlab" x={b.x + 15} y={66 - b.h} textAnchor="middle">{b.v}</text>
+            <text className="barlab" x={b.x + 15} y={61 - b.h} textAnchor="middle">{b.v}</text>
+            <text className="cap" x={b.x + 15} y="77" textAnchor="middle">{b.lab}</text>
           </g>
         ))}
-        <text className="cap" x="292" y="78" textAnchor="end">SHAP impact by channel &middot; relative</text>
+        <text className="cap" x="292" y="12" textAnchor="end">SHAP by channel &middot; relative</text>
       </svg>
     )
   }
@@ -97,12 +99,11 @@ function LedgerVis({ n }: { n: string }) {
         ))}
         <text className="mid" x="0" y="5" textAnchor="middle">5</text>
       </g>
-      <text className="midcap" x="48" y="78" textAnchor="middle">risk profiles</text>
       <g className="leg">
         {['34%', '22%', '18%', '14%', '12%'].map((t, i) => (
-          <g key={t} transform={`translate(104 ${10 + i * 13})`}>
+          <g key={t} transform={`translate(104 ${12 + i * 13})`}>
             <rect width="7" height="7" y="-6" rx="1.5" className="legdot" opacity={1 - i * 0.2} />
-            <text x="12" y="0">{t}</text>
+            <text x="12" y="0">P{i + 1} &middot; {t}</text>
           </g>
         ))}
       </g>
