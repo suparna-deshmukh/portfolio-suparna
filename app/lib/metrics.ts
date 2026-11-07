@@ -33,15 +33,18 @@ const M = (m: Metric) => m
 
 export const METRICS: Record<string, Metric> = {
   // ── Experience · RISA Labs ──
-  'risa-hours': M({ id: 'risa-hours', shown: '350 hrs/wk', num: 350, unit: 'hrs', source: 'RISA Labs — Status Tracking 0→1, 200 users', asOf: 'Nov 2026' }),
-  'risa-docs': M({ id: 'risa-docs', shown: '400', num: 400, unit: 'count', source: 'RISA Labs — docs/day via cron pipeline (bots, portal, fax APIs)', asOf: 'Nov 2026' }),
-  'risa-coverage': M({ id: 'risa-coverage', shown: '85%', num: 85, unit: '%', source: 'RISA Labs — order matching, coverage-first trade-off', asOf: 'Nov 2026' }),
-  'risa-precision': M({ id: 'risa-precision', shown: '96%', num: 96, unit: '%', source: 'RISA Labs — order matching, coverage-first trade-off', asOf: 'Nov 2026' }),
-    'risa-vapi': M({ id: 'risa-vapi', shown: '92%', num: 92, unit: '%', source: 'RISA Labs — Vapi calling MVP, 20-user pilot', asOf: 'Oct 2026' }),
-  'risa-qc': M({ id: 'risa-qc', shown: '2x', num: 2, unit: 'x', source: 'RISA Labs — unified QC UI throughput', asOf: 'Oct 2026' }),
-  'risa-pulse': M({ id: 'risa-pulse', shown: '87%', num: 87, unit: '%', source: 'RISA Labs — Pulse auto-RCA precision', asOf: 'Oct 2026' }),
-  'risa-orders': M({ id: 'risa-orders', shown: '2500', num: 2500, unit: 'count', source: 'RISA Labs — orders/day at the unified QC UI', asOf: 'Oct 2026' }),
-  'risa-users': M({ id: 'risa-users', shown: '200', num: 200, unit: 'count', source: 'RISA Labs — users served by Status Tracking', asOf: 'Oct 2026' }),
+  'risa-hours': M({ id: 'risa-hours', shown: '350 hrs/wk', num: 350, unit: 'hrs', source: 'RISA Labs: Status Tracking 0→1, 200 users', asOf: 'Nov 2026' }),
+  'risa-docs': M({ id: 'risa-docs', shown: '400', num: 400, unit: 'count', source: 'RISA Labs: docs/day via cron pipeline (bots, portal, fax APIs)', asOf: 'Nov 2026' }),
+  'risa-coverage': M({ id: 'risa-coverage', shown: '85%', num: 85, unit: '%', source: 'RISA Labs: order matching, coverage-first trade-off', asOf: 'Nov 2026' }),
+  'risa-precision': M({ id: 'risa-precision', shown: '96%', num: 96, unit: '%', source: 'RISA Labs: order matching, coverage-first trade-off', asOf: 'Nov 2026' }),
+    'risa-vapi': M({ id: 'risa-vapi', shown: '92%', num: 92, unit: '%', source: 'RISA Labs: Vapi calling MVP, 20-user pilot', asOf: 'Oct 2026' }),
+  'risa-qc': M({ id: 'risa-qc', shown: '2x', num: 2, unit: 'x', source: 'RISA Labs: unified QC UI throughput', asOf: 'Oct 2026' }),
+  'risa-pulse': M({ id: 'risa-pulse', shown: '87%', num: 87, unit: '%', source: 'RISA Labs: Pulse auto-RCA precision', asOf: 'Oct 2026' }),
+  'risa-orders': M({ id: 'risa-orders', shown: '2500', num: 2500, unit: 'count', source: 'RISA Labs: orders/day at the unified QC UI', asOf: 'Oct 2026' }),
+  'risa-users': M({ id: 'risa-users', shown: '200', num: 200, unit: 'count', source: 'RISA Labs: users served by Status Tracking', asOf: 'Oct 2026' }),
+  'risa-tat': M({ id: 'risa-tat', shown: '60%', num: 60, unit: '%', source: 'RISA Labs: RISA Assist, portal filing TAT cut', asOf: 'Nov 2026' }),
+  'risa-studio': M({ id: 'risa-studio', shown: '$10K/yr', num: 10, unit: '$', source: 'RISA Labs: Document Studio, Acrobat replacement, 70% step TAT cut', asOf: 'Nov 2026' }),
+  'risa-tpo': M({ id: 'risa-tpo', shown: '30%', num: 30, unit: '%', source: 'RISA Labs: time-per-order cut across 4 revamped UI steps', asOf: 'Nov 2026' }),
 
   // ── Experience · InvestMates ──
   'im-ctr': M({ id: 'im-ctr', shown: '25%', num: 25, n: 4200, unit: '%', source: 'InvestMates — homepage revamp A/B test (p<0.05)', asOf: 'Sep 2025' }),

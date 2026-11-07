@@ -12,6 +12,7 @@ import { useTimeline, type TlStep } from '../lib/timeline'
 import { usePrefersReducedMotion } from '../lib/hooks'
 import Attribution from './Attribution'
 import Disclosure from './Disclosure'
+import Rich from './Rich'
 
 /** One animated emblem per engagement: diamond, autonomous vehicle, biochar sprout. */
 const KRI = 'kri' + 'she'
@@ -85,7 +86,7 @@ const DOC_STEPS: TlStep[] = [
 function CorporateDoc({ c }: { c: Corporate }) {
   const ref = useRef<HTMLDivElement>(null)
   const reduced = usePrefersReducedMotion()
-  const tl = useTimeline(ref, DOC_STEPS, LOOP_MS, { initialHoldMs: 1200, loop: false })
+  const tl = useTimeline(ref, DOC_STEPS, LOOP_MS, { loop: true })
   const replaying = tl.inCycle && tl.has('stamp')
 
   return (
@@ -100,20 +101,13 @@ function CorporateDoc({ c }: { c: Corporate }) {
         <div className={`cfdoc-paper${replaying ? ' st shake' : tl.has('stamp') ? ' st' : ''}`}>
         <div className="cfdoc-hd">
           <span className="cfdoc-emb" aria-hidden="true">{EMBLEMS[c.id]}</span>
-          <span className="cfdoc-tt"><b>{c.doc.type}</b><small>file {String(c.no).padStart(2, '0')} · {c.name}</small></span>
+          <span className="cfdoc-tt"><b>{c.doc.type}</b></span>
         </div>
         {c.rows.map((r, i) => (
           <div key={r.label} className={`cfdoc-row${tl.has(`row${i}.inj`) ? ' inj' : ''}`} title={r.evidence}>
             <span>{r.label}</span>
           </div>
         ))}
-        <div className="cfdoc-gz">
-          <b>{c.proofMetric
-            ? <MetricTip id={c.proofMetric} focusable={false}><CountUp text={c.proof.value} /></MetricTip>
-            : <CountUp text={c.proof.value} />}</b>
-          <span>{c.proof.label}</span>
-          <Attribution a={c.proofAttribution} className="cfdoc-attr" />
-        </div>
       </div>
       <Stamp
         shape="rect" tone="ink" size="md" rot={-6}
@@ -176,16 +170,15 @@ export default function Corporate() {
                   <b>{c.name}</b>
                   <em>{c.engagement.via === '180DC' ? '180 DC' : 'Independent'} · {year(c.when)}</em>
                 </span>
-                <u><b>{c.proof.value}</b><span>{c.proofAttribution}</span></u>
               </a>
             </li>
           ))}
         </ol>
         <ol className="cf-files" aria-label="Corporate projects">
-          {CORPORATE.map(c => (
-            <li key={c.id} className="cf-file" id={`corporate-${c.id}`} data-emb={c.id}>
+          {CORPORATE.map((c, fi) => (
+            <li key={c.id} className="cf-file" id={`corporate-${c.id}`} data-emb={c.id} style={{ ['--fi' as string]: fi }}>
               <span className="cf-filetab" aria-hidden="true">
-                FILE {String(c.no).padStart(2, '0')} · {c.engagement.via === '180DC' ? '180 DC' : 'Independent'} · {year(c.when)}
+                {c.engagement.via === '180DC' ? '180 DC' : 'Independent'} · {year(c.when)}
               </span>
               <CorporateDoc c={c} />
               <div className="cf-main">
@@ -193,32 +186,26 @@ export default function Corporate() {
                   <span className={`cf-via${c.engagement.via === 'independent' ? ' ind' : ''}`}>
                     {c.engagement.via === '180DC' ? '180 Degrees Consulting · team lead' : 'Independent engagement'}
                   </span>
-                  {c.when} · {c.where}
                 </p>
                 <div className="cf-head">
                   <h3>{c.name}</h3>
-                  <span className="cf-role">{c.engagement.role}</span>
+                  <span className="cf-meta">{c.engagement.role} · {c.when} · {c.where}</span>
                 </div>
-                {c.descriptor && <p className="cf-desc">{c.descriptor}</p>}
-                {(c.askLine || c.myPart || c.outcome) && (
-                  <dl className="cf-amo">
-                    {c.askLine && <div><dt>Ask</dt><dd>{c.askLine}</dd></div>}
-                    {c.myPart && <div><dt>My part</dt><dd>{c.myPart}</dd></div>}
-                    {c.outcome && <div><dt>Outcome</dt><dd>{c.outcome}</dd></div>}
-                  </dl>
-                )}
-                <div className="cf-proof">
-                  {c.chips.map(ch => (
-                    <span key={ch.label} className="cf-chip">
-                      <b>{ch.metric ? <MetricTip id={ch.metric} focusable={false}><CountUp text={ch.value} /></MetricTip> : ch.value}</b>
-                      <span>{ch.label}</span>
-                      <Attribution a={ch.attribution} />
-                    </span>
-                  ))}
-                </div>
+                <p className="cf-big">
+                  <MetricTip id={c.proofMetric ?? ''} focusable={false}><CountUp text={c.proof.value} /></MetricTip>
+                  <span>{c.proofAttribution} · {c.chips.find(ch => ch.metric === c.proofMetric)?.label ?? c.proof.label}</span>
+                </p>
+                {c.line && <p className="cf-line"><Rich text={c.line} /></p>}
+                {c.chips.filter(ch => ch.metric !== c.proofMetric).slice(0, 1).map(ch => (
+                  <span key={ch.label} className="cf-chip cf-chip1">
+                    <b>{ch.metric ? <MetricTip id={ch.metric} focusable={false}><CountUp text={ch.value} /></MetricTip> : ch.value}</b>
+                    <span>{ch.label}</span>
+                    <Attribution a={ch.attribution} />
+                  </span>
+                ))}
                 <Disclosure label={`Details — ${c.name}`} className="cf-disc">
                   <ul className="cf-points">
-                    {c.points.map(pt => <li key={pt}>{pt}</li>)}
+                    {c.points.slice(1).map(pt => <li key={pt}>{pt}</li>)}
                   </ul>
                 </Disclosure>
                 <div className="cf-foot">

@@ -75,6 +75,10 @@
 .ex-risa-big{display:block;margin-top:9px;font:700 27px/1 var(--fd);letter-spacing:-.02em;color:var(--accText)}
 .ex-risa-big i{font-style:normal;font-size:14px}
 .ex-risa-sub{display:block;margin-top:5px;font:500 11px/1.45 var(--fm);color:var(--dim)}
+.ex-risa-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 8px;margin-top:8px;padding-top:8px;border-top:1px dashed var(--lineS)}
+.ex-rg{display:grid;gap:1.5px;min-width:0}
+.ex-rg b{font:600 14.5px/1 var(--fd);letter-spacing:-.02em;color:var(--accText);font-variant-numeric:tabular-nums;white-space:nowrap}
+.ex-rg small{font:500 11px/1.35 var(--fm);color:var(--dim)}
 
 /* the BITS Goa campus card */
 .ex-campus{left:2px;top:393px;width:216px;background:var(--surf);border:1px solid var(--lineS);border-radius:10px;
@@ -97,7 +101,7 @@
   background:color-mix(in oklab,var(--acc) 28%,rgba(255,255,255,.55));opacity:.9}
 .ex-note-num{display:block;font:700 16px/1 var(--fd);letter-spacing:-.01em;color:var(--accText)}
 .ex-note-lab{display:block;margin-top:4px;font:500 13px/1.4 var(--fm);letter-spacing:.02em;color:var(--dim)}
-.ex-n1{left:246px;top:258px}
+.ex-n1{left:246px;top:282px}
 .ex-n2{left:246px;top:362px}
 .ex-n3{left:246px;top:466px}
 html.motion-ok .ex-note{animation:exIn .8s var(--ease) both}

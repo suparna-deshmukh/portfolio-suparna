@@ -26,15 +26,28 @@ export default function HeroExhibit() {
           <span className="ex-bcode" aria-hidden="true" />
         </a>
 
-        <a className="ex-ob ex-risa" href="#experience-risa" style={{ ['--d' as string]: 1.45, ['--rot' as string]: '3deg' }} aria-label={`RISA Labs — ${m('risa-hours').num} hours a week saved across ${m('risa-users').shown} users; ${m('risa-docs').num} docs/day on a cron pipeline; order matching at ${m('risa-coverage').shown} coverage, ${m('risa-precision').shown} precision. ${m('risa-hours').source}, as of ${m('risa-hours').asOf}`}>
+        <a className="ex-ob ex-risa" href="#experience-risa" style={{ ['--d' as string]: 1.45, ['--rot' as string]: '3deg' }} aria-label={`RISA Labs: ${m('risa-hours').num} hours a week saved across ${m('risa-users').shown} users by Status Tracking; ${m('risa-docs').num} docs/day on a cron pipeline; ${m('risa-vapi').shown} accuracy on the Vapi calling MVP; ${m('risa-qc').shown} QC throughput; ${m('risa-pulse').shown} auto-RCA precision; ${m('risa-tat').shown} faster portal filing; ${m('risa-studio').shown} saved by Document Studio. ${m('risa-hours').source}, as of ${m('risa-hours').asOf}`}>
           <span className="ex-risa-hd"><b>RISA Labs</b><small>APM intern · now</small></span>
           <MetricTip id="risa-hours" className="block" focusable={false}><span className="ex-risa-big">{m('risa-hours').num}<i> hrs/wk</i></span></MetricTip>
           <span className="ex-risa-sub">saved across {m('risa-users').shown} users · Status Tracking 0→1</span>
-          <span className="ex-risa-sub">{m('risa-docs').num} docs/day · cron pipeline</span>
-          <span className="ex-risa-sub">{m('risa-coverage').shown} coverage / {m('risa-precision').shown} precision · order matching</span>
+          <span className="ex-risa-grid" aria-label="Other RISA standouts">
+            {([
+              ['risa-docs', 'docs/day'],
+              ['risa-vapi', 'Vapi calls'],
+              ['risa-qc', 'QC speed'],
+              ['risa-pulse', 'auto-RCA'],
+              ['risa-tat', 'portal TAT'],
+              ['risa-studio', 'Doc Studio'],
+            ] as const).map(([id, lab]) => (
+              <span key={id} className="ex-rg">
+                <MetricTip id={id} focusable={false}><b>{m(id).shown}</b></MetricTip>
+                <small>{lab}</small>
+              </span>
+            ))}
+          </span>
         </a>
 
-        <Link className="ex-ob ex-phone" href="/projects/askcart" style={{ ['--d' as string]: 0.7, ['--rot' as string]: '2.5deg' }} aria-label="AskCart — guided AI search, personal build">
+        <Link className="ex-ob ex-phone" href="/projects/askcart" style={{ ['--d' as string]: 0.7, ['--rot' as string]: '2.5deg' }} aria-label="AskCart: guided AI search, personal build">
           <span className="ex-island" aria-hidden="true" />
           <span className="acp-frame"><AskCartPhone /></span>
         </Link>
@@ -56,7 +69,7 @@ export default function HeroExhibit() {
         </div>
         </div>
 
-        <a className="ex-ob ex-campus" href="#about" style={{ ['--d' as string]: 0.9, ['--rot' as string]: '-2deg' }} aria-label="BITS Pilani, Goa — ECE with a Finance minor, class of 2027">
+        <a className="ex-ob ex-campus" href="#about" style={{ ['--d' as string]: 0.9, ['--rot' as string]: '-2deg' }} aria-label="BITS Pilani, Goa: ECE with a Finance minor, class of 2027">
           <span className="ex-clip" aria-hidden="true" />
           <Image src="/images/hero/bits-goa-sketch.webp" alt="Sketch of the BITS Pilani Goa campus" width={228} height={137} priority />
           <b>BITS Pilani, Goa</b>

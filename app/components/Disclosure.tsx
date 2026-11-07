@@ -5,17 +5,18 @@ import { useId, useEffect, useRef, useState, type ReactNode } from 'react'
 /**
  * Accessible expand/collapse (sections brief X-4). The body always stays in the DOM —
  * it is collapsed with grid rows, so no-JS and crawlers see everything (SSR renders
- * expanded; JS collapses after mount unless the session said open). State persists in
- * sessionStorage per instance. Height animates with grid-template-rows; Motion Off kills
- * the transition via the global motion-off CSS.
+ * collapsed; a noscript rule expands it for no-JS visitors). Closed by default with JS
+ * (the punch pass: details rest behind a disclosure); a stored session choice wins.
+ * Height animates with grid-template-rows; Motion Off kills the transition via the
+ * global motion-off CSS.
  */
 export default function Disclosure({ label, children, className }: { label: string; children: ReactNode; className?: string }) {
   const id = useId()
   const bodyId = useId()
   const keyRef = useRef(`sd-disc:${id}`)
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
   useEffect(() => {
-    try { setOpen(sessionStorage.getItem(keyRef.current) !== '0') } catch { /* storage blocked */ }
+    try { const stored = sessionStorage.getItem(keyRef.current); if (stored !== null) setOpen(stored === '1') } catch { /* storage blocked */ }
   }, [keyRef])
   const toggle = () => {
     setOpen(o => {

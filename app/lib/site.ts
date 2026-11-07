@@ -124,25 +124,26 @@ export interface Company {
   sector: string
   /** product = the two product roles, industry = the rotations page */
   group?: 'product' | 'industry'
-  /** standout role: rendered larger, with the full results list inline (no dropdown) */
-  featured?: boolean
   roles: Role[]
 }
 
 // Bullet copy is from the resume (source of truth for numbers).
 export const EXPERIENCE: Company[] = [
   {
-    id: 'risa', name: 'RISA Labs', monogram: 'RL', city: 'Bengaluru', years: "'26 to now", metric: m('risa-hours').shown, metricCaption: 'saved across 200 users by Status Tracking', summary: 'Associate Product Manager Intern · AI Workflows for US Healthcare', sector: 'Healthcare AI', group: 'product', featured: true,
+    id: 'risa', name: 'RISA Labs', monogram: 'RL', city: 'Bengaluru', years: "'26 to now", metric: m('risa-hours').shown, metricCaption: 'saved across 200 users by Status Tracking', summary: 'Associate Product Manager Intern · AI Workflows for US Healthcare', sector: 'Healthcare AI', group: 'product',
     roles: [
       { title: 'Associate Product Manager Intern', meta: 'Jul 2026 to Present · Healthcare AI · Bengaluru',
         heroMetric: 'risa-hours',
         hero: { value: m('risa-hours').shown, label: 'saved across 200 users' },
         how: 'by owning Status Tracking 0→1: 90k-order SQL analysis, user research, user stories, PRDs (v0 to v1), HLD and dev-testing.',
         results: [
-          { value: `${m('risa-coverage').shown} / ${m('risa-precision').shown}`, label: 'order matching, coverage-first trade-off', metric: 'risa-precision' },
+          { value: m('risa-docs').shown, label: 'docs/day · matching at 85% / 96%', metric: 'risa-precision' },
           { value: m('risa-vapi').shown, label: 'accuracy on the Vapi calling MVP', metric: 'risa-vapi' },
-          { value: m('risa-qc').shown, label: 'QC throughput on the unified UI', metric: 'risa-qc' },
+          { value: m('risa-qc').shown, label: 'QC throughput · 40% faster fixes', metric: 'risa-qc' },
           { value: m('risa-pulse').shown, label: 'precision on Pulse auto-RCA', metric: 'risa-pulse' },
+          { value: m('risa-tat').shown, label: 'faster portal filing, RISA Assist', metric: 'risa-tat' },
+          { value: m('risa-studio').shown, label: 'saved a year · 70% step TAT cut', metric: 'risa-studio' },
+          { value: m('risa-tpo').shown, label: 'time-per-order cut, 4 UI steps', metric: 'risa-tpo' },
         ],
         bullets: [
           { lead: 'Status Tracking 0→1, owned end to end', rest: ' — 90k-order SQL analysis, user research, PRDs v0 to v1, HLD, dev-testing; 200 users save 350 hrs/wk.' },
@@ -247,6 +248,8 @@ export interface Corporate {
   askLine?: string
   myPart?: string
   outcome?: string
+  /** one punchy line under the big proof — **bold** keywords, 100 characters or fewer */
+  line?: string
   /** exactly three deliverable lines — plain artifact statements, no verdict words */
   rows: CorporateRow[]
   /** the one number the file is remembered for. No gauge for money values (C-2). */
@@ -265,9 +268,63 @@ export interface Corporate {
 
 export const CORPORATE: Corporate[] = [
   {
-    id: 'kri' + 'she', no: 1, name: 'KriSHE Carbon',
+    id: 'everyday', no: 1, name: 'Everyday Diamonds',
+    engagement: { via: '180DC', role: 'Team Lead · GTM and Series A Fundraising' },
+    when: 'Aug 2024 – Sept 2024', where: 'Bengaluru',
+    line: 'Modeled **profitability and pricing**; built the roadmap and Series A deck behind the **$2.5M raise**.',
+    rows: [
+      { label: 'Profitability, pricing and projections model', attribution: 'built' },
+      { label: '4-year expansion roadmap, 5 stores', attribution: 'led' },
+      { label: 'Series A deck ($2.5M raise)', attribution: 'built' },
+    ],
+    proof: { value: m('ed-raise').shown, label: 'Series A the deck aided, All In Capital; first store launched' },
+    proofMetric: 'ed-raise',
+    proofAttribution: 'built',
+    doc: { type: 'Series A deck' },
+    stamp: 'Series A aided',
+    deck: { label: 'Series A deck', href: '' },
+    points: [
+      'Modeled profitability, pricing and financial projections; built the 4-year expansion roadmap and the Series A deck that aided a $2.5M raise from All In Capital.',
+      'Formulated the offline expansion strategy for 5 stores across India, and the first one launched in Bengaluru.',
+    ],
+    chips: [
+      { value: m('ed-raise').shown, label: 'Series A, All In Capital', metric: 'ed-raise', attribution: 'built' },
+      { value: m('ed-stores').shown, label: 'store expansion roadmap', metric: 'ed-stores', attribution: 'led' },
+    ],
+    ask: "Hi Suparna, I'd like to hear about the Everyday Diamonds file: the pricing model, the 4-year expansion roadmap and how the Series A deck aided the $2.5M raise.",
+  },
+  {
+    id: 'fedaykin', no: 2, name: 'Fedaykin AV',
+    engagement: { via: 'independent', role: 'GTM Strategy Consultant' },
+    when: 'Jul 2024 – Aug 2024', where: 'Remote',
+    line: 'Formulated the **GTM strategy** from market research and competitor analysis for stronger positioning.',
+    rows: [
+      { label: 'Competitor benchmarks', attribution: 'built' },
+      { label: 'Pricing and unit-economics model', attribution: 'built' },
+      { label: '950-client B2B sizing', attribution: 'led' },
+    ],
+    proof: { value: m('fa-unit').shown, label: 'unit economics lift found by the pricing audit, across specs, ops and annotation costs, modeled' },
+    proofMetric: 'fa-unit',
+    proofAttribution: 'built',
+    doc: { type: 'Pricing audit' },
+    stamp: 'Pricing audit done',
+    deck: { label: 'Project report', href: '' },
+    points: [
+      'Formulated the GTM strategy via market research, competitor analysis and a refined product-market fit for stronger positioning.',
+      'Optimized the pricing strategy across technical specs, operations and annotation costs, improving unit economics by 30%.',
+      'Curated a database of 950 potential AV clients and ran a bottom-up B2B market sizing to inform a scalable business model.',
+    ],
+    chips: [
+      { value: m('fa-unit').shown, label: 'unit economics (pricing audit)', metric: 'fa-unit', attribution: 'built' },
+      { value: m('fa-clients').shown, label: 'client database', metric: 'fa-clients', attribution: 'led' },
+    ],
+    ask: "Hi Suparna, I'd like to hear about the Fedaykin AV GTM strategy work.",
+  },
+  {
+    id: 'kri' + 'she', no: 3, name: 'KriSHE Carbon',
     engagement: { via: '180DC', role: 'Team Lead · GTM and Fundraising' },
     when: 'Jul 2025 – Aug 2025', where: 'Gurugram',
+    line: 'Built the **investor deck** and biochar model; pursued **₹12.5L in grants** with the client team.',
     rows: [
       { label: 'Investor deck and model', attribution: 'built' },
       { label: 'Biochar impact metrics', attribution: 'built' },
@@ -288,67 +345,10 @@ export const CORPORATE: Corporate[] = [
     ],
     ask: "Hi Suparna, I'd like to hear about the KriSHE Carbon fundraising work.",
   },
-  {
-    id: 'everyday', no: 2, name: 'Everyday Diamonds',
-    engagement: { via: '180DC', role: 'Team Lead · GTM and Series A Fundraising' },
-    when: 'Aug 2024 – Sept 2024', where: 'Bengaluru',
-    rows: [
-      { label: 'Profitability, pricing and projections model', attribution: 'built' },
-      { label: '4-year expansion roadmap, 5 stores', attribution: 'led' },
-      { label: 'Series A deck ($2.5M raise)', attribution: 'built' },
-    ],
-    proof: { value: m('ed-raise').shown, label: 'Series A the deck aided, All In Capital; first store launched' },
-    proofMetric: 'ed-raise',
-    proofAttribution: 'built',
-    doc: { type: 'Series A deck' },
-    stamp: 'Series A aided',
-    deck: { label: 'Series A deck', href: '' },
-    points: [
-      'Modeled profitability, pricing and financial projections; built the 4-year expansion roadmap and the Series A deck that aided a $2.5M raise from All In Capital.',
-      'Formulated the offline expansion strategy for 5 stores across India — and the first one launched in Bengaluru.',
-    ],
-    chips: [
-      { value: m('ed-raise').shown, label: 'Series A, All In Capital', metric: 'ed-raise', attribution: 'built' },
-      { value: m('ed-stores').shown, label: 'store expansion roadmap', metric: 'ed-stores', attribution: 'led' },
-    ],
-    ask: "Hi Suparna, I'd like to hear about the Everyday Diamonds file: the pricing model, the 4-year expansion roadmap and how the Series A deck aided the $2.5M raise.",
-  },
-  {
-    id: 'fedaykin', no: 3, name: 'Fedaykin AV',
-    engagement: { via: 'independent', role: 'GTM Strategy Consultant' },
-    when: 'Jul 2024 – Aug 2024', where: 'Remote',
-    rows: [
-      { label: 'Competitor benchmarks', attribution: 'built' },
-      { label: 'Pricing and unit-economics model', attribution: 'built' },
-      { label: '950-client B2B sizing', attribution: 'led' },
-    ],
-    proof: { value: m('fa-unit').shown, label: 'unit economics lift found by the pricing audit, across specs, ops and annotation costs — modeled, basis pending confirmation' },
-    proofMetric: 'fa-unit',
-    proofAttribution: 'built',
-    doc: { type: 'Pricing audit' },
-    stamp: 'Pricing audit done',
-    deck: { label: 'Project report', href: '' },
-    points: [
-      'Formulated the GTM strategy via market research, competitor analysis and a refined product-market fit for stronger positioning.',
-      'Optimized the pricing strategy across technical specs, operations and annotation costs, improving unit economics by 30%.',
-      'Curated a database of 950 potential AV clients and ran a bottom-up B2B market sizing to inform a scalable business model.',
-    ],
-    chips: [
-      { value: m('fa-unit').shown, label: 'unit economics (pricing audit)', metric: 'fa-unit', attribution: 'built' },
-      { value: m('fa-clients').shown, label: 'client database', metric: 'fa-clients', attribution: 'led' },
-    ],
-    ask: "Hi Suparna, I'd like to hear about the Fedaykin AV GTM strategy work.",
-  },
 ]
 
 /** The single header sentence that replaces the aggregate chips (C-4). */
 export const CORPORATE_LEDE = 'Three client engagements: two 180 Degrees Consulting team leads and one independent file. Every file ends in a deck, and every number on it is one I can defend.'
-
-export const CORPORATE_AGG: Stat[] = [
-  { value: m('ed-raise').shown, label: 'Series A raised', metric: 'ed-raise' },
-  { value: m('kc-grants').shown, label: 'grants enabled', metric: 'kc-grants' },
-  { value: m('fa-unit').shown, label: 'unit economics', metric: 'fa-unit' },
-]
 
 // ── About page: education, skills, honors ──
 
@@ -389,15 +389,19 @@ export interface Position {
   title: string
   when: string
   current?: boolean
-  /** one line: selection and team size (the scope) */
+  /** the full scope line, kept for aria and no-JS */
   blurb: string
-  /** the one headline figure for the panel (R-1 default) */
+  /** one line of context, 90 characters or fewer, **bold** keywords */
+  line: string
+  /** the one headline figure for the panel */
   headline: { metric: string; label: string }
-  /** static sponsor line — replaces the marquee (R-4) */
-  sponsors?: string[]
-  /** one plain line for Project SYNERGY (R-5) */
-  noteLine?: string
-  /** secondary stats, shown in the More detail disclosure only (R-2) */
+  /** secondary figure beside the headline (the Director's registrations) */
+  secondary?: { metric: string; label: string }
+  /** one-row full-width strip instead of a panel (Creative Director) */
+  strip?: boolean
+  /** plain lines for the Details disclosure, shown when empty data exists */
+  details?: string[]
+  /** stats shown in the strip */
   stats: Stat[]
   chips: { text: string; href?: string; metric?: string }[]
 }
@@ -407,12 +411,13 @@ export const POSITIONS: Position[] = [
   {
     id: 'placement', no: 1, org: 'BITS Goa', title: 'Placement Coordinator', when: 'May 2026 – Present', current: true,
     blurb: 'Selected 1 of 8 out of 1,000+ students. Leads campus placements and corporate outreach for the 2026 batch, end-to-end, with a 25-member team.',
+    line: 'Leads campus placements for the **2026 batch** with a team of **25**.',
     headline: { metric: 'pc-rate', label: 'batch placement, May to October 2026' },
-    noteLine: 'Project SYNERGY: a phased proposal to centralize placement and internship drives across the three BITS campuses — approved.',
-    stats: [
-      { value: m('pc-placed').shown, label: 'students placed', metric: 'pc-placed' },
-      { value: m('pc-team').shown, label: 'team led end-to-end', metric: 'pc-team' },
+    details: [
+      'Project SYNERGY: a phased proposal to centralize placement and internship drives across the three BITS campuses. Approved.',
+      'Selected 1 of 8 out of 1,000+ students.',
     ],
+    stats: [],
     chips: [
       { text: '1 of 8 selected', metric: 'pc-select' },
       { text: 'Project SYNERGY approved · 3 campuses' },
@@ -421,23 +426,26 @@ export const POSITIONS: Position[] = [
   {
     id: 'consult', no: 2, org: '180 Degrees Consulting', title: 'Director', when: 'May 2025 – Jun 2026',
     blurb: '45 consultants across 16 projects, 30% YoY revenue growth (club year over prior year). Awarded “Best Consultant” as a sophomore.',
-    headline: { metric: 'dc-sponsor', label: 'Consultathon sponsorships, 3,200 registrations' },
-    sponsors: ['Uplearn by Upstox', 'NextLeap', 'Unstop', 'The MBA Edge'],
-    stats: [
-      { value: m('dc-reg').shown, label: 'Consultathon registrations', metric: 'dc-reg' },
-      { value: m('dc-rev').shown, label: 'club YoY revenue growth', metric: 'dc-rev' },
-      { value: m('dc-courses').shown, label: 'course impressions · 85% retention', metric: 'dc-courses' },
+    line: 'Leads **45 consultants** across **16 projects**. Club revenue up **30%** year over year.',
+    headline: { metric: 'dc-sponsor', label: 'Consultathon sponsorships' },
+    secondary: { metric: 'dc-reg', label: 'registrations' },
+    details: [
+      'Consultathon sponsors: Uplearn by Upstox, NextLeap, Unstop and The MBA Edge.',
+      '50K+ course impressions · 85% retention (PM and consulting courses).',
     ],
+    stats: [],
     chips: [{ text: 'Best Consultant' }, { text: 'Consultathon on Unstop', href: CONSULTATHON_URL }],
   },
   {
     id: 'cel', no: 3, org: 'Center for Entrepreneurial Leadership', title: 'Creative Director', when: 'May 2025 – Jun 2026',
     blurb: "Coalescence'24: 40+ founders, investors and partners on stage — including Ankur Warikoo and UTI. Led a 20-member team across marketing and operations.",
-    headline: { metric: 'cel-impr', label: "Coalescence'24 impressions" },
+    line: "",
+    strip: true,
+    headline: { metric: 'cel-impr', label: 'Coalescence’24 impressions' },
     stats: [
-      { value: m('cel-founders').shown, label: 'founders, investors and partners secured', metric: 'cel-founders' },
+      { value: m('cel-founders').shown, label: 'founders, investors and partners', metric: 'cel-founders' },
+      { value: m('cel-impr').shown, label: 'impressions', metric: 'cel-impr' },
       { value: m('cel-rev').shown, label: 'event revenue', metric: 'cel-rev' },
-      { value: m('cel-team').shown, label: 'team across marketing and operations', metric: 'cel-team' },
     ],
     chips: [],
   },
@@ -477,8 +485,8 @@ export const DATA_LEDGERS: DataLedger[] = [
     where: `Synthetic/AMFI investment data · ${m('d2-users').shown} users`,
     provenance: 'synthetic',
     points: [
-      'Queried investment data via SQL; segmented 50K users by activation stages and constructed detailed 90-day retention cohort views.',
-      'Identified dormant user personas using RFM analysis; proposed re-engagement features backed by cohort-driven insights.',
+      'Segmented **50K users** by activation stage and built **90-day retention cohorts** in SQL.',
+      'Found dormant personas with **RFM**; proposed **re-engagement features**.',
     ],
     result: m('d2-users').shown,
     resultMetric: 'd2-users',
@@ -494,8 +502,8 @@ export const DATA_LEDGERS: DataLedger[] = [
     where: `Neobank fintech · ${m('d3-records').shown} campaign records`,
     provenance: undefined, // source not yet confirmed (input D2)
     points: [
-      'Trained XGBoost on 45K neobank campaign records; used SHAP to attribute conversions across 5 digital and direct channels.',
-      'Identified the top acquisition signals per channel; built an AI reallocation model reducing simulated CAC by 28% across the channel mix.',
+      'Trained **XGBoost** on 45K campaign records; used **SHAP** to attribute conversions across 5 channels.',
+      'Built an AI reallocation model that cut **simulated CAC by 28%**.',
     ],
     result: m('d3-cac').shown,
     resultMetric: 'd3-cac',
@@ -511,8 +519,8 @@ export const DATA_LEDGERS: DataLedger[] = [
     where: `YouTube Trending dataset · ${m('d1-videos').shown} videos`,
     provenance: 'public',
     points: [
-      'Built NLP features from titles and tags; applied K-means to segment 200K+ videos into archetypes by views and engagement.',
-      'Trained an XGBoost classifier predicting trending content at 82% AUC; surfaced the key drivers for content decisions via SHAP.',
+      'Built **NLP features** from titles and tags; segmented **200K+ videos** with K-means.',
+      'Trained **XGBoost** to predict trending at **82% AUC**; surfaced the drivers with SHAP.',
     ],
     result: `${m('d1-auc').shown} AUC`,
     resultMetric: 'd1-auc',
@@ -528,8 +536,8 @@ export const DATA_LEDGERS: DataLedger[] = [
     where: `LendingClub dataset · ${m('d4-records').shown} loan records`,
     provenance: 'public',
     points: [
-      'Queried 100K+ loan records via SQL; segmented users into 5 risk profiles using structured RFM-style feature analysis.',
-      'Built a logistic regression model to predict defaults; mapped risk segments to product features and targeted UX interventions.',
+      'Queried **100K+ loan records** in SQL; segmented borrowers into **5 risk profiles**.',
+      'Built a **logistic regression** default model; mapped segments to **UX interventions**.',
     ],
     result: m('d4-records').shown,
     resultMetric: 'd4-records',

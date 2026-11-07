@@ -1,124 +1,157 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import SectionHeader from './SectionHeader'
 import ProvenanceChip from './ProvenanceChip'
 import Disclosure from './Disclosure'
 import CountUp from './CountUp'
 import MetricTip from './MetricTip'
-import { METHOD_STEPS, DATA_LEDGERS  } from '../lib/site'
-import { m } from '../lib/metrics'
+import Rich from './Rich'
+import { METHOD_STEPS, DATA_LEDGERS, type DataLedger as Ledger } from '../lib/site'
+import { useTimeline, type TlStep } from '../lib/timeline'
 
 const COHORT_ROWS = [1, 0.92, 0.97, 0.9, 1, 0.95]
+const DORMANT: [number, number][] = [[3, 6], [4, 7]]
+const BARS = [{ v: 42, hot: true }, { v: 24 }, { v: 22 }, { v: 18 }, { v: 12 }]
+const DONUT = [34, 22, 18, 14, 12]
+const LOOP_MS = 8500
 
-/** One animated figure per ledger: spike, cohort heat, channel bars, risk donut.
-    P1-4: roomier 80-unit viewBoxes + >=10.5px labels (mobile override >=11px effective). */
-function LedgerVis({ n }: { n: string }) {
-  if (n === '01') {
-    return (
-      <svg className="dl-vis v1" viewBox="0 0 300 80" aria-hidden="true">
-        <defs>
-          <linearGradient id="dlArea" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="currentColor" stopOpacity=".28" />
-            <stop offset="1" stopColor="currentColor" stopOpacity="0" />
-          </linearGradient>
-        </defs>
-        <line className="g" x1="8" y1="66" x2="292" y2="66" />
-        <line className="g" x1="8" y1="52" x2="292" y2="52" />
-        <line className="g" x1="8" y1="38" x2="292" y2="38" />
-        <path className="area" d="M10 64 L44 60 L74 62 L104 56 L134 52 L158 46 L176 40 L208 22 L228 44 L256 52 L290 58 L290 66 L10 66 Z" />
-        <path className="line" pathLength="100" d="M10 64 L44 60 L74 62 L104 56 L134 52 L158 46 L176 40 L208 22 L228 44 L256 52 L290 58" />
-        <circle className="peak" cx="208" cy="22" r="3" />
-        <text className="cap" x="208" y="12" textAnchor="middle">spike &rarr; trend</text>
-        <text className="cap" x="292" y="76" textAnchor="end">{m('d1-auc').shown} AUC classifier</text>
-      </svg>
-    )
-  }
-  if (n === '02') {
-    const rows: React.ReactNode[] = []
-    COHORT_ROWS.forEach((f, r) => {
-      const cells: React.ReactNode[] = []
-      for (let w = 0; w < 9; w++) {
-        const o = Math.max(0.08, (1 - w * 0.105) * f)
-        cells.push(
-          <rect key={`${r}-${w}`} className="c" x={34 + w * 28} y={8 + r * 10} width={24} height={7} rx={1.5}
-            style={{ ['--o' as string]: o.toFixed(3), transitionDelay: `${(r * 9 + w) * 16}ms` }} />
-        )
-      }
-      rows.push(
-        <g key={r} className="crow">
-          <text className="rowlab" x={28} y={14 + r * 10} textAnchor="end">{`C${r + 1}`}</text>
-          {cells}
-        </g>
-      )
-    })
-    return (
-      <svg className="dl-vis v2" viewBox="0 0 320 80" aria-hidden="true">
-        <g className="heat">{rows}</g>
-        <rect className="ring" x={34 + 6 * 28 - 1.5} y={8 + 3 * 10 - 1.5} width={27} height={10} rx={2.5} />
-        <rect className="ring" x={34 + 7 * 28 - 1.5} y={8 + 4 * 10 - 1.5} width={27} height={10} rx={2.5} />
-        <line className="g" x1="257" y1="47" x2="263" y2="47" />
-        <text className="cap ringlab" x="266" y="50">dormant</text>
-        <text className="cap" x="46" y="76" textAnchor="middle">wk 0</text>
-        <text className="cap" x="268" y="76" textAnchor="middle">wk 8</text>
-      </svg>
-    )
-  }
-  if (n === '03') {
-    const bars = [
-      { x: 24, h: 42, v: '42', hot: true, lab: '1' }, { x: 72, h: 24, v: '24', lab: '2' },
-      { x: 120, h: 22, v: '22', lab: '3' }, { x: 168, h: 18, v: '18', lab: '4' }, { x: 216, h: 12, v: '12', lab: '5' },
-    ]
-    return (
-      <svg className="dl-vis v3" viewBox="0 0 300 80" aria-hidden="true">
-        <line className="g" x1="8" y1="66" x2="292" y2="66" />
-        <line className="g" x1="8" y1="44" x2="292" y2="44" />
-        {bars.map((b, i) => (
-          <g key={b.x} className="barg">
-            <rect className={`bar${b.hot ? ' hot' : ''}`} x={b.x} y={66 - b.h} width={30} height={b.h} rx={3}
-              style={{ transitionDelay: `${i * 120}ms` }} />
-            <text className="barlab" x={b.x + 15} y={61 - b.h} textAnchor="middle">{b.v}</text>
-            <text className="cap" x={b.x + 15} y="77" textAnchor="middle">{b.lab}</text>
-          </g>
-        ))}
-        <text className="cap" x="292" y="12" textAnchor="end">SHAP by channel &middot; relative</text>
-      </svg>
-    )
-  }
-  const segs = [
-    { len: 34, rot: 0, o: 1 }, { len: 22, rot: 122.4, o: 0.78 }, { len: 18, rot: 201.6, o: 0.58 },
-    { len: 14, rot: 266.4, o: 0.4 }, { len: 12, rot: 316.8, o: 0.26 },
-  ]
+const STEPS: Record<Ledger['figure']['type'], TlStep[]> = {
+  heatmap: [{ at: 60, name: 'go' }, { at: 800, name: 'ring' }, { at: 900, name: 'dorm' }, { at: 1200, name: 'pulse' }],
+  bars: [{ at: 60, name: 'go' }, { at: 800, name: 'pulse' }],
+  spike: [{ at: 100, name: 'go' }, { at: 700, name: 'area' }, { at: 900, name: 'peak' }],
+  donut: [{ at: 60, name: 'go' }, { at: 800, name: 'leg' }],
+}
+
+const CAPTION: Record<Ledger['figure']['type'], string> = {
+  heatmap: '90-day retention cohorts',
+  bars: 'SHAP by channel · relative',
+  spike: 'Spike to trend',
+  donut: '5 risk profiles',
+}
+
+const ARIA: Record<Ledger['figure']['type'], string> = {
+  heatmap: 'Cohort heatmap: six user cohorts, week 0 to 8 share of users still active. Cohorts C4 and C5 turn dormant around week 6.',
+  bars: 'Channel bars: relative conversion share across five channels; channel one, the top SHAP contributor, is highlighted.',
+  spike: 'Line chart: views spike, then settle into a trend; the peak is the viral moment the model predicts.',
+  donut: 'Donut chart: loan records split into five risk segments, from 34% down to 12%.',
+}
+
+/** Cohort heatmap in HTML: row labels, cells as divs, week labels underneath.
+ *  Dormant cells carry the rust ring. Hover, focus or tap isolates a row. */
+function HeatFigure() {
   return (
-    <svg className="dl-vis" viewBox="0 0 300 80" aria-hidden="true">
-      <g transform="translate(48 34)">
-        <circle className="donutbg" r="26" fill="none" strokeWidth="9" />
-        {segs.map((sg, i) => (
-          <circle key={i} className="seg" r="26" fill="none" strokeOpacity={sg.o} strokeWidth="9"
-            pathLength={100} style={{ ['--len' as string]: sg.len, transitionDelay: `${i * 130}ms`, transform: `rotate(${sg.rot - 90}deg)` }} />
-        ))}
-        <text className="mid" x="0" y="5" textAnchor="middle">5</text>
-      </g>
-      <g className="leg">
-        {['34%', '22%', '18%', '14%', '12%'].map((t, i) => (
-          <g key={t} transform={`translate(104 ${12 + i * 13})`}>
-            <rect width="7" height="7" y="-6" rx="1.5" className="legdot" opacity={1 - i * 0.2} />
-            <text x="12" y="0">P{i + 1} &middot; {t}</text>
-          </g>
-        ))}
-      </g>
-    </svg>
+    <div className="dl-heat">
+      {COHORT_ROWS.map((f, r) => {
+        const vals = Array.from({ length: 9 }, (_, w) => Math.round(Math.max(0.08, (1 - w * 0.105) * f) * 100))
+        return (
+          <div key={r} className="dl-hrow" tabIndex={0}
+            aria-label={`Cohort C${r + 1}, week 0 to 8: ${vals.join(', ')} percent of users still active`}>
+            <i className="dl-hlab">C{r + 1}</i>
+            {vals.map((v, w) => (
+              <i key={w} className={`dl-cell${DORMANT.some(([dr, dw]) => dr === r && dw === w) ? ' dorm' : ''}`}
+                style={{ ['--o' as string]: (v / 100).toFixed(2), ['--d' as string]: `${w * 65 + r * 8}ms` }} />
+            ))}
+          </div>
+        )
+      })}
+      <span className="dl-wks" aria-hidden="true"><i>WK 0</i><i>WK 8</i></span>
+      <span className="dl-dorm" aria-hidden="true">Dormant</span>
+    </div>
   )
 }
 
-/** Four data projects as ledger cards: ruled paper, a red margin, a figure, every pointer from the resume. */
-export default function DataLedger() {
-  const gridRef = useRef<HTMLDivElement>(null)
+/** Five channel bars, growing from the baseline; the top channel gets a ring pulse. */
+function BarsFigure() {
+  return (
+    <div className="dl-bars">
+      {BARS.map((b, i) => (
+        <div key={i} className="dl-barg" tabIndex={0} aria-label={`Channel ${i + 1}: ${b.v} relative conversion share`}>
+          <span className="dl-barval" style={{ ['--i' as string]: i }}><CountUp text={String(b.v)} /></span>
+          <i className={`dl-bar${b.hot ? ' hot' : ''}`} style={{ ['--h' as string]: `${Math.round((b.v / 42) * 100)}%`, ['--i' as string]: i }} />
+        </div>
+      ))}
+    </div>
+  )
+}
 
+/** Spike line: the SVG draws, the area fades in, the peak dot pops. */
+function SpikeFigure() {
+  return (
+    <div className="dl-spike">
+      <svg className="dl-spikesvg" viewBox="0 0 300 66" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="dlArea2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="currentColor" stopOpacity=".26" />
+            <stop offset="1" stopColor="currentColor" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <path className="dl-area" d="M8 58 L40 54 L68 56 L96 50 L124 46 L146 40 L164 34 L194 14 L214 38 L242 46 L292 52 L292 66 L8 66 Z" />
+        <path className="dl-line" pathLength="100" d="M8 58 L40 54 L68 56 L96 50 L124 46 L146 40 L164 34 L194 14 L214 38 L242 46 L292 52" />
+      </svg>
+      <i className="dl-peak" aria-hidden="true" />
+    </div>
+  )
+}
+
+/** Risk donut: a fixed 64px SVG with five segments, legend rows on the right. */
+function DonutFigure({ a, setA }: { a: number; setA: (n: number) => void }) {
+  const rots = DONUT.map((_, i) => -90 + DONUT.slice(0, i).reduce((a, b) => a + b, 0) * 3.6)
+  return (
+    <div className="dl-donutwrap" data-a={a >= 0 ? a : undefined}>
+      <div className="dl-donut">
+        <svg viewBox="0 0 64 64" aria-hidden="true">
+          <circle className="dl-dbg" cx="32" cy="32" r="26" fill="none" strokeWidth="9" />
+          {DONUT.map((len, i) => (
+            <circle key={i} className="dl-seg" cx="32" cy="32" r="26" fill="none" strokeWidth="9"
+              strokeOpacity={1 - i * 0.16} pathLength={100}
+              style={{ ['--len' as string]: len, ['--i' as string]: i, transform: `rotate(${rots[i]}deg)`, transformOrigin: '32px 32px' }}
+              onPointerEnter={() => setA(i)} onPointerLeave={() => setA(-1)} />
+          ))}
+        </svg>
+        <span className="dl-dmid" aria-hidden="true"><b><CountUp text="5" /></b></span>
+      </div>
+      <div className="dl-leg">
+        {DONUT.map((len, i) => (
+          <span key={i} className="dl-legrow" tabIndex={0} aria-label={`Risk segment P${i + 1}: ${len}% of records`}
+            style={{ ['--i' as string]: i }}
+            onPointerEnter={() => setA(i)} onFocus={() => setA(i)} onPointerLeave={() => setA(-1)} onBlur={() => setA(-1)}>
+            <i className="dl-legdot" aria-hidden="true" />P{i + 1} <b>{len}%</b>
+          </span>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+/** One figure slot per ledger card: a fixed 82px stage (66px chart + 16px caption) that
+ *  loops while in view, replays on hover, focus or tap, and rests on its finished frame. */
+function FigureSlot({ l }: { l: Ledger }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const tl = useTimeline(ref, STEPS[l.figure.type], LOOP_MS, { loop: true })
+  const [a, setA] = useState(-1)
+  const cls = `dl-slot ${l.figure.type}${tl.has('go') ? ' go' : ''}${tl.has('ring') ? ' ring' : ''}${tl.has('dorm') ? ' dorm' : ''}${tl.has('pulse') ? ' pulse' : ''}${tl.has('area') ? ' area' : ''}${tl.has('peak') ? ' peak' : ''}${tl.has('leg') ? ' leg' : ''}`
+  return (
+    <div ref={ref} className={cls} role="img" aria-label={ARIA[l.figure.type]}
+      onPointerEnter={tl.replay} onFocus={tl.replay} onClick={tl.replay}>
+      <div className="dl-chart">
+        {l.figure.type === 'heatmap' && <HeatFigure />}
+        {l.figure.type === 'bars' && <BarsFigure />}
+        {l.figure.type === 'spike' && <SpikeFigure />}
+        {l.figure.type === 'donut' && <DonutFigure a={a} setA={setA} />}
+      </div>
+      <div className="dl-cap">
+        <span>{CAPTION[l.figure.type]}</span>
+        {l.figure.status === 'illustrative' && <i className="dl-ill">Illustrative</i>}
+      </div>
+    </div>
+  )
+}
+
+export default function DataProjects() {
+  const gridRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
-    const box = gridRef.current
-    if (!box) return
-    const cards = Array.from(box.querySelectorAll<HTMLElement>('.dl-card'))
+    const cards = Array.from(document.querySelectorAll<HTMLElement>('.dl-card'))
     const io = new IntersectionObserver(entries => {
       for (const e of entries) {
         if (e.isIntersecting) { (e.target as HTMLElement).classList.add('in'); io.unobserve(e.target) }
@@ -157,15 +190,14 @@ export default function DataLedger() {
           {[...DATA_LEDGERS].sort((a, b) => a.rank - b.rank).map(l => (
             <article key={l.n} className="dl-card">
               <span className="dl-num" aria-hidden="true">{l.n}</span>
-              {l.figure.status === 'illustrative' && <span className="dl-ill">Illustrative</span>}
               <header className="dl-head">
                 <h3>{l.title}</h3>
                 <span className="dl-where">{l.where} <ProvenanceChip p={l.provenance} /></span>
               </header>
               {l.finding && <p className="dl-find">{l.finding}</p>}
-              <LedgerVis n={l.n} />
+              <FigureSlot l={l} />
               <ul className="dl-points">
-                {l.points.map(p => <li key={p}>{p}</li>)}
+                {l.points.map(p => <li key={p}><Rich text={p} /></li>)}
               </ul>
               <footer className="dl-foot">
                 <span className="dl-tech">{l.tech}</span>

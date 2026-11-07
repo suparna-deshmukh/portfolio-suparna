@@ -244,3 +244,96 @@ superseded by `cp-corp-*`).
 * **Corporate emblem hover** is a transition lift rather than a re-run of
   the emblem choreography — transform-only, and the emblems' one-shot
   play is not retriggerable by CSS alone.
+
+## 15. Punch pass (Corporate / POR / Data) — final QA
+
+Context: the punch-pass brief (one big number per object, subtle looped
+HTML-label figures, punchier copy, mobile) on top of the user's screenshot
+round. **Process note:** the prod server found at the start of this pass was
+serving a stale intermediate build (corporate doc rows, manila tabs and hero
+notes were all older than the committed code); everything below was verified
+against fresh `npm run build` + restart cycles on the final worktree.
+
+### What changed in this pass
+* **POR** — one panel anatomy: one-line eyebrow (`0N · ORG`, ellipsis +
+  `title`), 24px role + dates row, 48/40px hero figure (Placement `58% → 85%`
+  counts 58→85; Director ₹17L + 24px "3,200 registrations"), ≤90-char line,
+  ≤2 chips, `Details` closed by default. OfferStamps + TeamDots deleted:
+  Placement = 10px track, 58→85% segment fill + round **240 PLACED** stamp
+  slam (−6°, `--settle`) + one 180ms card nudge; Director = single 16-tile
+  row (14px, 40ms stagger, caption "16 projects · 45 consultants"). CEL is a
+  one-row strip (40+ / 400K+ / ₹10L+ with labels). Sponsors: static line in
+  details, no marquee. Nothing loops in POR; hover/focus/click replays one
+  visual.
+* **Corporate** — order Everyday → Fedaykin → KriSHE (per owner); manila tab
+  "FILE 0N ·" prefix removed (now "via · year"); right column = eyebrow
+  chip, h3 + mono meta, **big proof** (52/40px CountUp + chip label +
+  attribution), one `Rich` line, one non-duplicate chip, `Details`
+  (`points.slice(1)`), deck chip hidden while empty, "Ask me about it →".
+  Mini-doc: gauge arcs and "file 0N" sub-line gone, stamp padding fixed
+  (clears the last row at 320), loop restored (8800ms, rows 380/1500/2620,
+  stamp 4650, pause off-screen, replay on hover/focus/tap/button).
+* **Data** — `.dl-slot` rebuild: fixed 82px stage (66px chart + 16px caption),
+  identical across all four cards; shapes as HTML divs / fixed-size SVG,
+  **all labels HTML 11–12px** (no scaled SVG text); per-slot `useTimeline`
+  8500ms loop, `initialHoldMs: 0` (starts on scroll-in, loops in view);
+  heatmap column fade-in + dormant ring/pulse, bars scaleY stagger + count-up
+  values + accent pulse, spike draw/area/peak, donut segment draw + legend
+  slide + centre count. Row/bar/legend isolation via `tabindex`+`aria-label`
+  + `data-a`; slots are `role="img"` with finished-state labels.
+  **Illustrative** tag moved from the card's top-right corner into the slot's
+  caption row (quiet dashed 11px, bug H). Result figures 36px accent.
+* **Projects** — AskCart report + Research board: `initialHoldMs: 0` /
+  `FIRST_HOLD_MS = 0` — animations start on scroll-in and keep looping in
+  view (no hover needed); Research band palette → green `--pa-fl` (matches
+  the agentic extractor).
+* **Hero** — RISA card 2×3 op-metric grid (400 docs/day, 92% Vapi, 2x QC,
+  87% auto-RCA, 60% portal TAT, $10K/yr Doc Studio); n1 re-anchored 258→282
+  for the taller card; aria-labels colon-separated (no em dashes).
+* **Experience** — RISA renders as a standard card (featured treatment
+  retired): 7 punchy result rows + always-present "All 8 results" dropdown
+  (the 350 hero lives only in the hero figure).
+
+### Verification (final build, this session)
+* `npm run check` (tsc + eslint + resume lint): **green**.
+* Console: **0 errors** in every screenshot run (1440/1024 light, 390/320
+  dark/light, reduced-motion run).
+* `node scripts/qa-fonts.mjs --routes /`: **PASS** at 1440→320 (no effective
+  text < 11px).
+* No-JS: disclosures SSR closed + `<noscript>` expands `.disc-body`;
+  corporate files fully expanded.
+* Reduced motion (`--force-prefers-reduced-motion`, 1440×4000 full page):
+  every figure on its finished frame — track segment filled + 240 PLACED
+  stamp, tile row filled, data cells/bars/line/donut/legend fully painted,
+  corporate files at opacity 1. Crops: `rm-about.png`, `rm-corpdata.png`.
+* Served-HTML asserts: no "Term sheet" row, no "FILE 0N" tab, corporate
+  order everyday→fedaykin→krishe, `RISA Labs:` colon, 4× "Illustrative".
+* 320: no horizontal scroll (resume reflow verified in §14; about/corporate/
+  data re-shot this pass, no clipped text).
+
+### Screenshots (in /tmp/qa11/)
+`fin-1440-light-{hero,about,corporate,data}.png`, `fin-390-dark-{...}.png`,
+`fin1024-1024-light-{about,corporate,data}.png` (punch build), `fin2-1440-light-
+{data,corporate}.png` + `fin2-390-dark-#data.png` (after tab + Illustrative-tag
+fixes), `hero3-1440-light-#hero.png` (final hero), `rm-1440.png` + crops
+(reduced motion), `done-390-dark-*` half-scale crops used for the 390 layout
+check.
+
+### Deviations
+* Data figure slots are **82px**, not the brief's 72px (the 6-row heatmap
+  needs 66px of chart).
+* Donut centre shows only "5" — "segments" would overflow the 43px hole at
+  the 11px floor; the caption "5 risk profiles" carries it.
+* Corporate mini-doc keeps plain deliverable rows (no verdict chips) per the
+  reviewer's "don't say things and then built"; the punch pass's "verdict
+  words stay as in data" holds trivially — the data has none.
+* "Pause on hover" (brief) is implemented as **replay on hover** on the
+  mini-doc, matching the project boards' engine.
+* Bar value labels count up once on first view, not on every loop cycle.
+* Hero pinned notes unchanged in code ("Top 8 / Accenture", "Placement
+  Coordinator / 2026 batch", "$2.5M / Everyday") — the "1 of 8" hero variant
+  seen in an earlier stale server render was never committed; "1 of 8" lives
+  on the POR panel (chip + details), which satisfies the reviewer's request
+  without a third encoding of the same fact.
+* `RISA Labs —` em dashes removed from new copy (metrics sources, aria-labels);
+  pre-existing em dashes in the About bio and OG images predate this pass.

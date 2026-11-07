@@ -94,29 +94,6 @@ html.motion-ok .rt-big b::after{transition:transform .8s var(--ease) .15s}
   font:400 13px/1.45 var(--fb);letter-spacing:0;text-transform:none;color:var(--dim)}
 .rt-ft li strong{color:var(--fg);font-weight:700}
 
-/* ── the standout role: a larger card, an accent ring, and the full results
-   list inline — every point and number visible without a dropdown ── */
-.rt-stn.featured .rt-card{padding:22px 26px;
-  border-color:color-mix(in oklab,var(--acc) 45%,var(--lineS));
-  box-shadow:0 1px 0 var(--press),0 26px 44px -24px rgba(23,19,14,.55),0 0 0 3px color-mix(in oklab,var(--acc) 12%,transparent)}
-.rt-stn.featured .rt-node{width:54px;height:54px;font-size:12px}
-.rt-stn.featured .rt-head h3{font-size:31px}
-.rt-flag{display:inline-flex;align-items:center;margin-left:12px;padding:3px 9px 4px;border-radius:999px;
-  border:1px solid color-mix(in oklab,var(--acc) 50%,transparent);
-  background:color-mix(in oklab,var(--acc) 10%,transparent);
-  font:700 11.5px/1 var(--fm);letter-spacing:.08em;text-transform:uppercase;color:var(--accText);transform:translateY(-2px)}
-.rt-stn.featured .rt-role h4{font-size:20px}
-.rt-stn.featured .rt-big b{font-size:50px}
-.rt-stn.featured .rt-big>span{font-size:16.5px}
-.rt-stn.featured .rt-how{font-size:15px}
-.rt-stn.featured .rt-out li b{font-size:22px}
-.rt-stn.featured .rt-out li span{font-size:13px}
-.rt-out-full{margin:4px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;
-  font:400 13.5px/1.5 var(--fb);color:var(--dim)}
-.rt-out-full li{padding:7px 0;border-bottom:1px solid var(--line)}
-.rt-out-full li:first-child{border-top:1px solid var(--line)}
-.rt-out-full li strong{color:var(--fg);font-weight:700}
-
 /* motion: stations settle in once, top down */
 html.motion-ok .rt-stn{animation:rtIn .8s var(--ease) both;animation-delay:calc(var(--si,0) * 90ms)}
 @keyframes rtIn{from{opacity:0;translate:0 16px}}
@@ -127,6 +104,10 @@ html.motion-ok .rt-stn.in .rt-out li:nth-child(1){transition-delay:.2s}
 html.motion-ok .rt-stn.in .rt-out li:nth-child(2){transition-delay:.32s}
 html.motion-ok .rt-stn.in .rt-out li:nth-child(3){transition-delay:.44s}
 html.motion-ok .rt-stn.in .rt-out li:nth-child(4){transition-delay:.56s}
+html.motion-ok .rt-stn.in .rt-out li:nth-child(5){transition-delay:.68s}
+html.motion-ok .rt-stn.in .rt-out li:nth-child(6){transition-delay:.8s}
+html.motion-ok .rt-stn.in .rt-out li:nth-child(7){transition-delay:.92s}
+html.motion-ok .rt-stn.in .rt-out li:nth-child(8){transition-delay:1.04s}
 html.motion-ok .rt-stn.in .rt-ft{animation:rtFtIn .45s var(--ease) .65s both}
 @keyframes rtFtIn{from{opacity:0}}
 @media (prefers-reduced-motion:reduce){
@@ -146,7 +127,4 @@ html.motion-ok .rt-stn.in .rt-ft{animation:rtFtIn .45s var(--ease) .65s both}
   .rt-node{left:-56px;width:38px;height:38px;top:16px;font-size:11px}
   .rt-body{grid-template-columns:1fr;gap:16px}
   .rt-big b{font-size:38px}
-  .rt-stn.featured .rt-card{padding:22px 20px}
-  .rt-stn.featured .rt-head h3{font-size:27px}
-  .rt-stn.featured .rt-big b{font-size:46px}
 }

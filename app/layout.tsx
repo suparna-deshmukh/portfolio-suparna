@@ -86,10 +86,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* P3-4: no-JS fallbacks — the JS-only exhibit fit gets a static scale, and the
             JS-only controls (theme/motion toggles, p99 hint) are removed so nothing dead renders. */}
         <noscript>
-          <style>{`
-            @media (min-width:640px){.exhibit{transform:scale(.74)!important;transform-origin:50% 0}}
-            .themebtn,.p99 .kb,.kb{display:none}
-          `}</style>
+            <style>{`
+              @media (min-width:640px){.exhibit{transform:scale(.74)!important;transform-origin:50% 0}}
+              .themebtn,.p99 .kb,.kb{display:none}
+              .disc-body{grid-template-rows:1fr!important}
+            `}</style>
         </noscript>
       </head>
       <body>

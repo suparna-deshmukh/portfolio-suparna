@@ -30,7 +30,7 @@ const ICONS: Record<Src, React.JSX.Element> = {
 
 const SCATTER_MS = 2100
 const SORTED_MS = 4700
-const FIRST_HOLD_MS = 2600
+const FIRST_HOLD_MS = 0
 const COUNT_MS = 600
 const TOP_MENTIONS = m('ra-mentions').num ?? 7
 const LOOP_MS = SCATTER_MS + SORTED_MS

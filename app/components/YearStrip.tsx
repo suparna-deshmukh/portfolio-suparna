@@ -40,11 +40,13 @@ function pack(spans: Span[]): { span: Span; row: number }[] {
   const sorted = [...spans].sort((a, b) => a.from - b.from)
   const lastTo: number[] = []
   return sorted.map(sp => {
-    let row = lastTo.findIndex(to => sp.from >= to + 0.03) // ~1 month of breathing room for min-width pills
+    let row = lastTo.findIndex(to => sp.from >= to + 0.06) // ~2 months of breathing room for min-width pills
     if (row === -1) { row = lastTo.length; lastTo.push(sp.to) } else lastTo[row] = sp.to
     return { span: sp, row }
   })
 }
+
+const laneRows = (packed: { row: number }[]) => (packed.length ? Math.max(...packed.map(p => p.row)) + 1 : 1)
 
 export default function YearStrip() {
   const consulting: Span[] = []
@@ -71,6 +73,8 @@ export default function YearStrip() {
 
   const packedPositions = pack(positions)
   const packedConsulting = pack(consulting)
+  const consultRows = laneRows(packedConsulting)
+  const posRows = laneRows(packedPositions)
 
   const honors = ACHIEVEMENTS.map(a => ({ year: a.year + 0.4, label: a.name }))
 
@@ -84,7 +88,7 @@ export default function YearStrip() {
           <div className="ys-track"><div className="ys-bar" style={{ left: x(START), width: `calc(${x(EDUCATION.classOf)} - ${x(START)})` }} aria-hidden="true" /></div>
         </div>
         <div className="ys-lane"><i className="ys-lab">Consulting</i>
-          <div className="ys-track">
+          <div className="ys-track" style={{ ['--rows' as string]: consultRows }}>
             {packedConsulting.map(({ span: b, row }) => (
               <a key={b.label + row} className="ys-item ys-c" style={{ left: x(b.from), width: xw(b.from, b.to), top: row * 10, height: 9 }}
                 href={b.href ?? '#corporate'} title={`${b.label}`}>
@@ -94,7 +98,7 @@ export default function YearStrip() {
           </div>
         </div>
         <div className="ys-lane"><i className="ys-lab">Positions</i>
-          <div className="ys-track">
+          <div className="ys-track" style={{ ['--rows' as string]: posRows }}>
             {packedPositions.map(({ span: b, row }) => (
               <a key={b.label + row} className="ys-item ys-p" style={{ left: x(b.from), width: xw(b.from, b.to), top: row * 10, height: 9 }}
                 href={b.href ?? '#about-positions'} title={b.label}>

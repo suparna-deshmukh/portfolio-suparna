@@ -11,14 +11,14 @@ import { CurrentlyTicker } from './AboutExtras'
 import Stamp from './Stamp'
 import YearStrip from './YearStrip'
 import Disclosure from './Disclosure'
+import Rich from './Rich'
 import { useTimeline } from '../lib/timeline'
 
-/** A field of slim tiles that fill in one by one when the panel enters view —
- *  the project board run, one tile per engagement (the Director's single visual, R-2). */
-function TileField({ count, cols, caption }: { count: number; cols: number; caption: string }) {
+/** One project per tile, in a single 16-tile row (the Director's signature visual, R-2). */
+function TileField({ count, caption }: { count: number; caption: string }) {
   return (
     <div className="ab-tiles" role="img" aria-label={caption}>
-      <div className="ab-tiles-grid" style={{ ['--cols' as string]: cols }} aria-hidden="true">
+      <div className="ab-tiles-grid" style={{ ['--cols' as string]: count }} aria-hidden="true">
         {Array.from({ length: count }).map((_, i) => <i key={i} style={{ ['--i' as string]: i }} />)}
       </div>
       <span>{caption}</span>
@@ -26,56 +26,69 @@ function TileField({ count, cols, caption }: { count: number; cols: number; capt
   )
 }
 
-/** The placement ledger: rubber-stamped offers that slam in one by one — each stamp stands
- *  for 40 students (240 placed = exactly six). The caption carries the fact (R-3). */
-function OfferStamps() {
+/** Placement track: the 58% to 85% segment fills left to right, then one round stamp
+ *  slams at the end. The finished frame is the base state (P3). */
+function PlacementTrack() {
   const placed = m('pc-placed').num ?? 240
-  const per = 40
-  const full = Math.floor(placed / per)
-  const partial = placed % per
   return (
-    <div className="ab-offers" role="img"
-      aria-label={`${placed} students placed — ${full} stamps, each one stands for ${per} students${partial ? ` plus ${partial}` : ''}`}>
-      {Array.from({ length: full }).map((_, i) => (
-        <Stamp key={i} shape="offer" tone="ok" size="sm" rot={i % 2 ? 1.6 : -2.2} label="OFFER"
-          decorative className="ab-offer" style={{ ['--i' as string]: i }} />
-      ))}
-      {partial > 0 && (
-        <Stamp shape="offer" tone="ok" size="sm" rot={-1.2} label="OFFER" decorative
-          className="ab-offer partial" style={{ ['--i' as string]: full }} />
-      )}
-      <span>1 stamp = {per} students · {placed} placed</span>
+    <div className="ab-trackfig" role="img" aria-label={`Batch placement rose from 58% to 85%. ${placed} students placed so far.`}>
+      <div className="ab-track" aria-hidden="true"><i className="ab-trackseg" /></div>
+      <span className="ab-trackstamp" aria-hidden="true"><b>{placed}</b>PLACED</span>
     </div>
   )
 }
 
-/** Right page: the college years — one panel per position, one headline each, the rest
- *  behind a disclosure (R-1). */
+/** The headline figure: a rate like "58%→85%" splits into a small dim start and a big
+ *  count-up finish; everything else counts from zero. */
+function HeroFigure({ metric, label, secondary }: { metric: string; label: string; secondary?: { metric: string; label: string } }) {
+  const shown = m(metric).shown
+  const arrow = shown.includes('→') ? shown.split('→') : null
+  return (
+    <p className="ab-headline">
+      <span className="ab-herofig">
+        {arrow
+          ? <>
+            <small className="ab-from">{arrow[0]} →</small>
+            <MetricTip id={metric} focusable={false}><CountUp text={arrow[1]} from={parseFloat(arrow[0])} className="ab-hero" /></MetricTip>
+          </>
+          : <MetricTip id={metric} focusable={false}><CountUp text={shown} className="ab-hero" /></MetricTip>}
+        <span className="ab-hlabel">{label}</span>
+      </span>
+      {secondary && (
+        <span className="ab-sec">
+          <MetricTip id={secondary.metric} focusable={false}><CountUp text={m(secondary.metric).shown} /></MetricTip>
+          <span>{secondary.label}</span>
+        </span>
+      )}
+    </p>
+  )
+}
+
+/** Right page: the college years — two panels (Placement, Director) plus the CEL one-row
+ *  strip, each with one headline; the rest behind a closed disclosure (R-1). */
 function Positions() {
+  const panels = POSITIONS.filter(p => !p.strip)
+  const strip = POSITIONS.find(p => p.strip)
   return (
     <div className="ab-read" id="about-positions">
       <p className="lab">Positions of responsibility <span>3 roles · BITS Goa</span></p>
       <div className="ab-panels">
-        {POSITIONS.map(p => (
+        {panels.map(p => (
           <article key={p.id} className="ab-panel" id={`about-${p.id}`}>
             <p className="ab-eyebrow">
-              POSITION {String(p.no).padStart(2, '0')} · {p.org} · {p.when}
+              <span title={p.org}>{String(p.no).padStart(2, '0')} · {p.org.toUpperCase()}</span>
               {p.current && <b className="ab-now">NOW</b>}
             </p>
             <header>
               <b>{p.title}</b>
+              <em>{p.when}</em>
             </header>
-            <p className="ab-scope">{p.blurb}</p>
-            <p className="ab-headline">
-              <MetricTip id={p.headline.metric}><CountUp text={m(p.headline.metric).shown} /></MetricTip>
-              <span>{p.headline.label}</span>
-            </p>
-            {p.id === 'placement' && <OfferStamps />}
-            {p.id === 'consult' && <TileField count={m('dc-projects').num ?? 16} cols={8} caption={`${m('dc-projects').shown} projects · 45 consultants`} />}
-            {p.noteLine && <p className="ab-note">{p.noteLine}</p>}
-            {p.sponsors && (
-              <p className="ab-sponsors">Consultathon sponsors: {p.sponsors.join(', ')}</p>
-            )}
+            <div className="ab-herorow">
+              <HeroFigure metric={p.headline.metric} label={p.headline.label} secondary={p.secondary} />
+              {p.id === 'placement' && <PlacementTrack />}
+              {p.id === 'consult' && <TileField count={m('dc-projects').num ?? 16} caption={`${m('dc-projects').shown} projects · 45 consultants`} />}
+            </div>
+            {p.line && <p className="ab-line"><Rich text={p.line} /></p>}
             {p.chips.length > 0 && (
               <ul className="ab-chips">
                 {p.chips.map(ch => (
@@ -89,23 +102,35 @@ function Positions() {
                 ))}
               </ul>
             )}
-            {p.stats.length > 0 && (
+            {p.details && p.details.length > 0 && (
               <Disclosure label="More detail" className="ab-disc">
-                <div className="ab-stats">
-                  {p.stats.map(s => (
-                    <div key={s.label}>
-                      {s.metric
-                        ? <MetricTip id={s.metric} focusable={false}><CountUp text={s.value} /></MetricTip>
-                        : <CountUp text={s.value} />}
-                      <span>{s.label}</span>
-                  </div>
-                ))}
-                </div>
+                <ul className="ab-details">
+                  {p.details.map(d => <li key={d}><Rich text={d} /></li>)}
+                </ul>
               </Disclosure>
             )}
           </article>
         ))}
       </div>
+      {strip && (
+        <div className="ab-strip" id={`about-${strip.id}`}>
+          <div className="ab-strip-hd">
+            <p className="ab-eyebrow"><span title={strip.org}>{String(strip.no).padStart(2, '0')} · {strip.org.toUpperCase()}</span></p>
+            <header>
+              <b>{strip.title}</b>
+              <em>{strip.when}</em>
+            </header>
+          </div>
+          <div className="ab-strip-stats">
+            {strip.stats.map(s => (
+              <div key={s.label} className="ab-strip-stat">
+                <MetricTip id={s.metric ?? ''} focusable={false}><CountUp text={s.value} /></MetricTip>
+                <span>{s.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
       <div className="ab-honors" id="about-honors">
         <p className="lab">Honors <span>case competitions and fellowships</span></p>
         <ol>
@@ -177,11 +202,33 @@ export default function About() {
     const panels = Array.from(document.querySelectorAll<HTMLElement>('#about .ab-panel'))
     const io = new IntersectionObserver(entries => {
       for (const e of entries) {
-        if (e.isIntersecting) { (e.target as HTMLElement).classList.add('in'); io.unobserve(e.target) }
+        if (e.isIntersecting) { (e.target as HTMLElement).classList.add('in', 'play'); io.unobserve(e.target) }
       }
     }, { threshold: 0.3 })
     panels.forEach(p => io.observe(p))
-    return () => io.disconnect()
+    // hover, focus or tap on a visual replays just that object's choreography
+    const visuals = Array.from(document.querySelectorAll<HTMLElement>('#about .ab-trackfig, #about .ab-tiles'))
+    const handlers = visuals.map(v => {
+      const re = () => {
+        const panel = v.closest<HTMLElement>('.ab-panel')
+        if (!panel) return
+        panel.classList.remove('play')
+        void panel.offsetWidth
+        panel.classList.add('play')
+      }
+      v.addEventListener('pointerenter', re)
+      v.addEventListener('focusin', re)
+      v.addEventListener('click', re)
+      return [v, re] as const
+    })
+    return () => {
+      io.disconnect()
+      handlers.forEach(([v, re]) => {
+        v.removeEventListener('pointerenter', re)
+        v.removeEventListener('focusin', re)
+        v.removeEventListener('click', re)
+      })
+    }
   }, [])
 
   return (

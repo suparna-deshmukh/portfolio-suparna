@@ -46,7 +46,7 @@ export default function AskCartReport() {
   const reduced = usePrefersReducedMotion()
   const [counts, setCounts] = useState(false)
 
-  const tl = useTimeline(ref, STEPS, LOOP_MS, { initialHoldMs: LOOP_MS - STAMP_AT })
+  const tl = useTimeline(ref, STEPS, LOOP_MS, { initialHoldMs: 0 })
   const replaying = tl.inCycle && tl.has('stamp')
 
   // Feature detection after mount (SSR renders the static path) — the only safe place for this setState.
