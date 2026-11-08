@@ -102,7 +102,7 @@ export const LOG: LogEntry[] = [
 
 export interface Bullet { lead: string; rest: string }
 /** One proof figure: the number and what it measures. */
-export interface Stat { value: string; label: string; /** metric registry id behind the figure; components attach a hover proof when present */ metric?: string }
+export interface Stat { value: string; /** trailing unit/suffix kept out of the count-up and rendered dim (e.g. '+', 'K+', 'L+') */ suffix?: string; label: string; /** metric registry id behind the figure; components attach a hover proof when present */ metric?: string }
 interface RoleBase { title: string; meta: string; bullets: Bullet[]; /** metric registry id for the headline figure */ heroMetric?: string }
 /**
  * A role with its proof pulled out of the bullets: `hero` is the headline, `how` is the verbatim `rest`
@@ -377,6 +377,8 @@ export interface Position {
   details?: string[]
   /** stats shown in the strip */
   stats: Stat[]
+  /** short highlights rendered as chips in the strip (verbatim from supplied content) */
+  highlights?: string[]
   chips: { text: string; href?: string; metric?: string }[]
 }
 
@@ -417,10 +419,11 @@ export const POSITIONS: Position[] = [
     strip: true,
     headline: { metric: 'cel-impr', label: 'Coalescence’24 impressions' },
     stats: [
-      { value: m('cel-founders').shown, label: 'founders, investors and partners', metric: 'cel-founders' },
-      { value: m('cel-impr').shown, label: 'impressions', metric: 'cel-impr' },
-      { value: m('cel-rev').shown, label: 'event revenue', metric: 'cel-rev' },
+      { value: '40', suffix: '+', label: 'founders, investors and partners', metric: 'cel-founders' },
+      { value: '400', suffix: 'K+', label: 'impressions', metric: 'cel-impr' },
+      { value: '\u20b910', suffix: 'L+', label: 'event revenue', metric: 'cel-rev' },
     ],
+    highlights: ['Ankur Warikoo & UTI on stage'],
     chips: [],
   },
 ]

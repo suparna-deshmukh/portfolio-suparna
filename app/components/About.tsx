@@ -121,12 +121,22 @@ function Positions() {
             {strip.line && <p className="ab-strip-line"><Rich text={strip.line} /></p>}
           </div>
           <div className="ab-strip-stats">
-            {strip.stats.map(s => (
-              <div key={s.label} className="ab-strip-stat">
-                <MetricTip id={s.metric ?? ''} focusable={false}><CountUp text={s.value} /></MetricTip>
-                <span>{s.label}</span>
+            <div className="ab-statrow">
+              {strip.stats.map(s => (
+                <div key={s.label} className="ab-strip-stat">
+                  <span className="ab-statnum">
+                    <MetricTip id={s.metric ?? ''} focusable={false}><CountUp text={s.value} ms={600} /></MetricTip>
+                    {s.suffix && <i className="ab-suf">{s.suffix}</i>}
+                  </span>
+                  <span className="ab-slab">{s.label}</span>
+                </div>
+              ))}
+            </div>
+            {strip.highlights && strip.highlights.length > 0 && (
+              <div className="ab-strip-chips">
+                {strip.highlights.map(h => <span key={h} className="ab-strip-chip">{h}</span>)}
               </div>
-            ))}
+            )}
           </div>
         </div>
       )}

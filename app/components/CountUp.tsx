@@ -13,7 +13,7 @@ const easeOut = (t: number) => 1 - Math.pow(1 - t, 4)
  * "38→51%" counts from 38; everything else counts from 0.
  * An explicit `from` overrides the start value (e.g. the 85% in "58% to 85%").
  */
-export default function CountUp({ text, className, from, delayMs = 0 }: { text: string; className?: string; from?: number; delayMs?: number }) {
+export default function CountUp({ text, className, from, delayMs = 0, ms }: { text: string; className?: string; from?: number; delayMs?: number; ms?: number }) {
   const ref = useRef<HTMLElement>(null)
   const seen = useInViewOnce(ref, 0.4)
   const [shown, setShown] = useState(text)
@@ -26,7 +26,7 @@ export default function CountUp({ text, className, from, delayMs = 0 }: { text: 
   useEffect(() => {
     if (!seen || !match || Number.isNaN(target)) return
     if (!document.documentElement.classList.contains('motion-ok')) return
-    const duration = target < 10 ? SHORT_MS : LONG_MS
+    const duration = ms ?? (target < 10 ? SHORT_MS : LONG_MS)
     let raf = 0
     let start = 0
     const tick = (now: number) => {
