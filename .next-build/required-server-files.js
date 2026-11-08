@@ -66,7 +66,8 @@ self.__SERVER_FILES_MANIFEST={
       ],
       "remotePatterns": [],
       "qualities": [
-        75
+        75,
+        90
       ],
       "unoptimized": false,
       "customCacheHandler": false
