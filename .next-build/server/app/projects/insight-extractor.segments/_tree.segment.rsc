@@ -11,4 +11,4 @@
 3:[["children",{"s":"__PAGE__","h":160}]]
 2:[["children",{"s":{"n":"slug","t":"d","k":"insight-extractor","s":[]},"h":96,"c":"$Q3"}]]
 1:[["children",{"s":"projects","h":96,"c":"$Q2"}]]
-0:{"b":"Zkz9coRjEuUvqmqzY_VMq","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"PPxRtrgclrvPCN-l8oeOJ","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
