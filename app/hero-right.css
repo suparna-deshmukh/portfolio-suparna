@@ -101,13 +101,15 @@
   background:color-mix(in oklab,var(--acc) 28%,rgba(255,255,255,.55));opacity:.9}
 .ex-note-num{display:block;font:700 16px/1 var(--fd);letter-spacing:-.01em;color:var(--accText)}
 .ex-note-lab{display:block;margin-top:4px;font:500 13px/1.4 var(--fm);letter-spacing:.02em;color:var(--dim)}
-.ex-n1{left:246px;top:282px}
-.ex-n2{left:246px;top:362px}
-.ex-n3{left:246px;top:466px}
-html.motion-ok .ex-note{animation:exIn .8s var(--ease) both}
-html.motion-ok .ex-n1{animation-delay:1.05s}
-html.motion-ok .ex-n2{animation-delay:1.2s}
-html.motion-ok .ex-n3{animation-delay:1.35s}
+/* L-shape: n1 under the RISA card, n2 under n1, n3 off to the right and below the phone */
+.ex-n1{left:246px;top:232px}
+.ex-n2{left:246px;top:314px}
+.ex-n3{left:396px;top:500px}
+html.motion-ok .ex-note{animation:exIn .8s var(--ease) both,exSway 7s ease-in-out infinite alternate}
+html.motion-ok .ex-n1{animation-delay:1.05s,-1.2s}
+html.motion-ok .ex-n2{animation-delay:1.2s,-3.8s}
+html.motion-ok .ex-n3{animation-delay:1.35s,-6.1s}
+@keyframes exSway{from{rotate:-5deg}to{rotate:5deg}}
 @media (prefers-reduced-motion:reduce){.ex-note{animation:none}}
 
 /* dimension-style callouts */

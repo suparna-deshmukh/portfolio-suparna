@@ -70,7 +70,7 @@ export function assertNoDeadLinks() {
     check(`PROJECTS[${p.slug}].live_url`, p.live_url)
     for (const l of p.links ?? []) check(`PROJECTS[${p.slug}].links`, l.href)
   }
-  for (const c of CORPORATE) check(`CORPORATE[${c.id}].deck`, c.deck?.href)
+  for (const c of CORPORATE) for (const l of c.links ?? []) check(`CORPORATE[${c.id}].links`, l.href)
   for (const a of ACHIEVEMENTS) check(`ACHIEVEMENTS[${a.name}].deck`, a.deck?.href)
   if (problems.length) throw new Error(`[dead-links] rendered links without a real destination: ${problems.join('; ')}`)
 }
@@ -232,37 +232,26 @@ export const EXPERIENCE: Company[] = [
 
 export type Attribution = 'led' | 'built' | 'contributed' | 'supported'
 /** Wording ladder legend, shown once per section (Appendix B of the sections brief). */
-export const ATTRIBUTION_LEGEND = 'led — I owned it end to end · built — I produced the artifact · contributed — part of a team effort · supported — I assisted the owner'
-
 export interface CorporateRow { label: string; attribution: Attribution; evidence?: string }
 export interface Corporate {
   id: string
   no: number
   name: string
-  /** one line on what the client does — hidden until supplied (input C1) */
-  descriptor?: string
   engagement: { via: '180DC' | 'independent'; role: string }
-  when: string
+  /** month-range pill, e.g. "Aug to Sept 2024" */
+  dur: string
   where: string
-  /** Ask / My part / Outcome lines — hidden until supplied in Suparna's words (inputs C3) */
-  askLine?: string
-  myPart?: string
-  outcome?: string
-  /** one punchy line under the big proof — **bold** keywords, 100 characters or fewer */
-  line?: string
-  /** exactly three deliverable lines — plain artifact statements, no verdict words */
+  /** exactly three deliverable lines on the mini-doc — plain artifact statements */
   rows: CorporateRow[]
-  /** the one number the file is remembered for. No gauge for money values (C-2). */
+  /** the one number the file is remembered for, on one line with its label */
   proof: { value: string; label: string }
   proofMetric?: string
-  /** attribution for the headline number */
-  proofAttribution: Attribution
   doc: { type: string }
+  /** optional per-file links — rendered only when a real URL exists, never "#" */
+  links?: { label: string; href: string }[]
   /** the rubber stamp — never a claim larger than her role (input C6) */
   stamp: string
-  deck?: { label: string; href?: string; thumb?: string }
   points: string[]
-  chips: (Stat & { attribution: Attribution })[]
   ask: string
 }
 
@@ -270,85 +259,68 @@ export const CORPORATE: Corporate[] = [
   {
     id: 'everyday', no: 1, name: 'Everyday Diamonds',
     engagement: { via: '180DC', role: 'Team Lead · GTM and Series A Fundraising' },
-    when: 'Aug 2024 – Sept 2024', where: 'Bengaluru',
-    line: 'Modeled **profitability and pricing**; built the roadmap and Series A deck behind the **$2.5M raise**.',
+    dur: 'Aug to Sept 2024', where: 'Bengaluru',
     rows: [
-      { label: 'Profitability, pricing and projections model', attribution: 'built' },
-      { label: '4-year expansion roadmap, 5 stores', attribution: 'led' },
-      { label: 'Series A deck ($2.5M raise)', attribution: 'built' },
+      { label: 'Profitability + pricing model', attribution: 'built' },
+      { label: '4-year roadmap, 5 stores', attribution: 'led' },
+      { label: 'Series A deck ($2.5M)', attribution: 'built' },
     ],
-    proof: { value: m('ed-raise').shown, label: 'Series A the deck aided, All In Capital; first store launched' },
+    proof: { value: m('ed-raise').shown, label: 'Series A, All In Capital' },
     proofMetric: 'ed-raise',
-    proofAttribution: 'built',
     doc: { type: 'Series A deck' },
     stamp: 'Series A aided',
-    deck: { label: 'Series A deck', href: '' },
+    links: [{ label: 'Series A deck', href: '' }],
     points: [
-      'Modeled profitability, pricing and financial projections; built the 4-year expansion roadmap and the Series A deck that aided a $2.5M raise from All In Capital.',
-      'Formulated the offline expansion strategy for 5 stores across India, and the first one launched in Bengaluru.',
-    ],
-    chips: [
-      { value: m('ed-raise').shown, label: 'Series A, All In Capital', metric: 'ed-raise', attribution: 'built' },
-      { value: m('ed-stores').shown, label: 'store expansion roadmap', metric: 'ed-stores', attribution: 'led' },
+      'Modeled **profitability, pricing and projections**; built the **4-year expansion roadmap** and the **Series A deck**.',
+      'Formulated the offline expansion strategy for **5 stores** across India; first store launched in **Bengaluru**.',
     ],
     ask: "Hi Suparna, I'd like to hear about the Everyday Diamonds file: the pricing model, the 4-year expansion roadmap and how the Series A deck aided the $2.5M raise.",
   },
   {
     id: 'fedaykin', no: 2, name: 'Fedaykin AV',
     engagement: { via: 'independent', role: 'GTM Strategy Consultant' },
-    when: 'Jul 2024 – Aug 2024', where: 'Remote',
-    line: 'Formulated the **GTM strategy** from market research and competitor analysis for stronger positioning.',
+    dur: 'Jul to Aug 2024', where: 'Remote',
     rows: [
       { label: 'Competitor benchmarks', attribution: 'built' },
-      { label: 'Pricing and unit-economics model', attribution: 'built' },
+      { label: 'Pricing + unit-econ model', attribution: 'built' },
       { label: '950-client B2B sizing', attribution: 'led' },
     ],
-    proof: { value: m('fa-unit').shown, label: 'unit economics lift found by the pricing audit, across specs, ops and annotation costs, modeled' },
+    proof: { value: m('fa-unit').shown, label: 'Unit economics (pricing audit)' },
     proofMetric: 'fa-unit',
-    proofAttribution: 'built',
     doc: { type: 'Pricing audit' },
     stamp: 'Pricing audit done',
-    deck: { label: 'Project report', href: '' },
+    links: [{ label: 'Final report', href: '' }],
     points: [
-      'Formulated the GTM strategy via market research, competitor analysis and a refined product-market fit for stronger positioning.',
-      'Optimized the pricing strategy across technical specs, operations and annotation costs, improving unit economics by 30%.',
-      'Curated a database of 950 potential AV clients and ran a bottom-up B2B market sizing to inform a scalable business model.',
-    ],
-    chips: [
-      { value: m('fa-unit').shown, label: 'unit economics (pricing audit)', metric: 'fa-unit', attribution: 'built' },
-      { value: m('fa-clients').shown, label: 'client database', metric: 'fa-clients', attribution: 'led' },
+      'Formulated the **GTM strategy** via market research, competitor analysis and a refined product-market fit.',
+      'Optimized pricing across specs, operations and annotation costs, improving **unit economics by 30%**.',
+      'Curated a **950-client** AV database and ran a **bottom-up B2B market sizing** to inform the business model.',
     ],
     ask: "Hi Suparna, I'd like to hear about the Fedaykin AV GTM strategy work.",
   },
   {
     id: 'kri' + 'she', no: 3, name: 'KriSHE Carbon',
     engagement: { via: '180DC', role: 'Team Lead · GTM and Fundraising' },
-    when: 'Jul 2025 – Aug 2025', where: 'Gurugram',
-    line: 'Built the **investor deck** and biochar model; pursued **₹12.5L in grants** with the client team.',
+    dur: 'Jul to Aug 2025', where: 'Gurugram',
     rows: [
       { label: 'Investor deck and model', attribution: 'built' },
       { label: 'Biochar impact metrics', attribution: 'built' },
       { label: '20+ high-fit buyers', attribution: 'led' },
     ],
-    proof: { value: m('kc-grants').shown, label: 'in grants the deck and biochar model pursued, with the client team' },
+    proof: { value: m('kc-grants').shown, label: 'Grants pursued with the client team' },
     proofMetric: 'kc-grants',
-    proofAttribution: 'built',
     doc: { type: 'Grant review' },
     stamp: 'Grants pursued',
+    links: [{ label: 'Case deck', href: '' }],
     points: [
-      'Built the investor pitch deck and financial projections; a scalable biochar model and impact metrics enabled ₹12.5L in grants.',
-      'Ran carbon market and buyer research; developed the positioning and sales narrative, identifying 20+ high-fit opportunities.',
-    ],
-    chips: [
-      { value: m('kc-grants').shown, label: 'grants pursued, with the client team', metric: 'kc-grants', attribution: 'built' },
-      { value: m('kc-buyers').shown, label: 'high-fit opportunities', metric: 'kc-buyers', attribution: 'led' },
+      'Built the **investor deck** and financial projections; a **biochar model** and impact metrics pursued **₹12.5L in grants**.',
+      'Ran **carbon market and buyer research**; developed the positioning and sales narrative, identifying **20+ high-fit opportunities**.',
     ],
     ask: "Hi Suparna, I'd like to hear about the KriSHE Carbon fundraising work.",
   },
 ]
 
 /** The single header sentence that replaces the aggregate chips (C-4). */
-export const CORPORATE_LEDE = 'Three client engagements: two 180 Degrees Consulting team leads and one independent file. Every file ends in a deck, and every number on it is one I can defend.'
+export const CORPORATE_LEDE = 'Consulting engagements with real companies, measured in real business impact.'
 
 // ── About page: education, skills, honors ──
 
@@ -373,6 +345,8 @@ export interface Honor {
   year: number
   crest: { text: string; color: string }
   deck?: { label: string; href?: string }
+  /** optional slide-1 thumbnail (≤40 KB) — rendered only when supplied */
+  thumb?: string
 }
 export const ACHIEVEMENTS: Honor[] = [
   { rank: m('acc-rank').shown, of: m('acc-of').shown, name: "Accenture Strategy Connect '25", note: 'GenAI in supply chain, India', organiser: 'Accenture', year: 2025, crest: { text: 'A', color: '#E2401B' }, deck: { label: 'Case deck', href: '' } },
@@ -439,7 +413,7 @@ export const POSITIONS: Position[] = [
   {
     id: 'cel', no: 3, org: 'Center for Entrepreneurial Leadership', title: 'Creative Director', when: 'May 2025 – Jun 2026',
     blurb: "Coalescence'24: 40+ founders, investors and partners on stage — including Ankur Warikoo and UTI. Led a 20-member team across marketing and operations.",
-    line: "",
+    line: 'Led **Coalescence\u201924** end to end with a 20-member team across marketing and operations.',
     strip: true,
     headline: { metric: 'cel-impr', label: 'Coalescence’24 impressions' },
     stats: [
@@ -479,7 +453,7 @@ export interface DataLedger {
 }
 export const DATA_LEDGERS: DataLedger[] = [
   {
-    n: '02',
+    n: '01',
     rank: 1,
     title: 'Mutual Fund Activation & Retention',
     where: `Synthetic/AMFI investment data · ${m('d2-users').shown} users`,
@@ -496,7 +470,7 @@ export const DATA_LEDGERS: DataLedger[] = [
     tech: 'SQL · Python · Excel',
   },
   {
-    n: '03',
+    n: '02',
     rank: 2,
     title: 'Growth Attribution & CAC Optimization',
     where: `Neobank fintech · ${m('d3-records').shown} campaign records`,
@@ -513,7 +487,7 @@ export const DATA_LEDGERS: DataLedger[] = [
     tech: 'Python · scikit-learn · SHAP · SQL',
   },
   {
-    n: '01',
+    n: '03',
     rank: 3,
     title: 'Content Virality Prediction & Segmentation',
     where: `YouTube Trending dataset · ${m('d1-videos').shown} videos`,
@@ -564,7 +538,7 @@ export function assertSections() {
         problems.push(`CORPORATE[${c.id}].proof: ${mt.num}/${mt.den} does not reproduce ${mt.shown}`)
       }
     }
-    if (c.deck?.href && !link(c.deck.href)) problems.push(`CORPORATE[${c.id}].deck: dead href`)
+    for (const l of c.links ?? []) if (l.href && !link(l.href)) problems.push(`CORPORATE[${c.id}].links: dead href`)
   }
   for (const d of DATA_LEDGERS) {
     if (!d.kind) problems.push(`DATA_LEDGERS[${d.n}]: missing result kind`)

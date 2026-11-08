@@ -2,7 +2,7 @@
 
 import '../corporate.css'
 import { useEffect, useRef } from 'react'
-import { CORPORATE, CORPORATE_LEDE, ATTRIBUTION_LEGEND, PREFILL_EVENT, link, type Corporate } from '../lib/site'
+import { CORPORATE, CORPORATE_LEDE, PREFILL_EVENT, link, type Corporate } from '../lib/site'
 import { m } from '../lib/metrics'
 import CountUp from './CountUp'
 import Stamp from './Stamp'
@@ -10,8 +10,6 @@ import MetricTip from './MetricTip'
 import SectionHeader from './SectionHeader'
 import { useTimeline, type TlStep } from '../lib/timeline'
 import { usePrefersReducedMotion } from '../lib/hooks'
-import Attribution from './Attribution'
-import Disclosure from './Disclosure'
 import Rich from './Rich'
 
 /** One animated emblem per engagement: diamond, autonomous vehicle, biochar sprout. */
@@ -70,8 +68,9 @@ const EMBLEMS: Record<string, React.ReactNode> = {
   ),
 }
 
-const ROW_AT = [380, 1500, 2620]
-const STAMP_AT = 4650
+/** Fast first run (2.2s or less), then the loop: rows write in, the stamp slams, rest, repeat. */
+const ROW_AT = [0, 300, 600]
+const STAMP_AT = 1200
 const LOOP_MS = 8800
 const DOC_STEPS: TlStep[] = [
   ...[0, 1, 2].map(i => ({ at: ROW_AT[i], name: `row${i}.inj` })),
@@ -80,8 +79,8 @@ const DOC_STEPS: TlStep[] = [
 
 /**
  * The file's paper: a compact report — the deliverable rows write in one by one, then the
- * rubber stamp lands on the bottom edge. Plays once and rests; the first paint is the
- * finished document.
+ * rubber stamp lands on the bottom edge. The first paint is the finished document; the loop
+ * pauses off-screen and reduced motion rests on the finished frame.
  */
 function CorporateDoc({ c }: { c: Corporate }) {
   const ref = useRef<HTMLDivElement>(null)
@@ -104,7 +103,7 @@ function CorporateDoc({ c }: { c: Corporate }) {
           <span className="cfdoc-tt"><b>{c.doc.type}</b></span>
         </div>
         {c.rows.map((r, i) => (
-          <div key={r.label} className={`cfdoc-row${tl.has(`row${i}.inj`) ? ' inj' : ''}`} title={r.evidence}>
+          <div key={r.label} className={`cfdoc-row${tl.has(`row${i}.inj`) ? ' inj' : ''}`}>
             <span>{r.label}</span>
           </div>
         ))}
@@ -126,8 +125,9 @@ function CorporateDoc({ c }: { c: Corporate }) {
 
 /**
  * Corporate projects as stamped files: one wide sheet per engagement. The left hand is a
- * self-stamping paper (term sheet, pricing audit, grant review) that plays once and rests;
- * the right hand is the engagement's story: eyebrow, title, proofs and the details.
+ * self-stamping paper (Series A deck, pricing audit, grant review) that plays once, loops
+ * while in view and rests on its finished frame; the right hand is the engagement's story:
+ * eyebrow pills, title, the one big number, and the deliverables.
  */
 export default function Corporate() {
   useEffect(() => {
@@ -136,12 +136,11 @@ export default function Corporate() {
       for (const e of entries) {
         if (e.isIntersecting) { (e.target as HTMLElement).classList.add('in'); io.unobserve(e.target) }
       }
-    }, { threshold: 0.25 })
+    }, { threshold: 0, rootMargin: '0px 0px 35% 0px' })
     files.forEach(f => io.observe(f))
     return () => io.disconnect()
   }, [])
 
-  const year = (when: string) => when.slice(-4)
   return (
     <section className="band band-sand" id="corporate">
       <div className="sec wrap">
@@ -154,67 +153,39 @@ export default function Corporate() {
             `${CORPORATE.length} client engagements · GTM and fundraising`,
             'Two team-lead files via 180 Degrees Consulting, one independent',
           ]}
-          aside={
-            <>
-              <b className="cf-lede">{CORPORATE_LEDE}</b>
-              <p className="cf-legend">{ATTRIBUTION_LEGEND}</p>
-            </>
-          }
+          aside={<b className="cf-lede">{CORPORATE_LEDE}</b>}
         />
-        <ol className="cf-tabs" aria-label="Corporate project files">
-          {CORPORATE.map(c => (
-            <li key={c.id}>
-              <a href={`#corporate-${c.id}`} className="cf-tab" data-emb={c.id}>
-                <i aria-hidden="true">{EMBLEMS[c.id]}</i>
-                <span>
-                  <b>{c.name}</b>
-                  <em>{c.engagement.via === '180DC' ? '180 DC' : 'Independent'} · {year(c.when)}</em>
-                </span>
-              </a>
-            </li>
-          ))}
-        </ol>
         <ol className="cf-files" aria-label="Corporate projects">
           {CORPORATE.map((c, fi) => (
             <li key={c.id} className="cf-file" id={`corporate-${c.id}`} data-emb={c.id} style={{ ['--fi' as string]: fi }}>
-              <span className="cf-filetab" aria-hidden="true">
-                {c.engagement.via === '180DC' ? '180 DC' : 'Independent'} · {year(c.when)}
-              </span>
               <CorporateDoc c={c} />
               <div className="cf-main">
                 <p className="cf-eyebrow">
                   <span className={`cf-via${c.engagement.via === 'independent' ? ' ind' : ''}`}>
                     {c.engagement.via === '180DC' ? '180 Degrees Consulting · team lead' : 'Independent engagement'}
                   </span>
+                  <span className="cf-dur">{c.dur}</span>
                 </p>
                 <div className="cf-head">
                   <h3>{c.name}</h3>
-                  <span className="cf-meta">{c.engagement.role} · {c.when} · {c.where}</span>
+                  <span className="cf-meta">{c.engagement.role} · {c.where}</span>
                 </div>
                 <p className="cf-big">
-                  <MetricTip id={c.proofMetric ?? ''} focusable={false}><CountUp text={c.proof.value} /></MetricTip>
-                  <span>{c.proofAttribution} · {c.chips.find(ch => ch.metric === c.proofMetric)?.label ?? c.proof.label}</span>
+                  <MetricTip id={c.proofMetric ?? ''} focusable={false}>
+                    <CountUp text={c.proof.value} delayMs={900} />
+                  </MetricTip>
+                  <span>{c.proof.label}</span>
                 </p>
-                {c.line && <p className="cf-line"><Rich text={c.line} /></p>}
-                {c.chips.filter(ch => ch.metric !== c.proofMetric).slice(0, 1).map(ch => (
-                  <span key={ch.label} className="cf-chip cf-chip1">
-                    <b>{ch.metric ? <MetricTip id={ch.metric} focusable={false}><CountUp text={ch.value} /></MetricTip> : ch.value}</b>
-                    <span>{ch.label}</span>
-                    <Attribution a={ch.attribution} />
-                  </span>
-                ))}
-                <Disclosure label={`Details — ${c.name}`} className="cf-disc">
-                  <ul className="cf-points">
-                    {c.points.slice(1).map(pt => <li key={pt}>{pt}</li>)}
-                  </ul>
-                </Disclosure>
+                <ul className="cf-points">
+                  {c.points.map(pt => <li key={pt}><Rich text={pt} /></li>)}
+                </ul>
                 <div className="cf-foot">
-                  {c.deck && link(c.deck.href) && (
-                    <a className="cf-chip cf-chip-deck" href={c.deck.href} target="_blank" rel="noopener noreferrer">
+                  {c.links?.filter(l => link(l.href)).map(l => (
+                    <a key={l.label} className="cf-link" href={l.href} target="_blank" rel="noopener noreferrer">
                       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z" /><path d="M14 3v5h5" /><path d="M10 13h6M10 17h6" /></svg>
-                      <span>{c.deck.label}</span><b aria-hidden="true">↗</b>
+                      <span>{l.label}</span><b aria-hidden="true">↗</b>
                     </a>
-                  )}
+                  ))}
                   <a
                     className="btn ghost sm"
                     href="#contact"

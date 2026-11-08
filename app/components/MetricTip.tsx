@@ -16,15 +16,15 @@ export default function MetricTip({ id, children, className, focusable = true }:
   focusable?: boolean
 }) {
   const mt = m(id)
-  const head = [mt.n ? `n=${mt.n}` : null, `as of ${mt.asOf}`].filter(Boolean).join(' · ')
+  const detail = [mt.n ? `n=${mt.n}` : null, `as of ${mt.asOf}`].filter(Boolean).join(' · ')
   return (
     <span
       className={['mtip', className].filter(Boolean).join(' ')}
       tabIndex={focusable ? 0 : undefined}
-      aria-label={`${mt.shown}. ${head}. ${mt.source}`}
+      aria-label={`${mt.shown}. ${mt.source}. ${detail}.`}
     >
       {children}
-      <span className="mtip-b" aria-hidden="true"><b>{head}</b><i>{mt.source}</i></span>
+      <span className="mtip-b" aria-hidden="true"><b>{mt.source}</b><i>{detail}</i></span>
     </span>
   )
 }

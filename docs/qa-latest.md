@@ -337,3 +337,63 @@ check.
   without a third encoding of the same fact.
 * `RISA Labs —` em dashes removed from new copy (metrics sources, aria-labels);
   pre-existing em dashes in the About bio and OG images predate this pass.
+
+## 16. QA-12 — reviewer round 3 + Insight Extractor
+
+### Verified
+* **Corporate restructure** (1440 light/dark, 390 dark): no Details
+  dropdowns, no summary line, no chips or led/built markers, no folder tabs;
+  duration pills on the engagement row, dates off the title meta; one-line
+  big proof (40px Fraunces + label); points always visible with `**bold**`;
+  link chips render nothing while hrefs are empty; mini-doc top-aligned
+  ≤200w/≤170h; files compact (18–20px padding). Screenshots:
+  `docs/qa-shots/qa12/corporate-1440.png`, `corporate-390-dark.png`.
+* **Data cards** (1440/1024/390, light+dark): 100px fixed slots line up the
+  2×2; heatmap WK axis on its own row, DORMANT in a 58px gutter clear of the
+  cells; spike finished frame has the full line, area, 9px ringed peak and
+  the 82% AUC chip at the line end; donut 72px with a two-column 12px legend;
+  footer = tech row + (kind tag, 36px figure, right-aligned qualifier
+  beneath) — no crammed "50Kusers"; cards renumbered 01–04 in visual order;
+  one column ≤899. `data-1440.png`, `data-1024.png`, `data-390-dark.png`.
+* **Hero exhibit**: notes in the L-shape (246/232, 246/314, 396/500) with
+  ≥10px gaps against the phone (ends y490), campus card (ends x218) and RISA
+  card (ends y≈219); ±5° `exSway` only under `motion-ok` (independent
+  `rotate` property, desynced negative delays, composed with the parallax
+  transform); the real BITS Goa photo on the campus card only
+  (`bits-goa.webp`, 12.8 KB, sketch deleted). `hero-1440.png`,
+  `hero-390-dark.png`.
+* **Experience manifest**: caption + years in one right-aligned 11px line
+  under the metric (row 3 removed). `experience-1440.png`.
+* **About**: YearStrip gone (component + `.ys*` rules + 44px/print entries);
+  CEL strip has its context line and the title/dates no longer run
+  together; honors are equal-height flex cards with the deck chip pinned to
+  the bottom (44px target, hidden while `href` is empty) and an optional
+  thumb slot; education card compressed to its content (44px crest,
+  one-line minor/class and dates rows). `about-1440.png`,
+  `education-compressed.png`, `about-390-dark.png`.
+* **Projects**: three case cards (AskCart `tm`, Insight Extractor `fl`,
+  Research Agent `vx`); InsightFlow renders the finished frame in the
+  reduced-motion full-page shot (raw lines + highlights, hex, 6 uniform
+  pipeline segments, four cause cards, 94.6K REVIEWS stamp fully inside the
+  card after the 104px bottom band); mobile 390 reflow is a real stacked
+  composition (agent row horizontal, pipeline segments inline).
+  `projects-1440.png`, `projects-1440-insight.png`, `projects-390-dark.png`.
+* **Routes**: `/`, `/projects/insight-extractor`, `/projects/askcart`,
+  `/projects/research-agent` all 200 on the rebuilt server.
+* **Checks**: `npm run check` green (tsc, eslint, resume lint); no console
+  errors in any screenshot run (0 across six section jobs × two themes);
+  `qa-fonts` PASS at 1440/1280 (hard) after raising the InsightFlow labels
+  (11.5–13px → effective ≥11px at the stage scale).
+
+### Notes
+* The 1024px font audit lists sub-11px text only in the hero exhibit and
+  FitStage project figures — those scale as one unit by design (the
+  `--s`/FitStage shrink keeps their internal layouts pixel-exact); the
+  default hard viewports (1440/1280) pass clean. Corporate, Data, POR and
+  Honors use fixed px type and hold the floor at every width.
+* `MetricTip` tooltips now lead with the metric's `source` (what the number
+  means) and demote `n=… · as of …` to the second line — the reviewer's
+  "unimportant numbers instead of lift" complaint.
+* AskCart SKU count is 54K everywhere (summary, body, `ac-skus`) per the
+  updated resume; Chimera keeps $4M (first source block wins over $5M+),
+  PrimeWealth keeps 33% AUM.

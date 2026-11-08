@@ -232,8 +232,7 @@ export default function Experience() {
                     <span className="rt-st">{i === 0 ? 'NOW' : `S${i + 1}`}</span>
                     <span className="n">{c.name}<em>{c.sector}</em></span>
                     <span className="m">{c.metric}</span>
-                    <span className="y">{c.years}</span>
-                    <span className="k">{c.metricCaption}</span>
+                    <span className="k">{c.metricCaption} · {c.years}</span>
                   </a>
                 </li>
               ))}

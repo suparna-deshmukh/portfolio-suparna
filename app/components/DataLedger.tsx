@@ -130,7 +130,7 @@ function FigureSlot({ l }: { l: Ledger }) {
   const ref = useRef<HTMLDivElement>(null)
   const tl = useTimeline(ref, STEPS[l.figure.type], LOOP_MS, { loop: true })
   const [a, setA] = useState(-1)
-  const cls = `dl-slot ${l.figure.type}${tl.has('go') ? ' go' : ''}${tl.has('ring') ? ' ring' : ''}${tl.has('dorm') ? ' dorm' : ''}${tl.has('pulse') ? ' pulse' : ''}${tl.has('area') ? ' area' : ''}${tl.has('peak') ? ' peak' : ''}${tl.has('leg') ? ' leg' : ''}`
+  const cls = `dl-slot ${l.figure.type}${tl.has('go') ? ' go' : ''}${tl.has('ring') ? ' ring' : ''}${tl.has('dorm') ? ' dorm' : ''}${tl.has('pulse') ? ' pulse' : ''}${tl.has('area') ? ' area' : ''}${tl.has('peak') ? ' peak' : ''}${tl.has('leg') ? ' leg' : ''}${tl.has('chip') ? ' chip' : ''}`
   return (
     <div ref={ref} className={cls} role="img" aria-label={ARIA[l.figure.type]}
       onPointerEnter={tl.replay} onFocus={tl.replay} onClick={tl.replay}>
@@ -201,10 +201,13 @@ export default function DataProjects() {
               </ul>
               <footer className="dl-foot">
                 <span className="dl-tech">{l.tech}</span>
-                <span className="dl-res">
+                <div className="dl-resline">
                   <i className="dl-reskind">{l.kind === 'scale' ? 'Scale' : l.kind === 'modeled' ? 'Modeled' : 'Result'}</i>
-                  <MetricTip id={l.resultMetric}><CountUp text={l.result} /></MetricTip><small>{l.resLabel}</small>
-                </span>
+                  <span className="dl-res">
+                    <MetricTip id={l.resultMetric}><CountUp text={l.result} /></MetricTip>
+                  </span>
+                  <small className="dl-resq">{l.resLabel}</small>
+                </div>
               </footer>
               {l.detail && (l.detail.method || l.detail.informs || l.detail.limits) && (
                 <Disclosure label={`Method and limits — ${l.title}`} className="dl-disc">

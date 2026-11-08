@@ -23,15 +23,15 @@
 #about .ab-dc::first-letter{float:left;font:600 60px/.84 var(--fd);margin:5px 10px 0 0;color:var(--accText)}
 
 /* education: a diploma card — crest, school, degree, minor and class year. No grades. */
-#about .ab-edu{margin-top:18px;padding:14px 16px;display:flex;gap:16px;align-items:center;border:1px solid var(--lineS);border-radius:10px;background:var(--tint)}
-#about .ab-edu-crest{flex:none;width:56px;height:56px;color:var(--accText);opacity:.9}
-#about .ab-edu-bd{min-width:0;display:grid;gap:2px}
-#about .ab-edu .lab{margin:0 0 3px}
-#about .ab-edu b{font:600 16px/1.35 var(--fb);letter-spacing:-.01em}
-#about .ab-edu > .ab-edu-bd > span:not(.ab-edu-meta){font-size:13.5px;line-height:1.45;color:var(--dim)}
-#about .ab-edu-gpa{display:block;margin-top:4px;font:500 12px/1.4 var(--fm);letter-spacing:.02em;color:var(--dim)}
-#about .ab-edu-meta{display:flex;align-items:center;gap:10px;margin-top:5px;font:500 11px/1.4 var(--fm);letter-spacing:.03em;text-transform:uppercase;color:var(--dimmer)}
-#about .ab-edu-meta em{font-style:normal;color:var(--dim)}
+#about .ab-edu{margin-top:18px;padding:12px 14px;display:flex;gap:14px;align-items:center;border:1px solid var(--lineS);border-radius:10px;background:var(--tint)}
+#about .ab-edu-crest{flex:none;width:44px;height:44px;color:var(--accText);opacity:.9}
+#about .ab-edu-bd{min-width:0;display:grid;gap:1px}
+#about .ab-edu .lab{margin:0 0 2px}
+#about .ab-edu b{font:600 15px/1.25 var(--fb);letter-spacing:-.01em}
+#about .ab-edu > .ab-edu-bd > span:not(.ab-edu-meta){font-size:13px;line-height:1.35;color:var(--dim)}
+#about .ab-edu-gpa{display:block;margin-top:3px;font:500 12px/1.35 var(--fm);letter-spacing:.02em;color:var(--dim);white-space:nowrap}
+#about .ab-edu-meta{display:flex;align-items:center;gap:10px;margin-top:4px;font:500 11px/1.3 var(--fm);letter-spacing:.03em;text-transform:uppercase;color:var(--dimmer)}
+#about .ab-edu-meta em{font-style:normal;color:var(--dim);white-space:nowrap}
 #about .ab-edu-meta i{flex:1;height:1px;background:var(--lineS)}
 
 /* positions of responsibility: stat panels, the first one featured */
@@ -68,6 +68,11 @@ html.motion-ok #about .ab-panel:hover{transform:translateY(-2px);box-shadow:0 18
 #about .ab-strip{margin-top:14px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px 20px;
   border:1px solid var(--lineS);border-radius:8px;padding:13px 18px;background:var(--surf)}
 #about .ab-strip-hd .ab-eyebrow{margin-bottom:5px}
+#about .ab-strip header{display:flex;align-items:baseline;flex-wrap:wrap;gap:2px 12px}
+#about .ab-strip header b{font:700 20px/1.2 var(--fd);letter-spacing:-.015em;color:var(--fg)}
+#about .ab-strip header em{font:500 12px/1.4 var(--fm);font-style:normal;letter-spacing:.03em;color:var(--dim)}
+#about .ab-strip-line{margin:6px 0 0;font-size:14px;line-height:1.5;color:var(--dim);max-width:72ch}
+#about .ab-strip-line b{color:var(--fg);font-weight:700}
 #about .ab-strip-stats{display:flex;gap:28px}
 #about .ab-strip-stat{display:grid;gap:3px;justify-items:start}
 #about .ab-strip-stat b{font:600 36px/1 var(--fd);letter-spacing:-.02em;color:var(--accText);font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -113,19 +118,22 @@ html.motion-ok #about .ab-panel.play:has(.ab-trackfig){animation:abNudge .35s va
 /* honors: the medal shelf */
 #about .ab-honors{margin-top:16px;padding-top:14px;border-top:1px solid var(--lineS)}
 #about .ab-honors ol{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-#about .ab-honors li{display:grid;gap:8px;padding:18px 16px 15px;border:1px solid var(--lineS);border-radius:10px;background:var(--surf);
+#about .ab-honors li{display:flex;flex-direction:column;align-items:stretch;gap:8px;padding:18px 16px 15px;border:1px solid var(--lineS);border-radius:10px;background:var(--surf);
   transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s}
-html.motion-ok #about .ab-honors li:hover{transform:translateY(-3px);box-shadow:0 18px 28px -20px rgba(23,19,14,.5);border-color:color-mix(in oklab,var(--acc) 42%,var(--lineS))}
+html.motion-ok #about .ab-honors li:hover,html.motion-ok #about .ab-honors li:focus-within{transform:translateY(-3px);box-shadow:0 18px 28px -20px rgba(23,19,14,.5);border-color:color-mix(in oklab,var(--acc) 42%,var(--lineS))}
+#about .ab-hn-top{display:grid;grid-template-columns:54px minmax(0,1fr);gap:4px 12px;align-items:start}
 #about .ab-crest{width:54px;height:54px}
 #about .ab-crest svg{width:100%;height:100%;display:block}
-#about .ab-honors li:hover .ab-crest{transform:rotate(-6deg) scale(1.06);transition:transform .35s var(--ease)}
+#about .ab-honors li:hover .ab-crest,#about .ab-honors li:focus-within .ab-crest{transform:rotate(-6deg) scale(1.06);transition:transform .35s var(--ease)}
+#about .ab-hn-txt{display:grid;gap:5px;align-content:start}
 #about .ab-honors b{font:700 19.5px/1.12 var(--fd);letter-spacing:-.01em;color:var(--fg)}
 #about .ab-honors b i{font-style:normal;font-size:11px;font-weight:500;letter-spacing:.02em;color:var(--dimmer)}
 #about .ab-honors .ab-hn-name{font:600 12.5px/1.3 var(--fb);color:var(--fg)}
-#about .ab-honors li > span:last-of-type{font-size:11.5px;line-height:1.4;color:var(--dim)}
-#about .ab-hn-deck{justify-self:start;display:inline-flex;align-items:center;gap:5px;margin-top:2px;
+#about .ab-hn-txt > span:last-child{font-size:11.5px;line-height:1.4;color:var(--dim)}
+#about .ab-hn-thumb{width:100%;aspect-ratio:440/248;object-fit:cover;border:1px solid var(--lineS);border-radius:8px;margin-top:2px}
+#about .ab-hn-deck{align-self:start;display:inline-flex;align-items:center;gap:6px;margin-top:auto;min-height:44px;padding:0 14px;
   font:600 11.5px/1 var(--fm);letter-spacing:.05em;text-transform:uppercase;color:var(--accText);
-  border:1px solid color-mix(in oklab,var(--acc) 45%,var(--lineS));border-radius:999px;padding:5px 10px;
+  border:1px solid color-mix(in oklab,var(--acc) 45%,var(--lineS));border-radius:999px;
   text-decoration:none;transition:background-color .25s}
 #about .ab-hn-deck:hover{background:color-mix(in oklab,var(--acc) 10%,transparent)}
 
@@ -180,10 +188,7 @@ html.motion-ok #about .ab-honors li:hover{transform:translateY(-3px);box-shadow:
   #about .ab-strip-stats{flex-wrap:wrap;gap:14px 24px}
   #about .ab-strip-stat b{font-size:30px}
   #about .ab-honors ol{grid-template-columns:1fr}
-  #about .ab-honors li{grid-template-columns:auto minmax(0,1fr);align-items:start}
-  #about .ab-honors b{grid-column:2}
-  #about .ab-honors .ab-hn-name{grid-column:2}
-  #about .ab-hn-deck{grid-column:2}
+  #about .ab-honors .ab-hn-deck{align-self:stretch;justify-content:center}
 }
 
 /* ── dark ── */
@@ -206,34 +211,4 @@ html.motion-ok #about .ab-honors li:hover{transform:translateY(-3px);box-shadow:
 /* education: the CLASS OF 2027 seal presses once (E-1) */
 #about .ab-edu{position:relative}
 #about .ab-seal{position:absolute;right:6px;top:-14px;z-index:3}
-#about .ab-edu-when{display:block;margin-top:6px;font:500 11.5px/1.3 var(--fm);letter-spacing:.04em;color:var(--dimmer)}
-/* four years at a glance (E-3) */
-.ys{margin-top:20px;border:1px solid var(--lineS);border-radius:10px;background:var(--surf2);padding:12px 14px 12px}
-.ys-years{display:flex;margin-left:88px}
-.ys-years div{display:flex;width:100%;justify-content:space-between}
-.ys-years span{font:500 11px/1 var(--fm);letter-spacing:.04em;color:var(--dimmer)}
-.ys-lanes{margin-top:8px;display:grid;gap:7px}
-.ys-lane{display:flex;align-items:center;gap:0}
-.ys-lab{width:88px;flex:none;font:600 11px/1 var(--fm);font-style:normal;letter-spacing:.08em;text-transform:uppercase;color:var(--dimmer)}
-.ys-track{position:relative;flex:1;height:calc(var(--rows, 1) * 10px)}
-.ys-bar{position:absolute;top:2px;height:16px;border-radius:4px;
-  background:color-mix(in oklab,var(--acc) 26%,transparent);border:1px solid color-mix(in oklab,var(--acc) 42%,transparent)}
-.ys-item{position:absolute;top:0;height:19px;display:inline-flex;align-items:center;padding:0 7px;border-radius:5px;min-width:27px;
-  font:500 11px/1 var(--fm);color:var(--fg);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  transition:filter .2s}
-.ys-c{background:color-mix(in oklab,var(--acc) 14%,var(--surf));border:1px solid color-mix(in oklab,var(--acc) 35%,var(--lineS))}
-.ys-p{background:var(--tint);border:1px solid var(--lineS);margin-top:0}
-.ys-lane:nth-child(3) .ys-track{transform:translateY(1px)}
-.ys-item:hover,.ys-item:focus-visible{filter:brightness(1.06);outline:2px solid var(--focus);outline-offset:1px}
-.ys-dot{position:absolute;top:0;height:19px;display:inline-flex;align-items:center;padding:0 4px;text-decoration:none;translate:-4px 0}
-.ys-dot i{width:7px;height:7px;flex:none;border-radius:50%;background:var(--acc)}
-.ys-dot:hover,.ys-dot:focus-visible{color:var(--fg)}
-@media (max-width:640px){
-  .ys-years{margin-left:0}
-  .ys-lane{flex-direction:column;align-items:stretch;gap:5px}
-  .ys-lab{width:auto;margin-bottom:2px}
-  .ys-track{display:flex;flex-direction:column;gap:5px;height:auto}
-  .ys-bar,.ys-item{position:static;width:100%;height:auto;padding:5px 8px}
-  .ys-dot{position:static;translate:none;padding:5px 0}
-  .ys-dot i{display:none}
-}
+#about .ab-edu-when{display:block;margin-top:3px;font:500 11.5px/1.3 var(--fm);letter-spacing:.04em;color:var(--dimmer);white-space:nowrap}

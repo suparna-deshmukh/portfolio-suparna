@@ -84,9 +84,9 @@ export const PROJECTS: Project[] = [
     "id": "s-p1",
     "slug": "askcart",
     "title": "AskCart: Guided AI E-Commerce Search and Chatbot",
-    "summary": "A guided follow-up search MVP over 36K Bayesian-rated SKUs that cut null results from 27.3% to 8%, with a RAG chatbot that passes evals at 96.5%.",
+    "summary": "A guided follow-up search MVP over 54K Bayesian-rated SKUs that cut null results from 27.3% to 8%, with a RAG chatbot that passes evals at 96.5%.",
     "tags": ["Next.js", "SQL", "Python", "ML", "Gemini API"],
-    "body": "## The problem\nAskCart started from a simple observation: e-commerce search fails silently. When the catalog returns nothing, the shopper doesn't file a ticket — they just leave. I wanted to see how often that happens and what the queries actually look like, so I started with the only dataset that would tell me the truth: reviews.\n\n## Mining 94,600 reviews for signal\nI built an agentic extractor on the Reddit, App Store and Play Store APIs and fed it into a 6-stage SQL pipeline. Across 94.6K reviews it isolated four root causes of search failure: vague intent, missing filter context, spelling and slang drift, and catalog gaps that no query could ever fix. Each cause got its own treatment instead of one generic \"no results\" page.\n\n## Ask, don't guess\nThe product decision was to replace the dead end with a guided follow-up: a Vercel-deployed MVP over 36K Bayesian-rated SKUs that asks one narrow question at a time — budget, use case, must-have feature — and re-runs the search with the answer. On 150 real search sessions, null results fell from 27.3% to 8%.\n\n## When the model is the fallback\nA lot of the remaining misses were Hinglish: \"sneekrs red\", \"waterproof for monsoon\". I built an ML semantic fallback using multilingual embeddings for similarity search, so vague or code-mixed queries still resolve. On a 100-query eval set, top-3 relevance hit 88%.\n\n## Evals before launch\nOn top of search I built a RAG chatbot on LLM intent parsing and embedding search. I wrote AI evals for search, RAG and UX before the first demo; the suite passes at 96.5% (n=113) and now guards every prompt and index change. User-level click and event analytics with properties show 78.7% of searches resolve within 2 follow-ups (n=150).\n\n## What shipped\nNext.js front end, SQL pipeline, Python + ML fallback, Gemini API for the chat. What I'd do differently: instrument the funnel from day one, and budget the embeddings before it budgets me.",
+    "body": "## The problem\nAskCart started from a simple observation: e-commerce search fails silently. When the catalog returns nothing, the shopper doesn't file a ticket — they just leave. I wanted to see how often that happens and what the queries actually look like, so I started with the only dataset that would tell me the truth: reviews.\n\n## Mining 94,600 reviews for signal\nI built an agentic extractor on the Reddit, App Store and Play Store APIs and fed it into a 6-stage SQL pipeline. Across 94.6K reviews it isolated four root causes of search failure: vague intent, missing filter context, spelling and slang drift, and catalog gaps that no query could ever fix. Each cause got its own treatment instead of one generic \"no results\" page.\n\n## Ask, don't guess\nThe product decision was to replace the dead end with a guided follow-up: a Vercel-deployed MVP over 54K Bayesian-rated SKUs that asks one narrow question at a time — budget, use case, must-have feature — and re-runs the search with the answer. On 150 real search sessions, null results fell from 27.3% to 8%.\n\n## When the model is the fallback\nA lot of the remaining misses were Hinglish: \"sneekrs red\", \"waterproof for monsoon\". I built an ML semantic fallback using multilingual embeddings for similarity search, so vague or code-mixed queries still resolve. On a 100-query eval set, top-3 relevance hit 88%.\n\n## Evals before launch\nOn top of search I built a RAG chatbot on LLM intent parsing and embedding search. I wrote AI evals for search, RAG and UX before the first demo; the suite passes at 96.5% (n=113) and now guards every prompt and index change. User-level click and event analytics with properties show 78.7% of searches resolve within 2 follow-ups (n=150).\n\n## What shipped\nNext.js front end, SQL pipeline, Python + ML fallback, Gemini API for the chat. What I'd do differently: instrument the funnel from day one, and budget the embeddings before it budgets me.",
     "cover_image_url": "/images/projects/askcart-cover.webp",
     "links": [{ "label": "Live on Vercel", href: "#" }, { "label": "Read the PRD", href: "#" }],
     "stats": [
@@ -101,6 +101,30 @@ export const PROJECTS: Project[] = [
       { "label": "The dataset", "line": "I started with the only dataset that would tell me the truth: reviews." },
       { "label": "The fix", "line": "null results fell from 27.3% to 8%" },
       { "label": "The guardrail", "line": "the suite passes at 96.5% (n=113)" }
+    ],
+    "highlights": [ "Each cause got its own treatment instead of one generic \"no results\" page." ]
+  },
+  {
+    "id": "s-p3",
+    "slug": "insight-extractor",
+    "title": "Insight Extractor: Agentic Review Mining for Search Intelligence",
+    "summary": "An agentic extractor on the Reddit, App Store and Play Store APIs, feeding a 6-stage SQL pipeline that mines 94.6K reviews and isolates four root causes of silent search failure.",
+    "tags": ["Python", "SQL", "LLM agents", "REST APIs"],
+    "body": "## Why reviews\nE-commerce search fails silently, and the fix lives in the only dataset that will tell you why: reviews. People don't file tickets for a dead-end search, but they do review the app that failed them.\n\n## The mechanism\nI built an agentic extractor on the Reddit, App Store and Play Store APIs that pulls raw review text at scale, then a 6-stage SQL pipeline that cleans, deduplicates and tags it. Across 94.6K reviews the pipeline isolates the root causes of search failure instead of one fuzzy complaint category.\n\n## Four root causes, four treatments\nThe mining surfaced four causes: vague intent, missing filter context, spelling and slang drift, and catalog gaps that no query could ever fix. Each cause got its own treatment instead of one generic \"no results\" page.\n\n## What it informed\nThe causes became the product plan for AskCart: a guided follow-up flow for vague intent and missing context, and a semantic fallback for the code-mixed queries the lexicon never reaches. The extractor still runs as the eval source of truth for the search index.",
+    "cover_image_url": "/images/projects/insight-extractor-cover.webp",
+    "links": [],
+    "stats": [
+      { "id": "ac-reviews", "label": "reviews mined across 3 stores", "hot": true },
+      { "id": "ac-causes", "label": "root causes of search failure" },
+      { "id": "ie-stages", "label": "SQL pipeline stages" }
+    ],
+    "is_published": true,
+    "created_at": "2026-08-18T10:00:00+00:00",
+    "pull_quote": { "text": "Each cause got its own treatment instead of one generic \"no results\" page.", "mark": "its own treatment" },
+    "notes": [
+      { "label": "The dataset", "line": "the only dataset that will tell you why: reviews" },
+      { "label": "The pipeline", "line": "a 6-stage SQL pipeline that cleans, deduplicates and tags it" },
+      { "label": "The output", "line": "four root causes of search failure" }
     ],
     "highlights": [ "Each cause got its own treatment instead of one generic \"no results\" page." ]
   },

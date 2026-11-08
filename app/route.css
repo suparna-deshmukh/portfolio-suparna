@@ -29,8 +29,7 @@
 /* the sector chip takes the whole second line, so name and metric can never collide */
 .rt-man .n em{width:100%;font:500 11px/1 var(--fm);font-style:normal;letter-spacing:.09em;text-transform:uppercase;color:var(--dim);border:1px dashed var(--lineS);border-radius:999px;padding:3.5px 7px;white-space:nowrap}
 .rt-man .m{font:600 12.5px/1 var(--fm);font-variant-numeric:tabular-nums;white-space:nowrap;grid-row:1;justify-self:end}
-.rt-man .y{font:500 12px/1 var(--fm);color:var(--dimmer);white-space:nowrap;grid-row:2;grid-column:3;justify-self:end}
-.rt-man .k{grid-column:1/-1;grid-row:3;margin-top:3px;font-size:12px;line-height:1.35;color:var(--dim)}
+.rt-man .k{grid-column:3;grid-row:2;justify-self:end;align-self:center;font:500 11px/1.45 var(--fm);color:var(--dimmer);text-align:right;max-width:26ch}
 
 /* ── the road and its stations ── */
 .rt-stops{position:relative;display:grid;gap:28px;padding-left:74px}

@@ -71,7 +71,7 @@ export default function HeroExhibit() {
 
         <a className="ex-ob ex-campus" href="#about" style={{ ['--d' as string]: 0.9, ['--rot' as string]: '-2deg' }} aria-label="BITS Pilani, Goa: ECE with a Finance minor, class of 2027">
           <span className="ex-clip" aria-hidden="true" />
-          <Image src="/images/hero/bits-goa-sketch.webp" alt="Sketch of the BITS Pilani Goa campus" width={228} height={137} priority />
+          <Image src="/images/hero/bits-goa.webp" alt="The BITS Pilani Goa campus: main building, palms and lawn" width={400} height={153} priority />
           <b>BITS Pilani, Goa</b>
           <small>{EDUCATION.branch}</small>
           <small>Finance minor · Class of 2027</small>

@@ -19,10 +19,10 @@ const MODES: Mode[] = [
 ]
 
 const STEP = { answer: 520, verdict: 1040 }
-const ROW_AT = [400, 1750, 3100]
-const GAUGE_AT = 4500
-const STAMP_AT = 5500
-const LOOP_MS = 9500
+const ROW_AT = [300, 1250, 2200]
+const GAUGE_AT = 3200
+const STAMP_AT = 4000
+const LOOP_MS = 7000
 const TRACK_PX = 420
 const SCORE = parseFloat(m('ac-eval').shown)
 

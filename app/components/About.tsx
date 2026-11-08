@@ -9,7 +9,7 @@ import MetricTip from './MetricTip'
 import SectionHeader from './SectionHeader'
 import { CurrentlyTicker } from './AboutExtras'
 import Stamp from './Stamp'
-import YearStrip from './YearStrip'
+import Image from 'next/image'
 import Disclosure from './Disclosure'
 import Rich from './Rich'
 import { useTimeline } from '../lib/timeline'
@@ -120,6 +120,7 @@ function Positions() {
               <b>{strip.title}</b>
               <em>{strip.when}</em>
             </header>
+            {strip.line && <p className="ab-strip-line"><Rich text={strip.line} /></p>}
           </div>
           <div className="ab-strip-stats">
             {strip.stats.map(s => (
@@ -136,20 +137,27 @@ function Positions() {
         <ol>
           {ACHIEVEMENTS.map(a => (
             <li key={a.name}>
-              <span className="ab-crest" style={{ color: a.crest.color }} aria-hidden="true">
-                <svg viewBox="0 0 48 48">
-                  <circle cx="24" cy="24" r="21" fill="none" stroke="currentColor" strokeWidth="1.7" />
-                  <circle cx="24" cy="24" r="16.5" fill="none" stroke="currentColor" strokeWidth=".7" strokeDasharray="2 3" />
-                  <text x="24" y={a.crest.text.length > 1 ? 27.5 : 30.5} textAnchor="middle"
-                    style={{ font: `700 ${a.crest.text.length > 1 ? 10.5 : 20}px var(--fd)`, fill: 'currentColor', letterSpacing: a.crest.text.length > 1 ? '.06em' : '0' }}>
-                    {a.crest.text}
-                  </text>
-                </svg>
+              <span className="ab-hn-top">
+                <span className="ab-crest" style={{ color: a.crest.color }} aria-hidden="true">
+                  <svg viewBox="0 0 48 48">
+                    <circle cx="24" cy="24" r="21" fill="none" stroke="currentColor" strokeWidth="1.7" />
+                    <circle cx="24" cy="24" r="16.5" fill="none" stroke="currentColor" strokeWidth=".7" strokeDasharray="2 3" />
+                    <text x="24" y={a.crest.text.length > 1 ? 27.5 : 30.5} textAnchor="middle"
+                      style={{ font: `700 ${a.crest.text.length > 1 ? 10.5 : 20}px var(--fd)`, fill: 'currentColor', letterSpacing: a.crest.text.length > 1 ? '.06em' : '0' }}>
+                      {a.crest.text}
+                    </text>
+                  </svg>
+                </span>
+                <span className="ab-hn-txt">
+                  <b>{a.rank} <i>of {a.of}</i></b>
+                  <span className="ab-hn-name">{a.name}</span>
+                  <span className="ab-hn-org">{a.organiser} · {a.year}</span>
+                  <span>{a.note}</span>
+                </span>
               </span>
-              <b>{a.rank} <i>of {a.of}</i></b>
-              <span className="ab-hn-name">{a.name}</span>
-              <span className="ab-hn-org">{a.organiser} · {a.year}</span>
-              <span>{a.note}</span>
+              {a.thumb && (
+                <Image className="ab-hn-thumb" src={a.thumb} alt={`Slide from the ${a.name} deck`} width={440} height={248} loading="lazy" />
+              )}
               {a.deck && link(a.deck.href) && (
                 <a className="ab-hn-deck" href={a.deck.href} target="_blank" rel="noopener noreferrer">
                   {a.deck.label} <span aria-hidden="true">↗</span>
@@ -251,7 +259,6 @@ export default function About() {
             </div>
             <div id="education">
               <Education />
-              <YearStrip />
             </div>
             <span className="ab-folio" aria-hidden="true">Suparna Deshmukh</span>
           </div>

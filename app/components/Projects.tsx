@@ -4,7 +4,7 @@ import CountUp from './CountUp'
 import MetricTip from './MetricTip'
 import { m } from '../lib/metrics'
 import { link } from '../lib/site'
-import { LazyAskCartReport, LazyResearchBoard } from './lazy'
+import { LazyAskCartReport, LazyInsightFlow, LazyResearchBoard } from './lazy'
 import ViewTransitionLink from './ViewTransitionLink'
 import VisibleCard from './VisibleCard'
 import { SortingDots } from './ProjectSignatures'
@@ -14,7 +14,7 @@ const liveHost = (url?: string | null) => (url ? url.replace(/^https?:\/\//, '')
 interface Stat { id?: string; value: string; label: string; hot?: boolean }
 
 interface CaseProps {
-  variant: 'tm' | 'fl'
+  variant: 'tm' | 'fl' | 'vx'
   id: string
   index: number
   slug: string
@@ -72,9 +72,10 @@ function Case({ variant, id, index, slug, title, summary, liveUrl, links, stack,
 
 export default function Projects() {
   const askcart = PROJECTS.find(p => p.slug === 'askcart')
+  const insight = PROJECTS.find(p => p.slug === 'insight-extractor')
   const research = PROJECTS.find(p => p.slug === 'research-agent')
-    const shipped = [askcart, research].filter(Boolean)
-    const meta: [string, string] = [`${shipped.length} personal case studies`, 'Corporate projects right below']
+  const shipped = [askcart, insight, research].filter(Boolean)
+  const meta: [string, string] = [`${shipped.length} personal case studies`, 'Review mining, guided search, agentic research']
 
   return (
     <section className="band" id="projects" data-current="tm">
@@ -108,11 +109,27 @@ export default function Projects() {
               media={<LazyAskCartReport />}
             />
           )}
-          {research && (
+          {insight && (
             <Case
               variant="fl"
-              id="projects-research"
+              id="projects-insight"
               index={1}
+              slug={insight.slug}
+              title={insight.title}
+              summary="Reviews are the only dataset that will tell you why a search failed. The extractor mines 94.6K of them from three stores and resolves the noise into four root causes, each with its own treatment."
+              liveUrl={insight.live_url}
+              links={insight.links}
+              stack="Python · SQL · LLM agents · REST APIs"
+              statsLabel="One run"
+              stats={(insight.stats ?? []).map(st => ({ id: st.id, value: m(st.id).shown, label: st.label, hot: st.hot }))}
+              media={<LazyInsightFlow />}
+            />
+          )}
+          {research && (
+            <Case
+              variant="vx"
+              id="projects-research"
+              index={2}
               slug={research.slug}
               title={research.title}
               summary="Give it a topic: it mines Reddit and Hacker News, clusters the pain points, and hands back a ranked list plus a first draft of the PRD."

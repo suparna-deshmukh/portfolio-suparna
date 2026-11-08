@@ -120,9 +120,11 @@ export const METRICS: Record<string, Metric> = {
   'ac-follow': M({ id: 'ac-follow', shown: '78.7%', num: 118, den: 150, n: 150, unit: '%', source: 'AskCart MVP — searches resolved within 2 follow-ups', asOf: 'Aug 2026' }),
   'ac-relevance': M({ id: 'ac-relevance', shown: '88%', num: 88, n: 100, unit: '%', source: 'AskCart — top-3 relevance, multilingual embedding fallback, 100-query eval', asOf: 'Aug 2026' }),
   'ac-reviews': M({ id: 'ac-reviews', shown: '94.6K', num: 94600, unit: 'count', source: 'AskCart — reviews mined via agentic extractor (Reddit, App Store, Play Store)', asOf: 'Aug 2026' }),
-  'ac-skus': M({ id: 'ac-skus', shown: '36K', num: 36000, unit: 'count', source: 'AskCart MVP — Bayesian-rated SKUs in the catalog', asOf: 'Aug 2026' }),
+  'ac-skus': M({ id: 'ac-skus', shown: '54K', num: 54000, unit: 'count', source: 'AskCart MVP — Bayesian-rated SKUs in the catalog', asOf: 'Nov 2026' }),
   'ac-users': M({ id: 'ac-users', shown: '6', num: 6, unit: 'count', source: 'AskCart — user interviews for the guided flow', asOf: 'Aug 2026' }),
   'ac-causes': M({ id: 'ac-causes', shown: '4', num: 4, unit: 'count', source: 'AskCart — root causes of search failure isolated from 94.6K reviews', asOf: 'Aug 2026' }),
+  // ── Projects · Insight Extractor ──
+  'ie-stages': M({ id: 'ie-stages', shown: '6', num: 6, unit: 'count', source: 'Insight Extractor — SQL pipeline stages behind the review mining', asOf: 'Aug 2026' }),
   'ac-narrow': M({ id: 'ac-narrow', shown: '12', num: 12, unit: 'count', source: 'AskCart evals — SKUs after guided narrowing, missing_context mode', asOf: 'Aug 2026' }),
 
   // ── Projects · Research Agent ──
