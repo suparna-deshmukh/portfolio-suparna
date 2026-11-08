@@ -349,7 +349,7 @@ Objects (all links):
 
 | object | pos (x/y) | size | depth/rot | content → target |
 |---|---|---|---|---|
-| ID badge | 0/20 | 172w | 1.15 / −5° | monogram badge `suparna-portrait.webp` (256×256 source, q95; `next/image` quality 90, sizes 300px; placeholder until Suparna supplies a real photo), name, "Associate Product Manager", "RISA Labs · Bengaluru" → `#about` |
+| ID badge | 0/20 | 172w | 1.15 / −5° | real portrait `suparna-portrait.webp` (1254×1254 full-res source, q90; `next/image` quality 90, sizes 300px; CSS cover-crops to 144/136), name, "Associate Product Manager", "RISA Labs · Bengaluru" → `#about` |
 | AskCart phone | 400/16 | 248×474 | .7 / 2.5° | dark phone frame + island; **live loop** `AskCartPhone`: status bar, app header, typing caret in the search field, a guided-question card ("What's the budget?" chips) then a result list where the old "no results" becomes a guided re-run → `/projects/askcart` |
 | RISA stat card | 206/36 | 168w | 1.45 / 3° | accent top bar, "RISA Labs / APM intern · now", **350 hrs/wk** big figure, "saved across 200 users · Status Tracking 0→1" subline, then a **2×3 op-metric grid** (`.ex-risa-grid`, 6 cells, one-line labels, each value a `MetricTip`): 400 docs/day · cron pipeline · 92% Vapi calls · 2x QC speed · 87% auto-RCA · 60% portal TAT · $10K/yr Doc Studio (ids `risa-docs`/`risa-vapi`/`risa-qc`/`risa-pulse`/`risa-tat`/`risa-studio`) → `#experience-risa` |
 | Campus card | 2/393 | 216w | .9 / −2° | **real campus photo** `bits-goa.webp` (800×306 original paste, re-encoded q90 — the photo lives only on this card, never on the notes; cover-cropped to 188/113 by CSS), "BITS Pilani, Goa", `EDUCATION.branch` ("Electronics and Communication Engineering"), "Finance minor · Class of 2027" → `#about` |
