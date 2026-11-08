@@ -18,11 +18,11 @@ const MODES: Mode[] = [
   { name: 'missing_context', tool: 'filters: none', agent: `guided narrowing \u2192 ${m('ac-narrow').shown} SKUs`, missed: false },
 ]
 
-const STEP = { answer: 520, verdict: 1040 }
-const ROW_AT = [300, 1250, 2200]
-const GAUGE_AT = 3200
-const STAMP_AT = 4000
-const LOOP_MS = 7000
+const STEP = { answer: 360, verdict: 730 }
+const ROW_AT = [200, 900, 1550]
+const GAUGE_AT = 2250
+const STAMP_AT = 2800
+const LOOP_MS = 4900
 const TRACK_PX = 420
 const SCORE = parseFloat(m('ac-eval').shown)
 

@@ -124,7 +124,7 @@ export const PROJECTS: Project[] = [
     "notes": [
       { "label": "The dataset", "line": "the only dataset that will tell you why: reviews" },
       { "label": "The pipeline", "line": "a 6-stage SQL pipeline that cleans, deduplicates and tags it" },
-      { "label": "The output", "line": "four root causes of search failure" }
+      { "label": "The output", "line": "the root causes of search failure" }
     ],
     "highlights": [ "Each cause got its own treatment instead of one generic \"no results\" page." ]
   },

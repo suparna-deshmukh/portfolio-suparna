@@ -177,7 +177,7 @@ export default function Corporate() {
                   <span>{c.proof.label}</span>
                 </p>
                 <ul className="cf-points">
-                  {c.points.map(pt => <li key={pt}><Rich text={pt} /></li>)}
+                  {c.points.map((pt, pi) => <li key={pt} style={{ ['--i' as string]: pi }}><Rich text={pt} /></li>)}
                 </ul>
                 <div className="cf-foot">
                   {c.links?.filter(l => link(l.href)).map(l => (

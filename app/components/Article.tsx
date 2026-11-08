@@ -15,6 +15,7 @@ const TOC_MIN_HEADINGS = 4
 /** Intrinsic sizes of the cover files in public/, so the figure reserves its height before the image loads. */
 const COVER_SIZE: Record<string, [number, number]> = {
   '/images/projects/askcart-cover.webp': [1200, 690],
+  '/images/projects/insight-extractor-cover.webp': [1200, 690],
   '/images/projects/research-agent-cover.webp': [480, 288],
   '/images/blog/null-results-cover.webp': [1200, 675],
 }
@@ -70,7 +71,7 @@ export default function Article({ kind, slug, backHref, backLabel, title, subtit
             </div>
             {cover && (
               <figure className="fig" style={isCase ? { viewTransitionName: `case-media-${slug}` } : undefined}>
-                <Image src={cover} alt="" width={coverW} height={coverH} sizes="(max-width: 900px) 100vw, 900px" style={{ width: '100%', height: 'auto' }} />
+                <Image src={cover} alt="" width={coverW} height={coverH} sizes="(max-width: 900px) 100vw, 900px" priority style={{ width: '100%', height: 'auto' }} />
               </figure>
             )}
             {(quote || annot.notes?.length) && (

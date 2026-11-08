@@ -12,9 +12,8 @@ const STEP_MS = 1500
 const LAST = 7
 
 /**
- * The hero phone: a live loop of AskCart's guided search — the query types itself, one narrow
- * follow-up question appears, an answer is picked, and the results land. Replays while on screen;
- * reduced motion shows the settled frame.
+ * The hero phone: a live loop of AskCart's guided search — the finished result list is always
+ * on screen; the loop just re-runs the query. Reduced motion shows the settled frame.
  */
 export default function AskCartPhone() {
   const [step, setStep] = useState(LAST)
@@ -25,10 +24,12 @@ export default function AskCartPhone() {
     return () => window.clearInterval(id)
   }, [])
 
-  const typed = step >= 1 ? QUERY[Math.min(1, step - 1)] : ''
-  const questionOn = step >= 3
-  const optionOn = step >= 5
-  const resultsOn = step >= 7
+  // The loop only toggles which query is shown; the guided answer and the finished result list
+  // stay on screen at all times, so the idle and first frames never show a blank white screen.
+  const typed = step >= 4 ? QUERY[1] : QUERY[0]
+  const questionOn = true
+  const optionOn = true
+  const resultsOn = true
 
   return (
     <span className="acp" aria-hidden="true">

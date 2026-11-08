@@ -1,85 +1,174 @@
-/* ── hero left column: "title block". The name set as an engineering drawing's title block —
-   a double-ruled sheet with a name plate, three fact cells (education, location with a live
-   IST clock, impact) and ruled rows for the current work.
-   Text is always at full strength on first paint. Under html.motion-ok only the block landing,
-   the rules and the highlight draw in; without JS or with reduced motion they show final. */
+/* ── hero left column: the printed-card title block. Double-hairline frame (1px green 35%
+   outside, 6px gap, 1px ink 90% inside), corner crop-marks, paper grain, an oversized serif
+   name stacked on two lines, a slowly rotating seal overlapping the top-right corner, ruled
+   ledger rows and pill CTAs. Text is fully visible at first paint; under html.motion-ok a
+   single <600ms flourish plays on top (transform/opacity only, from opacity .01, never 0).
+   Pointer tilt + highlight attach after idle, fine pointers only. */
 
 .hd-left{min-width:0}
-.tb{position:relative;max-width:580px;margin-bottom:10px;color:var(--fg);background:var(--surf);
-  border:2px solid var(--fg);outline:1px solid var(--lineS);outline-offset:5px;border-radius:3px;
-  box-shadow:0 26px 46px -22px rgba(23,19,14,.42)}
-[data-theme="dark"] .tb{box-shadow:0 0 0 1px var(--line),0 26px 46px -22px rgba(0,0,0,.7)}
 
+/* ── the card: cream surface, green wash behind the name block, layered shadow ── */
+.tb{--mx:200%;--my:200%;position:relative;max-width:580px;margin-bottom:10px;color:var(--fg);
+  border:1px solid color-mix(in oklab,var(--acc) 35%,transparent);border-radius:8px;
+  background:
+    radial-gradient(260px 220px at var(--mx) var(--my),color-mix(in oklab,var(--acc) 7%,transparent),transparent 70%),
+    linear-gradient(135deg,color-mix(in oklab,var(--acc) 8%,transparent),transparent 55%),
+    var(--surf);
+  box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 2px 4px rgba(20,40,30,.06),0 18px 40px -12px rgba(20,40,30,.22)}
+[data-theme="dark"] .tb{box-shadow:0 1px 0 rgba(255,255,255,.05) inset,0 2px 4px rgba(0,0,0,.2),0 18px 40px -12px rgba(0,0,0,.55)}
+/* inner hairline, 6px inside the outer frame */
+.tb::before{content:"";position:absolute;inset:6px;border:1px solid color-mix(in oklab,var(--fg) 90%,transparent);border-radius:4px;pointer-events:none}
+/* four corner crop-marks: 10px L-shapes, 1px ink at 60%, just outside the frame */
+.tb::after{content:"";position:absolute;inset:-12px;pointer-events:none;
+  background:
+    linear-gradient(color-mix(in oklab,var(--fg) 60%,transparent),color-mix(in oklab,var(--fg) 60%,transparent)) left 0 top 0/10px 1px no-repeat,
+    linear-gradient(color-mix(in oklab,var(--fg) 60%,transparent),color-mix(in oklab,var(--fg) 60%,transparent)) left 0 top 0/1px 10px no-repeat,
+    linear-gradient(color-mix(in oklab,var(--fg) 60%,transparent),color-mix(in oklab,var(--fg) 60%,transparent)) right 0 top 0/10px 1px no-repeat,
+    linear-gradient(color-mix(in oklab,var(--fg) 60%,transparent),color-mix(in oklab,var(--fg) 60%,transparent)) right 0 top 0/1px 10px no-repeat,
+    linear-gradient(color-mix(in oklab,var(--fg) 60%,transparent),color-mix(in oklab,var(--fg) 60%,transparent)) left 0 bottom 0/10px 1px no-repeat,
+    linear-gradient(color-mix(in oklab,var(--fg) 60%,transparent),color-mix(in oklab,var(--fg) 60%,transparent)) left 0 bottom 0/1px 10px no-repeat,
+    linear-gradient(color-mix(in oklab,var(--fg) 60%,transparent),color-mix(in oklab,var(--fg) 60%,transparent)) right 0 bottom 0/10px 1px no-repeat,
+    linear-gradient(color-mix(in oklab,var(--fg) 60%,transparent),color-mix(in oklab,var(--fg) 60%,transparent)) right 0 bottom 0/1px 10px no-repeat}
+/* paper grain: inline feTurbulence, ~4%, multiply */
+/* ≥1024: the card runs ~15% wider than its column, biased left so the name keeps
+   breathing room from the left hairline (and the page margin absorbs the overhang). */
+@media (min-width:1024px){
+  /* 15% wider, biased left by 6 more points of the column (right edge in 6,
+     left edge out 6); the shift is capped so the crop marks never pass the
+     viewport edge when the page has no side margin to absorb it. */
+  .tb{width:calc(100% * 1.15)}
+  .tb{margin-left:calc(var(--pad) * -1 + 14px)}
+}
+@media (min-width:1440px){
+  .tb{margin-left:max(calc(100% * -0.145),calc((100vw - 1440px) * -0.5 - var(--pad) + 14px))}
+}
+
+.tb-grain{position:absolute;inset:1px;border-radius:7px;pointer-events:none;opacity:.04;mix-blend-mode:multiply;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* pointer tilt + highlight: only once the idle-attached handler has written the vars */
+@media (pointer:fine){
+  html.motion-ok .tb{transform:perspective(900px) rotateX(var(--tiltX,0deg)) rotateY(var(--tiltY,0deg));transition:transform .3s var(--ease)}
+}
+
+/* ── name block: oversized serif, tight two-line stack, 1px ink rule at the bottom edge ── */
 .tb-r{display:grid}
+.tb-name-r{border-bottom:1px solid var(--fg)}
+.tb-name{margin:0;padding:52px 20px 28px 20px;font:600 clamp(52px,6.6vw,108px)/.92 var(--fd);letter-spacing:-.02em;font-optical-sizing:auto}
+.tb-name span{display:block}
+.tb-first{position:relative;color:var(--accText)}
+/* baseline-deepening gradient as a masked duplicate — no background-clip:text
+   (a headless Chromium raster artifact smears it in the padding above the line) */
+.tb-first::after{content:"Suparna";position:absolute;inset:0;pointer-events:none;color:color-mix(in oklab,var(--accText) 72%,#000);
+  -webkit-mask-image:linear-gradient(180deg,transparent 52%,#000 100%);mask-image:linear-gradient(180deg,transparent 52%,#000 100%)}
+[data-theme="dark"] .tb-first::after{color:color-mix(in oklab,var(--accText) 80%,#fff)}
 
-/* name plate row */
-.tb-name-r{position:relative}
-.tb-name-r::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;background:var(--fg)}
-.tb-name{margin:0;padding:26px 26px 20px;font:600 clamp(40px,4.4vw,52px)/.94 var(--fd);letter-spacing:-.02em}
-.tb-first{color:var(--accText)}
-.tb-line{margin:0;padding:14px 26px 2px;font-size:15.5px;line-height:1.5;color:var(--dim);max-width:44ch;text-wrap:pretty}
-
-/* corner seal on the name plate */
-.tb-seal{position:absolute;right:18px;top:14px;width:52px;height:52px;color:var(--accText);opacity:.75;pointer-events:none}
-[data-theme="dark"] .tb-seal{opacity:.6}
+/* corner seal: cream disc overlapping the card corner, ring text rotating, SD still */
+.tb-seal{position:absolute;right:-24px;top:-24px;width:112px;height:112px;z-index:3;color:var(--accText);opacity:.8;
+  background:var(--surf);border-radius:50%;box-shadow:0 12px 28px -12px rgba(20,40,30,.45),0 0 0 1px var(--lineS)}
+[data-theme="dark"] .tb-seal{opacity:.7;box-shadow:0 12px 28px -12px rgba(0,0,0,.7),0 0 0 1px var(--lineS)}
 .tb-seal svg{width:100%;height:100%;display:block;transform:rotate(-8deg)}
+.tb-seal-ring{transform-origin:40px 40px}
+html.motion-ok .tb-seal-ring{animation:tbSpin 60s linear .6s infinite}
+html.motion-ok .tb:hover .tb-seal-ring{animation-duration:12s}
+@keyframes tbSpin{to{transform:rotate(360deg)}}
 .tb-seal-t{font:600 6.8px var(--fm);letter-spacing:.17em;fill:currentColor}
-.tb-seal-m{font:700 15px var(--fd);letter-spacing:.01em;fill:currentColor}
-html.motion-ok .tb-seal svg{animation:tbSealIn .8s var(--ease) .8s both}
-@keyframes tbSealIn{from{opacity:0;transform:rotate(14deg) scale(.85)}}
+.tb-seal-dot{stroke:none}
 
-/* ruled rows: mono label | bold value | right-aligned detail */
+/* tagline: 19-20px ink at 78%, the positioning line's close gets a drawn-in underline */
+.tb-line{margin:0;padding:16px 20px 2px;font-size:19.5px;line-height:1.5;color:color-mix(in oklab,var(--fg) 78%,transparent);max-width:34ch;text-wrap:pretty}
+.tb-u{position:relative;white-space:nowrap}
+.tb-u svg{position:absolute;left:1px;bottom:-4px;width:calc(100% - 2px);height:8px;overflow:visible;pointer-events:none}
+.tb-u-line{fill:none;stroke:var(--acc);stroke-width:2;stroke-linecap:round;stroke-dasharray:100;stroke-dashoffset:0}
+html.motion-ok .tb-u-line{animation:tbDraw .3s cubic-bezier(.22,1,.36,1) .25s both}
+@keyframes tbDraw{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+
+/* ── ledger rows: mono label | role + subtext, identical structure, dashed ink dividers ── */
 .tb-rows{margin:0;padding:0}
-.tb-row{position:relative;display:grid;grid-template-columns:84px minmax(0,auto) minmax(0,1fr);align-items:baseline;column-gap:12px;padding:14px 24px 13px}
-.tb-row + .tb-row{border-top:1px dashed var(--lineS)}
-.tb-row dt{display:flex;align-items:center;gap:7px;font:500 11.5px/1.3 var(--fm);letter-spacing:.06em;text-transform:uppercase;color:var(--dim);white-space:nowrap}
-.tb-row dt i{flex:none;width:7px;height:7px;border-radius:50%;background:var(--acc)}
-.tb-row.live dt{color:var(--accText)}
-.tb-row dd{margin:0}
-.tb-val{font:700 16.5px/1.25 var(--fb);letter-spacing:-.01em;color:var(--fg);white-space:nowrap}
-.tb-det{justify-self:end;text-align:right;font:12px/1.4 var(--fm);color:var(--dim)}
-.tb-row.live .tb-val{color:var(--accText);
-  background:linear-gradient(transparent 52%,color-mix(in oklab,var(--acc) 46%,transparent) 52% 94%,transparent 94%) no-repeat 0 0/100% 100%}
-[data-theme="dark"] .tb-row.live .tb-val{background-image:linear-gradient(transparent 52%,color-mix(in oklab,var(--acc) 38%,transparent) 52% 94%,transparent 94%)}
+.tb-row{position:relative;display:grid;grid-template-columns:132px minmax(0,1fr);column-gap:24px;row-gap:4px;
+  align-items:baseline;padding:18px 32px 18px 20px;border-radius:2px}
+.tb-row + .tb-row{border-top:1px dashed color-mix(in oklab,var(--fg) 22%,transparent)}
+.tb-row dt{margin:0;font:500 11.5px/1.4 var(--fm);letter-spacing:.14em;text-transform:uppercase;color:color-mix(in oklab,var(--fg) 70%,transparent);white-space:nowrap}
+.tb-val{margin:0;font:600 22px/1.25 var(--fb);letter-spacing:-.01em;color:var(--fg);padding-right:32px;text-wrap:balance;transition:translate .18s var(--ease)}
+.tb-det{grid-column:2;margin:0;font:500 13px/1.4 var(--fm);color:color-mix(in oklab,var(--fg) 70%,transparent)}
+@media (hover:hover) and (pointer:fine){
+  .tb-row::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:3px;background:var(--acc);
+    transform:scaleY(0);transform-origin:top;transition:transform .18s var(--ease)}
+  .tb-row:hover{background:color-mix(in oklab,var(--acc) 6%,transparent)}
+  .tb-row:hover::before,.tb-row:focus-within::before{transform:scaleY(1)}
+  .tb-row:hover .tb-val,.tb-row:focus-within .tb-val{translate:4px 0}
+}
 
-/* detail drops under the value: on .stack rows and on narrow sheets */
-.tb-row.stack{grid-template-columns:84px minmax(0,1fr);row-gap:3px}
-.tb-row.stack .tb-det{grid-column:2;justify-self:start;text-align:left}
-
-/* foot: CTAs, then the phone + links line */
-.tb-foot{display:grid;gap:14px;padding:18px 24px 20px;position:relative}
-.tb-foot::before{content:"";position:absolute;left:0;right:0;top:-1px;height:1px;background:var(--lineS)}
+/* ── foot: pill CTAs, then the social lines ── */
+.tb-foot{display:grid;gap:6px;padding:16px 20px 20px;margin-top:2px;border-top:1px dashed color-mix(in oklab,var(--fg) 22%,transparent)}
 .tb-foot .hctas{display:flex;gap:12px;flex-wrap:wrap}
-.tb-foot .btn{padding:13px 20px;font-size:14.5px}
-.tb-links{margin:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:5px 16px;font:500 12px/1.4 var(--fm);letter-spacing:.02em;color:var(--dim)}
-.tb-links a{color:var(--fg);text-decoration:underline;text-decoration-color:var(--acc);text-underline-offset:3px;transition:text-decoration-color .2s}
-.tb-links a:hover{text-decoration-color:var(--accText)}
-.tb-links a:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:2px}
-
-/* motion: draw once on load */
-html.motion-ok .tb{animation:tbLand .8s var(--ease) .05s both}
-html.motion-ok .tb-name-r::after{animation:tbRule .7s var(--ease) .45s both}
-html.motion-ok .tb-foot::before{animation:tbRule .7s var(--ease) .66s both}
-html.motion-ok .tb-rows{animation:tbRowsIn .6s var(--ease) .62s both}
-html.motion-ok .tb-row.live .tb-val{animation:tbMark .8s var(--ease) 1.15s both}
-html.motion-ok .tb-seal{animation:none}
-@keyframes tbLand{from{translate:0 -14px}} /* no opacity: the name plate is the LCP element — text must be visible on first paint */
-@keyframes tbRule{from{transform:scaleX(0)}transform-origin:left}
-@keyframes tbRowsIn{from{opacity:0;translate:0 5px}}
-@keyframes tbMark{from{background-size:0% 100%}}
-
-@media (max-width:899px){
-  .tb{max-width:none}
-  .tb-name{font-size:clamp(26px,8.5vw,42px);padding:20px 20px 16px}
-  .tb-foot .hctas{flex-wrap:nowrap}
-  .tb-foot .hctas .btn{flex:1 1 0;justify-content:center;padding:14px 10px;white-space:nowrap}
+.tb-foot .btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 26px;
+  border-radius:999px;border:1px solid var(--acc);font:600 16px/1 var(--fb);background:var(--acc);color:var(--accInk);cursor:pointer;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 10px 22px -10px color-mix(in oklab,var(--acc) 55%,transparent);
+  transition:transform .15s var(--ease),background-color .2s,border-color .2s,box-shadow .2s}
+.tb-foot .btn span{display:inline-block;transition:translate .2s var(--ease)}
+@media (hover:hover) and (pointer:fine){
+  .tb-foot .btn:hover{transform:translateY(-1px);background:color-mix(in oklab,var(--acc) 85%,#000)}
+  .tb-foot .btn:hover span{translate:0 3px}
 }
-@media (max-width:520px){
-  .tb-row{grid-template-columns:76px minmax(0,1fr);row-gap:3px}
-  .tb-det{grid-column:2;justify-self:start;text-align:left}
-  .tb-seal{width:48px;height:48px;right:14px;top:12px}
-  .tb-line{padding:11px 20px 2px;font-size:15px}
+.tb-foot .btn:active{transform:translateY(0) scale(.98)}
+.tb-foot .btn.ghost{background:transparent;color:var(--fg);border:1.5px solid var(--fg);box-shadow:none}
+@media (hover:hover) and (pointer:fine){
+  .tb-foot .btn.ghost:hover{background:color-mix(in oklab,var(--fg) 6%,transparent);border-color:var(--acc);transform:translateY(-1px)}
+  .tb-foot .btn.ghost:hover span{translate:0 0}
 }
+.tb-foot .btn:focus-visible,.tb-links a:focus-visible{outline:2px solid var(--acc);outline-offset:3px;border-radius:999px}
+.tb-links{margin:0;display:flex;flex-wrap:wrap;align-items:center;gap:0 16px;font:500 14px/1.4 var(--fm);letter-spacing:.02em}
+.tb-links a{position:relative;display:inline-flex;align-items:center;min-height:44px;color:var(--fg);text-decoration:none;
+  background:linear-gradient(var(--acc),var(--acc)) no-repeat left calc(100% - 2px)/0% 1px;transition:background-size .25s var(--ease)}
+.tb-links a span{display:inline-block;transition:translate .2s var(--ease)}
+@media (hover:hover) and (pointer:fine){
+  .tb-links a:hover,.tb-links a:focus-visible{background-size:100% 1px}
+  .tb-links a:hover span,.tb-links a:focus-visible span{translate:2px -2px}
+}
+
+/* ── entrance: one <600ms flourish, transform/opacity only, from opacity .01 (never hidden) ── */
+html.motion-ok .tb-first{animation:tbLine .35s cubic-bezier(.22,1,.36,1) both}
+html.motion-ok .tb-last{animation:tbLine .35s cubic-bezier(.22,1,.36,1) .04s both}
+html.motion-ok .tb-seal{animation:tbFade .25s ease .06s both}
+html.motion-ok .tb-line{animation:tbUp .25s cubic-bezier(.22,1,.36,1) .12s both}
+html.motion-ok .tb-row:nth-child(1){animation:tbUp .25s cubic-bezier(.22,1,.36,1) .16s both}
+html.motion-ok .tb-row:nth-child(2){animation:tbUp .25s cubic-bezier(.22,1,.36,1) .2s both}
+html.motion-ok .tb-row:nth-child(3){animation:tbUp .25s cubic-bezier(.22,1,.36,1) .24s both}
+html.motion-ok .hctas{animation:tbUp .25s cubic-bezier(.22,1,.36,1) .28s both}
+html.motion-ok .tb-links{animation:tbUp .25s cubic-bezier(.22,1,.36,1) .32s both}
+@keyframes tbLine{from{opacity:.01;translate:0 8px}}
+@keyframes tbFade{from{opacity:.01}}
+@keyframes tbUp{from{opacity:.01;translate:0 6px}}
+
+@media (min-width:768px) and (max-width:1023px){
+  .tb-name{font-size:clamp(56px,6.6vw,88px)}
+}
+
+/* ≤640: tighter card, stacked ledger rows, full-width stacked pills, one-line links */
+@media (max-width:640px){
+  .tb{max-width:none;padding:0}
+  .tb-name{padding:44px 16px 24px;font-size:52px}
+  .tb-seal{width:72px;height:72px;right:-16px;top:-16px}
+  .tb-line{padding:14px 20px 2px;font-size:18px}
+  .tb-row{grid-template-columns:1fr;row-gap:3px;padding:16px 20px}
+  .tb-val{padding-right:12px}
+  .tb-det{grid-column:1}
+  .tb-foot{padding:14px 20px 18px}
+  .tb-foot .hctas{flex-direction:column;gap:10px}
+  .tb-foot .btn{width:100%;height:52px}
+  .tb-links{row-gap:0}
+  .tb-links a{min-height:44px}
+}
+@media (max-width:359px){
+  .tb-name{padding:40px 14px 22px}
+  .tb-row{padding:14px 16px}
+  .tb-line{padding:12px 16px 2px}
+  .tb-foot{padding:12px 16px 16px}
+}
+
 @media (prefers-reduced-motion:reduce){
-  .tb,.tb-name-r::after,.tb-foot::before,.tb-rows,.tb-row.live .tb-val,.tb-seal svg{animation:none}
+  .tb-first,.tb-last,.tb-seal,.tb-line,.tb-row,.hctas,.tb-links,.tb-u-line,.tb-seal-ring{animation:none}
+  .tb-val,.tb-row::before,.tb-foot .btn,.tb-foot .btn span,.tb-links a span{transition:none}
+  .tb{transform:none}
 }

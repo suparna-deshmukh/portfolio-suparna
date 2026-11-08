@@ -1,45 +1,52 @@
-/* ── hero right column: the annotated exhibit. Four objects pinned loose on the cross-grid —
-   the ID badge, the BITS Goa campus, the RISA stat card, the AskCart phone (a live loop of the
-   guided search) — each tagged with a dimension-style callout. The pointer drives a small
-   parallax; objects lift on hover. Under html.motion-ok the objects settle in; without JS or
-   with reduced motion they show final. */
+/* ── hero right column: the annotated exhibit. A three-column desk grid — the ID badge over the
+   BITS Goa campus card, the RISA stat card with the InvestMates card, the placement note and
+   the 180DC POR file under it, and the AskCart phone with the two achievement notes. Dimension-style
+   callouts ride their own gutter above every object; the pointer drives a small parallax (≤5px),
+   objects lift ≤4px on hover. Real grid/flex flow, auto rows, 20px gaps — no hand-placed absolutes. */
 
-.ex-wrap{position:relative;width:min(660px,100%);aspect-ratio:660/610;margin-inline:auto}
-.exhibit{position:absolute;top:0;left:0;width:660px;height:610px;transform:scale(var(--s,1));transform-origin:0 0}
+.ex-wrap{position:relative;width:min(726px,100%);margin-inline:auto;aspect-ratio:726/665}
+.exhibit{width:726px;transform:scale(var(--s,1));transform-origin:0 0;display:grid;grid-template-columns:288px 188px 210px;gap:20px}
+.ex-col{display:flex;flex-direction:column;gap:20px;min-width:0}
 
-.ex-ob{position:absolute;display:block;text-decoration:none;color:var(--fg);
-  transform:rotate(var(--rot,0deg)) translate3d(calc(var(--mx,0) * var(--d,1) * 12px),calc(var(--my,0) * var(--d,1) * 8px),0);
-  transition:translate .3s var(--ease)}
-.ex-ob:hover{translate:0 -5px}
+/* dimension-style callout: its own gutter line above the object it labels, with a short leader tick */
+.ex-lab{position:relative;height:16px;font:500 13px/16px var(--fm);letter-spacing:.1em;color:var(--dim);white-space:nowrap;
+  transform:translate3d(calc(var(--mx,0) * 8px),calc(var(--my,0) * 6px),0);transition:transform .3s var(--ease)}
+.ex-lab .ix{color:var(--accText);font-weight:700}
+.ex-lab::after{content:"";position:absolute;left:50%;top:16px;height:12px;border-left:1px dashed var(--lineS)}
+
+.ex-ob{position:relative;display:block;text-decoration:none;color:var(--fg);
+  transform:translate3d(calc(var(--mx,0) * 8px),calc(var(--my,0) * 6px),0);
+  transition:translate .3s var(--ease),transform .3s var(--ease)}
+.ex-ob:hover{translate:0 -3px}
 .ex-ob:focus-visible{outline:2px solid var(--focus);outline-offset:4px;border-radius:8px}
 
 /* ID badge */
-.ex-badge{left:0;top:20px;width:172px;background:var(--surf);border:1px solid var(--lineS);border-radius:12px;
+.ex-badge{width:100%;background:var(--surf);border:1px solid var(--lineS);border-radius:12px;
   padding:30px 12px 10px;box-shadow:0 22px 34px -20px rgba(23,19,14,.5)}
 [data-theme="dark"] .ex-badge{box-shadow:0 0 0 1px var(--line),0 22px 34px -20px rgba(0,0,0,.8)}
 .ex-clip{position:absolute;top:8px;left:50%;translate:-50% 0;width:34px;height:12px;border-radius:7px;
-  background:color-mix(in oklab,var(--fg) 14%,transparent);border:1px solid var(--lineS)}
+  background:color-mix(in oklab,var(--fg) 14%,transparent);border:1px solid var(--lineS);z-index:1}
 .ex-badge img{display:block;width:100%;aspect-ratio:144/136;object-fit:cover;border-radius:7px}
-.ex-badge b{display:block;margin-top:9px;font:700 14.5px/1.2 var(--fb);letter-spacing:-.01em}
-.ex-badge small{display:block;font:500 13.5px/1.5 var(--fm);color:var(--dim)}
+.ex-badge b{display:block;margin-top:9px;font:700 14.5px/1.2 var(--fb);letter-spacing:-.01em;white-space:nowrap}
+.ex-badge small{display:block;font:500 12px/1.5 var(--fm);letter-spacing:0;color:var(--dim);white-space:nowrap}
 .ex-bcode{display:block;height:12px;margin-top:8px;border-radius:1px;opacity:.55;
   background:repeating-linear-gradient(90deg,currentColor 0 2px,transparent 2px 5px,currentColor 5px 6px,transparent 6px 9px,currentColor 9px 12px,transparent 12px 15px)}
 
 /* phone with the AskCart loop */
-.ex-phone{left:400px;top:16px;width:248px;height:474px;background:#0D1411;border-radius:38px;padding:10px;
+.ex-phone{width:210px;height:401px;background:#0D1411;border-radius:38px;padding:10px;
   box-shadow:0 34px 50px -24px rgba(23,19,14,.55)}
 [data-theme="dark"] .ex-phone{box-shadow:0 0 0 1px var(--line),0 34px 50px -24px rgba(0,0,0,.9)}
-.ex-island{position:absolute;top:18px;left:50%;translate:-50% 0;width:86px;height:22px;border-radius:12px;background:#0D1411;z-index:2}
+.ex-island{position:absolute;top:18px;left:50%;translate:-50% 0;width:74px;height:20px;border-radius:11px;background:#0D1411;z-index:2}
 .acp-frame{display:flex;background:#FAFCF8;color:#15211A;border-radius:30px;height:100%;overflow:hidden;padding:30px 14px 14px}
 
-.acp{display:flex;flex-direction:column;height:100%;font-family:var(--fb)}
+.acp{display:flex;flex-direction:column;height:100%;font-family:var(--fb);min-width:0}
 .acp-status{display:flex;justify-content:space-between;align-items:center;font:600 11px/1 var(--fm);color:rgba(21,33,26,.75)}
 .acp-bat{display:inline-flex;width:22px;height:11px;border:1.5px solid rgba(21,33,26,.5);border-radius:3px;padding:1.5px}
 .acp-bat i{display:block;width:70%;height:100%;background:rgba(21,33,26,.6);border-radius:1px}
 .acp-app{display:flex;align-items:baseline;gap:7px;margin:10px 0 8px}
 .acp-app b{font:700 17px/1 var(--fd);letter-spacing:-.02em}
 .acp-app small{font:500 11px/1 var(--fm);letter-spacing:.08em;text-transform:uppercase;color:rgba(21,33,26,.75)}
-.acp-field{display:flex;align-items:center;gap:8px;border:1.5px solid rgba(21,33,26,.25);border-radius:999px;padding:8px 12px;font-size:12.5px}
+.acp-field{display:flex;align-items:center;gap:8px;border:1.5px solid rgba(21,33,26,.25);border-radius:999px;padding:8px 12px;font-size:12.5px;min-width:0}
 .acp-field svg{width:13px;height:13px;flex:none;color:rgba(21,33,26,.55)}
 .acp-q{white-space:nowrap;overflow:hidden}
 .acp-caret{display:inline-block;width:1.5px;height:12px;margin-left:1px;background:#15211A;vertical-align:-1px;animation:acpBlink 1s steps(1) infinite}
@@ -57,99 +64,118 @@
 .acp-res{margin-top:10px;display:grid;gap:7px;opacity:0;translate:0 6px;transition:opacity .45s ease .12s,translate .45s var(--ease) .12s}
 .acp-res.on{opacity:1;translate:0 0}
 .acp-res > small{font:500 13px/1 var(--fm);letter-spacing:.12em;text-transform:uppercase;color:rgba(21,33,26,.5)}
-.acp-row{display:flex;align-items:center;gap:9px;border-top:1px solid rgba(21,33,26,.1);padding-top:7px}
-.acp-th{flex:none;width:30px;height:22px;border-radius:5px;background:linear-gradient(135deg,rgba(23,126,91,.35),rgba(23,126,91,.12))}
+.acp-row{display:flex;align-items:center;gap:9px;border-top:1px solid rgba(21,33,26,.1);padding-top:7px;min-width:0}
+.acp-th{flex:none;width:26px;height:20px;border-radius:5px;background:linear-gradient(135deg,rgba(23,126,91,.35),rgba(23,126,91,.12))}
 .acp-row span{display:grid;min-width:0}
 .acp-row b{font:600 11.5px/1.25 var(--fb)}
 .acp-row small{font:500 13px/1.4 var(--fm);color:rgba(21,33,26,.6)}
 .acp-row em{margin-left:auto;font:600 13px/1 var(--fm);font-style:normal;color:#B24A26;white-space:nowrap}
 
 /* the RISA stat card */
-.ex-risa{left:206px;top:36px;width:168px;background:var(--surf);border:1px solid var(--lineS);border-radius:10px;
+.ex-risa{width:100%;background:var(--surf);border:1px solid var(--lineS);border-radius:10px;
   padding:13px 14px 12px;box-shadow:0 22px 34px -20px rgba(23,19,14,.5)}
 [data-theme="dark"] .ex-risa{box-shadow:0 0 0 1px var(--line),0 22px 34px -20px rgba(0,0,0,.8)}
-.ex-risa::before{content:"";position:absolute;top:0;left:14px;right:14px;height:3px;background:var(--acc);border-radius:0 0 2px 2px}
 .ex-risa-hd{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
 .ex-risa-hd b{font:700 12.5px/1.2 var(--fb)}
 .ex-risa-hd small{font:500 11px/1.3 var(--fm);letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
-.ex-risa-big{display:block;margin-top:9px;font:700 27px/1 var(--fd);letter-spacing:-.02em;color:var(--accText)}
+.ex-risa-big{display:block;margin-top:9px;font:700 27px/1 var(--fd);letter-spacing:-.02em;color:var(--accText);white-space:nowrap}
 .ex-risa-big i{font-style:normal;font-size:14px}
-.ex-risa-sub{display:block;margin-top:5px;font:500 11px/1.45 var(--fm);color:var(--dim)}
+.ex-risa-sub{display:block;margin-top:5px;font:500 11px/1.45 var(--fm);letter-spacing:0;color:var(--dim)}
 .ex-risa-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 8px;margin-top:8px;padding-top:8px;border-top:1px dashed var(--lineS)}
 .ex-rg{display:grid;gap:1.5px;min-width:0}
 .ex-rg b{font:600 14.5px/1 var(--fd);letter-spacing:-.02em;color:var(--accText);font-variant-numeric:tabular-nums;white-space:nowrap}
-.ex-rg small{font:500 11px/1.35 var(--fm);color:var(--dim)}
+.ex-rg small{font:500 11px/1.35 var(--fm);letter-spacing:0;color:var(--dim)}
+
+/* the InvestMates stat card — half the RISA card, same column width */
+.ex-im{width:100%;background:var(--surf);border:1px solid var(--lineS);border-radius:10px;
+  padding:10px 12px 9px;box-shadow:0 22px 34px -20px rgba(23,19,14,.5)}
+[data-theme="dark"] .ex-im{box-shadow:0 0 0 1px var(--line),0 22px 34px -20px rgba(0,0,0,.8)}
+.ex-im-hd{display:flex;flex-direction:column;gap:1px}
+.ex-im-hd b{font:700 12px/1.2 var(--fb)}
+.ex-im-hd small{font:500 10.5px/1.3 var(--fm);letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
+.ex-im-big{display:block;margin-top:7px;font:700 21px/1 var(--fd);letter-spacing:-.02em;color:var(--accText);white-space:nowrap}
+.ex-im-lab{display:block;margin-top:4px;font:500 11px/1.35 var(--fm);letter-spacing:0;color:var(--dim)}
+
+/* the 180DC POR file — carries the $2.5M Series A that used to ride the phone note */
+.ex-por{width:100%;margin-top:3px;background:var(--surf);border:1px solid var(--lineS);border-radius:10px;
+  padding:11px 12px 10px;box-shadow:0 22px 34px -20px rgba(23,19,14,.5)}
+[data-theme="dark"] .ex-por{box-shadow:0 0 0 1px var(--line),0 22px 34px -20px rgba(0,0,0,.8)}
+.ex-por-hd{display:flex;flex-direction:column;gap:1px}
+.ex-por-hd b{font:700 12px/1.2 var(--fb)}
+.ex-por-hd small{font:500 10.5px/1.3 var(--fm);letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
+.ex-por-big{display:block;margin-top:7px;font:700 22px/1 var(--fd);letter-spacing:-.02em;color:var(--accText);white-space:nowrap}
+.ex-por-big i{font-style:normal;font-size:12.5px}
+.ex-por-lab{display:block;margin-top:4px;font:500 11px/1.35 var(--fm);letter-spacing:0;color:var(--dim)}
+
+/* the stat cards wear the same tape as the notes — no accent bar on the top edge */
+.ex-risa::before,.ex-im::before,.ex-por::before{content:"";position:absolute;top:-6px;left:50%;width:28px;height:11px;translate:-50% 0;rotate:-2deg;
+  background:color-mix(in oklab,var(--acc) 28%,rgba(255,255,255,.55));opacity:.9;z-index:1}
 
 /* the BITS Goa campus card */
-.ex-campus{left:2px;top:393px;width:216px;background:var(--surf);border:1px solid var(--lineS);border-radius:10px;
+.ex-campus{width:100%;background:var(--surf);border:1px solid var(--lineS);border-radius:10px;
   padding:16px 12px 8px;box-shadow:0 22px 34px -20px rgba(23,19,14,.5)}
 [data-theme="dark"] .ex-campus{box-shadow:0 0 0 1px var(--line),0 22px 34px -20px rgba(0,0,0,.8)}
 .ex-campus img{display:block;width:100%;aspect-ratio:188/113;object-fit:cover;border-radius:5px}
 .ex-campus b{display:block;margin-top:5px;font:700 12.5px/1.2 var(--fb)}
-.ex-campus small{display:block;font:500 11px/1.5 var(--fm);color:var(--dim)}
+.ex-campus small{display:block;font:500 11px/1.5 var(--fm);letter-spacing:-.03em;color:var(--dim)}
 
-/* pinned stat notes: the profile's standout numbers, taped into the gap.
-   They ride the same pointer parallax, hover lift and settle-in as the exhibit objects. */
-.ex-notes{display:contents}
-.ex-note{position:absolute;width:132px;background:var(--surf);border:1px solid var(--lineS);border-radius:8px;
+/* pinned stat notes: the profile's standout numbers, taped into the column flow.
+   They ride the same pointer parallax and settle-in as the exhibit objects. */
+.ex-note{position:relative;width:148px;background:var(--surf);border:1px solid var(--lineS);border-radius:8px;
   padding:7px 10px 6px;box-shadow:0 14px 24px -16px rgba(23,19,14,.5);
-  transform:rotate(var(--rot,0deg)) translate3d(calc(var(--mx,0) * var(--d,1) * 12px),calc(var(--my,0) * var(--d,1) * 8px),0);
-  transition:translate .3s var(--ease)}
-.ex-note:hover{translate:0 -5px}
+  transform:rotate(var(--rot,0deg)) translate3d(calc(var(--mx,0) * 8px),calc(var(--my,0) * 6px),0);
+  transition:transform .3s var(--ease),translate .3s var(--ease)}
+/* the taped notes lift on hover, like the exhibit cards */
+@media (hover:hover) and (pointer:fine){
+  .ex-note--pc:hover,.ex-note--acc:hover,.ex-note--iima:hover{translate:0 -3px}
+}
 [data-theme="dark"] .ex-note{box-shadow:0 0 0 1px var(--line),0 14px 24px -16px rgba(0,0,0,.8)}
 .ex-note::before{content:"";position:absolute;top:-6px;left:50%;width:28px;height:11px;translate:-50% 0;rotate:-2deg;
-  background:color-mix(in oklab,var(--acc) 28%,rgba(255,255,255,.55));opacity:.9}
-.ex-note-num{display:block;font:700 16px/1 var(--fd);letter-spacing:-.01em;color:var(--accText)}
-.ex-note-lab{display:block;margin-top:4px;font:500 13px/1.4 var(--fm);letter-spacing:.02em;color:var(--dim)}
-/* L-shape: n1 under the RISA card, n2 under n1, n3 off to the right and below the phone */
-.ex-n1{left:246px;top:232px}
-.ex-n2{left:246px;top:314px}
-.ex-n3{left:396px;top:500px}
+  background:color-mix(in oklab,var(--acc) 28%,rgba(255,255,255,.55));opacity:.9;z-index:1}
+.ex-note-num{display:block;font:700 16px/1.15 var(--fd);letter-spacing:-.01em;color:var(--accText)}
+.ex-note-lab{display:block;margin-top:4px;font:500 12px/1.4 var(--fm);letter-spacing:0;color:var(--dim)}
+.ex-note--pc{width:100%;margin-top:3px} /* full-width like the POR file it sits under; +3 so the 3px hover lift keeps a >=16px gap to the 05 label */
 html.motion-ok .ex-note{animation:exIn .8s var(--ease) both,exSway 7s ease-in-out infinite alternate}
-html.motion-ok .ex-n1{animation-delay:1.05s,-1.2s}
-html.motion-ok .ex-n2{animation-delay:1.2s,-3.8s}
-html.motion-ok .ex-n3{animation-delay:1.35s,-6.1s}
-@keyframes exSway{from{rotate:-5deg}to{rotate:5deg}}
+html.motion-ok .ex-note--pc{animation-delay:1.2s,-3.8s}
+html.motion-ok .ex-note--acc{animation-delay:1.05s,-1.2s}
+html.motion-ok .ex-note--iima{animation-delay:1.45s,-6.1s}
+.ex-note--iima{margin-top:3px} /* +3 so its hover lift keeps a >=16px gap to the Accenture note */
+@keyframes exSway{from{rotate:-0.6deg}to{rotate:0.6deg}}
 @media (prefers-reduced-motion:reduce){.ex-note{animation:none}}
 
-/* dimension-style callouts */
-.ex-calls{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
-.ex-calls text{font:500 13px var(--fm);letter-spacing:.1em;fill:var(--dim)}
-.ex-calls text .ix{fill:var(--accText);font-weight:700}
-.ex-calls path{fill:none;stroke:var(--lineS);stroke-width:1;stroke-dasharray:3 3}
-.ex-calls circle{fill:var(--acc)}
-
 /* motion: objects settle in once on load */
-html.motion-ok .ex-ob{animation:exIn .9s var(--ease) both;animation-delay:calc(.3s + var(--d) * .12s)}
+html.motion-ok .ex-ob{animation:exIn .9s var(--ease) both;animation-delay:calc(.3s + var(--d,1) * .12s)}
 @keyframes exIn{from{translate:0 18px}} /* no opacity: the campus card is the LCP element — objects paint on first frame */
-html.motion-ok .ex-calls g{animation:exIn .7s var(--ease) .8s both}
+html.motion-ok .ex-lab{animation:exIn .7s var(--ease) .55s both}
 html.motion-ok .hero.paused .acp-caret,html.motion-ok .hero.paused .ex-ob{animation-play-state:paused}
 
 @media (max-width:899px){
   .ex-wrap{width:100%}
 }
 
-/* P1-1 · mobile desk (≤640): the exhibit stops scaling with --s and becomes a purpose-built
-   vertical composition — ID badge and RISA stat side by side (equal height), the AskCart phone
-   at native size (no scaled-down text), the pinned notes as a scroll-snap strip with a peek of
-   the next card, the campus card last. Callouts and pointer parallax are desktop-only; the
-   one-time settle-in still plays. */
+/* P1-1 · mobile desk (≤640): the exhibit stops scaling and becomes a purpose-built composition —
+   badge and RISA side by side, then InvestMates, the phone, the placement note, the POR file and
+   the two achievement notes as a stacked list, the campus card last. Callout gutters and pointer
+   parallax are desktop-only. */
 @media (max-width:639px){
   .ex-wrap{width:100%;aspect-ratio:auto}
-  .exhibit{position:relative;width:auto;height:auto;transform:none;display:flex;flex-wrap:wrap;gap:12px;align-items:stretch}
-  .ex-ob,.ex-note{position:relative;inset:auto;transform:none}
-  .ex-badge{width:calc(50% - 6px);padding-top:26px}
-  .ex-risa{width:calc(50% - 6px)}
-  .ex-phone{width:min(78vw,248px);height:auto;aspect-ratio:248/474;margin-inline:auto}
-  .ex-notes{display:flex;gap:10px;width:100%;overflow-x:auto;scroll-snap-type:x mandatory;
-    padding:2px 2px 6px;scrollbar-width:none;scroll-padding-inline:2px}
-  .ex-notes::-webkit-scrollbar{display:none}
-  .ex-note{width:auto;flex:0 0 158px;scroll-snap-align:start}
-  .ex-campus{width:100%}
-  .ex-calls{display:none}
+  .exhibit{width:auto;height:auto;transform:none;display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:stretch}
+  .ex-col{display:contents}
+  .ex-lab{display:none}
+  .ex-ob,.ex-note{transform:none}
+  html.motion-ok .ex-note{animation:exIn .8s var(--ease) both} /* no sway: the wide mobile note would dip into the gap below */
+  .ex-badge{grid-column:1;grid-row:1;width:100%}
+  .ex-risa{grid-column:2;grid-row:1;width:100%}
+  .ex-im{grid-column:1/-1;grid-row:2;width:100%}
+  .ex-phone{grid-column:1/-1;grid-row:3;width:min(78vw,220px);height:auto;aspect-ratio:210/401;margin-inline:auto}
+  .ex-note--pc{grid-column:1/-1;grid-row:4;width:100%}
+  .ex-por{grid-column:1/-1;grid-row:5;width:100%}
+  .ex-note--acc{grid-column:1/-1;grid-row:6;width:100%}
+  .ex-note--iima{grid-column:1/-1;grid-row:7;width:100%}
+  .ex-note{width:100%}
+  .ex-campus{grid-column:1/-1;grid-row:8;width:100%}
 }
 @media (prefers-reduced-motion:reduce){
-  .ex-ob,.ex-calls g,.acp-caret{animation:none}
-  .ex-ob{transform:rotate(var(--rot,0deg))}
+  .ex-ob,.ex-lab,.acp-caret{animation:none}
   .acp-card,.acp-res{transition:none}
 }

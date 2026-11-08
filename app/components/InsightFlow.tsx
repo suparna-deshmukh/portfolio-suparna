@@ -7,12 +7,13 @@ import FitStage from './FitStage'
 import Stamp from './Stamp'
 import { m } from '../lib/metrics'
 
-/** Sample review text (illustrative) and the four root causes it resolves into. */
+/** Sample review text (illustrative), one row per root cause: each quote sits in the same row as
+ * the cause card it resolves into. Curly quotes throughout. */
 const RAW: { text: string; hl: string }[] = [
-  { text: '"red sneekrs, 0 results"', hl: 'sneekrs' },
-  { text: '"waterproof for monsoon"', hl: '' },
-  { text: '"foldable keyboard, which one?"', hl: 'foldable' },
-  { text: '"leather sling bag brownish"', hl: 'brownish' },
+  { text: '\u201Cfoldable keyboard, which one?\u201D', hl: 'foldable' },
+  { text: '\u201Cwaterproof for monsoon\u201D', hl: '' },
+  { text: '\u201Cred sneekrs, 0 results\u201D', hl: 'sneekrs' },
+  { text: '\u201Cleather sling bag brownish\u201D', hl: 'brownish' },
 ]
 
 const CAUSES: { no: string; name: string; sub: string }[] = [
@@ -22,15 +23,15 @@ const CAUSES: { no: string; name: string; sub: string }[] = [
   { no: '04', name: 'catalog gaps', sub: 'no query fixes these' },
 ]
 
-const ROW_AT = [100, 500, 900, 1300]
+const ROW_AT = [70, 350, 650, 950]
 const STEPS: TlStep[] = [
   ...RAW.map((_, i) => ({ at: ROW_AT[i], name: `row${i}` })),
-  { at: 1700, name: 'agent' },
-  { at: 2100, name: 'pipe' },
-  ...CAUSES.map((_, i) => ({ at: 2600 + i * 400, name: `c${i}` })),
-  { at: 4400, name: 'stamp' },
+  { at: 1000, name: 'agent' },
+  { at: 1150, name: 'pipe' },
+  ...CAUSES.map((_, i) => ({ at: 1850 + i * 300, name: `c${i}` })),
+  { at: 3100, name: 'stamp' },
 ]
-const LOOP_MS = 9000
+const LOOP_MS = 6300
 
 /**
  * The extractor's real mechanism, animated: raw review text from three stores, the agentic
@@ -68,7 +69,7 @@ export default function InsightFlow() {
   return (
     <div ref={ref} role="img"
       aria-label={`Animated review mining pipeline: raw e-commerce reviews from Reddit, the App Store and Play Store pass through an agentic extractor and a 6-stage SQL pipeline, and come out as four root causes of search failure. 94.6K reviews in, four causes out. Sample text is illustrative.`}>
-      <FitStage w={560} h={440}>
+      <FitStage w={560} h={490}>
         <div className="if" onPointerMove={onMove} onPointerLeave={onLeave}>
           <div ref={paper} className={`if-paper${replaying ? ' shake' : ''}`}>
             <div className="if-hd">
@@ -84,7 +85,6 @@ export default function InsightFlow() {
                     {l.text.slice(0, l.text.indexOf(l.hl))}<mark>{l.hl}</mark>{l.text.slice(l.text.indexOf(l.hl) + l.hl.length)}
                   </div>
                 ))}
-                <div className="if-src"><span>reddit · app store · play store</span><i className="if-ill">Illustrative</i></div>
               </div>
               <div className="if-agent">
                 <span className={`if-hex${tl.has('agent') ? ' on' : ''}`} aria-hidden="true">
@@ -111,6 +111,10 @@ export default function InsightFlow() {
                   </div>
                 ))}
               </div>
+            </div>
+            <div className="if-ft">
+              <span className="if-src">reddit · app store · play store</span>
+              <i className="if-ill">Illustrative</i>
             </div>
             <Stamp
               shape="round" tone="ok" size="lg" rot={-9}

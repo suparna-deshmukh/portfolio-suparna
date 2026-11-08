@@ -1,0 +1,40 @@
+{
+  "name": "Suparna Deshmukh",
+  "line": "I build AI products for messy, high-stakes workflows, and measure what changes.",
+  "rows": [
+    {
+      "dt": "Currently",
+      "val": "Associate Product Manager Intern at RISA Labs",
+      "det": "AI workflows, US healthcare"
+    },
+    {
+      "dt": "Building",
+      "val": "AskCart",
+      "det": "guided AI search, personal build"
+    },
+    {
+      "dt": "Placements",
+      "val": "Placement Coordinator at BITS Goa",
+      "det": "Selected 1 of 8 of 1,000+ students"
+    }
+  ],
+  "seal": "SUPARNA DESHMUKH · PRODUCT ·",
+  "hrefs": [
+    {
+      "text": "See the builds ↓",
+      "href": "#projects"
+    },
+    {
+      "text": "Let's talk",
+      "href": "#contact"
+    },
+    {
+      "text": "LinkedIn ↗",
+      "href": "https://www.linkedin.com/in/suparna-deshmukh/"
+    },
+    {
+      "text": "GitHub ↗",
+      "href": "https://github.com/suparna-deshmukh"
+    }
+  ]
+}

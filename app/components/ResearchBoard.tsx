@@ -28,8 +28,8 @@ const ICONS: Record<Src, React.JSX.Element> = {
   jira: <><rect width="18" height="18" x="3" y="3" rx="2" /><path d="m9 12 2 2 4-4" /></>,
 }
 
-const SCATTER_MS = 2100
-const SORTED_MS = 4700
+const SCATTER_MS = 1500
+const SORTED_MS = 3300
 const FIRST_HOLD_MS = 0
 const COUNT_MS = 600
 const TOP_MENTIONS = m('ra-mentions').num ?? 7

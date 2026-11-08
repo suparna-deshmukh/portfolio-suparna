@@ -105,6 +105,8 @@ html.motion-ok .cf-file.in .cf-bud{animation:cfBud .9s var(--ease) 1.05s both}
 .cf-points li{position:relative;padding-left:19px;font-size:15px;line-height:1.5;color:var(--fg)}
 .cf-points li::before{content:"";position:absolute;left:2px;top:.62em;width:9px;height:2px;background:var(--acc)}
 .cf-points b{font-weight:700}
+html.motion-ok .cf-file .cf-points li{opacity:0;translate:0 5px;transition:opacity .3s var(--ease),translate .3s var(--ease);transition-delay:calc(90ms + var(--i,0) * 45ms)}
+html.motion-ok .cf-file.in .cf-points li{opacity:1;translate:0 0}
 .cf-foot{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin-top:13px}
 .cf-link{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--lineS);border-radius:8px;
   padding:7px 11px;background:var(--tint);cursor:pointer;text-decoration:none;color:inherit;

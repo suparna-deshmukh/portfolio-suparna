@@ -14,22 +14,24 @@
 @media (min-width:901px){
   .rt-man{max-height:calc(100dvh - 120px);overflow:auto;overscroll-behavior:contain}
 }
-.rt-man header{display:flex;align-items:center;gap:9px;padding:0 8px 12px;border-bottom:2px solid var(--fg)}
+.rt-man header{display:flex;align-items:center;gap:9px;padding:0 8px 8px;border-bottom:2px solid var(--fg)}
 .rt-man header b{font:700 13px/1 var(--fm);letter-spacing:.14em;text-transform:uppercase}
 .rt-man header small{margin-left:auto;font:500 12px/1 var(--fm);color:var(--dim)}
 .rt-compass{width:19px;height:19px;flex:none;color:var(--accText);fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-.rt-man ol{margin:0;padding:0;list-style:none}
-.rt-div{display:flex;align-items:center;gap:8px;font:600 11px/1 var(--fm);letter-spacing:.18em;text-transform:uppercase;color:var(--accText);padding:12px 8px 5px}
+.rt-man ol{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+.rt-div{display:flex;align-items:center;gap:8px;font:600 11px/1 var(--fm);letter-spacing:.18em;text-transform:uppercase;color:var(--accText);padding:8px 8px 3px}
 .rt-div::after{content:"";flex:1;height:1px;background:var(--lineS)}
-.rt-man a{display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-rows:auto auto;gap:2px 10px;align-items:center;padding:11px 8px 10px;border-radius:8px;text-decoration:none;color:inherit;transition:background-color .2s}
+/* each stop row is three real flow layers — no absolute positioning, fixed heights or negative
+   margins: (1) station chip + single-line company name + right-aligned metric, (2) the sector
+   chip sized to its own text, (3) the caption at full width of the content area. */
+.rt-man a{display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-rows:auto auto auto;column-gap:10px;row-gap:3px;align-items:center;padding:8px 10px;border-radius:8px;text-decoration:none;color:inherit;transition:background-color .2s}
 .rt-man a:hover{background:var(--tint)}
 .rt-man a.on{background:color-mix(in oklab,var(--acc) 9%,var(--surf))}
-.rt-st{font:700 11px/1 var(--fm);letter-spacing:.08em;color:var(--accText);border:1px solid var(--lineS);border-radius:999px;padding:3.5px 8px;white-space:nowrap;grid-row:1}
-.rt-man .n{display:flex;flex-wrap:wrap;align-items:center;gap:3px 8px;min-width:0;grid-row:1/span 2;font:600 14px/1.25 var(--fb);letter-spacing:-.01em}
-/* the sector chip takes the whole second line, so name and metric can never collide */
-.rt-man .n em{width:100%;font:500 11px/1 var(--fm);font-style:normal;letter-spacing:.09em;text-transform:uppercase;color:var(--dim);border:1px dashed var(--lineS);border-radius:999px;padding:3.5px 7px;white-space:nowrap}
-.rt-man .m{font:600 12.5px/1 var(--fm);font-variant-numeric:tabular-nums;white-space:nowrap;grid-row:1;justify-self:end}
-.rt-man .k{grid-column:3;grid-row:2;justify-self:end;align-self:center;font:500 11px/1.45 var(--fm);color:var(--dimmer);text-align:right;max-width:26ch}
+.rt-st{font:700 11px/1 var(--fm);letter-spacing:.08em;color:var(--accText);border:1px solid var(--lineS);border-radius:999px;padding:3.5px 8px;white-space:nowrap;grid-column:1;grid-row:1}
+.rt-man .n{grid-column:2;grid-row:1;font:600 14px/1.25 var(--fb);letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rt-man .m{font:600 12.5px/1 var(--fm);font-variant-numeric:tabular-nums;white-space:nowrap;grid-column:3;grid-row:1;justify-self:end}
+.rt-man .rt-sec{grid-column:2;grid-row:2;width:max-content;font:500 11px/1 var(--fm);font-style:normal;letter-spacing:.09em;text-transform:uppercase;color:var(--dim);border:1px dashed var(--lineS);border-radius:999px;padding:3.5px 7px;white-space:nowrap}
+.rt-man .k{grid-column:1/-1;grid-row:3;font:400 12px/1.4 var(--fm);color:var(--dimmer);text-align:left}
 
 /* ── the road and its stations ── */
 .rt-stops{position:relative;display:grid;gap:28px;padding-left:74px}
@@ -93,21 +95,21 @@ html.motion-ok .rt-big b::after{transition:transform .8s var(--ease) .15s}
   font:400 13px/1.45 var(--fb);letter-spacing:0;text-transform:none;color:var(--dim)}
 .rt-ft li strong{color:var(--fg);font-weight:700}
 
-/* motion: stations settle in once, top down */
-html.motion-ok .rt-stn{animation:rtIn .8s var(--ease) both;animation-delay:calc(var(--si,0) * 90ms)}
+/* motion: stations settle in once, the moment they touch the bottom edge of the viewport */
+html.motion-ok .rt-stn.rev{animation:rtIn .55s var(--ease) both;animation-delay:calc(var(--si,0) * 60ms)}
 @keyframes rtIn{from{opacity:0;translate:0 16px}}
-/* when a station crosses the reading line, its proof rows and details step in */
-html.motion-ok .rt-out li{opacity:0;transition:opacity .55s var(--ease)}
-html.motion-ok .rt-stn.in .rt-out li{opacity:1}
-html.motion-ok .rt-stn.in .rt-out li:nth-child(1){transition-delay:.2s}
-html.motion-ok .rt-stn.in .rt-out li:nth-child(2){transition-delay:.32s}
-html.motion-ok .rt-stn.in .rt-out li:nth-child(3){transition-delay:.44s}
-html.motion-ok .rt-stn.in .rt-out li:nth-child(4){transition-delay:.56s}
-html.motion-ok .rt-stn.in .rt-out li:nth-child(5){transition-delay:.68s}
-html.motion-ok .rt-stn.in .rt-out li:nth-child(6){transition-delay:.8s}
-html.motion-ok .rt-stn.in .rt-out li:nth-child(7){transition-delay:.92s}
-html.motion-ok .rt-stn.in .rt-out li:nth-child(8){transition-delay:1.04s}
-html.motion-ok .rt-stn.in .rt-ft{animation:rtFtIn .45s var(--ease) .65s both}
+/* proof rows and details step in on the same trigger, fast */
+html.motion-ok .rt-out li{opacity:0;transition:opacity .35s var(--ease)}
+html.motion-ok .rt-stn.rev .rt-out li{opacity:1}
+html.motion-ok .rt-stn.rev .rt-out li:nth-child(1){transition-delay:.1s}
+html.motion-ok .rt-stn.rev .rt-out li:nth-child(2){transition-delay:.18s}
+html.motion-ok .rt-stn.rev .rt-out li:nth-child(3){transition-delay:.26s}
+html.motion-ok .rt-stn.rev .rt-out li:nth-child(4){transition-delay:.34s}
+html.motion-ok .rt-stn.rev .rt-out li:nth-child(5){transition-delay:.42s}
+html.motion-ok .rt-stn.rev .rt-out li:nth-child(6){transition-delay:.5s}
+html.motion-ok .rt-stn.rev .rt-out li:nth-child(7){transition-delay:.58s}
+html.motion-ok .rt-stn.rev .rt-out li:nth-child(8){transition-delay:.66s}
+html.motion-ok .rt-stn.rev .rt-ft{animation:rtFtIn .3s var(--ease) .35s both}
 @keyframes rtFtIn{from{opacity:0}}
 @media (prefers-reduced-motion:reduce){
   .rt-stn,.rt-stn.now .rt-node::after{animation:none}
@@ -120,7 +122,7 @@ html.motion-ok .rt-stn.in .rt-ft{animation:rtFtIn .45s var(--ease) .65s both}
   .rt-trail{left:16.5px}
   .rt-train{left:18px}
   .rt-man{position:static}
-  .rt-man .k{display:none}
+  .rt-man a{grid-template-columns:auto minmax(0,1fr) auto}
   .rt-stops{padding-left:56px}
   .rt-stops::before{left:17px}
   .rt-node{left:-56px;width:38px;height:38px;top:16px;font-size:11px}

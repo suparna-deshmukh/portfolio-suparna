@@ -1,18 +1,16 @@
 'use client'
 
 import '../about.css'
-import { useEffect, useRef } from 'react'
-import { ACHIEVEMENTS, EDUCATION, POSITIONS, link } from '../lib/site'
+import { useEffect } from 'react'
+import { ACHIEVEMENTS, POSITIONS, link } from '../lib/site'
 import { m } from '../lib/metrics'
 import CountUp from './CountUp'
 import MetricTip from './MetricTip'
 import SectionHeader from './SectionHeader'
 import { CurrentlyTicker } from './AboutExtras'
-import Stamp from './Stamp'
 import Image from 'next/image'
 import Disclosure from './Disclosure'
 import Rich from './Rich'
-import { useTimeline } from '../lib/timeline'
 
 /** One project per tile, in a single 16-tile row (the Director's signature visual, R-2). */
 function TileField({ count, caption }: { count: number; caption: string }) {
@@ -171,40 +169,6 @@ function Positions() {
   )
 }
 
-/** Education diploma with the CLASS OF 2027 seal — presses once on first view (E-1). */
-const SEAL_STEPS = [{ at: 700, name: 'seal' }]
-
-function Education() {
-  const ref = useRef<HTMLDivElement>(null)
-  const tl = useTimeline(ref, SEAL_STEPS, 60000, { loop: false })
-  return (
-    <div ref={ref} className="ab-edu">
-      <svg className="ab-edu-crest" viewBox="0 0 44 44" aria-hidden="true">
-        <circle cx="22" cy="22" r="20" fill="none" stroke="currentColor" strokeWidth="1.4" />
-        <circle cx="22" cy="22" r="15" fill="none" stroke="currentColor" strokeWidth=".7" />
-        <path d="M14 27v-8l8-5 8 5v8" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
-        <path d="M17.5 27v-5.5M22 27v-5.5M26.5 27v-5.5" stroke="currentColor" strokeWidth="1.4" />
-        <path d="M13.5 30h17" stroke="currentColor" strokeWidth="1.4" />
-      </svg>
-      <div className="ab-edu-bd">
-        <p className="lab">Education</p>
-        <b>{EDUCATION.school}</b>
-        <span>{EDUCATION.degree}</span>
-        {EDUCATION.grades && <span className="ab-edu-gpa">{EDUCATION.grades}</span>}
-        <span className="ab-edu-meta"><em>{EDUCATION.minor}</em><i aria-hidden="true" /><em>{EDUCATION.classYear}</em></span>
-        <span className="ab-edu-when">{EDUCATION.when}</span>
-      </div>
-      <Stamp
-        shape="round" tone="ok" size="sm" rot={-8}
-        label="CLASS OF 2027"
-        slammed={tl.has('seal')}
-        decorative
-        className="ab-seal timeline"
-      />
-    </div>
-  )
-}
-
 export default function About() {
   useEffect(() => {
     const panels = Array.from(document.querySelectorAll<HTMLElement>('#about .ab-panel'))
@@ -256,9 +220,6 @@ export default function About() {
             <div className="ab-bio">
               <p className="ab-dc">I studied Electronics and Communication Engineering at BITS Pilani Goa, with a Finance minor. I drifted into product because my questions were never only about the tech — they were also about people, and about money. Now I&apos;m an Associate Product Manager at RISA Labs, shipping AI workflows for US healthcare.</p>
               <p>Outside work I lead campus placements at BITS Goa and run a 45-consultant practice at 180 Degrees Consulting.</p>
-            </div>
-            <div id="education">
-              <Education />
             </div>
             <span className="ab-folio" aria-hidden="true">Suparna Deshmukh</span>
           </div>

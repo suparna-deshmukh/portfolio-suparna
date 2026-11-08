@@ -8,7 +8,7 @@ import HeroExhibit from './HeroExhibit'
 
 const noop = () => {}
 
-const EXHIBIT_W = 660
+const EXHIBIT_W = 726
 
 export default function Hero() {
   const heroRef = useRef<HTMLElement>(null)
@@ -20,7 +20,15 @@ export default function Hero() {
     const wrap = wrapRef.current
     const exhibit = document.getElementById('hero-exhibit')
     if (!wrap || !exhibit) return
-    const fit = () => exhibit.style.setProperty('--s', String(Math.min(wrap.clientWidth / EXHIBIT_W, 1.15)))
+    const fit = () => {
+      // Mobile (<=639) uses a purpose-built unscaled composition; desktop scales the fixed 726px
+      // desk to the column and syncs the wrapper's height to the scaled block.
+      const s = window.matchMedia('(max-width:639px)').matches
+        ? 1
+        : Math.min(wrap.clientWidth / EXHIBIT_W, 1.15)
+      exhibit.style.setProperty('--s', String(s))
+      wrap.style.height = `${Math.round(exhibit.offsetHeight * s)}px`
+    }
     fit()
     const ro = new ResizeObserver(fit)
     ro.observe(wrap)

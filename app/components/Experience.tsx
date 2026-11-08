@@ -96,8 +96,16 @@ export default function Experience() {
         if (i >= 0) setActive(i)
       })
     }, { rootMargin: READING_LINE })
-    stops.forEach(s => io.observe(s))
-    return () => io.disconnect()
+    // Reveal: a station settles in the moment it touches the bottom edge of the viewport.
+    const rev = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return
+        (e.target as HTMLElement).classList.add('rev')
+        rev.unobserve(e.target)
+      })
+    }, { threshold: 0 })
+    stops.forEach(s => rev.observe(s))
+    return () => { io.disconnect(); rev.disconnect() }
   }, [])
 
   // The trail: as the reading line travels down the road, the accent line fills and the
@@ -230,8 +238,9 @@ export default function Experience() {
                     onClick={() => setActive(i)}
                   >
                     <span className="rt-st">{i === 0 ? 'NOW' : `S${i + 1}`}</span>
-                    <span className="n">{c.name}<em>{c.sector}</em></span>
+                    <span className="n">{c.name}</span>
                     <span className="m">{c.metric}</span>
+                    <em className="rt-sec">{c.sector}</em>
                     <span className="k">{c.metricCaption} · {c.years}</span>
                   </a>
                 </li>

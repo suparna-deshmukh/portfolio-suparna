@@ -170,9 +170,6 @@ export default function DataProjects() {
           variant="sm"
           title="Four ledgers, one method."
           meta={['4 data projects · SQL + Python', 'From viral videos to loan books']}
-          aside={
-            <p className="dl-asidetx">Same four steps in every card: ask a question, pull the data, analyze it, and let it inform a decision. Figures are illustrative sketches of the analysis until real exports are wired in.</p>
-          }
         />
         <div className="dl-method" aria-label="The method shared by every ledger">
           {METHOD_STEPS.map(st => (
@@ -197,7 +194,7 @@ export default function DataProjects() {
               {l.finding && <p className="dl-find">{l.finding}</p>}
               <FigureSlot l={l} />
               <ul className="dl-points">
-                {l.points.map(p => <li key={p}><Rich text={p} /></li>)}
+                {l.points.map((p, i) => <li key={p} style={{ ['--i' as string]: i }}><Rich text={p} /></li>)}
               </ul>
               <footer className="dl-foot">
                 <span className="dl-tech">{l.tech}</span>

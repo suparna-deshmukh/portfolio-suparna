@@ -197,10 +197,13 @@ html.motion-ok .sh .w{transition:transform .6s var(--ease);transition-delay:calc
 .dl-head{display:grid;gap:3px;padding-right:44px}
 .dl-head h3{margin:0;font:600 19.5px/1.25 var(--fd);letter-spacing:-.015em}
 .dl-where{font-size:12.5px;color:var(--dimmer)}
-/* the figures: fixed 82px slots (66px chart + 16px caption row), HTML labels at 11px+,
-   a looped timeline per card. Base = finished frame; pre-states only under html.motion-ok. */
+/* the figures: 100px slots (84px chart + 16px caption row), HTML labels at 11px+,
+   a looped timeline per card; the heatmap slot sizes to its 94px chart so the week row
+   never collides with the caption. Base = finished frame; pre-states only under html.motion-ok. */
 .dl-slot{position:relative;height:100px;margin:13px 0 0;cursor:default}
+.dl-slot.heatmap{height:auto}
 .dl-chart{position:relative;height:84px}
+.dl-slot.heatmap .dl-chart{height:auto}
 .dl-cap{height:16px;display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:0}
 .dl-cap > span{font:500 11px/1 var(--fm);letter-spacing:.07em;text-transform:uppercase;color:var(--dimmer)}
 .dl-ill{font:500 11px/1 var(--fm);font-style:normal;letter-spacing:.04em;color:var(--dimmer);border:1px dashed var(--lineS);border-radius:4px;padding:2.5px 6px}
@@ -711,9 +714,15 @@ html.motion-ok .case-tm.paused::before,html.motion-ok .case-tm.paused .tm-field 
 /* ── Insight Extractor (project #2): raw review → agentic extractor → 6-stage SQL → 4 causes.
    Same family as the AskCart report: paper, ink, DM Mono, one stamped number. Base =
    finished frame; pre-states only under html.motion-ok. ── */
+/* ── Insight Extractor (project #2): raw review → agentic extractor → 6-stage SQL → 4 causes.
+   Same family as the AskCart report: paper, ink, DM Mono, one stamped number. The four input
+   quotes align row-for-row with the four cause cards across the extractor column; thin connector
+   lines (quote → extractor → card) draw in with each row. Base = finished frame; pre-states only
+   under html.motion-ok. The stage height fits its content: header, the aligned rows, and one
+   footer band (sources bottom-left, the Illustrative tag and the stamp at bottom-right). ── */
 .if{position:absolute;inset:0}
-.if-paper{position:absolute;inset:0;border-radius:var(--r);padding:16px 18px 104px;background:var(--surf);border:1px solid var(--lineS);overflow:hidden;
-  box-shadow:0 24px 40px -28px rgba(23,19,14,.55);transition:transform .5s var(--ease)}
+.if-paper{position:absolute;inset:0;border-radius:var(--r);padding:16px 18px;background:var(--surf);border:1px solid var(--lineS);overflow:hidden;
+  display:flex;flex-direction:column;box-shadow:0 24px 40px -28px rgba(23,19,14,.55);transition:transform .5s var(--ease)}
 .if-paper::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.6;mix-blend-mode:multiply;
   background:repeating-linear-gradient(180deg,transparent 0 27px,color-mix(in oklab,var(--fg) 6%,transparent) 27px 28px)}
 .if-paper.shake{animation:trShake .38s var(--ease)}
@@ -721,32 +730,50 @@ html.motion-ok .case-tm.paused::before,html.motion-ok .case-tm.paused .tm-field 
 .if-hd b{font:700 15px/1.1 var(--fd);color:var(--fg)}
 .if-hd small{display:block;font:400 12.5px/1.2 var(--fm);color:var(--dim);margin-top:3px}
 .if-hd .sc{margin-left:auto;font:500 13px/1.4 var(--fm);color:var(--dim);text-align:right;font-variant-numeric:tabular-nums}
-.if-cols{display:grid;grid-template-columns:208px 96px minmax(0,1fr);gap:12px;padding-top:14px;position:relative;z-index:1}
-.if-raw{display:grid;gap:10px;align-content:start}
-.if-line{position:relative;font:400 12.5px/1.45 var(--fm);color:var(--dim);padding-left:15px}
+.if-cols{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 84px minmax(0,1fr);column-gap:16px;row-gap:10px;padding-top:14px;position:relative;z-index:1}
+.if-raw,.if-causes{display:contents}
+.if-line{position:relative;grid-column:1;align-self:center;font:400 12.5px/1.45 var(--fm);color:var(--dim);padding-left:15px}
 .if-line::before{content:"›";position:absolute;left:0;color:var(--dimmer)}
 .if-line mark{background:none;color:var(--fg);font-weight:600;padding:0;box-shadow:inset 0 -2px 0 var(--pa)}
-.if-src{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:4px;font:500 12px/1.3 var(--fm);letter-spacing:.03em;color:var(--dimmer)}
-.if-ill{font:500 11.5px/1 var(--fm);font-style:normal;letter-spacing:.04em;color:var(--dimmer);border:1px dashed var(--lineS);border-radius:4px;padding:2.5px 6px}
-.if-agent{display:grid;justify-items:center;align-content:start;gap:9px;padding-top:2px}
+/* quote → extractor connector: spans the gap, draws in with the row */
+.if-line::after{content:"";position:absolute;top:50%;right:-16px;width:16px;height:1px;background:var(--lineS);transform:scaleX(1);transform-origin:left center}
+.if-line:nth-child(1){grid-row:1}
+.if-line:nth-child(2){grid-row:2}
+.if-line:nth-child(3){grid-row:3}
+.if-line:nth-child(4){grid-row:4}
+.if-agent{grid-column:2;grid-row:1/span 4;display:grid;justify-items:center;align-content:center;gap:10px;position:relative}
 .if-hex{width:58px;height:58px;color:var(--paText)}
 .if-hex svg{width:100%;height:100%;display:block}
 .if-agem{font:600 11.5px/1.3 var(--fm);letter-spacing:.05em;text-transform:uppercase;color:var(--dim);text-align:center}
 .if-pipe{display:grid;gap:4px;justify-items:center}
 .if-pipe i{width:48px;height:6px;border-radius:3px;background:var(--surf2);border:1px solid var(--lineS)}
-.if-pipe b{font:600 11.5px/1 var(--fm);letter-spacing:.06em;color:var(--dimmer);margin-top:2px}
-.if-causes{display:grid;gap:8px;align-content:start}
-.if-cause{display:grid;grid-template-columns:22px minmax(0,1fr);gap:1px 8px;padding:8px 10px;border:1px solid var(--lineS);border-radius:7px;
+.if-pipe b{font:600 11.5px/1 var(--fm);letter-spacing:.06em;color:var(--dimmer);margin-top:10px}
+.if-cause{position:relative;grid-column:3;align-self:center;display:grid;grid-template-columns:22px minmax(0,1fr);gap:1px 8px;padding:8px 10px;border:1px solid var(--lineS);border-radius:7px;
   background:color-mix(in oklab,var(--pa) 7%,var(--surf))}
+/* extractor → cause connector: spans the gap, draws in with the card */
+.if-cause::before{content:"";position:absolute;top:50%;left:-16px;width:16px;height:1px;background:var(--lineS);transform:scaleX(1);transform-origin:right center}
 .if-cause > b{grid-row:1/span 2;align-self:center;font:700 12.5px/1 var(--fd);color:var(--paText)}
 .if-cause div b{display:block;font:600 13px/1.2 var(--fb);color:var(--fg)}
 .if-cause small{font:400 11.5px/1.35 var(--fm);color:var(--dim)}
-.if-stamp{position:absolute;right:16px;bottom:12px}
+.if-cause:nth-child(1){grid-row:1}
+.if-cause:nth-child(2){grid-row:2}
+.if-cause:nth-child(3){grid-row:3}
+.if-cause:nth-child(4){grid-row:4}
+/* footer band: single 11px source line bottom-left, Illustrative tag bottom-right, stamp in its
+   own zone at the far corner — nothing wraps, nothing touches */
+.if-ft{position:relative;flex:none;height:112px;margin-top:12px}
+.if-src{position:absolute;left:0;bottom:10px;font:500 11px/1.3 var(--fm);letter-spacing:.03em;color:var(--dimmer);white-space:nowrap}
+.if-ill{position:absolute;right:98px;bottom:12px;font:500 11px/1 var(--fm);font-style:normal;letter-spacing:.04em;color:var(--dimmer);border:1px dashed var(--lineS);border-radius:4px;padding:3px 7px;white-space:nowrap}
+.if-paper .if-stamp{position:absolute;right:0;bottom:0;width:80px;height:80px}
+.if-paper .if-stamp .stamp-txt b{font-size:20px}
+.if-paper .if-stamp .stamp-txt i{font-size:11px;letter-spacing:.16em;margin-top:3px}
 html.motion-ok .if .if-line,html.motion-ok .if .if-cause{opacity:0;transform:translateX(-8px);transition:opacity .3s ease,transform .5s var(--ease)}
 html.motion-ok .if .if-line.inj,html.motion-ok .if .if-cause.inj{opacity:1;transform:none}
+html.motion-ok .if .if-line::after,html.motion-ok .if .if-cause::before{transform:scaleX(0);transition:transform .35s var(--ease)}
+html.motion-ok .if .if-line.inj::after,html.motion-ok .if .if-cause.inj::before{transform:scaleX(1);transition-delay:.25s}
 html.motion-ok .if .if-hex{opacity:0;transform:scale(.6);transition:opacity .3s ease,transform .5s var(--settle)}
 html.motion-ok .if .if-hex.on{opacity:1;transform:scale(1)}
-html.motion-ok .if .if-pipe i{opacity:0;transform:scaleX(.25);transform-origin:left;transition:opacity .3s ease,transform .45s var(--ease);transition-delay:calc(var(--i) * 90ms)}
+html.motion-ok .if .if-pipe i{opacity:0;transform:scaleX(.25);transform-origin:left;transition:opacity .3s ease,transform .45s var(--ease);transition-delay:calc(var(--i) * 150ms)}
 html.motion-ok .if .if-pipe.on i{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.if .if-line,.if .if-cause,.if .if-hex,.if .if-pipe i{transition:none!important;animation:none!important}}
 html.motion-ok .tr-paper.st.shake{animation:trShake .55s var(--ease)}
@@ -1216,6 +1243,8 @@ html.motion-off .disc-body{transition:none}
 .dl-points li{position:relative;padding-left:17px;font-size:15px;line-height:1.5;color:var(--fg)}
 .dl-points li::before{content:"";position:absolute;left:2px;top:.62em;width:9px;height:2px;background:var(--acc)}
 .dl-points li b{font-weight:700;color:var(--fg)}
+html.motion-ok .dl-card .dl-points li{opacity:0;translate:0 5px;transition:opacity .3s var(--ease),translate .3s var(--ease);transition-delay:calc(90ms + var(--i,0) * 45ms)}
+html.motion-ok .dl-card.in .dl-points li{opacity:1;translate:0 0}
 .dl-foot{margin-top:auto;padding-top:12px;border-top:1px dashed var(--lineS);display:grid;gap:9px}
 .dl-tech{font:500 12px/1.4 var(--fm);letter-spacing:.02em;color:var(--dimmer)}
 .dl-resline{display:grid;grid-template-columns:auto 1fr;align-items:end;gap:2px 10px}
@@ -1237,7 +1266,6 @@ html.motion-off .disc-body{transition:none}
 .dl-grid[data-hl="data"] .dl-card .dl-where{opacity:1}
 .dl-grid[data-hl="analysis"] .dl-card .dl-slot{opacity:1}
 .dl-grid[data-hl="result"] .dl-card .dl-res{opacity:1}
-.dl-asidetx{margin:0;font-size:12.5px;line-height:1.55;color:var(--dim);max-width:34ch}
 
 /* ── P1-1 · phones stop scaling content (≤640). The fixed-size FitStage figures reflow into
    native layouts instead of shrinking below the 11px floor: the AskCart report becomes stacked

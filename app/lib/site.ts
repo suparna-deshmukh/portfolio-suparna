@@ -384,8 +384,8 @@ export interface Position {
 export const POSITIONS: Position[] = [
   {
     id: 'placement', no: 1, org: 'BITS Goa', title: 'Placement Coordinator', when: 'May 2026 – Present', current: true,
-    blurb: 'Selected 1 of 8 out of 1,000+ students. Leads campus placements and corporate outreach for the 2026 batch, end-to-end, with a 25-member team.',
-    line: 'Leads campus placements for the **2026 batch** with a team of **25**.',
+    blurb: 'Selected 1 of 8 out of 1,000+ students. Leading campus placements and corporate outreach for the 2026 batch, end-to-end, with a 25-member team.',
+    line: 'Leading campus placements and corporate outreach for the **2026 batch**, end-to-end, with a **25**-member team.',
     headline: { metric: 'pc-rate', label: 'batch placement, May to October 2026' },
     details: [
       'Project SYNERGY: a phased proposal to centralize placement and internship drives across the three BITS campuses. Approved.',
@@ -400,7 +400,7 @@ export const POSITIONS: Position[] = [
   {
     id: 'consult', no: 2, org: '180 Degrees Consulting', title: 'Director', when: 'May 2025 – Jun 2026',
     blurb: '45 consultants across 16 projects, 30% YoY revenue growth (club year over prior year). Awarded “Best Consultant” as a sophomore.',
-    line: 'Leads **45 consultants** across **16 projects**. Club revenue up **30%** year over year.',
+    line: 'Led **45 consultants** across **16 projects**, driving **30%** YoY revenue growth.',
     headline: { metric: 'dc-sponsor', label: 'Consultathon sponsorships' },
     secondary: { metric: 'dc-reg', label: 'registrations' },
     details: [
@@ -408,7 +408,7 @@ export const POSITIONS: Position[] = [
       '50K+ course impressions · 85% retention (PM and consulting courses).',
     ],
     stats: [],
-    chips: [{ text: 'Best Consultant' }, { text: 'Consultathon on Unstop', href: CONSULTATHON_URL }],
+    chips: [{ text: 'Awarded Best Consultant as a sophomore' }, { text: 'Consultathon on Unstop', href: CONSULTATHON_URL }],
   },
   {
     id: 'cel', no: 3, org: 'Center for Entrepreneurial Leadership', title: 'Creative Director', when: 'May 2025 – Jun 2026',
