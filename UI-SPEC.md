@@ -349,10 +349,10 @@ Objects (all links):
 
 | object | pos (x/y) | size | depth/rot | content → target |
 |---|---|---|---|---|
-| ID badge | 0/20 | 172w | 1.15 / −5° | photo `suparna-portrait.webp` (144×136, clip slot, barcode strip), name, "Associate Product Manager", "RISA Labs · Bengaluru" → `#about` |
+| ID badge | 0/20 | 172w | 1.15 / −5° | monogram badge `suparna-portrait.webp` (256×256 source, q95; `next/image` quality 90, sizes 300px; placeholder until Suparna supplies a real photo), name, "Associate Product Manager", "RISA Labs · Bengaluru" → `#about` |
 | AskCart phone | 400/16 | 248×474 | .7 / 2.5° | dark phone frame + island; **live loop** `AskCartPhone`: status bar, app header, typing caret in the search field, a guided-question card ("What's the budget?" chips) then a result list where the old "no results" becomes a guided re-run → `/projects/askcart` |
 | RISA stat card | 206/36 | 168w | 1.45 / 3° | accent top bar, "RISA Labs / APM intern · now", **350 hrs/wk** big figure, "saved across 200 users · Status Tracking 0→1" subline, then a **2×3 op-metric grid** (`.ex-risa-grid`, 6 cells, one-line labels, each value a `MetricTip`): 400 docs/day · cron pipeline · 92% Vapi calls · 2x QC speed · 87% auto-RCA · 60% portal TAT · $10K/yr Doc Studio (ids `risa-docs`/`risa-vapi`/`risa-qc`/`risa-pulse`/`risa-tat`/`risa-studio`) → `#experience-risa` |
-| Campus card | 2/393 | 216w | .9 / −2° | **real campus photo** `bits-goa.webp` (400×153, cover-cropped to 188/113 — the photo lives only on this card, never on the notes), "BITS Pilani, Goa", `EDUCATION.branch` ("Electronics and Communication Engineering"), "Finance minor · Class of 2027" → `#about` |
+| Campus card | 2/393 | 216w | .9 / −2° | **real campus photo** `bits-goa.webp` (800×306 original paste, re-encoded q90 — the photo lives only on this card, never on the notes; cover-cropped to 188/113 by CSS), "BITS Pilani, Goa", `EDUCATION.branch` ("Electronics and Communication Engineering"), "Finance minor · Class of 2027" → `#about` |
 
 **Pinned notes** (`.ex-note`, taped `::before` tape tab, same parallax/hover/settle as
 objects — deliberately *not* static):
@@ -1107,7 +1107,10 @@ portal, `z` above everything.
   `LazyEndPull` (800 px), `LazyP99Panel` (2000 px). Static figures render their
   final frame via CSS before the component mounts (see §4).
 * **Images:** `next/image` with explicit width/height everywhere — hero ID-badge
-  portrait and campus card (`priority`; the badge is the LCP element, 1.25 s on a
+  portrait and campus card (both `quality={90}`; Next 16 defaults `images.qualities` to
+  `[75]`, so `next.config.mjs` sets `images: { qualities: [75, 90] }` — without it the
+  quality prop is silently snapped to 75; `sizes` hints keep the browser from pulling
+  1920 px upscales for ~270–300 px cards) and campus card (`priority`; the badge is the LCP element, 1.25 s on a
   real-throttle mobile run, 390×844, Slow 4G + 4× CPU) and article covers.
   Lighthouse's *simulated* mobile LCP (3.9 s) is a 4× CPU model artifact — the
   real-throttle measurement is the number that meets the ≤ 2.0 s budget.

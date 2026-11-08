@@ -23,7 +23,7 @@ export default function HeroExhibit() {
           <span className="ex-lab"><span className="ix">01</span> · THE PERSON</span>
           <a className="ex-ob ex-badge" href="#about" style={{ ['--d' as string]: 1.15 }}>
             <span className="ex-clip" aria-hidden="true" />
-            <Image src="/images/hero/suparna-portrait.webp" alt="Suparna Deshmukh" width={144} height={136} priority style={{ width: '100%', height: 'auto' }} />
+            <Image src="/images/hero/suparna-portrait.webp" alt="Suparna Deshmukh" width={256} height={256} quality={90} sizes="(max-width: 640px) 80vw, 300px" priority style={{ width: '100%', height: 'auto' }} />
             <b>Suparna Deshmukh</b>
             <small>Associate Product Manager Intern</small>
             <small>RISA Labs · Bengaluru</small>
@@ -32,7 +32,7 @@ export default function HeroExhibit() {
           <span className="ex-lab"><span className="ix">02</span> · BITS PILANI, GOA</span>
           <a className="ex-ob ex-campus" href="#about" style={{ ['--d' as string]: 0.9 }} aria-label="BITS Pilani, Goa: ECE with a Finance minor, class of 2027">
             <span className="ex-clip" aria-hidden="true" />
-            <Image src="/images/hero/bits-goa.webp" alt="The BITS Pilani Goa campus: main building, palms and lawn" width={400} height={153} priority style={{ width: '100%', height: 'auto' }} />
+            <Image src="/images/hero/bits-goa.webp" alt="The BITS Pilani Goa campus: main building, palms and lawn" width={800} height={306} quality={90} sizes="(max-width: 640px) 88vw, 272px" priority style={{ width: '100%', height: 'auto' }} />
             <b>BITS Pilani, Goa</b>
             <small>{EDUCATION.branch}</small>
             <small>Finance minor · Class of 2027</small>

@@ -4,6 +4,9 @@ const nextConfig = {
   // `.next` (run builds with NEXT_DIST_DIR=.next-build, see README).
   distDir: process.env.NEXT_DIST_DIR ?? '.next',
 
+  // Next 16 defaults qualities to [75]; allow 90 for the hero photos (portrait + BITS Goa campus).
+  images: { qualities: [75, 90] },
+
   // P3-6: security headers. A full CSP ships in Report-Only once the inline pre-paint
   // theme script carries a hash; frame-ancestors is inert on its own but lands now.
   async headers() {
