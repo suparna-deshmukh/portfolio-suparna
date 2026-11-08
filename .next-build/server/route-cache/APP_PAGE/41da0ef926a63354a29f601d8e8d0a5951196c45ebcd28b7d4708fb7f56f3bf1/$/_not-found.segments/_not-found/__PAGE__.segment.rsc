@@ -1,0 +1,51 @@
+1:"$Sreact.fragment"
+3:"/_next/static/chunks/3wxbea9llr-ay.js"
+4:"/_next/static/chunks/431-is9saswto.js"
+5:I[53501,["$3","$4"],"default"]
+6:I[13779,["$3","$4"],"default"]
+7:"/_next/static/chunks/3qfy96eoyh-ek.js"
+8:I[39756,["$7"],"default"]
+9:"/_next/static/chunks/3e-trmq-88vzw.js"
+a:I[8821,["$3","$4","$9"],"default"]
+b:I[37457,["$7"],"default"]
+c:I[22016,["$3","$4"],""]
+d:I[8224,["$3","$4"],"LazyP99Panel"]
+e:"ViewTransitionResolver"
+f:I[11212,["$3","$4"],"$e"]
+16:I[97367,["$7"],"OutletBoundary"]
+17:"$Sreact.suspense"
+1a:"ViewportBoundary"
+1b:I[97367,["$7"],"$1a"]
+1c:"MetadataBoundary"
+1d:I[97367,["$7"],"$1c"]
+:HL["/_next/static/chunks/0hqnp4vweejjz.css","style"]
+:HL["/_next/static/chunks/2eyfxiyzhfn2w.css","style"]
+2:["$","style",null,{"children":"\n              @media (min-width:640px){.exhibit{transform:scale(.74)!important;transform-origin:50% 0}}\n              .themebtn,.p99 .kb,.kb{display:none}\n              .disc-body{grid-template-rows:1fr!important}\n            "}]
+11:X
+14:X
+14:C
+15:[["children",{"s":"__PAGE__","h":160,"d":{"r":["$","$1","c",{"children":[["$","main",null,{"id":"content","className":"nfbox","children":[["$","span",null,{"className":"nf-stamp","aria-hidden":"true","children":"Return to Sender"}],["$","h1",null,{"children":["4",["$","em",null,{"children":"0"}],"4"]}],["$","p",null,{"children":"This route never shipped."}],["$","div",null,{"className":"acts","children":[["$","$Lc",null,{"className":"btn","href":"/#projects","children":"See what shipped →"}],["$","$Lc",null,{"className":"btn ghost","href":"/","children":"Back home"}]]}]]}],null,["$","$L16",null,{"children":["$","$17",null,{"name":"Next.MetadataOutlet","children":"$@18"}]}]]}],"p":"$@19","v":null,"s":"$11"}}]]
+12:[["children",{"s":"/_not-found","h":96,"d":{"r":["$","$1","c",{"children":[null,["$","$L8",null,{"parallelRouterKey":"children","template":["$","$Lb",null,{}]}]]}],"p":"$@13","v":"$14","s":"$11"},"c":"$Q15"}]]
+0:{"t":{"t":{"s":"","h":80,"d":{"r":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/0hqnp4vweejjz.css","precedence":"next"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/2eyfxiyzhfn2w.css","precedence":"next"}],["$","script","script-0",{"src":"/_next/static/chunks/3wxbea9llr-ay.js","async":true}],["$","script","script-1",{"src":"/_next/static/chunks/431-is9saswto.js","async":true}]],["$","html",null,{"lang":"en","data-theme":"light","suppressHydrationWarning":true,"className":"_9g_AUa_variable Qlaoza_variable BUe6DW_variable","children":[["$","head",null,{"children":[["$","script",null,{"dangerouslySetInnerHTML":{"__html":"(function(){try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark'){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}var d=document.documentElement;d.dataset.theme=t;d.style.colorScheme=t;if(localStorage.getItem('motion')==='off'){d.classList.add('motion-off');return}if(!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('motion-ok');var n=navigator;if((n.hardwareConcurrency||8)<=4||(n.deviceMemory||8)<=4||(n.connection&&n.connection.saveData))d.classList.add('lite')}catch(e){}})()"}}],["$","noscript",null,{"children":"$2"}]]}],["$","body",null,{"children":[["$","a",null,{"className":"skip","href":"#content","children":"Skip to content"}],["$","$L5",null,{}],["$","$L6",null,{}],["$","$L8",null,{"parallelRouterKey":"children","error":"$a","errorStyles":[],"errorScripts":[["$","script","script-0",{"src":"/_next/static/chunks/3e-trmq-88vzw.js","async":true}]],"template":["$","$Lb",null,{}],"notFound":[["$","main",null,{"id":"content","className":"nfbox","children":[["$","span",null,{"className":"nf-stamp","aria-hidden":"true","children":"Return to Sender"}],["$","h1",null,{"children":["4",["$","em",null,{"children":"0"}],"4"]}],["$","p",null,{"children":"This route never shipped."}],["$","div",null,{"className":"acts","children":[["$","$Lc",null,{"className":"btn","href":"/#projects","children":"See what shipped →"}],["$","$Lc",null,{"className":"btn ghost","href":"/","children":"Back home"}]]}]]}],[]]}],["$","$Ld",null,{}],["$","$Lf",null,{}]]}]]}]]}],"p":"$@10","v":null,"s":"$11"},"c":"$Q12"},"h":{"r":["$","$1","h",{"children":[["$","meta",null,{"name":"robots","content":"noindex"}],["$","$L1b",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}],["$","meta","2",{"name":"theme-color","content":"#F1F4EF","media":"(prefers-color-scheme: light)"}],["$","meta","3",{"name":"theme-color","content":"#0E1512","media":"(prefers-color-scheme: dark)"}]]}],["$","$L1d",null,{"children":[["$","div",null,{"hidden":true,"children":["$","$17",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"Page not found · Suparna Deshmukh"}],["$","meta","1",{"name":"description","content":"Associate Product Manager at RISA Labs. Case studies on AI search, agentic research and GTM, data ledgers, and product work across five industries."}],["$","link","2",{"rel":"manifest","href":"/manifest.webmanifest"}],["$","link","3",{"rel":"canonical","href":"http://localhost:3210"}],["$","meta","4",{"name":"mobile-web-app-capable","content":"yes"}],["$","meta","5",{"name":"apple-mobile-web-app-title","content":"Suparna Deshmukh"}],["$","meta","6",{"name":"apple-mobile-web-app-status-bar-style","content":"default"}],["$","meta","7",{"property":"og:title","content":"Suparna Deshmukh · AI Product Manager"}],["$","meta","8",{"property":"og:description","content":"Associate Product Manager at RISA Labs. Case studies on AI search, agentic research and GTM, data ledgers, and product work across five industries."}],["$","meta","9",{"property":"og:url","content":"http://localhost:3210"}],["$","meta","10",{"property":"og:site_name","content":"Suparna Deshmukh · Portfolio"}],["$","meta","11",{"property":"og:locale","content":"en_US"}],["$","meta","12",{"property":"og:image","content":"http://localhost:3210/opengraph-image?14d3248fa9b1d9ce"}],["$","meta","13",{"property":"og:image:type","content":"image/png"}],["$","meta","14",{"property":"og:image:width","content":"1200"}],["$","meta","15",{"property":"og:image:height","content":"630"}],["$","meta","16",{"property":"og:image:alt","content":"Suparna Deshmukh — AI Product Manager portfolio"}],["$","meta","17",{"property":"og:type","content":"website"}],"$L1e","$L1f","$L20","$L21","$L22","$L23","$L24","$L25","$L26","$L27","$L28"]}]}],null]}],"$L29"]}],"p":"$@2a","v":null,"s":"$11"}},"a":"$@2b","u":"$@2c","b":"B02Thdt7i5sTstWIwsjRz"}
+2d:I[27201,["$7"],"IconMark"]
+18:null
+1e:["$","meta","18",{"name":"twitter:card","content":"summary_large_image"}]
+1f:["$","meta","19",{"name":"twitter:title","content":"Suparna Deshmukh · AI Product Manager"}]
+20:["$","meta","20",{"name":"twitter:description","content":"Associate Product Manager at RISA Labs. Case studies on AI search, agentic research and GTM, data ledgers, and product work across five industries."}]
+21:["$","meta","21",{"name":"twitter:image","content":"http://localhost:3210/opengraph-image?14d3248fa9b1d9ce"}]
+22:["$","meta","22",{"name":"twitter:image:alt","content":"Suparna Deshmukh — AI Product Manager portfolio"}]
+23:["$","meta","23",{"name":"twitter:image:type","content":"image/png"}]
+24:["$","meta","24",{"name":"twitter:image:width","content":"1200"}]
+25:["$","meta","25",{"name":"twitter:image:height","content":"630"}]
+26:["$","link","26",{"rel":"icon","href":"/icon.svg"}]
+27:["$","link","27",{"rel":"apple-touch-icon","href":"/apple-icon"}]
+28:["$","$L2d","28",{}]
+29:["$","meta",null,{"name":"next-size-adjust","content":""}]
+11:300
+2c:true
+11:C
+2b:0
+13:"$undefined"
+10:"$undefined"
+2a:"$undefined"
+19:"$undefined"

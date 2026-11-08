@@ -1,0 +1,3 @@
+module.exports=[96046,a=>{"use strict";a.i(7997),a.i(99475),a.i(12031),a.i(58042);var b=a.i(67573);b.K.pine,b.K.blue;var c=a.i(52425);let d={alt:"Case study — Suparna Deshmukh",contentType:"image/png",size:{width:1200,height:630}};async function e(a){let{__metadata_id__:b,...e}=await a.params,f=(0,c.fillMetadataSegment)("/projects/[slug]",e,"opengraph-image",!1);return[function(a){let b={alt:a.alt,type:a.contentType||"image/png",url:f+"?98ccbeb6dbf7416d"},{size:c}=a;return c&&(b.width=c.width,b.height=c.height),b}(d)]}a.s(["default",0,e],96046)},64459,function(a){a.n(a.i(96046))}];
+
+//# sourceMappingURL=app_projects_%5Bslug%5D_opengraph-image--metadata_15uk8mviz49mo.js.map

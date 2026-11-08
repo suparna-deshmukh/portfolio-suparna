@@ -1,1 +1,16 @@
-{"/favicon.ico/route":"/favicon.ico","/api/contact/route":"/api/contact","/page":"/","/_not-found/page":"/_not-found","/projects/[slug]/page":"/projects/[slug]","/api/github/route":"/api/github"}
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/api/contact/route": "/api/contact",
+  "/api/github/route": "/api/github",
+  "/apple-icon/route": "/apple-icon",
+  "/icon.svg/route": "/icon.svg",
+  "/manifest.webmanifest/route": "/manifest.webmanifest",
+  "/opengraph-image/route": "/opengraph-image",
+  "/page": "/",
+  "/projects/[slug]/opengraph-image/route": "/projects/[slug]/opengraph-image",
+  "/projects/[slug]/page": "/projects/[slug]",
+  "/resume/page": "/resume",
+  "/robots.txt/route": "/robots.txt",
+  "/sitemap.xml/route": "/sitemap.xml"
+}

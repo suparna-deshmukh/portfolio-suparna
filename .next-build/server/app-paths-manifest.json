@@ -1,8 +1,16 @@
 {
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/api/contact/route": "app/api/contact/route.js",
-  "/page": "app/page.js",
+  "/_global-error/page": "app/_global-error/page.js",
   "/_not-found/page": "app/_not-found/page.js",
+  "/api/contact/route": "app/api/contact/route.js",
+  "/api/github/route": "app/api/github/route.js",
+  "/apple-icon/route": "app/apple-icon/route.js",
+  "/icon.svg/route": "app/icon.svg/route.js",
+  "/manifest.webmanifest/route": "app/manifest.webmanifest/route.js",
+  "/opengraph-image/route": "app/opengraph-image/route.js",
+  "/page": "app/page.js",
+  "/projects/[slug]/opengraph-image/route": "app/projects/[slug]/opengraph-image/route.js",
   "/projects/[slug]/page": "app/projects/[slug]/page.js",
-  "/api/github/route": "app/api/github/route.js"
+  "/resume/page": "app/resume/page.js",
+  "/robots.txt/route": "app/robots.txt/route.js",
+  "/sitemap.xml/route": "app/sitemap.xml/route.js"
 }

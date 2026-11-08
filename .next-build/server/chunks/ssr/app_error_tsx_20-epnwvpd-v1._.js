@@ -1,0 +1,3 @@
+module.exports=[78141,a=>{"use strict";var b=a.i(87924),c=a.i(38246);a.s(["default",0,function({error:a,reset:d}){return(0,b.jsxs)("main",{id:"content",className:"nfbox",children:[(0,b.jsx)("span",{className:"nf-stamp","aria-hidden":"true",children:"Void"}),(0,b.jsxs)("h1",{children:["5",(0,b.jsx)("em",{children:"0"}),"0"]}),(0,b.jsxs)("p",{children:["The sheet tore itself. ",null]}),(0,b.jsxs)("div",{className:"acts",children:[(0,b.jsx)("button",{className:"btn",type:"button",onClick:d,children:"Try again"}),(0,b.jsx)(c.default,{className:"btn ghost",href:"/",children:"Back home"})]})]})}])}];
+
+//# sourceMappingURL=app_error_tsx_20-epnwvpd-v1._.js.map

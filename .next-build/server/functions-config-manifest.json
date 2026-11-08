@@ -1,1 +1,4 @@
-{"version":1,"functions":{"/_not-found":{},"/api/github":{},"/projects/[slug]":{}}}
+{
+  "version": 1,
+  "functions": {}
+}
