@@ -30,17 +30,11 @@
     linear-gradient(color-mix(in oklab,var(--fg) 60%,transparent),color-mix(in oklab,var(--fg) 60%,transparent)) right 0 bottom 0/10px 1px no-repeat,
     linear-gradient(color-mix(in oklab,var(--fg) 60%,transparent),color-mix(in oklab,var(--fg) 60%,transparent)) right 0 bottom 0/1px 10px no-repeat}
 /* paper grain: inline feTurbulence, ~4%, multiply */
-/* ≥1024: the card runs ~15% wider than its column, biased left so the name keeps
-   breathing room from the left hairline (and the page margin absorbs the overhang). */
-@media (min-width:1024px){
-  /* 15% wider, biased left by 6 more points of the column (right edge in 6,
-     left edge out 6); the shift is capped so the crop marks never pass the
-     viewport edge when the page has no side margin to absorb it. */
-  .tb{width:calc(100% * 1.15)}
-  .tb{margin-left:calc(var(--pad) * -1 + 14px)}
-}
-@media (min-width:1440px){
-  .tb{margin-left:max(calc(100% * -0.145),calc((100vw - 1440px) * -0.5 - var(--pad) + 14px))}
+/* The card keeps the page's standard content margins (no overhang) and scales
+   uniformly with --heroS so the whole hero fits the first screen on normal
+   laptops; the fixed 726px desk on the right is capped by the same factor. */
+@media (min-width:1025px){
+  .tb{zoom:var(--heroS,1)}
 }
 
 .tb-grain{position:absolute;inset:1px;border-radius:7px;pointer-events:none;opacity:.04;mix-blend-mode:multiply;
