@@ -8,7 +8,7 @@
 :HL["/_next/static/media/Satoshi_400-s.p.0dvfn5g0xv8bu.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/_next/static/media/Satoshi_500-s.p.1jgchyhj64537.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/_next/static/media/Satoshi_700-s.p.2_-zzs2una4mm.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
-3:[["children",{"s":"__PAGE__","h":160}]]
-2:[["children",{"s":{"n":"slug","t":"d","k":"research-agent","s":[]},"h":96,"c":"$Q3"}]]
-1:[["children",{"s":"projects","h":96,"c":"$Q2"}]]
-0:{"b":"BtZb_eMuRYSEPFcmdEyhu","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+:HL["/_next/static/chunks/24gra8lwnirc5.css","style"]
+2:[["children",{"s":"__PAGE__","h":160}]]
+1:[["children",{"s":"resume","h":96,"c":"$Q2"}]]
+0:{"b":"7CLMp6QmmJwlubLA87ZJW","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
