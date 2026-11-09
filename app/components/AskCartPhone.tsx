@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 
 const QUERY = ['waterproof', 'waterproof sneakers']
-const OPTIONS = ['Under ₹3K', '₹3K – 5K', '₹5K – 8K']
+const OPTIONS = ['Under ₹3K', '₹3K–5K', '₹5K–8K']
 const RESULTS = [
   { n: 'Monsoon Grip Trail', p: '₹4,299', r: '4.6' },
   { n: 'RainStride Lite', p: '₹3,799', r: '4.4' },
@@ -50,7 +50,7 @@ export default function AskCartPhone() {
         </span>
       </span>
       <span className={`acp-res${resultsOn ? ' on' : ''}`}>
-        <small>12 matches · 0 dead ends</small>
+        <small className="acp-counts"><span>12 matches</span><span>0 dead ends</span></small>
         {RESULTS.map(r => (
           <span className="acp-row" key={r.n}>
             <i className="acp-th" />
