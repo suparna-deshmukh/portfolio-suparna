@@ -47,3 +47,4 @@ design-review/
 
 # local dev outbox for the contact form when no mail key is set (P0-5)
 .contact-outbox.jsonl
+.env*

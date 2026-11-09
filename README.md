@@ -13,6 +13,27 @@ Contact form is a hardened API route (`app/api/contact`) using Resend when
 `RESEND_API_KEY` is set; in dev, submissions are written to
 `.contact-outbox.jsonl` instead.
 
+## System design
+
+- **Rendering**: Next.js 15 (App Router, TypeScript). Every page except the contact
+  route is fully static — the site deploys as static assets + one serverless function.
+- **Layout**: one scrolling "bench" page (`app/page.tsx`) — case studies
+  (AskCart, research agent), corporate project files, data ledgers, experience,
+  about, contact — plus a resume page (`app/resume`) with a copy-lint in CI.
+- **Styling**: hand-rolled CSS (no UI kit, no animation libraries); all motion is
+  hand-rolled and gated behind `html.motion-ok` (see `UI-SPEC.md`); fonts
+  self-hosted via `next/font/local` except DM Mono.
+- **Contact**: the contact form posts to the hardened `app/api/contact` route,
+  which delivers through the owner-provided Resend API (credentials in
+  `RESEND_API_KEY`; public address in `NEXT_PUBLIC_CONTACT_EMAIL`). The route
+  validates + rate-limits submissions server-side; in dev, submissions land in
+  `.contact-outbox.jsonl` instead of being sent.
+- **Data guard**: the site renders no personal email until `NEXT_PUBLIC_CONTACT_EMAIL`
+  is set; all personal details are owned by the site config (`app/lib/site.ts`).
+- **Build discipline**: `npm run build` outputs to an isolated `.next-build`
+  directory (the dev server keeps its own `.next`); `npm run check` = tsc + lint
+  + resume copy lint, all green in CI.
+
 ## Run it
 
 ```bash
