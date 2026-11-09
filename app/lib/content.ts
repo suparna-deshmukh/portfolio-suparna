@@ -107,26 +107,26 @@ export const PROJECTS: Project[] = [
   {
     "id": "s-p3",
     "slug": "insight-extractor",
-    "title": "Insight Extractor: Agentic Review Mining for Search Intelligence",
-    "summary": "An agentic extractor on the Reddit, App Store and Play Store APIs, feeding a 6-stage SQL pipeline that mines 94.6K reviews and isolates four root causes of silent search failure.",
-    "tags": ["Python", "SQL", "LLM agents", "REST APIs"],
-    "body": "## Why reviews\nE-commerce search fails silently, and the fix lives in the only dataset that will tell you why: reviews. People don't file tickets for a dead-end search, but they do review the app that failed them.\n\n## The mechanism\nI built an agentic extractor on the Reddit, App Store and Play Store APIs that pulls raw review text at scale, then a 6-stage SQL pipeline that cleans, deduplicates and tags it. Across 94.6K reviews the pipeline isolates the root causes of search failure instead of one fuzzy complaint category.\n\n## Four root causes, four treatments\nThe mining surfaced four causes: vague intent, missing filter context, spelling and slang drift, and catalog gaps that no query could ever fix. Each cause got its own treatment instead of one generic \"no results\" page.\n\n## What it informed\nThe causes became the product plan for AskCart: a guided follow-up flow for vague intent and missing context, and a semantic fallback for the code-mixed queries the lexicon never reaches. The extractor still runs as the eval source of truth for the search index.",
+    "title": "Insight Extractor: Agentic User Insight Engine",
+    "summary": "A Gemini-planned research agent: one brief in, eight live platforms tapped in parallel, signal bucketed by LLM + SQL, and a fixed-format User Insights Report out — on a strict ≤3 Gemini-calls-per-run budget.",
+    "tags": ["Next.js", "TypeScript", "Gemini", "LLM agents", "REST APIs"],
+    "body": "## Why\nPM work dies in the gap between “I need user signal” and eight open tabs of Hacker News, Reddit and app-store reviews. A manual sweep takes days, and most of it is dedup work.\n\n## The mechanism\nA four-step wizard captures the brief: topic, objective, audience, competitors, timeframe. Gemini plans the research from that brief — per-platform keywords, app hints, timeframes — then parallel fetchers hit the live APIs (Hacker News, Reddit, App Store, Play Store, GitHub, Google Trends, Product Hunt, YouTube). SQL stages clean and deduplicate the corpus, an LLM pass labels each record into insight buckets with sentiment, and the output is a fixed-format User Insights Report — snapshot, buckets, evidence, trend, competitor comparison, methodology — as shareable markdown.\n\n## Budget and guardrails\nStrictly ≤3 Gemini calls per run (plan → label → synthesize). The key pool rotates on quota failure with per-key daily caps, a per-user run window limits agent runs (default 5 per rolling 5 hours), and all shared state — budget, identity, windows — lives in one store: local JSON for single-instance, Redis for multi-instance Vercel, so the free-tier quota is enforced platform-wide, never per instance.\n\n## Modes\nRapid Scan (~1 minute, one Gemini call) for a fast pass; Standard; Deep Dive (~3–6 minutes, hundreds of records, full corpus labeling); and Raw Data, which skips synthesis and hands over the CSV.\n\n## Where it runs\nDeployed as a serverless app; the real run captured in the screenshots (“flipkart delivery”, deep mode) pulled 187 records across six platforms, dropped the irrelevant, and returned six buckets plus a full report in about 3.5 minutes.",
     "cover_image_url": "/images/projects/insight-extractor-cover.webp",
     "links": [],
     "stats": [
-      { "id": "ac-reviews", "label": "reviews mined across 3 stores", "hot": true },
-      { "id": "ac-causes", "label": "root causes of search failure" },
-      { "id": "ie-stages", "label": "SQL pipeline stages" }
+      { "id": "ie-platforms", "label": "live platforms tapped per run", "hot": true },
+      { "id": "ie-records", "label": "records pulled in a deep run" },
+      { "id": "ie-buckets", "label": "insight buckets per report" }
     ],
     "is_published": true,
     "created_at": "2026-08-18T10:00:00+00:00",
-    "pull_quote": { "text": "Each cause got its own treatment instead of one generic \"no results\" page.", "mark": "its own treatment" },
+    "pull_quote": { "text": "A fixed-format User Insights Report — on a strict ≤3 Gemini-calls-per-run budget.", "mark": "≤3 Gemini-calls-per-run" },
     "notes": [
-      { "label": "The dataset", "line": "the only dataset that will tell you why: reviews" },
-      { "label": "The pipeline", "line": "a 6-stage SQL pipeline that cleans, deduplicates and tags it" },
-      { "label": "The output", "line": "the root causes of search failure" }
+      { "label": "The brief", "line": "topic, objective, audience, competitors, timeframe" },
+      { "label": "The engine", "line": "Gemini plans; live APIs run in parallel; SQL + LLM bucket the signal" },
+      { "label": "The output", "line": "a report a PM can finish in four minutes" }
     ],
-    "highlights": [ "Each cause got its own treatment instead of one generic \"no results\" page." ]
+    "highlights": [ "Eight live platforms tapped in parallel from one brief", "A shared platform-wide Gemini budget, enforced across instances" ]
   },
   {
     "id": "s-p2",

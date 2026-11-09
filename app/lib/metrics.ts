@@ -125,6 +125,9 @@ export const METRICS: Record<string, Metric> = {
   'ac-causes': M({ id: 'ac-causes', shown: '4', num: 4, unit: 'count', source: 'AskCart — root causes of search failure isolated from 94.6K reviews', asOf: 'Aug 2026' }),
   // ── Projects · Insight Extractor ──
   'ie-stages': M({ id: 'ie-stages', shown: '6', num: 6, unit: 'count', source: 'Insight Extractor — SQL pipeline stages behind the review mining', asOf: 'Aug 2026' }),
+  'ie-platforms': M({ id: 'ie-platforms', shown: '8', num: 8, unit: 'count', source: 'Insight Extractor — live platform APIs tapped per run (HN, Reddit, App Store, Play Store, GitHub, Google Trends, Product Hunt, YouTube)', asOf: 'Nov 2026' }),
+  'ie-records': M({ id: 'ie-records', shown: '187', num: 187, unit: 'count', source: 'Insight Extractor — deep run "flipkart delivery": records fetched across six platforms', asOf: 'Nov 2026' }),
+  'ie-buckets': M({ id: 'ie-buckets', shown: '6', num: 6, unit: 'count', source: 'Insight Extractor — insight buckets in the flipkart delivery deep run report', asOf: 'Nov 2026' }),
   'ac-narrow': M({ id: 'ac-narrow', shown: '12', num: 12, unit: 'count', source: 'AskCart evals — SKUs after guided narrowing, missing_context mode', asOf: 'Aug 2026' }),
 
   // ── Projects · Research Agent ──

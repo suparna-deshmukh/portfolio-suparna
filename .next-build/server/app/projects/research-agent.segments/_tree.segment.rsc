@@ -1,4 +1,4 @@
-:HL["/_next/static/chunks/0jz4bcfdjt12a.css","style"]
+:HL["/_next/static/chunks/1qm4tfo8xt1x8.css","style"]
 :HL["/_next/static/chunks/2eyfxiyzhfn2w.css","style"]
 :HL["/_next/static/media/DM_Mono_400-s.p.2njitm-prmz2_.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/_next/static/media/DM_Mono_400_ext-s.p.38hmww4cj4vme.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
@@ -11,4 +11,4 @@
 3:[["children",{"s":"__PAGE__","h":160}]]
 2:[["children",{"s":{"n":"slug","t":"d","k":"research-agent","s":[]},"h":96,"c":"$Q3"}]]
 1:[["children",{"s":"projects","h":96,"c":"$Q2"}]]
-0:{"b":"tFvDbYYNDmEnNLl9XwgEn","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"HJSg0_unau68aProrVWHj","t":{"t":{"s":"","h":80,"c":"$Q1"}}}

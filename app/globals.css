@@ -1318,3 +1318,7 @@ nav.fnav a::after{content:"";position:absolute;inset:0 -6px -8px}
   a{text-decoration:underline}
   .ex-ob,.ex-note,.rt-card,.case,.rcard,.disc,.stamp,.dl-card,.tr-paper,.fb,.tb{border:1px solid CanvasText}
 }
+/* insight extractor case: real product screenshots */
+.ie-shots{display:grid;grid-template-columns:1fr;gap:12px;width:100%}
+.ie-shot{margin:0;min-width:0}
+.ie-shot figcaption{font-size:11px;line-height:1.45;opacity:.62;margin-top:5px}
