@@ -1,14 +1,14 @@
 [
   {
     "route": "/",
-    "firstLoadUncompressedJsBytes": 596100,
+    "firstLoadUncompressedJsBytes": 596583,
     "firstLoadChunkPaths": [
       ".next-build/static/chunks/3qfy96eoyh-ek.js",
-      ".next-build/static/chunks/2r0hr84mo9sjo.js",
+      ".next-build/static/chunks/1nvw_zjg8306g.js",
       ".next-build/static/chunks/25f6-895lgos1.js",
       ".next-build/static/chunks/3e-trmq-88vzw.js",
       ".next-build/static/chunks/2pc_9k-y87gue.js",
-      ".next-build/static/chunks/0i9uvb1zj6vhl.js",
+      ".next-build/static/chunks/16iw7dd782y0s.js",
       ".next-build/static/chunks/1pcw6gskne7pf.js",
       ".next-build/static/chunks/0edxz630ucjmj.js",
       ".next-build/static/chunks/21bzz90g4x-lk.js",
@@ -18,10 +18,10 @@
   },
   {
     "route": "/projects/[slug]",
-    "firstLoadUncompressedJsBytes": 534933,
+    "firstLoadUncompressedJsBytes": 534654,
     "firstLoadChunkPaths": [
       ".next-build/static/chunks/3qfy96eoyh-ek.js",
-      ".next-build/static/chunks/2r0hr84mo9sjo.js",
+      ".next-build/static/chunks/1nvw_zjg8306g.js",
       ".next-build/static/chunks/25f6-895lgos1.js",
       ".next-build/static/chunks/3e-trmq-88vzw.js",
       ".next-build/static/chunks/3di6r1bze5bos.js",
@@ -34,10 +34,10 @@
   },
   {
     "route": "/_not-found",
-    "firstLoadUncompressedJsBytes": 512673,
+    "firstLoadUncompressedJsBytes": 512394,
     "firstLoadChunkPaths": [
       ".next-build/static/chunks/3qfy96eoyh-ek.js",
-      ".next-build/static/chunks/2r0hr84mo9sjo.js",
+      ".next-build/static/chunks/1nvw_zjg8306g.js",
       ".next-build/static/chunks/25f6-895lgos1.js",
       ".next-build/static/chunks/3e-trmq-88vzw.js",
       ".next-build/static/chunks/1pcw6gskne7pf.js",
@@ -49,10 +49,10 @@
   },
   {
     "route": "/resume",
-    "firstLoadUncompressedJsBytes": 512673,
+    "firstLoadUncompressedJsBytes": 512394,
     "firstLoadChunkPaths": [
       ".next-build/static/chunks/3qfy96eoyh-ek.js",
-      ".next-build/static/chunks/2r0hr84mo9sjo.js",
+      ".next-build/static/chunks/1nvw_zjg8306g.js",
       ".next-build/static/chunks/25f6-895lgos1.js",
       ".next-build/static/chunks/3e-trmq-88vzw.js",
       ".next-build/static/chunks/1pcw6gskne7pf.js",

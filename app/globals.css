@@ -1202,13 +1202,14 @@ html.vt-nav::view-transition-old(root){animation-direction:reverse}
 /* ── Metric tip: hover/focus proof for headline stats (sample size, as-of, source) ── */
 .mtip{position:relative;display:inline-block;outline:none}
 .mtip.block{display:block}
-.mtip-b{position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%) translateY(3px);width:max-content;max-width:250px;
+.mtip-b{position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(calc(-50% + var(--mtip-dx,0px))) translateY(3px);width:max-content;max-width:250px;
   background:var(--surf);border:1px solid var(--lineS);border-radius:8px;box-shadow:0 2px 3px var(--press),0 14px 28px -12px rgba(23,19,14,.3);
   padding:7px 10px;font:500 11px/1.5 var(--fm);letter-spacing:0;text-transform:none;color:var(--dim);text-align:left;
-  opacity:0;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease);z-index:40}
-.mtip-b b{display:block;font-weight:700;color:var(--fg);margin-bottom:1px}
-.mtip-b i{display:block;font-style:normal}
-.mtip:hover .mtip-b,.mtip:focus-visible .mtip-b{opacity:1;transform:translateX(-50%) translateY(0)}
+  opacity:0;pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease);z-index:40;
+  white-space:normal;overflow-wrap:anywhere}
+.mtip-b .mtip-src{display:block;font:700 11px/1.5 var(--fm);color:var(--fg);margin-bottom:1px;white-space:normal;overflow-wrap:anywhere}
+.mtip-b .mtip-det{display:block;font:500 11px/1.5 var(--fm);white-space:normal;overflow-wrap:anywhere}
+.mtip:hover .mtip-b,.mtip:focus-visible .mtip-b{opacity:1;transform:translateX(calc(-50% + var(--mtip-dx,0px))) translateY(0)}
 @media (prefers-reduced-motion:reduce){.mtip-b{transition:none}}
 
 /* ── sections brief shared blocks (X-2..X-5) ── */
@@ -1319,6 +1320,7 @@ nav.fnav a::after{content:"";position:absolute;inset:0 -6px -8px}
   .ex-ob,.ex-note,.rt-card,.case,.rcard,.disc,.stamp,.dl-card,.tr-paper,.fb,.tb{border:1px solid CanvasText}
 }
 /* insight extractor case: real product screenshots */
-.case-shots{display:grid;grid-template-columns:1fr;gap:14px;width:100%;margin-top:4px}
+.case-shots{grid-area:fig;align-self:start;display:grid;grid-template-columns:1fr;gap:14px;margin:28px 44px 0 56px}
 .case-shot{margin:0;min-width:0}
 .case-shot figcaption{font-size:11px;line-height:1.45;opacity:.62;margin-top:5px}
+.case-shot figcaption i{font:600 10px/1 var(--fm);letter-spacing:.08em;color:var(--accText);opacity:1;margin-right:6px}

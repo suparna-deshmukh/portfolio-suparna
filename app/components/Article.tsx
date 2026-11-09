@@ -75,7 +75,7 @@ export default function Article({ kind, slug, backHref, backLabel, title, subtit
             </div>
             {caseShots.length ? (
               <div className="case-shots" style={{ viewTransitionName: `case-media-${slug}` }}>
-                {caseShots.map(s => (
+                {caseShots.map((s, i) => (
                   <figure key={s.src} className="case-shot">
                     <Image
                       src={s.src}
@@ -86,7 +86,7 @@ export default function Article({ kind, slug, backHref, backLabel, title, subtit
                       priority={s === caseShots[0]}
                       style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 6, border: '1px solid color-mix(in oklab, var(--pa) 25%, transparent)' }}
                     />
-                    <figcaption>{s.cap}</figcaption>
+                    <figcaption><i aria-hidden="true">{String(i + 1).padStart(2, '0')}</i>{s.cap}</figcaption>
                   </figure>
                 ))}
               </div>

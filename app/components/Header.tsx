@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { RESUME_URL, link } from '../lib/site'
 import { DEFAULT_THEME, NEXT_THEME, THEME_COLORS, resolveTheme, type ThemePref } from '../lib/site'
-import { istTime } from '../lib/hooks'
 import { useMotionPref, setMotion } from '../lib/motion'
 
 type Resolved = 'light' | 'dark'
@@ -26,7 +25,6 @@ const DL = (
 
 export default function Header() {
   const isHome = usePathname() === '/'
-  const [time, setTime] = useState('')
   const [scrolled, setScrolled] = useState(false)
   const [pref, setPref] = useState<ThemePref>(DEFAULT_THEME)
   const [resolved, setResolved] = useState<Resolved>('light')
@@ -63,13 +61,10 @@ export default function Header() {
       }
     }
     sysDark.addEventListener('change', onSystem)
-    const tick = () => setTime(istTime())
-    tick()
-    const id = setInterval(tick, 30_000)
     // A sentinel 80px down the page: no scroll listener, so no forced layout on every scroll event.
     const io = new IntersectionObserver(([e]) => setScrolled(!e.isIntersecting))
     if (sentinelRef.current) io.observe(sentinelRef.current)
-    return () => { clearInterval(id); io.disconnect(); sysDark.removeEventListener('change', onSystem) }
+    return () => { io.disconnect(); sysDark.removeEventListener('change', onSystem) }
   }, [])
 
   const toggleTheme = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -108,10 +103,8 @@ export default function Header() {
           <span className="full">Suparna Deshmukh</span><span className="ini">SD</span>
         </Link>
         <div className="right">
-          <span className="pill loc" aria-label="Bengaluru, local time">
-            <span className="city">Bengaluru</span><i />
-            <span className="num clock" suppressHydrationWarning>{time || '--:--'}</span><i />
-            <span>IST</span>
+          <span className="pill loc" aria-label="Bengaluru">
+            <span className="city">Bengaluru</span>
           </span>
           {link(RESUME_URL) && (
             <a className="res" href={RESUME_URL}>
