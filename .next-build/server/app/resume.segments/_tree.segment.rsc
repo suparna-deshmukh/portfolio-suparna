@@ -11,4 +11,4 @@
 :HL["/_next/static/chunks/24gra8lwnirc5.css","style"]
 2:[["children",{"s":"__PAGE__","h":160}]]
 1:[["children",{"s":"resume","h":96,"c":"$Q2"}]]
-0:{"b":"7CLMp6QmmJwlubLA87ZJW","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
+0:{"b":"8oUILXdG9p-H5ZWZ_9iqI","t":{"t":{"s":"","h":80,"c":"$Q1"}}}

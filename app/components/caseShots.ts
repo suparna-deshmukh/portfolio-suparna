@@ -6,8 +6,8 @@ export const CASE_SHOTS: Record<string, CaseShot[]> = {
   askcart: [
     { src: '/images/projects/askcart-home.webp', w: 1280, h: 800,
       cap: 'The home: one search, one ask — the guided follow-up replaces the dead end.' },
-    { src: '/images/projects/askcart-guided.webp', w: 1200, h: 852,
-      cap: 'The misspelled query “Shadhi Gift” still lands: one question — budget, for whom, occasion, material, style — narrows it and the results re-rank.' },
+    { src: '/images/projects/askcart-guided.webp', w: 1200, h: 660,
+      cap: '0 hits is the trigger, not the end: “shaadi gift under 2k” misses, and one tappable follow-up — what kind of item? — replaces the blank page.' },
     { src: '/images/projects/askcart-analytics.webp', w: 1280, h: 900,
       cap: 'Live analytics against the study baseline: null results 8.0% vs 27.3%, 78.7% resolved within two follow-ups.' },
   ],
