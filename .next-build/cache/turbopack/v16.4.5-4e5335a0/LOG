@@ -969,3 +969,47 @@ FAM | META SEQ | SST SEQ         | RANGE
   3 | 00000497 | 00000492 SST    |                [================================================================]                    | 28d38ddf602db646-cded00e9ab434c15 (0 MiB, fresh, 69 bytes, 3 entries, 0 tombstones)
   2 | 00000498 | 00000493 SST    |    [============================================================================================]    | 090ba600c3820fc2-f7ed8bd1750a74d7 (0 MiB, fresh, 180039 bytes, 39 entries, 0 tombstones)
   1 | 00000499 | 00000494 SST    | [==================================================================================================] | 01f9e95b509568fe-ffe1f5856bfecd9a (0 MiB, fresh, 421774 bytes, 470 entries, 0 tombstones)
+Time 2026-11-09T00:00:13.026521Z
+Commit 00000507 513 keys in 30ms 106µs
+FAM | META SEQ | SST SEQ         | RANGE
+  0 | 00000504 | 00000503 SST    |                                                                             O                        | c44bdff4074eecdb-c44bdff4074eecdb (0 MiB, fresh, 38 bytes, 1 entries, 0 tombstones)
+  3 | 00000505 | 00000501 SST    |                 [===================================================================]                | 29c1faf45341fbb4-d70da7435e696ada (0 MiB, fresh, 69 bytes, 3 entries, 0 tombstones)
+  2 | 00000506 | 00000500 SST    |    [============================================================================================]    | 090ba600c3820fc2-f7ed8bd1750a74d7 (0 MiB, fresh, 180207 bytes, 39 entries, 0 tombstones)
+  1 | 00000507 | 00000502 SST    | [==================================================================================================] | 01f9e95b509568fe-ffe1f5856bfecd9a (0 MiB, fresh, 421730 bytes, 470 entries, 0 tombstones)
+  3 | 00000509 | Compaction:
+  3 | 00000509 | MERGE (15 keys):
+  3 | 00000509 | 00000482 INPUT  |   [==============================================================================]                   | 063a4de340061a55-cf6d93fc78ea172e
+  3 | 00000509 | 00000492 INPUT  |                [================================================================]                    | 28d38ddf602db646-cded00e9ab434c15
+  3 | 00000509 | 00000501 INPUT  |                 [===================================================================]                | 29c1faf45341fbb4-d70da7435e696ada
+  3 | 00000509 | 00000508 OUTPUT |   [=================================================================================]                | 063a4de340061a55-d70da7435e696ada (compacted)
+Time 2026-11-09T00:00:13.058968Z
+Commit 00000510 15 keys in 17ms 712µs
+FAM | META SEQ | SST SEQ         | RANGE
+  3 | 00000509 | 00000508 SST    |   [=================================================================================]                | 063a4de340061a55-d70da7435e696ada (0 MiB, compacted, 213 bytes, 15 entries, 0 tombstones)
+  3 | 00000509 | 00000482 00000492 00000501 OBSOLETE SST
+    |          | 00000482 00000492 00000501 SST DELETED
+    |          | 00000486 00000497 00000505 META DELETED
+Time 2026-11-09T00:10:26.512368Z
+Commit 00000518 565 keys in 29ms 409µs
+FAM | META SEQ | SST SEQ         | RANGE
+  0 | 00000515 | 00000514 SST    |                                                                             O                        | c44bdff4074eecdb-c44bdff4074eecdb (0 MiB, fresh, 38 bytes, 1 entries, 0 tombstones)
+  3 | 00000516 | 00000512 SST    |                                   [=====================================]                            | 57c2e6bc9d8c6ba8-baa5417e487ff87b (0 MiB, fresh, 105 bytes, 6 entries, 0 tombstones)
+  2 | 00000517 | 00000511 SST    |    [===============================================================================================] | 090ba600c3820fc2-ff2eaefa31b17819 (0 MiB, fresh, 202247 bytes, 54 entries, 0 tombstones)
+  1 | 00000518 | 00000513 SST    | [==================================================================================================] | 01f9e95b509568fe-ffe1f5856bfecd9a (0 MiB, fresh, 428576 bytes, 504 entries, 0 tombstones)
+  0 | 00000520 | Compaction:
+  0 | 00000520 | MERGE (1 keys):
+  0 | 00000520 | 00000459 INPUT  |                                                                             O                        | c44bdff4074eecdb-c44bdff4074eecdb
+  0 | 00000520 | 00000464 INPUT  |                                                                             O                        | c44bdff4074eecdb-c44bdff4074eecdb
+  0 | 00000520 | 00000471 INPUT  |                                                                             O                        | c44bdff4074eecdb-c44bdff4074eecdb
+  0 | 00000520 | 00000484 INPUT  |                                                                             O                        | c44bdff4074eecdb-c44bdff4074eecdb
+  0 | 00000520 | 00000495 INPUT  |                                                                             O                        | c44bdff4074eecdb-c44bdff4074eecdb
+  0 | 00000520 | 00000503 INPUT  |                                                                             O                        | c44bdff4074eecdb-c44bdff4074eecdb
+  0 | 00000520 | 00000514 INPUT  |                                                                             O                        | c44bdff4074eecdb-c44bdff4074eecdb
+  0 | 00000520 | 00000519 OUTPUT |                                                                             O                        | c44bdff4074eecdb-c44bdff4074eecdb (compacted)
+Time 2026-11-09T00:10:26.545266Z
+Commit 00000521 1 keys in 18ms 525µs
+FAM | META SEQ | SST SEQ         | RANGE
+  0 | 00000520 | 00000519 SST    |                                                                             O                        | c44bdff4074eecdb-c44bdff4074eecdb (0 MiB, compacted, 38 bytes, 1 entries, 0 tombstones)
+  0 | 00000520 | 00000459 00000464 00000471 00000484 00000495 00000503 00000514 OBSOLETE SST
+    |          | 00000459 00000464 00000471 00000484 00000495 00000503 00000514 SST DELETED
+    |          | 00000460 00000465 00000472 00000485 00000496 00000504 00000515 META DELETED
