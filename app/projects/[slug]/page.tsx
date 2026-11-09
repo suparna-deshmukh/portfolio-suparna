@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Article from '../../components/Article'
+import { CASE_SHOTS } from '../../components/caseShots'
 import { getCaseStudies as published, getLead, postToPile, projectToPile, readMinutes } from '../../lib/posts'
 import { link, SITE_URL } from '../../lib/site'
 
@@ -57,6 +58,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       subtitle={subtitle ?? project.summary}
       minutes={readMinutes(project.body)}
       cover={project.cover_image_url}
+      shots={CASE_SHOTS[project.slug]}
       body={project.body}
       meta={
         <>

@@ -7,6 +7,7 @@ import MarkOnRead from './MarkOnRead'
 import EndDesk from './EndDesk'
 import ViewTransitionLink from './ViewTransitionLink'
 import { annotatedParagraph, NOTE_ARROW } from './annotate'
+import { type CaseShot } from './caseShots'
 import Image from 'next/image'
 import type { Annotated } from '../lib/content'
 import { LEAD_NOTES, sectionOf, sections, slugify, type PileItem } from '../lib/posts'
@@ -30,6 +31,8 @@ interface ArticleProps {
   meta: React.ReactNode
   minutes: number
   cover?: string | null
+  /** Real product screenshots shown in place of the cover on case studies (see caseShots.ts). */
+  shots?: CaseShot[]
   body: string
   annot: Annotated
   reply: string
@@ -44,13 +47,14 @@ const headingText = (children: React.ReactNode): string =>
  * margin notes beside the lines they quote, a section rail, and an ending that stays on the desk.
  * Paper, title, rail bars and notes carry the view-transition names the home sheet and pile pages use.
  */
-export default function Article({ kind, slug, backHref, backLabel, title, subtitle, meta, minutes, cover, body, annot, reply, pile }: ArticleProps) {
+export default function Article({ kind, slug, backHref, backLabel, title, subtitle, meta, minutes, cover, shots, body, annot, reply, pile }: ArticleProps) {
   const toc = sections(body)
   const hasToc = toc.length >= TOC_MIN_HEADINGS
   const isCase = kind === 'Case study'
   const quote = annot.pull_quote
   const [before, after] = quote?.mark ? quote.text.split(quote.mark) : [quote?.text ?? '', '']
   const [coverW, coverH] = (cover && COVER_SIZE[cover]) || []
+  const caseShots = isCase ? (shots ?? []) : []
 
   return (
     <main id="content" className={`ms${hasToc ? ' has-rail' : ''}`}>
@@ -69,7 +73,24 @@ export default function Article({ kind, slug, backHref, backLabel, title, subtit
               <h1 style={{ viewTransitionName: `${isCase ? 'case' : 'post'}-title-${slug}` }}>{title}</h1>
               {subtitle && <p className="sub">{subtitle}</p>}
             </div>
-            {cover && (
+            {caseShots.length ? (
+              <div className="case-shots" style={{ viewTransitionName: `case-media-${slug}` }}>
+                {caseShots.map(s => (
+                  <figure key={s.src} className="case-shot">
+                    <Image
+                      src={s.src}
+                      alt={s.cap}
+                      width={s.w}
+                      height={s.h}
+                      sizes="(max-width: 900px) 100vw, 900px"
+                      priority={s === caseShots[0]}
+                      style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 6, border: '1px solid color-mix(in oklab, var(--pa) 25%, transparent)' }}
+                    />
+                    <figcaption>{s.cap}</figcaption>
+                  </figure>
+                ))}
+              </div>
+            ) : cover && (
               <figure className="fig" style={isCase ? { viewTransitionName: `case-media-${slug}` } : undefined}>
                 <Image src={cover} alt="" width={coverW} height={coverH} sizes="(max-width: 900px) 100vw, 900px" priority style={{ width: '100%', height: 'auto' }} />
               </figure>

@@ -4,8 +4,7 @@ import CountUp from './CountUp'
 import MetricTip from './MetricTip'
 import { m } from '../lib/metrics'
 import { link } from '../lib/site'
-import { LazyAskCartReport, LazyResearchBoard } from './lazy'
-import InsightShots from './InsightShots'
+import { LazyAskCartReport, LazyInsightFlow, LazyResearchBoard } from './lazy'
 import ViewTransitionLink from './ViewTransitionLink'
 import VisibleCard from './VisibleCard'
 import { SortingDots } from './ProjectSignatures'
@@ -123,7 +122,7 @@ export default function Projects() {
               stack="Python · SQL · LLM agents · REST APIs"
               statsLabel="One run"
               stats={(insight.stats ?? []).map(st => ({ id: st.id, value: m(st.id).shown, label: st.label, hot: st.hot }))}
-              media={<InsightShots />}
+              media={<LazyInsightFlow />}
             />
           )}
           {research && (

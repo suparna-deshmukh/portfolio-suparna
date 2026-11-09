@@ -2,11 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>http://localhost:3210</loc>
-<lastmod>2026-11-09T14:41:54.398Z</lastmod>
+<lastmod>2026-11-09T14:50:25.034Z</lastmod>
 </url>
 <url>
 <loc>http://localhost:3210/resume</loc>
-<lastmod>2026-11-09T14:41:54.398Z</lastmod>
+<lastmod>2026-11-09T14:50:25.034Z</lastmod>
 </url>
 <url>
 <loc>http://localhost:3210/projects/askcart</loc>
