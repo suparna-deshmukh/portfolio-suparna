@@ -120,13 +120,13 @@ export const PROJECTS: Project[] = [
     ],
     "is_published": true,
     "created_at": "2026-08-18T10:00:00+00:00",
-    "pull_quote": { "text": "A fixed-format User Insights Report — on a strict ≤3 Gemini-calls-per-run budget.", "mark": "≤3 Gemini-calls-per-run" },
+    "pull_quote": { "text": "Strictly ≤3 Gemini calls per run (plan → label → synthesize).", "mark": "≤3 Gemini calls per run" },
     "notes": [
       { "label": "The brief", "line": "topic, objective, audience, competitors, timeframe" },
-      { "label": "The engine", "line": "Gemini plans; live APIs run in parallel; SQL + LLM bucket the signal" },
-      { "label": "The output", "line": "a report a PM can finish in four minutes" }
+      { "label": "The engine", "line": "Gemini plans the research from that brief" },
+      { "label": "The output", "line": "returned six buckets plus a full report in about 3.5 minutes" }
     ],
-    "highlights": [ "Eight live platforms tapped in parallel from one brief", "A shared platform-wide Gemini budget, enforced across instances" ]
+    "highlights": [ "parallel fetchers hit the live APIs (Hacker News, Reddit, App Store, Play Store, GitHub, Google Trends, Product Hunt, YouTube)", "so the free-tier quota is enforced platform-wide, never per instance" ]
   },
   {
     "id": "s-p2",
