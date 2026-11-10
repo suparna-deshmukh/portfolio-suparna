@@ -1,0 +1,10 @@
+.next/
+.next-build/
+node_modules/
+session context/
+design-review/
+.gstack/
+.claude/
+.env
+.env.local
+.env.example
