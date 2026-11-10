@@ -12,6 +12,8 @@
 # next.js
 /.next/
 /out/
+# local preview route cache (build artifact, regenerated on every build)
+.next-build/server/route-cache/
 
 # production
 /build
