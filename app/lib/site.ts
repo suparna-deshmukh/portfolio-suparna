@@ -6,10 +6,12 @@ export const RESUME_URL = '/Suparna-Deshmukh-Resume.pdf' // generated: scripts/b
 /** Canonical origin for metadata. Set NEXT_PUBLIC_SITE_URL once a domain exists (Section 7 #13). */
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3210'
 
-/** Theme preference cycle (P1-9): system -> light -> dark. Stored in localStorage 'theme'. */
+/** Theme (user requirement 2026-11-10): the default state is LIGHT, and the
+ *  toggle cycles light -> dark. Stored in localStorage 'theme'; legacy
+ *  'system' values still resolve to the device preference. */
 export type ThemePref = 'system' | 'light' | 'dark'
-export const DEFAULT_THEME: ThemePref = 'system'
-export const NEXT_THEME: Record<ThemePref, ThemePref> = { system: 'light', light: 'dark', dark: 'system' }
+export const DEFAULT_THEME: ThemePref = 'light'
+export const NEXT_THEME: Record<ThemePref, ThemePref> = { light: 'dark', dark: 'light', system: 'light' }
 export const THEME_COLORS: Record<'light' | 'dark', string> = { light: '#F1F4EF', dark: '#0E1512' }
 export function resolveTheme(pref: ThemePref, systemDark: boolean): 'light' | 'dark' {
   return pref === 'system' ? (systemDark ? 'dark' : 'light') : pref
