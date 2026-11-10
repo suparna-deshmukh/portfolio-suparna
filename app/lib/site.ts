@@ -220,12 +220,10 @@ export const EXPERIENCE: Company[] = [
         how: 'by identifying US NRI pain points, sizing SAM/SOM and refining PMF for market entry.',
         results: [
           { value: m('pw-leads').shown, label: 'inbound leads up', metric: 'pw-leads' },
-          { value: m('pw-model').shown, label: 'AUM growth in the scenario model', metric: 'pw-model' },
         ],
         bullets: [
           { lead: 'Helped lift AUM 16%', rest: ' by identifying US NRI pain points, sizing SAM/SOM, refining PMF and building the market entry strategy.' },
           { lead: 'Inbound leads up 40%', rest: ' from a customer-centric GTM strategy: mapped acquisition channels, content strategy and targeting criteria.' },
-          { lead: 'Persona-segmented scenario model', rest: ' simulating the optimal client mix; go-live recommendations drove 50% AUM growth in simulation.' },
         ] },
     ],
   },

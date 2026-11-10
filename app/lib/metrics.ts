@@ -67,7 +67,6 @@ export const METRICS: Record<string, Metric> = {
   // ── Experience · PrimeWealth ──
   'pw-aum': M({ id: 'pw-aum', shown: '16%', num: 16, unit: '%', source: 'PrimeWealth — AUM lift, US NRI market entry', asOf: 'Mar 2025' }),
   'pw-leads': M({ id: 'pw-leads', shown: '40%', num: 40, unit: '%', source: 'PrimeWealth — inbound leads, market entry strategy', asOf: 'Mar 2025' }),
-  'pw-model': M({ id: 'pw-model', shown: '50%', num: 50, unit: '%', source: 'PrimeWealth — AUM growth in persona-segmented scenario model', asOf: 'Mar 2025' }),
 
   // ── Corporate projects (180 Degrees Consulting engagements) ──
   'ed-raise': M({ id: 'ed-raise', shown: '$2.5M', num: 2.5, unit: '$', source: 'Everyday Diamonds — Series A from All In Capital, deck by 180DC team', asOf: 'Sep 2024' }),
