@@ -291,7 +291,7 @@ export const CORPORATE: Corporate[] = [
     proofMetric: 'fa-unit',
     doc: { type: 'Pricing audit' },
     stamp: 'Pricing audit done',
-    links: [{ label: 'Final report', href: '' }],
+    links: [{ label: 'Final report', href: 'https://drive.google.com/file/d/1IzHsoUU5PZz34WZwYGVYcR_-DA1FhWuk/view?usp=sharing' }],
     points: [
       'Formulated the **GTM strategy** via market research, competitor analysis and a refined product-market fit.',
       'Optimized pricing across specs, operations and annotation costs, improving **unit economics by 30%**.',
