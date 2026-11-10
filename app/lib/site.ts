@@ -271,7 +271,7 @@ export const CORPORATE: Corporate[] = [
     proofMetric: 'ed-raise',
     doc: { type: 'Series A deck' },
     stamp: 'Series A aided',
-    links: [{ label: 'Series A deck', href: '' }],
+    links: [{ label: 'Series A deck', href: 'https://drive.google.com/file/d/1y9tvo-Y6JZnrr8hPyKnxqGqWQscyKxnL/view?usp=sharing' }],
     points: [
       'Modeled **profitability, pricing and projections**; built the **4-year expansion roadmap** and the **Series A deck**.',
       'Formulated the offline expansion strategy for **5 stores** across India; first store launched in **Bengaluru**.',
@@ -351,9 +351,9 @@ export interface Honor {
   thumb?: string
 }
 export const ACHIEVEMENTS: Honor[] = [
-  { rank: m('acc-rank').shown, of: m('acc-of').shown, name: "Accenture Strategy Connect '25", note: 'GenAI in supply chain, India', organiser: 'Accenture', year: 2025, crest: { text: 'A', color: '#E2401B' }, deck: { label: 'Case deck', href: '' } },
-  { rank: m('iima-rank').shown, of: m('iima-of').shown, name: "IIMA Fintech Frontier '24", note: '0→1 product design and GTM', organiser: 'Indian Institute of Management Ahmedabad', year: 2024, crest: { text: 'IIM', color: '#1F4E8C' }, deck: { label: 'Case deck', href: '' } },
-  { rank: m('nl-rank').shown, of: m('nl-of').shown, name: "NextLeap PM Fellowship '26", note: 'Guided AI search for Google Photos', organiser: 'NextLeap', year: 2026, crest: { text: 'N', color: '#0E9F8A' }, deck: { label: 'Get →', href: 'https://github.com/suparna-deshmukh/photo-case' } },
+  { rank: m('acc-rank').shown, of: m('acc-of').shown, name: "Accenture Strategy Connect '25", note: 'GenAI in supply chain, India', organiser: 'Accenture', year: 2025, crest: { text: 'A', color: '#E2401B' }, deck: { label: 'Case deck', href: 'https://drive.google.com/file/d/1wdV_UxTVbzHmIm4gsM44ZANff_H-joxy/view?usp=sharing' } },
+  { rank: m('iima-rank').shown, of: m('iima-of').shown, name: "IIMA Fintech Frontier '24", note: '0→1 product design and GTM', organiser: 'Indian Institute of Management Ahmedabad', year: 2024, crest: { text: 'IIM', color: '#1F4E8C' }, deck: { label: 'Case deck', href: 'https://drive.google.com/file/d/1kZrfUr3Aig1_DTlSfpFzp-sOyGAIIkM4/view?usp=sharing' } },
+  { rank: m('nl-rank').shown, of: m('nl-of').shown, name: "NextLeap PM Fellowship '26", note: 'Guided AI search for Google Photos', organiser: 'NextLeap', year: 2026, crest: { text: 'N', color: '#0E9F8A' }, deck: { label: 'Source on GitHub', href: 'https://github.com/suparna-deshmukh/photo-case' } },
 ]
 
 export const CONSULTATHON_URL = 'https://unstop.com/competitions/consultathon-50-bits-pilani-k-k-birla-goa-campus-1674892'
