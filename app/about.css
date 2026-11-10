@@ -199,7 +199,7 @@ html.motion-ok #about .ab-honors li:hover,html.motion-ok #about .ab-honors li:fo
   #about .ab-strip-stats{padding-left:0;padding-top:10px;border-top:1px dashed color-mix(in oklab,var(--fg) 14%,transparent)}
   #about .ab-statrow{grid-template-columns:1.3fr 1fr 1.2fr}
   #about .ab-strip-stat b,#about .ab-suf{font-size:30px}
-  #about .ab-slab{font-size:10.5px;letter-spacing:.02em;min-height:29.4px}
+  #about .ab-slab{letter-spacing:.02em} /* 11px floor: base font-size and 30.8px min-height apply */
   #about .ab-honors ol{grid-template-columns:1fr}
   #about .ab-honors .ab-hn-deck{align-self:stretch;justify-content:center}
 }
@@ -227,5 +227,5 @@ html.motion-ok #about .ab-honors li:hover,html.motion-ok #about .ab-honors li:fo
   #about .ab-strip{padding:12px 16px}
   #about .ab-strip-stat{padding:0 7px}
   #about .ab-strip-stat b,#about .ab-suf{font-size:24px}
-  #about .ab-slab{font-size:10px;letter-spacing:.01em;min-height:28px}
+  #about .ab-slab{letter-spacing:.01em} /* 11px floor: base font-size and 30.8px min-height apply */
 }

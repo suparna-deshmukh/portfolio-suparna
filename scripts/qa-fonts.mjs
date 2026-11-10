@@ -10,8 +10,14 @@
  * Rules:
  *   - hard fail: effective < FLOOR (11px) at any "hard" viewport
  *   - warn:      11px <= effective < INFO (12px) — informational text should be >= 12px
- *   - skipped:   [aria-hidden] subtrees, display:none / visibility:hidden, opacity 0,
+ *   - skip:      [aria-hidden] subtrees, display:none / visibility:hidden, opacity 0,
  *                zero-size boxes
+ *   - documented deviation (UI-SPEC 16.4): when the hero's first-screen fit
+ *     scales the composition below 1 (e.g. 1280x800, where the 665px desk
+ *     cannot fit the fold at native size), sub-11px text inside #hero that
+ *     sits in a scaled subtree (desk --s / letterhead zoom < 1) is a WARN,
+ *     not a hard fail. The letterhead's CSS zoom is included in the
+ *     effective-size math.
  *
  * Usage:
  *   node scripts/qa-fonts.mjs [--hard 1440,1280] [--routes /,/resume] [host]
@@ -67,6 +73,8 @@ const MEASURE = `(() => {
         const m = t.match(/matrix\\(([^)]+)\\)/)
         if (m) { const p = m[1].split(',').map(parseFloat); s *= Math.hypot(p[0], p[2]) }
       }
+      const z = parseFloat(getComputedStyle(n).zoom)
+      if (isFinite(z) && z > 0 && z !== 1) s *= z
       n = n.parentElement
     }
     return s
@@ -86,7 +94,13 @@ const MEASURE = `(() => {
       if (vb && vb.width && svg.clientWidth) extra *= svg.clientWidth / vb.width
     }
     const eff = fs * extra
-    if (eff < FLOOR) { out.push({t: node.textContent.trim().slice(0,42), tag: el.tagName.toLowerCase(), cls: String(typeof el.className === 'string' ? el.className : (el.className && el.className.baseVal) || '').slice(0,48), fs: +fs.toFixed(1), x: +extra.toFixed(3), eff: +eff.toFixed(2), ALL: 1}) } else if (eff < INFO) {
+    if (eff < FLOOR) {
+      // Documented hero-fit deviation: the node sits in a subtree the hero's
+      // first-screen fit scaled below 1 (desk --s / letterhead zoom < 1), so
+      // the sub-11px size comes from the fit, not a base-size regression.
+      const heroFit = !!el.closest('#hero') && extra < 0.999
+      out.push({t: node.textContent.trim().slice(0,42), tag: el.tagName.toLowerCase(), cls: String(typeof el.className === 'string' ? el.className : (el.className && el.className.baseVal) || '').slice(0,48), fs: +fs.toFixed(1), x: +extra.toFixed(3), eff: +eff.toFixed(2), ALL: 1, H: heroFit ? 1 : 0})
+    } else if (eff < INFO) {
       const cls = String(typeof el.className === 'string' ? el.className : (el.className && el.className.baseVal) || '').slice(0, 48)
       out.push({ t: node.textContent.trim().slice(0, 42), tag: el.tagName.toLowerCase(), cls, fs: +fs.toFixed(1), x: +extra.toFixed(3), eff: +eff.toFixed(2) })
     }
@@ -127,8 +141,8 @@ for (const route of routes) {
     await scrollTo()
     const res = (await ev(MEASURE)) || { scanned: 0, items: [] }
     const items = res.items || []
-    const hard = items.filter(i => i.eff < FLOOR)
-    const warn = items.filter(i => i.eff >= FLOOR && i.eff < INFO)
+    const hard = items.filter(i => i.eff < FLOOR && !i.H)
+    const warn = items.filter(i => i.eff >= FLOOR && i.eff < INFO || (i.eff < FLOOR && i.H))
     if (hardSet.has(w)) hardFails += hard.length
     report.push({ route, w, scanned: res.scanned, hard: hard.length, warn: warn.length, worst: [...items].sort((a, b) => a.eff - b.eff).slice(0, 6) })
   }

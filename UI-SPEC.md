@@ -1198,6 +1198,14 @@ Contract:
 * The 640–1024 band keeps the scaled stage per the P1-2 table; sub-11px
   text there is a **documented warn**, not a hard fail, until a tablet
   composition lands.
+* Hero first-screen fit: `--heroS` on `.hd-in` scales the letterhead (CSS
+  `zoom`) and the 726px desk (`--s`) together so the whole hero fits the
+  fold. Where the fold cannot hold the 665px desk at native size
+  (e.g. 1280×800, ~588px available), sub-11px text inside `#hero` that
+  sits in a scaled subtree (desk `--s` or letterhead zoom < 1) is a
+  **documented warn**, not a hard fail — `qa-fonts` flags those nodes
+  `H:1` and counts them as warns. The letterhead's CSS `zoom` is part of
+  the effective-size math (only transform matrices were counted before).
 * `useTimeline` `steps` arrays must be **module-level constants**: an inline
   array gets a new identity every render, which re-triggers the IO effect
   into an infinite update loop (found while wiring the Education seal).

@@ -1328,4 +1328,4 @@ nav.fnav a::after{content:"";position:absolute;inset:0 -6px -8px}
 .case-shot{margin:0;min-width:0}
 .case-shot img{display:block;width:100%;height:auto;border:1px solid var(--lineS);border-radius:6px;background:var(--surf2)}
 .case-shot figcaption{font-size:11px;line-height:1.45;opacity:.62;margin-top:5px}
-.case-shot figcaption i{font:600 10px/1 var(--fm);letter-spacing:.08em;color:var(--accText);opacity:1;margin-right:6px}
+.case-shot figcaption i{font:600 11px/1 var(--fm);letter-spacing:.08em;color:var(--accText);opacity:1;margin-right:6px}
