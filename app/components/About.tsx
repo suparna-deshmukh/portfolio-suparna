@@ -168,7 +168,8 @@ function Positions() {
               )}
               {a.deck && link(a.deck.href) && (
                 <a className="ab-hn-deck" href={a.deck.href} target="_blank" rel="noopener noreferrer">
-                  {a.deck.label} <span aria-hidden="true">↗</span>
+                  {a.deck.label}
+                  {!a.deck.label.endsWith('→') && <span aria-hidden="true">↗</span>}
                 </a>
               )}
             </li>

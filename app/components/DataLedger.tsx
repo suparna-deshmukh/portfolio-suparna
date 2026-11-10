@@ -205,6 +205,11 @@ export default function DataProjects() {
                   </span>
                   <small className="dl-resq">{l.resLabel}</small>
                 </div>
+                {l.links?.repo && (
+                  <a className="dl-repo" href={l.links.repo} target="_blank" rel="noopener noreferrer">
+                    Source on GitHub <span aria-hidden="true">↗</span>
+                  </a>
+                )}
               </footer>
               {l.detail && (l.detail.method || l.detail.informs || l.detail.limits) && (
                 <Disclosure label={`Method and limits — ${l.title}`} className="dl-disc">

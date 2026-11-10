@@ -351,7 +351,7 @@ export interface Honor {
 export const ACHIEVEMENTS: Honor[] = [
   { rank: m('acc-rank').shown, of: m('acc-of').shown, name: "Accenture Strategy Connect '25", note: 'GenAI in supply chain, India', organiser: 'Accenture', year: 2025, crest: { text: 'A', color: '#E2401B' }, deck: { label: 'Case deck', href: '' } },
   { rank: m('iima-rank').shown, of: m('iima-of').shown, name: "IIMA Fintech Frontier '24", note: '0→1 product design and GTM', organiser: 'Indian Institute of Management Ahmedabad', year: 2024, crest: { text: 'IIM', color: '#1F4E8C' }, deck: { label: 'Case deck', href: '' } },
-  { rank: m('nl-rank').shown, of: m('nl-of').shown, name: "NextLeap PM Fellowship '26", note: 'Guided AI search for Google Photos', organiser: 'NextLeap', year: 2026, crest: { text: 'N', color: '#0E9F8A' }, deck: { label: 'Project deck', href: '' } },
+  { rank: m('nl-rank').shown, of: m('nl-of').shown, name: "NextLeap PM Fellowship '26", note: 'Guided AI search for Google Photos', organiser: 'NextLeap', year: 2026, crest: { text: 'N', color: '#0E9F8A' }, deck: { label: 'Get →', href: 'https://github.com/suparna-deshmukh/photo-case' } },
 ]
 
 export const CONSULTATHON_URL = 'https://unstop.com/competitions/consultathon-50-bits-pilani-k-k-birla-goa-campus-1674892'
@@ -471,6 +471,7 @@ export const DATA_LEDGERS: DataLedger[] = [
     kind: 'scale',
     figure: { type: 'heatmap', status: 'illustrative' },
     tech: 'SQL · Python · Excel',
+    links: { repo: 'https://github.com/suparna-deshmukh/mutualfund-cohort' },
   },
   {
     n: '02',
@@ -488,6 +489,7 @@ export const DATA_LEDGERS: DataLedger[] = [
     kind: 'modeled',
     figure: { type: 'bars', status: 'illustrative' },
     tech: 'Python · scikit-learn · SHAP · SQL',
+    links: { repo: 'https://github.com/suparna-deshmukh/neobank-funnel' },
   },
   {
     n: '03',
@@ -505,6 +507,7 @@ export const DATA_LEDGERS: DataLedger[] = [
     kind: 'outcome',
     figure: { type: 'spike', status: 'illustrative' },
     tech: 'SQL · Python · scikit-learn · XGBoost',
+    links: { repo: 'https://github.com/suparna-deshmukh/youtube-trending-ml' },
   },
   {
     n: '04',
@@ -522,6 +525,7 @@ export const DATA_LEDGERS: DataLedger[] = [
     kind: 'scale',
     figure: { type: 'donut', status: 'illustrative' },
     tech: 'SQL · Python · scikit-learn',
+    links: { repo: 'https://github.com/suparna-deshmukh/lendingclub-risk' },
   },
 ]
 /** The method strip (D-3): the four labelled steps shared by every card. */
