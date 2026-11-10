@@ -5,6 +5,8 @@
    objects lift ≤4px on hover. Real grid/flex flow, auto rows, 20px gaps — no hand-placed absolutes. */
 
 .ex-wrap{position:relative;width:min(726px,100%);margin-inline:auto;aspect-ratio:726/665}
+/* >=1025: Hero.tsx sizes the wrap to the exact scaled desk box; auto left margin pushes it to the right content edge */
+@media (min-width:1025px){.ex-wrap{margin-inline:auto 0}}
 .exhibit{width:726px;transform:scale(var(--s,1));transform-origin:0 0;display:grid;grid-template-columns:288px 188px 210px;gap:20px}
 .ex-col{display:flex;flex-direction:column;gap:20px;min-width:0}
 

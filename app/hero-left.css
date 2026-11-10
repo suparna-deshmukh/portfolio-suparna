@@ -30,9 +30,9 @@
     linear-gradient(color-mix(in oklab,var(--fg) 60%,transparent),color-mix(in oklab,var(--fg) 60%,transparent)) right 0 bottom 0/10px 1px no-repeat,
     linear-gradient(color-mix(in oklab,var(--fg) 60%,transparent),color-mix(in oklab,var(--fg) 60%,transparent)) right 0 bottom 0/1px 10px no-repeat}
 /* paper grain: inline feTurbulence, ~4%, multiply */
-/* The card keeps the page's standard content margins (no overhang) and scales
-   uniformly with --heroS so the whole hero fits the first screen on normal
-   laptops; the fixed 726px desk on the right is capped by the same factor. */
+/* The card keeps the page's standard content margins (no overhang) and zooms with --heroS
+   (set in Hero.tsx) so the whole hero fits the first screen; the fixed 726px desk on the
+   right is scaled independently by --s so card and desk share the viewport budget. */
 @media (min-width:1025px){
   .tb{zoom:var(--heroS,1)}
 }

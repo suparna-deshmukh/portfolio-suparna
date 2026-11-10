@@ -58,6 +58,27 @@ Per the brief: content frozen except user-authorized changes; these are logged h
     placements and corporate outreach for the 2026 batch, end-to-end, with a
     25-member team."; 180DC line now "Led 45 consultants across 16 projects, driving
     30% YoY revenue growth." (verbs per user, phrasing aligned to the resume).
+17. **First-screen fit revamp (user: right side underused to the margins, both
+    elements too small, desk should match the card's height, browser zoom drifted
+    the layout on x).** Root causes: (a) card and desk shared one scale factor and
+    the desk's fr column + card zoom fed each other through a ResizeObserver,
+    oscillating during browser zoom; (b) 108/104px hero padding wasted first-screen
+    budget; (c) the desk centered in its column, floating short of the right margin.
+    Fix: `.hd-in` padding 84/64; at >=1025 Hero.tsx pins the 5/8 columns to exact px
+    (kills the fr feedback loop) and sizes the card (zoom) and desk (scale)
+    independently against innerHeight minus 148px. The card's local width is its
+    column divided by its zoom, so its height depends on the zoom shipped — the fit
+    bisects the largest zoom whose measured (at that zoom) on-screen height fits,
+    floored to 0.01 so the section never overflows the viewport. The desk scales to
+    exactly the card's height whenever the column width allows, otherwise fills the
+    column (width-fit) and always hugs the right content edge (auto left margin on
+    `.ex-wrap`, sized to the scaled desk box). No ResizeObserver; resize is
+    rAF-debounced and the fit is deterministic, so browser zoom lands on identical
+    values. <=1024 stacked behavior unchanged.
+    Assumption: when the viewport is wide/short (width-fit: 1512x982, 1920x1080,
+    1025x768) the desk is shorter than the card rather than the card being shrunk to
+    match — the margins win over the height match, per "stick to the left and right
+    margins properly".
 
 ## Verification
 
@@ -67,3 +88,14 @@ Per the brief: content frozen except user-authorized changes; these are logged h
   no failures, no console warnings.
 - Lighthouse mobile: performance 72 → 76, accessibility 97 → 97, TBT 550ms → 410ms,
   CLS 0.002 → 0.
+- Fit/margin/zoom-stability check (`sd-fitscreen.js`): at 1512x982, 1440x900,
+  1366x768, 1280x800, 1025x768, 1920x1080 the section never exceeds the viewport,
+  card flush at the left content edge, desk flush at the right, desk height within
+  0.5px of the card's at 1440/1366/1280, no horizontal scroll, no console errors.
+  Zoom round-trip 1512x982 -> 1209x786 (~125% browser zoom) -> back lands on
+  identical x/width/height/heroS values.
+- Lighthouse mobile (dev :3210): performance 75 (vs 76 baseline, within run noise;
+  one cold run measured 35/7130ms TBT and repeated immediately at 75/300ms),
+  accessibility 97 (unchanged), TBT 300ms (vs 410ms baseline).
+- Screenshots: `fitscreen-1512.png`, `fitscreen-1440.png` (both sections fully
+  visible at their own size, margins respected).
