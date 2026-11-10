@@ -7,7 +7,9 @@ nav.fnav a.on .nic{stroke-width:1.9}
 
 @media (min-width:900px){
   nav.fnav{top:10px;bottom:auto;z-index:95;padding:4px;box-shadow:none}
-  nav.fnav a{height:36px;padding:0 14px;font-size:14px}
+  /* fixed+left:50% caps shrink-to-fit at half the viewport, so keep labels on one line
+     or the two-word items (Corporate/Data Projects) wrap under each other */
+  nav.fnav a{height:36px;padding:0 14px;font-size:14px;white-space:nowrap}
   nav.fnav .ind{top:4px;bottom:4px}
   nav.fnav .ind .prog{bottom:4px}
   nav.fnav.hidden{transform:translateX(-50%)}
