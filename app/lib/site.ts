@@ -148,47 +148,48 @@ export const EXPERIENCE: Company[] = [
           { value: m('risa-tpo').shown, label: 'time-per-order cut, 4 UI steps', metric: 'risa-tpo' },
         ],
         bullets: [
-          { lead: 'Status Tracking 0→1, owned end to end', rest: ' — 90k-order SQL analysis, user research, PRDs v0 to v1, HLD, dev-testing; 200 users save 350 hrs/wk.' },
+          { lead: 'Status Tracking 0→1, owned end to end', rest: ' — 90k-order SQL analysis, user research, PRDs v0 to v1, HLD, dev-testing; 200 users save 250 hrs/wk.' },
           { lead: '400 docs/day on a cron pipeline', rest: ' — bots, portal and fax APIs; order matching at 85% coverage, 96% precision, a coverage-first trade-off.' },
           { lead: '92% accuracy on inquiry calls', rest: ' — agentic calling MVP on Vapi from 4 months of data; call checklists and configs, a 20-user pilot.' },
           { lead: '2x QC throughput, 40% faster fixes', rest: ' — interviews found QC juggling 4 platforms; prototyped and shipped a unified UI, 2500 orders/day.' },
           { lead: '87% precision on auto-RCA', rest: ' — built Pulse, a RAG tool-calling auto-RCA with chatbot; flags 15 metric drops/day, 60% coverage.' },
           { lead: '60% faster portal filing', rest: ' — launched RISA Assist on the Chrome Store; parses portal HTML, auto-fills answers.' },
           { lead: '$10K/yr saved, 70% step TAT cut', rest: ' — Document Studio on standard APIs fetches and processes clinical docs; replaced Acrobat.' },
-          { lead: '30% time-per-order cut', rest: ' — revamped 4 key UI steps for edge cases with tech, design and compliance, from user research and Amplitude.' },
+          { lead: '10% time-per-order cut', rest: ' — revamped 4 key UI steps for edge cases with tech, design and compliance, from user research and Amplitude.' },
         ] },
     ],
   },
   {
-    id: 'investmates', name: 'InvestMates', monogram: 'IM', city: 'Seattle (Remote)', years: "'25", metric: m('im-ctr').shown, metricCaption: 'homepage CTR lift from the revamp A/B test', summary: 'Product Manager (Part-time) · AI Wealth Management for NRIs', sector: 'FinTech · Wealth', group: 'product',
+    id: 'investmates', name: 'InvestMates', monogram: 'IM', city: 'Seattle (Remote)', years: "'25", metric: m('im-ctr').shown, metricCaption: 'homepage CTR lift from the checkpoint A/B test', summary: 'Product Manager (Part-time) · AI Wealth Management for NRIs', sector: 'FinTech · Wealth', group: 'product',
     roles: [{ title: 'Product Manager (Part-time)', meta: 'Jul 2025 to Sept 2025 · FinTech · Seattle (Remote)',
       heroMetric: 'im-ctr',
       hero: { value: m('im-ctr').shown, label: 'homepage CTR lift' },
-      how: 'by authoring PRDs for the homepage revamp and AI portfolio health, A/B tested (n=4200, p<0.05).',
+      how: 'by A/B testing portfolio import as a homepage checkpoint (n=4200, p<0.05).',
       results: [
         { value: m('im-sessions').shown, label: 'longer sessions', metric: 'im-sessions' },
         { value: m('im-dropoff').shown, label: 'drop-offs cut by lifecycle campaigns', metric: 'im-dropoff' },
         { value: m('im-d7').shown, label: 'D7 retention', metric: 'im-d7' },
       ],
       bullets: [
-        { lead: 'Lifted homepage CTR 25%, sessions 10%', rest: ' — authoring PRDs for the homepage revamp and AI portfolio health, A/B tested (n=4200, p<0.05).' },
+        { lead: 'Owned E2E onboarding end to end', rest: ' — risk, goal and portfolio import, PRD to launch in Jira; completion up 19%, portfolio up 22%, TTFV cut 15%.' },
+        { lead: 'Lifted homepage CTR 25%, sessions 10%', rest: ' — portfolio import was buried, so A/B tested it as a homepage checkpoint (n=4200, p<0.05).' },
         { lead: 'Cut drop-offs 18%, D7 retention up 3 pp', rest: ' by running cohort CleverTap lifecycle email and notification campaigns for 3k users on user funnel data.' },
       ] }],
   },
   {
-    id: 'suzlon', name: 'Suzlon Group', monogram: 'SZ', city: 'Pune', years: "'25", metric: m('szl-report').shown, metricCaption: 'reporting time cut by automated pipelines', summary: 'Summer Intern (Team Lead) · Renewable Energy', sector: 'Renewable Energy', group: 'industry',
+    id: 'suzlon', name: 'Suzlon Group', monogram: 'SZ', city: 'Pune', years: "'25", metric: m('szl-report').shown, metricCaption: 'reporting time cut by automated workflows', summary: 'Summer Intern (Team Lead) · Renewable Energy', sector: 'Renewable Energy', group: 'industry',
       roles: [
         { title: 'Summer Intern (Team Lead)', meta: 'May 2025 to Jul 2025 · Renewable energy · Pune',
         heroMetric: 'szl-report',
         hero: { value: m('szl-report').shown, label: 'reporting time cut' },
-        how: 'by automating 20 data pipelines with n8n, AI agents and IMAP email parsing.',
+        how: 'by automating 10 workflows with n8n, AI agents and IMAP email parsing.',
         results: [
           { value: m('szl-states').shown, label: 'CSR analysis led as team lead', metric: 'szl-states' },
-          { value: m('szl-pipelines').shown, label: 'data pipelines automated', metric: 'szl-pipelines' },
+          { value: m('szl-pipelines').shown, label: 'workflows automated', metric: 'szl-pipelines' },
         ],
         bullets: [
           { lead: 'Led 5 interns on an 8-state CSR analysis', rest: ' with Excel and VBA; built and presented Power BI KPI dashboards and PPTs to leadership.' },
-          { lead: 'Automated 20 data pipelines with n8n', rest: ' integrating AI agents and IMAP email parsing to build CSVs and PPTs; cut reporting time by 66%.' },
+          { lead: 'Automated 10 workflows with n8n', rest: ' integrating AI agents and IMAP email parsing to build CSVs and PPTs; cut reporting time by 66%.' },
         ] },
     ],
   },
@@ -222,7 +223,7 @@ export const EXPERIENCE: Company[] = [
           { value: m('pw-model').shown, label: 'AUM growth in the scenario model', metric: 'pw-model' },
         ],
         bullets: [
-          { lead: 'Helped lift AUM 33%', rest: ' by identifying US NRI pain points, sizing SAM/SOM, refining PMF and building the market entry strategy.' },
+          { lead: 'Helped lift AUM 16%', rest: ' by identifying US NRI pain points, sizing SAM/SOM, refining PMF and building the market entry strategy.' },
           { lead: 'Inbound leads up 40%', rest: ' from a customer-centric GTM strategy: mapped acquisition channels, content strategy and targeting criteria.' },
           { lead: 'Persona-segmented scenario model', rest: ' simulating the optimal client mix; go-live recommendations drove 50% AUM growth in simulation.' },
         ] },
@@ -260,7 +261,7 @@ export interface Corporate {
 export const CORPORATE: Corporate[] = [
   {
     id: 'everyday', no: 1, name: 'Everyday Diamonds',
-    engagement: { via: '180DC', role: 'Team Lead · GTM and Series A Fundraising' },
+    engagement: { via: '180DC', role: 'Team Lead of 10 · GTM and Series A Fundraising' },
     dur: 'Aug to Sept 2024', where: 'Bengaluru',
     rows: [
       { label: 'Profitability + pricing model', attribution: 'built' },

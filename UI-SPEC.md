@@ -348,7 +348,7 @@ Objects (all links):
 |---|---|---|---|---|
 | ID badge | 0/20 | 172w | −5° | real portrait `suparna-portrait-f1628725.webp` (content-hashed filename — busts browser and optimizer caches when the photo is swapped) (1254×1254 full-res source, q90; `next/image` quality 90, sizes 300px; CSS cover-crops to 144/136), name, "Associate Product Manager", "RISA Labs · Bengaluru" → `#about` |
 | AskCart phone | 400/16 | 248×474 | 2.5° | dark phone frame + island; **live loop** `AskCartPhone`: status bar, app header, typing caret in the search field, a guided-question card ("What's your budget?" chips — 11px mono, `white-space:nowrap`, wrap only at chip boundaries: "Under ₹3K" + "₹3K–5K" row 1, "₹5K–8K" row 2; label and app-header sub also nowrap) then a result list — "12 matches" / "0 dead ends" as a 11px flex space-between line — where the old "no results" becomes a guided re-run → `/projects/askcart` |
-| RISA stat card | 206/36 | 168w | 3° | accent top bar, "RISA Labs / APM intern · now", **350 hrs/wk** big figure, "saved across 200 users · Status Tracking 0→1" subline, then a **2×3 op-metric grid** (`.ex-risa-grid`, 6 cells, one-line labels, each value a `MetricTip`): 400 docs/day · cron pipeline · 92% Vapi calls · 2x QC speed · 87% auto-RCA · 60% portal TAT · $10K/yr Doc Studio (ids `risa-docs`/`risa-vapi`/`risa-qc`/`risa-pulse`/`risa-tat`/`risa-studio`) → `#experience-risa` |
+| RISA stat card | 206/36 | 168w | 3° | accent top bar, "RISA Labs / APM intern · now", **250 hrs/wk** big figure, "saved across 200 users · Status Tracking 0→1" subline, then a **2×3 op-metric grid** (`.ex-risa-grid`, 6 cells, one-line labels, each value a `MetricTip`): 400 docs/day · cron pipeline · 92% Vapi calls · 2x QC speed · 87% auto-RCA · 60% portal TAT · $10K/yr Doc Studio (ids `risa-docs`/`risa-vapi`/`risa-qc`/`risa-pulse`/`risa-tat`/`risa-studio`) → `#experience-risa` |
 | Campus card | 2/393 | 216w | −2° | **real campus photo** `bits-goa-5cd7ed84.webp` (content-hashed filename) (800×306 original paste, re-encoded q90 — the photo lives only on this card, never on the notes; cover-cropped to 188/113 by CSS), "BITS Pilani, Goa", `EDUCATION.branch` ("Electronics and Communication Engineering"), "Finance minor · Class of 2027" → `#about` |
 
 **Pinned notes** (`.ex-note`, taped `::before` tape tab, same hover/settle as
@@ -446,13 +446,13 @@ One per company, newest first (RISA = `NOW`). Entrance: staggered rise
   * foot: `<details>` "All N results" (chevron rotates) → bullets
     (`strong` lead + rest).
 Data (`site.ts EXPERIENCE`, source = the Nov 2026 resume): RISA Labs (Healthcare AI,
-product; 350 hrs/wk hero) — a **standard card** since the punch pass (the featured
+product; 250 hrs/wk hero) — a **standard card** since the punch pass (the featured
 treatment was retired): 7 punchy result rows (400 docs/day, 92% Vapi, 2x QC, 87%
-auto-RCA, 60% portal TAT, $10K/yr Doc Studio, 30% time-per-order; the hero 350 lives
+auto-RCA, 60% portal TAT, $10K/yr Doc Studio, 10% time-per-order; the hero 250 lives
 only in the hero figure, never duplicated in the rows) plus the always-present
 "All 8 results" dropdown, InvestMates (FinTech·Wealth, product; 25% CTR; sessions
 10%), Suzlon Group (Renewable Energy; 66%), Chimera VC (Venture Capital; $4M
-pipeline — corrected from $5M), PrimeWealth (Wealth Management; 33%).
+pipeline — corrected from $5M), PrimeWealth (Wealth Management; 16%).
 
 ---
 

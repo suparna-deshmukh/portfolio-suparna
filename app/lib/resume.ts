@@ -31,27 +31,28 @@ export const RESUME = {
     {
       name: 'RISA Labs', role: 'Associate Product Manager Intern', when: 'Jul 2026 – Present', place: 'Bengaluru · AI Workflows for US Healthcare',
       bullets: [
-        'Owned **Status Tracking** 0→1: 90,000-order SQL analysis, user research, PRDs (v0 and v1), HLD and dev-testing; **200 users save 350 hrs/wk**',
+        'Owned **Status Tracking** 0→1: 90,000-order SQL analysis, user research, PRDs (v0 and v1), HLD and dev-testing; **200 users save 250 hrs/wk**',
         'Designed a **cron pipeline for 400 docs/day** via bots, portal and fax APIs; order matching at **85% coverage, 96% precision** (coverage-first trade-off)',
         'Built an **agentic calling MVP on Vapi** for inquiry calls from 4 months of data, call checklists and configs; 20-user pilot, **92% accuracy**',
         'Shipped a **unified QC UI** after user interviews found QC juggling 4 platforms: **2x throughput, 40% faster error fixes**, 2,500 orders/day',
         'Built **Pulse**, a RAG tool-calling auto-RCA tool with a chatbot, eval-tested: flags 15 metric drops/day at **87% precision**, 60% RCA coverage',
         'Launched **RISA Assist** on the Chrome Store: parses portal HTML and auto-fills answers, cutting **portal filing TAT 60%**',
-        'Shipped **Document Studio** on standard APIs to fetch and process clinical docs; replaced Acrobat, **saved $10K/yr, step TAT cut 70%**; revamped 4 key order UI steps with tech, design and compliance, **time-per-order cut 30%**',
+        'Shipped **Document Studio** on standard APIs to fetch and process clinical docs; replaced Acrobat, **saved $10K/yr, step TAT cut 70%**; revamped 4 key order UI steps with tech, design and compliance, **time-per-order cut 10%**',
       ],
     },
     {
       name: 'InvestMates', role: 'Product Manager (Part-time)', when: 'Jul 2025 – Sep 2025', place: 'Seattle, US (Remote) · AI Wealth Management for NRIs',
       bullets: [
-        'Authored PRDs for the homepage revamp and AI portfolio health; A/B tested (sample 4,200, p < 0.05): **homepage CTR up 25%, sessions up 10%**',
+        'Owned **E2E onboarding** (risk, goal and portfolio import) from PRD to launch in Jira: **completion up 19%, portfolio up 22%, TTFV cut 15%**',
+        'Portfolio import was buried, so A/B tested it as a homepage checkpoint (sample 4,200, p < 0.05): **homepage CTR up 25%, sessions up 10%**',
         'Ran CleverTap lifecycle email and notification campaigns for 3,000 users on funnel data: **drop-offs cut 18%, D7 retention up 3 pp**',
       ],
     },
     {
       name: 'Suzlon Group', role: 'Summer Intern (Team Lead)', when: 'May 2025 – Jul 2025', place: 'Pune · Renewable Energy',
       bullets: [
-        'Led 6 interns on an 8-state CSR analysis and presented Power BI KPI dashboards to leadership',
-        'Automated **20 data pipelines** with n8n, AI agents and IMAP email parsing to build CSVs and PPTs: **reporting time cut 66%**',
+        'Led 5 interns on an 8-state CSR analysis and presented Power BI KPI dashboards to leadership',
+        'Automated **10 workflows** with n8n, AI agents and IMAP email parsing to build CSVs and PPTs: **reporting time cut 66%**',
       ],
     },
     {
@@ -64,16 +65,16 @@ export const RESUME = {
     {
       name: 'PrimeWealth', role: 'GTM Intern', when: 'Dec 2024 – Mar 2025', place: 'Pune (Remote) · Wealth Management, US Expansion',
       bullets: [
-        'Built the US market entry strategy: identified NRI pain points, sized SAM and SOM, mapped channels and content; **AUM up 33%, inbound leads up 40%**',
+        'Built the US market entry strategy: identified NRI pain points, sized SAM and SOM, mapped channels and content; **AUM up 16%, inbound leads up 40%**',
       ],
     },
   ] satisfies Entry[],
   projects: [
     {
-      name: 'AskCart', role: 'Guided AI E-Commerce Search and Chatbot', when: '', place: 'Next.js, SQL, Python, ML, Gemini API',
+      name: 'AskCart', role: 'Guided AI E-Commerce Search and Chatbot', when: '', place: 'Next.js, SQL, Python, RAG, ML, REST APIs',
       bullets: [
         'Mined **94,600 reviews** via an agentic extractor (Reddit, App Store, Play Store APIs) and a 6-stage SQL pipeline; isolated **4 root causes**',
-        'Interviewed 6 users; built a Vercel-deployed guided follow-up MVP over 36,000 Bayesian-rated SKUs: **null results down 27.3% to 8%** (150 sessions)',
+        'Interviewed 6 users; built a Vercel-deployed guided follow-up MVP over 54,000 Bayesian-rated SKUs: **null results down 27.3% to 8%** (150 sessions)',
         'Embedding fallback for vague queries (**top-3 88%**); RAG chatbot AI evals **96.5% pass (113)**; **78.7% resolved in 2 follow-ups (150)**',
       ],
     },
@@ -87,7 +88,7 @@ export const RESUME = {
   ] satisfies Entry[],
   corporate: [
     {
-      name: 'Everyday Diamonds', role: 'Team Lead · GTM and Series A', when: 'Aug 2024 – Sep 2024', place: 'Bengaluru · 180 Degrees Consulting',
+      name: 'Everyday Diamonds', role: 'Team Lead of 10 · GTM and Series A', when: 'Aug 2024 – Sep 2024', place: 'Bengaluru · 180 Degrees Consulting',
       bullets: [
         'Modeled profitability, pricing and projections; expansion roadmap and Series A deck aided a **$2.5M raise** (All In Capital); first store launched',
       ],
@@ -133,8 +134,8 @@ export const RESUME = {
     "Top 10% of 270, NextLeap Product Management Fellowship '26 (guided AI search for Google Photos)",
   ],
   skills: [
-    'Product and AI: Claude Code, AI agents, RAG, HLD, APIs, MCP, eval layers, GitHub, Figma, Jira, Power BI, A/B testing, RCA, Next.js',
-    'Analytics: SQL, Python, BigQuery, Amplitude, CleverTap, Metabase, Firebase, Excel, funnel and cohort analysis, dashboarding',
+    'Programming and AI: Python, SQL, JavaScript, Next.js, APIs, HLD, RAG, AI agents, MCP, LLM evals, Claude Code, GitHub',
+    'Product and analytics: Amplitude, Mixpanel, CleverTap, BigQuery, Firebase, Metabase, Power BI, Excel, Jira, Figma, A/B testing',
   ],
 }
 

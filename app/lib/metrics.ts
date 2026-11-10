@@ -33,7 +33,7 @@ const M = (m: Metric) => m
 
 export const METRICS: Record<string, Metric> = {
   // ── Experience · RISA Labs ──
-  'risa-hours': M({ id: 'risa-hours', shown: '350 hrs/wk', num: 350, unit: 'hrs', source: 'RISA Labs: Status Tracking 0→1, 200 users', asOf: 'Nov 2026' }),
+  'risa-hours': M({ id: 'risa-hours', shown: '250 hrs/wk', num: 250, unit: 'hrs', source: 'RISA Labs: Status Tracking 0→1, 200 users', asOf: 'Nov 2026' }),
   'risa-docs': M({ id: 'risa-docs', shown: '400', num: 400, unit: 'count', source: 'RISA Labs: docs/day via cron pipeline (bots, portal, fax APIs)', asOf: 'Nov 2026' }),
   'risa-coverage': M({ id: 'risa-coverage', shown: '85%', num: 85, unit: '%', source: 'RISA Labs: order matching, coverage-first trade-off', asOf: 'Nov 2026' }),
   'risa-precision': M({ id: 'risa-precision', shown: '96%', num: 96, unit: '%', source: 'RISA Labs: order matching, coverage-first trade-off', asOf: 'Nov 2026' }),
@@ -44,17 +44,17 @@ export const METRICS: Record<string, Metric> = {
   'risa-users': M({ id: 'risa-users', shown: '200', num: 200, unit: 'count', source: 'RISA Labs: users served by Status Tracking', asOf: 'Oct 2026' }),
   'risa-tat': M({ id: 'risa-tat', shown: '60%', num: 60, unit: '%', source: 'RISA Labs: RISA Assist, portal filing TAT cut', asOf: 'Nov 2026' }),
   'risa-studio': M({ id: 'risa-studio', shown: '$10K/yr', num: 10, unit: '$', source: 'RISA Labs: Document Studio, Acrobat replacement, 70% step TAT cut', asOf: 'Nov 2026' }),
-  'risa-tpo': M({ id: 'risa-tpo', shown: '30%', num: 30, unit: '%', source: 'RISA Labs: time-per-order cut across 4 revamped UI steps', asOf: 'Nov 2026' }),
+  'risa-tpo': M({ id: 'risa-tpo', shown: '10%', num: 10, unit: '%', source: 'RISA Labs: time-per-order cut across 4 revamped UI steps', asOf: 'Nov 2026' }),
 
   // ── Experience · InvestMates ──
-  'im-ctr': M({ id: 'im-ctr', shown: '25%', num: 25, n: 4200, unit: '%', source: 'InvestMates — homepage revamp A/B test (p<0.05)', asOf: 'Sep 2025' }),
+  'im-ctr': M({ id: 'im-ctr', shown: '25%', num: 25, n: 4200, unit: '%', source: 'InvestMates — portfolio-import homepage checkpoint A/B test (p<0.05)', asOf: 'Sep 2025' }),
   'im-sessions': M({ id: 'im-sessions', shown: '10%', num: 10, unit: '%', source: 'InvestMates — homepage revamp, session length', asOf: 'Sep 2025' }),
   'im-dropoff': M({ id: 'im-dropoff', shown: '18%', num: 18, unit: '%', source: 'InvestMates — CleverTap lifecycle campaigns, 3k users', asOf: 'Sep 2025' }),
   'im-d7': M({ id: 'im-d7', shown: '+3 pp', num: 3, unit: 'count', source: 'InvestMates — D7 retention, lifecycle campaigns', asOf: 'Sep 2025' }),
 
   // ── Experience · Suzlon ──
-  'szl-report': M({ id: 'szl-report', shown: '66%', num: 66, unit: '%', source: 'Suzlon — reporting time cut by 20 automated n8n pipelines', asOf: 'Jul 2025' }),
-  'szl-pipelines': M({ id: 'szl-pipelines', shown: '20', num: 20, unit: 'count', source: 'Suzlon — data pipelines automated with n8n + AI agents', asOf: 'Jul 2025' }),
+  'szl-report': M({ id: 'szl-report', shown: '66%', num: 66, unit: '%', source: 'Suzlon — reporting time cut by 10 automated n8n workflows', asOf: 'Jul 2025' }),
+  'szl-pipelines': M({ id: 'szl-pipelines', shown: '10', num: 10, unit: 'count', source: 'Suzlon — workflows automated with n8n + AI agents', asOf: 'Jul 2025' }),
   'szl-states': M({ id: 'szl-states', shown: '8-state', num: 8, unit: 'count', source: 'Suzlon — CSR analysis led as team lead', asOf: 'Jul 2025' }),
 
   // ── Experience · Chimera VC ──
@@ -65,7 +65,7 @@ export const METRICS: Record<string, Metric> = {
   'ch-memos': M({ id: 'ch-memos', shown: '7', num: 7, unit: 'count', source: 'Chimera VC — investment memos co-authored', asOf: 'May 2025' }),
 
   // ── Experience · PrimeWealth ──
-  'pw-aum': M({ id: 'pw-aum', shown: '33%', num: 33, unit: '%', source: 'PrimeWealth — AUM lift, US NRI market entry', asOf: 'Mar 2025' }),
+  'pw-aum': M({ id: 'pw-aum', shown: '16%', num: 16, unit: '%', source: 'PrimeWealth — AUM lift, US NRI market entry', asOf: 'Mar 2025' }),
   'pw-leads': M({ id: 'pw-leads', shown: '40%', num: 40, unit: '%', source: 'PrimeWealth — inbound leads, market entry strategy', asOf: 'Mar 2025' }),
   'pw-model': M({ id: 'pw-model', shown: '50%', num: 50, unit: '%', source: 'PrimeWealth — AUM growth in persona-segmented scenario model', asOf: 'Mar 2025' }),
 
