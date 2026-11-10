@@ -1,8 +1,8 @@
 /* ── hero right column: the annotated exhibit. A three-column desk grid — the ID badge over the
    BITS Goa campus card, the RISA stat card with the InvestMates card, the placement note and
    the 180DC POR file under it, and the AskCart phone with the two achievement notes. Dimension-style
-   callouts ride their own gutter above every object; the pointer drives a small parallax (≤5px),
-   objects lift ≤4px on hover. Real grid/flex flow, auto rows, 20px gaps — no hand-placed absolutes. */
+   callouts ride their own gutter above every object; objects lift ≤4px on hover.
+   Real grid/flex flow, auto rows, 20px gaps — no hand-placed absolutes. */
 
 .ex-wrap{position:relative;width:min(726px,100%);margin-inline:auto;aspect-ratio:726/665}
 /* >=1025: Hero.tsx sizes the wrap to the exact scaled desk box; auto left margin pushes it to the right content edge */
@@ -11,14 +11,12 @@
 .ex-col{display:flex;flex-direction:column;gap:20px;min-width:0}
 
 /* dimension-style callout: its own gutter line above the object it labels, with a short leader tick */
-.ex-lab{position:relative;height:16px;font:500 13px/16px var(--fm);letter-spacing:.1em;color:var(--dim);white-space:nowrap;
-  transform:translate3d(calc(var(--mx,0) * 8px),calc(var(--my,0) * 6px),0);transition:transform .3s var(--ease)}
+.ex-lab{position:relative;height:16px;font:500 13px/16px var(--fm);letter-spacing:.1em;color:var(--dim);white-space:nowrap}
 .ex-lab .ix{color:var(--accText);font-weight:700}
 .ex-lab::after{content:"";position:absolute;left:50%;top:16px;height:12px;border-left:1px dashed var(--lineS)}
 
 .ex-ob{position:relative;display:block;text-decoration:none;color:var(--fg);
-  transform:translate3d(calc(var(--mx,0) * 8px),calc(var(--my,0) * 6px),0);
-  transition:translate .3s var(--ease),transform .3s var(--ease)}
+  transition:translate .3s var(--ease)}
 .ex-ob:hover{translate:0 -3px}
 .ex-ob:focus-visible{outline:2px solid var(--focus);outline-offset:4px;border-radius:8px}
 
@@ -123,11 +121,10 @@
 .ex-campus small{display:block;font:500 11px/1.5 var(--fm);letter-spacing:-.03em;color:var(--dim)}
 
 /* pinned stat notes: the profile's standout numbers, taped into the column flow.
-   They ride the same pointer parallax and settle-in as the exhibit objects. */
+   They share the settle-in entrance as the exhibit objects. */
 .ex-note{position:relative;width:148px;background:var(--surf);border:1px solid var(--lineS);border-radius:8px;
   padding:7px 10px 6px;box-shadow:0 14px 24px -16px rgba(23,19,14,.5);
-  transform:rotate(var(--rot,0deg)) translate3d(calc(var(--mx,0) * 8px),calc(var(--my,0) * 6px),0);
-  transition:transform .3s var(--ease),translate .3s var(--ease)}
+  transform:rotate(var(--rot,0deg));transition:translate .3s var(--ease)}
 /* the taped notes lift on hover, like the exhibit cards */
 @media (hover:hover) and (pointer:fine){
   .ex-note--pc:hover,.ex-note--acc:hover,.ex-note--iima:hover{translate:0 -3px}
@@ -158,8 +155,8 @@ html.motion-ok .hero.paused .acp-caret,html.motion-ok .hero.paused .ex-ob{animat
 
 /* P1-1 · mobile desk (≤640): the exhibit stops scaling and becomes a purpose-built composition —
    badge and RISA side by side, then InvestMates, the phone, the placement note, the POR file and
-   the two achievement notes as a stacked list, the campus card last. Callout gutters and pointer
-   parallax are desktop-only. */
+   the two achievement notes as a stacked list, the campus card last. Callout gutters are
+   desktop-only. */
 @media (max-width:639px){
   .ex-wrap{width:100%;aspect-ratio:auto}
   .exhibit{width:auto;height:auto;transform:none;display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:stretch}

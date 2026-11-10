@@ -13,7 +13,7 @@ import { EDUCATION } from '../lib/site'
  * The hero's right hand: an annotated exhibit in a three-column desk grid — the ID badge over
  * the BITS Goa campus card, the RISA stat card with two taped notes under it, and the AskCart
  * phone with the Series A note. Each object is tagged with a dimension-style callout riding its
- * own gutter above it; the pointer drives a small parallax and objects lift on hover.
+ * own gutter above it; objects hold their positions and lift on hover.
  */
 export default function HeroExhibit() {
   return (

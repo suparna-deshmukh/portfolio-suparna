@@ -269,8 +269,6 @@ loaded" — opens `P99Panel` (same as pressing `p99` on the keyboard: load/perf 
    * Controls: a wave icon button in the header (next to the theme toggle) and a
      "Motion: on/off" pill in the footer; both share `useMotionPref()` (subscribes to
      the `motionchange` event), so they always agree.
-   * Coarse pointers get no hero pointer parallax; `onMove` also bails while
-     `motion-off` is set.
 10. **Lite (adaptive degrade, P1-5)** — `html.lite` is set (a) pre-paint when
     `hardwareConcurrency ≤ 4 || deviceMemory ≤ 4 || connection.saveData`, or (b) by
     `PageMotion` on coarse pointers after 3 long tasks (>50 ms) within the first 5 s.
@@ -340,28 +338,27 @@ notes float on their own.)
 
 ### 6.3 Exhibit (`HeroExhibit.tsx`, `hero-right.css`)
 A 660×610 stage (`.ex-wrap`, aspect-locked) scaled by `--s = min(width/660, 1.15)`.
-**Pointer parallax**: `pointermove` over the column writes `--mx/--my` (rAF); every
-object transforms `rotate(var(--rot)) translate3d(--mx·d·12px, --my·d·8px, 0)`,
-`d` = per-object depth; hover lifts `translate:0 -5px`; each object "settles" in
-(`exIn`, staggered under `motion-ok`).
+**No pointer parallax** (reviewer round): the exhibit objects hold their grid
+positions while the cursor moves; hover lifts `translate:0 -3px`; each object
+"settles" in (`exIn`, staggered under `motion-ok`).
 
 Objects (all links):
 
-| object | pos (x/y) | size | depth/rot | content → target |
+| object | pos (x/y) | size | rot | content → target |
 |---|---|---|---|---|
-| ID badge | 0/20 | 172w | 1.15 / −5° | real portrait `suparna-portrait-f1628725.webp` (content-hashed filename — busts browser and optimizer caches when the photo is swapped) (1254×1254 full-res source, q90; `next/image` quality 90, sizes 300px; CSS cover-crops to 144/136), name, "Associate Product Manager", "RISA Labs · Bengaluru" → `#about` |
-| AskCart phone | 400/16 | 248×474 | .7 / 2.5° | dark phone frame + island; **live loop** `AskCartPhone`: status bar, app header, typing caret in the search field, a guided-question card ("What's your budget?" chips — 11px mono, `white-space:nowrap`, wrap only at chip boundaries: "Under ₹3K" + "₹3K–5K" row 1, "₹5K–8K" row 2; label and app-header sub also nowrap) then a result list — "12 matches" / "0 dead ends" as a 11px flex space-between line — where the old "no results" becomes a guided re-run → `/projects/askcart` |
-| RISA stat card | 206/36 | 168w | 1.45 / 3° | accent top bar, "RISA Labs / APM intern · now", **350 hrs/wk** big figure, "saved across 200 users · Status Tracking 0→1" subline, then a **2×3 op-metric grid** (`.ex-risa-grid`, 6 cells, one-line labels, each value a `MetricTip`): 400 docs/day · cron pipeline · 92% Vapi calls · 2x QC speed · 87% auto-RCA · 60% portal TAT · $10K/yr Doc Studio (ids `risa-docs`/`risa-vapi`/`risa-qc`/`risa-pulse`/`risa-tat`/`risa-studio`) → `#experience-risa` |
-| Campus card | 2/393 | 216w | .9 / −2° | **real campus photo** `bits-goa-5cd7ed84.webp` (content-hashed filename) (800×306 original paste, re-encoded q90 — the photo lives only on this card, never on the notes; cover-cropped to 188/113 by CSS), "BITS Pilani, Goa", `EDUCATION.branch` ("Electronics and Communication Engineering"), "Finance minor · Class of 2027" → `#about` |
+| ID badge | 0/20 | 172w | −5° | real portrait `suparna-portrait-f1628725.webp` (content-hashed filename — busts browser and optimizer caches when the photo is swapped) (1254×1254 full-res source, q90; `next/image` quality 90, sizes 300px; CSS cover-crops to 144/136), name, "Associate Product Manager", "RISA Labs · Bengaluru" → `#about` |
+| AskCart phone | 400/16 | 248×474 | 2.5° | dark phone frame + island; **live loop** `AskCartPhone`: status bar, app header, typing caret in the search field, a guided-question card ("What's your budget?" chips — 11px mono, `white-space:nowrap`, wrap only at chip boundaries: "Under ₹3K" + "₹3K–5K" row 1, "₹5K–8K" row 2; label and app-header sub also nowrap) then a result list — "12 matches" / "0 dead ends" as a 11px flex space-between line — where the old "no results" becomes a guided re-run → `/projects/askcart` |
+| RISA stat card | 206/36 | 168w | 3° | accent top bar, "RISA Labs / APM intern · now", **350 hrs/wk** big figure, "saved across 200 users · Status Tracking 0→1" subline, then a **2×3 op-metric grid** (`.ex-risa-grid`, 6 cells, one-line labels, each value a `MetricTip`): 400 docs/day · cron pipeline · 92% Vapi calls · 2x QC speed · 87% auto-RCA · 60% portal TAT · $10K/yr Doc Studio (ids `risa-docs`/`risa-vapi`/`risa-qc`/`risa-pulse`/`risa-tat`/`risa-studio`) → `#experience-risa` |
+| Campus card | 2/393 | 216w | −2° | **real campus photo** `bits-goa-5cd7ed84.webp` (content-hashed filename) (800×306 original paste, re-encoded q90 — the photo lives only on this card, never on the notes; cover-cropped to 188/113 by CSS), "BITS Pilani, Goa", `EDUCATION.branch` ("Electronics and Communication Engineering"), "Finance minor · Class of 2027" → `#about` |
 
-**Pinned notes** (`.ex-note`, taped `::before` tape tab, same parallax/hover/settle as
+**Pinned notes** (`.ex-note`, taped `::before` tape tab, same hover/settle as
 objects — deliberately *not* static):
 
-| note | pos | depth/rot | num | label |
+| note | pos | rot | num | label |
 |---|---|---|---|---|
-| n1 | 246/232 | 1.25 / −2° | **Top 8** | of 9,000+ · Accenture Strategy '25 |
-| n2 | 246/314 | 1.05 / 1.6° | **Placement Coordinator** | BITS Goa · 2026 batch |
-| n3 | 396/500 | 1.35 / −1.2° | **$2.5M** | Series A · 180DC, Everyday Diamonds |
+| n1 | 246/232 | −2° | **Top 8** | of 9,000+ · Accenture Strategy '25 |
+| n2 | 246/314 | 1.6° | **Placement Coordinator** | BITS Goa · 2026 batch |
+| n3 | 396/500 | −1.2° | **$2.5M** | Series A · 180DC, Everyday Diamonds |
 
 **L-shape (reviewer round).** n1 sits under the RISA card, n2 under n1, and n3
 branches right and drops below the phone (y500, phone ends y490) — the column
@@ -371,8 +368,8 @@ plus the offset third card read as an L. Every pair keeps ≥10px of clear gap
 **Bubble sway (reviewer round).** Under `html.motion-ok` each note also rides
 `exSway` — a slow ±5° oscillation on the independent `rotate` property
 (7s ease-in-out infinite alternate, negative delays −1.2s/−3.8s/−6.1s desync the
-three so they never swing in unison). It composes with the parallax
-`transform` and the `exIn` settle (which uses `translate`). Reduced motion,
+three so they never swing in unison). It composes with the base `--rot` rotation
+and the `exIn` settle (which uses `translate`). Reduced motion,
 Motion Off and no-JS: static, on the base `--rot` only.
 
 **Callouts** (SVG, dimension-drawing style, `viewBox 0 0 660 610`; the g2 leader re-anchored to the campus card at y=393): `01 · THE PERSON`,
@@ -388,7 +385,7 @@ aesthetic).
 becomes a flex column: badge + RISA card side by side (equal height), the phone
 at native 248×474 centered, the three notes in `.ex-notes` — a horizontal
 scroll-snap strip (`scroll-snap-type:x mandatory`, 158px cards, next card
-peeks) — then the campus card full width. Callouts and parallax are off;
+peeks) — then the campus card full width. Callouts are off;
 `display:contents` on `.ex-notes` keeps the desktop layout untouched.
 
 `useVisibleLoop` on the hero pauses the phone loop + background off-screen.
@@ -1017,7 +1014,7 @@ portal, `z` above everything.
   scaled-down text; phone-mock labels raised to the 11px floor), the pinned
   notes as a **horizontal scroll-snap strip** with a peek of the next card
   (`.ex-notes`, `scroll-snap-type:x mandatory`), the campus card last;
-  callouts (`.ex-calls`) and pointer parallax are off; the one-time settle-in
+  callouts (`.ex-calls`) are off; the one-time settle-in
   still plays.
 * **FitStage un-scale** (`globals.css`): the fixed-size case figures reflow
   instead of shrinking. `.fit`/`.stage` become fluid; the AskCart report

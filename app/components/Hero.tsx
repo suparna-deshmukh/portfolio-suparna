@@ -17,7 +17,7 @@ export default function Hero() {
   const wrapRef = useRef<HTMLDivElement>(null)
   useVisibleLoop(heroRef, noop, noop) // .paused stops background and board loops off screen
 
-  // Fit the fixed-size exhibit to its column; the pointer drives a small parallax on the objects.
+  // Fit the fixed-size exhibit to its column.
   useEffect(() => {
     const cell = wrapRef.current
     const box = cell?.querySelector<HTMLElement>('.ex-wrap')
@@ -98,22 +98,7 @@ export default function Hero() {
       rafResize = requestAnimationFrame(() => { rafResize = 0; fit() })
     }
     window.addEventListener('resize', onResize)
-    let raf = 0
-    const onMove = (e: PointerEvent) => {
-      if (document.documentElement.classList.contains('motion-off')) return
-      if (raf) return
-      raf = requestAnimationFrame(() => {
-        raf = 0
-        const r = cell.getBoundingClientRect()
-        exhibit.style.setProperty('--mx', ((e.clientX - r.left) / r.width - 0.5).toFixed(3))
-        exhibit.style.setProperty('--my', ((e.clientY - r.top) / r.height - 0.5).toFixed(3))
-      })
-    }
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    // No pointer parallax on coarse pointers (P1-5); motion-off is checked per-event in onMove.
-    const coarse = window.matchMedia('(pointer: coarse)').matches
-    if (!reduced && !coarse) window.addEventListener('pointermove', onMove, { passive: true })
-    return () => { window.removeEventListener('resize', onResize); cancelAnimationFrame(rafResize); window.removeEventListener('pointermove', onMove); cancelAnimationFrame(raf) }
+    return () => { window.removeEventListener('resize', onResize); cancelAnimationFrame(rafResize) }
   }, [])
 
   return (
