@@ -39,6 +39,7 @@ export const METRICS: Record<string, Metric> = {
   'risa-precision': M({ id: 'risa-precision', shown: '96%', num: 96, unit: '%', source: 'RISA Labs: order matching, coverage-first trade-off', asOf: 'Nov 2026' }),
     'risa-vapi': M({ id: 'risa-vapi', shown: '92%', num: 92, unit: '%', source: 'RISA Labs: Vapi calling MVP, 20-user pilot', asOf: 'Oct 2026' }),
   'risa-qc': M({ id: 'risa-qc', shown: '2x', num: 2, unit: 'x', source: 'RISA Labs: unified QC UI throughput', asOf: 'Oct 2026' }),
+  'risa-sus': M({ id: 'risa-sus', shown: '92', num: 92, unit: 'count', source: 'RISA Labs: unified QC UI, SUS usability score', asOf: 'Nov 2026' }),
   'risa-pulse': M({ id: 'risa-pulse', shown: '87%', num: 87, unit: '%', source: 'RISA Labs: Pulse auto-RCA precision', asOf: 'Oct 2026' }),
   'risa-orders': M({ id: 'risa-orders', shown: '2500', num: 2500, unit: 'count', source: 'RISA Labs: orders/day at the unified QC UI', asOf: 'Oct 2026' }),
   'risa-users': M({ id: 'risa-users', shown: '200', num: 200, unit: 'count', source: 'RISA Labs: users served by Status Tracking', asOf: 'Oct 2026' }),
@@ -56,6 +57,7 @@ export const METRICS: Record<string, Metric> = {
   'szl-report': M({ id: 'szl-report', shown: '66%', num: 66, unit: '%', source: 'Suzlon — reporting time cut by 10 automated n8n workflows', asOf: 'Jul 2025' }),
   'szl-pipelines': M({ id: 'szl-pipelines', shown: '10', num: 10, unit: 'count', source: 'Suzlon — workflows automated with n8n + AI agents', asOf: 'Jul 2025' }),
   'szl-states': M({ id: 'szl-states', shown: '8-state', num: 8, unit: 'count', source: 'Suzlon — CSR analysis led as team lead', asOf: 'Jul 2025' }),
+  'szl-beneficiaries': M({ id: 'szl-beneficiaries', shown: '2.3M', num: 2.3, unit: 'count', source: 'Suzlon — beneficiaries whose CSR spending the 8-state analysis shaped', asOf: 'Jul 2025' }),
 
   // ── Experience · Chimera VC ──
   'ch-pipeline': M({ id: 'ch-pipeline', shown: '$4M', num: 4, unit: '$', source: 'Chimera VC — deal pipeline (10 startups, 7 memos)', asOf: 'May 2025' }),
@@ -84,6 +86,8 @@ export const METRICS: Record<string, Metric> = {
   'pc-team': M({ id: 'pc-team', shown: '25', num: 25, unit: 'count', source: 'Placement Coordinator, BITS Goa — team led end-to-end', asOf: 'Oct 2026' }),
   'pc-select': M({ id: 'pc-select', shown: '1 of 8', num: 1, den: 8, unit: 'count', source: 'Placement Coordinator selection, BITS Goa (1,000+ applicants)', asOf: 'May 2026' }),
   'pc-pool': M({ id: 'pc-pool', shown: '1,000+', num: 1000, unit: 'count', source: 'Placement Coordinator selection pool, BITS Goa', asOf: 'May 2026' }),
+  'pc-crm-emails': M({ id: 'pc-crm-emails', shown: '3,700', num: 3700, unit: 'count', source: 'Placement Coordinator, BITS Goa — emails and replies automated by the agentic AI mailing CRM (15-person team, 4 campaigns)', asOf: 'Nov 2026' }),
+  'pc-crm-campaigns': M({ id: 'pc-crm-campaigns', shown: '4', num: 4, unit: 'count', source: 'Placement Coordinator, BITS Goa — campaigns run through the agentic mailing CRM', asOf: 'Nov 2026' }),
   'dc-sponsor': M({ id: 'dc-sponsor', shown: '₹17L', num: 17, unit: '$', source: '180 Degrees Consulting — Consultathon sponsorships', asOf: 'Jun 2026' }),
   'dc-reg': M({ id: 'dc-reg', shown: '3,200', num: 3200, unit: 'count', source: '180 Degrees Consulting — Consultathon registrations', asOf: 'Jun 2026' }),
   'dc-rev': M({ id: 'dc-rev', shown: '30%', num: 30, unit: '%', source: '180 Degrees Consulting, BITS Goa — YoY revenue growth, 16 projects', asOf: 'Jun 2026' }),
@@ -127,6 +131,10 @@ export const METRICS: Record<string, Metric> = {
   'ie-platforms': M({ id: 'ie-platforms', shown: '8', num: 8, unit: 'count', source: 'Insight Extractor — live platform APIs tapped per run (HN, Reddit, App Store, Play Store, GitHub, Google Trends, Product Hunt, YouTube)', asOf: 'Nov 2026' }),
   'ie-records': M({ id: 'ie-records', shown: '187', num: 187, unit: 'count', source: 'Insight Extractor — deep run "flipkart delivery": records fetched across six platforms', asOf: 'Nov 2026' }),
   'ie-buckets': M({ id: 'ie-buckets', shown: '6', num: 6, unit: 'count', source: 'Insight Extractor — insight buckets in the flipkart delivery deep run report', asOf: 'Nov 2026' }),
+  'ie-stability': M({ id: 'ie-stability', shown: '82%', num: 82, unit: '%', source: 'Insight Extractor — rerun stability, repeated runs of the same brief', asOf: 'Nov 2026' }),
+  'ie-noise': M({ id: 'ie-noise', shown: '95%', num: 95, unit: '%', source: 'Insight Extractor — noise cut by the 6-stage pipeline', asOf: 'Nov 2026' }),
+  'ie-labels': M({ id: 'ie-labels', shown: '86%', num: 86, unit: '%', source: 'Insight Extractor — label accuracy of the pipeline labelling', asOf: 'Nov 2026' }),
+  'ie-success': M({ id: 'ie-success', shown: '98%', num: 98, unit: '%', source: 'Insight Extractor — run success under the 3-LLM-call cap (health-ranked fallbacks, 3-key rotation, run limits)', asOf: 'Nov 2026' }),
   'ac-narrow': M({ id: 'ac-narrow', shown: '12', num: 12, unit: 'count', source: 'AskCart evals — SKUs after guided narrowing, missing_context mode', asOf: 'Aug 2026' }),
 
   // ── Projects · Research Agent ──

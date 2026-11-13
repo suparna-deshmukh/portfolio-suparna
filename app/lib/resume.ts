@@ -33,11 +33,12 @@ export const RESUME = {
       bullets: [
         'Owned **Status Tracking** 0→1: 90,000-order SQL analysis, user research, PRDs (v0 and v1), HLD and dev-testing; **200 users save 250 hrs/wk**',
         'Designed a **cron pipeline for 400 docs/day** via bots, portal and fax APIs; order matching at **85% coverage, 96% precision** (coverage-first trade-off)',
-        'Built an **agentic calling MVP on Vapi** for inquiry calls from 4 months of data, call checklists and configs; 20-user pilot, **92% accuracy**',
-        'Shipped a **unified QC UI** after user interviews found QC juggling 4 platforms: **2x throughput, 40% faster error fixes**, 2,500 orders/day',
-        'Built **Pulse**, a RAG tool-calling auto-RCA tool with a chatbot, eval-tested: flags 15 metric drops/day at **87% precision**, 60% RCA coverage',
-        'Launched **RISA Assist** on the Chrome Store: parses portal HTML and auto-fills answers, cutting **portal filing TAT 60%**',
-        'Shipped **Document Studio** on standard APIs to fetch and process clinical docs; replaced Acrobat, **saved $10K/yr, step TAT cut 70%**; revamped 4 key order UI steps with tech, design and compliance, **time-per-order cut 10%**',
+        "Inquiry calls took **12% of a user's day**, so built a **voice agent MVP on Vapi** from 4 months of data, checklists and configs: **92% accuracy** in a 20-user pilot",
+        'QC reviewers juggled **4 platforms**, so prototyped and shipped a **unified UI**: **92 SUS, 2x throughput, 40% faster error fixes** on 2,500 orders/day',
+        'Built **Pulse**, a RAG, BigQuery-based auto-RCA tool **used by 8 PMs**; eval-tested to flag 15 metric drops/day at **87% precision**, 60% RCA coverage',
+        'Replaced Adobe Acrobat with **Document Studio** on platform APIs to fetch and process clinical docs by diagnosis: **saved $10K/yr, step TAT cut 70%**',
+        "Portal filing took **17% of a user's day**, so co-launched **RISA Assist**, a low-latency AI extension on the Chrome Store: parses HTML, autofills, **TAT cut 60%**",
+        'Revamped 4 key UI steps via **user interviews and Amplitude**, resolving edge cases with tech, design and compliance: **time per order cut 10%**',
       ],
     },
     {
@@ -45,14 +46,14 @@ export const RESUME = {
       bullets: [
         'Owned **E2E onboarding** (risk, goal and portfolio import) from PRD to launch in Jira: **completion up 19%, portfolio up 22%, TTFV cut 15%**',
         'Portfolio import was buried, so A/B tested it as a homepage checkpoint (sample 4,200, p < 0.05): **homepage CTR up 25%, sessions up 10%**',
-        'Ran CleverTap lifecycle email and notification campaigns for 3,000 users on funnel data: **drop-offs cut 18%, D7 retention up 3 pp**',
+        'Split **3,000 users into 5 activation drop-off cohorts**; tailored **CleverTap email and push campaigns** cut drop-offs 18%, **D7 retention up 3 pp**',
       ],
     },
     {
       name: 'Suzlon Group', role: 'Summer Intern (Team Lead)', when: 'May 2025 – Jul 2025', place: 'Pune · Renewable Energy',
       bullets: [
-        'Led 5 interns on an 8-state CSR analysis and presented Power BI KPI dashboards to leadership',
-        'Automated **10 workflows** with n8n, AI agents and IMAP email parsing to build CSVs and PPTs: **reporting time cut 66%**',
+        'Led **5 interns** on an 8-state CSR analysis; presented Power BI KPI dashboards and PPTs to leadership, **shaping spending for 2.3M beneficiaries**',
+        'Reporting data sat in **email inboxes**, so automated **10 workflows** with n8n, AI agents and IMAP parsing: **reporting time cut 66%**',
       ],
     },
     {
@@ -73,9 +74,11 @@ export const RESUME = {
     {
       name: 'AskCart', role: 'Guided AI E-Commerce Search and Chatbot', when: '', place: 'Next.js, SQL, Python, RAG, ML, REST APIs',
       bullets: [
-        'Mined **94,600 reviews** via an agentic extractor (Amazon, Play, Trustpilot, App Store and Reddit) and a 6-stage SQL pipeline; isolated **4 root causes**',
+        'Mined **94,600 reviews** from 5 sources with the Insight Extractor, a 6-stage SQL pipeline and K-means validation; isolated **4 root causes**',
         'Interviewed 6 users; built a Vercel-deployed guided follow-up MVP over 54,000 Bayesian-rated SKUs: **null results down 27.3% to 8%** (150 sessions)',
-        'Embedding fallback for vague queries (**top-3 88%**); RAG chatbot AI evals **96.5% pass (113)**; **78.7% resolved in 2 follow-ups (150)**',
+        'Built an ML semantic fallback with **multilingual-e5-small** embeddings for vague-query similarity: **top-3 relevance 88%** (100 queries)',
+        'Built a RAG chatbot on **Gemini** LLM intent parsing and embedding search; AI evals for search, RAG and UX passed **96.5%** (113 cases)',
+        'Integrated **click and event analytics** with properties and a funnel dashboard: **78.7% of searches resolved in 2 follow-ups** (150 sessions)',
       ],
     },
     {
@@ -110,8 +113,9 @@ export const RESUME = {
     {
       name: 'BITS Goa', role: 'Placement Coordinator', when: 'May 2026 – Present', place: '',
       bullets: [
-        'Selected 1 of 8 from over 1,000 students; leading 2026 batch placements with a **25-member team**',
+        'Selected **1 of 8** from over 1,000 students; leading campus placements and corporate outreach for the 2026 batch with a **25-member team**',
         'Placed **240 students** since May 2026, lifting batch placement from **58% to 85%**; **Project SYNERGY** 3-campus centralization proposal approved',
+        'Built an **agentic AI mailing CRM** with outreach analytics; a 15-person team used it to automate **3,700 emails and replies** across 4 campaigns',
       ],
     },
     {

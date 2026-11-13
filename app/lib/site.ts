@@ -142,6 +142,7 @@ export const EXPERIENCE: Company[] = [
           { value: m('risa-docs').shown, label: 'docs/day · matching at 85% / 96%', metric: 'risa-precision' },
           { value: m('risa-vapi').shown, label: 'accuracy on the Vapi calling MVP', metric: 'risa-vapi' },
           { value: m('risa-qc').shown, label: 'QC throughput · 40% faster fixes', metric: 'risa-qc' },
+          { value: m('risa-sus').shown, label: 'SUS usability, unified QC UI', metric: 'risa-sus' },
           { value: m('risa-pulse').shown, label: 'precision on Pulse auto-RCA', metric: 'risa-pulse' },
           { value: m('risa-tat').shown, label: 'faster portal filing, RISA Assist', metric: 'risa-tat' },
           { value: m('risa-studio').shown, label: 'saved a year · 70% step TAT cut', metric: 'risa-studio' },
@@ -150,12 +151,12 @@ export const EXPERIENCE: Company[] = [
         bullets: [
           { lead: 'Status Tracking 0→1, owned end to end', rest: ' — 90k-order SQL analysis, user research, PRDs v0 to v1, HLD, dev-testing; 200 users save 250 hrs/wk.' },
           { lead: '400 docs/day on a cron pipeline', rest: ' — bots, portal and fax APIs; order matching at 85% coverage, 96% precision, a coverage-first trade-off.' },
-          { lead: '92% accuracy on inquiry calls', rest: ' — agentic calling MVP on Vapi from 4 months of data; call checklists and configs, a 20-user pilot.' },
-          { lead: '2x QC throughput, 40% faster fixes', rest: ' — interviews found QC juggling 4 platforms; prototyped and shipped a unified UI, 2500 orders/day.' },
-          { lead: '87% precision on auto-RCA', rest: ' — built Pulse, a RAG tool-calling auto-RCA with chatbot; flags 15 metric drops/day, 60% coverage.' },
-          { lead: '60% faster portal filing', rest: ' — launched RISA Assist on the Chrome Store; parses portal HTML, auto-fills answers.' },
-          { lead: '$10K/yr saved, 70% step TAT cut', rest: ' — Document Studio on standard APIs fetches and processes clinical docs; replaced Acrobat.' },
-          { lead: '10% time-per-order cut', rest: ' — revamped 4 key UI steps for edge cases with tech, design and compliance, from user research and Amplitude.' },
+          { lead: '92% accuracy on inquiry calls', rest: " — calls took 12% of a user's day, so built a voice agent MVP on Vapi from 4 months of data; checklists and configs, a 20-user pilot." },
+          { lead: '2x QC throughput, 40% faster fixes', rest: ' — QC reviewers juggled 4 platforms, so prototyped and shipped a unified UI at 92 SUS, 2,500 orders/day.' },
+          { lead: '87% precision on auto-RCA', rest: ' — built Pulse, a RAG, BigQuery-based auto-RCA used by 8 PMs; eval-tested to flag 15 metric drops/day, 60% RCA coverage.' },
+          { lead: '$10K/yr saved, 70% step TAT cut', rest: ' — Document Studio on platform APIs fetches and processes clinical docs by diagnosis; replaced Adobe Acrobat.' },
+          { lead: '60% faster portal filing', rest: " — filing took 17% of a user's day, so co-launched RISA Assist on the Chrome Store; parses HTML, auto-fills answers." },
+          { lead: '10% time-per-order cut', rest: ' — revamped 4 key UI steps via user interviews and Amplitude, resolving edge cases with tech, design and compliance.' },
         ] },
     ],
   },
@@ -173,7 +174,7 @@ export const EXPERIENCE: Company[] = [
       bullets: [
         { lead: 'Owned E2E onboarding end to end', rest: ' — risk, goal and portfolio import, PRD to launch in Jira; completion up 19%, portfolio up 22%, TTFV cut 15%.' },
         { lead: 'Lifted homepage CTR 25%, sessions 10%', rest: ' — portfolio import was buried, so A/B tested it as a homepage checkpoint (n=4200, p<0.05).' },
-        { lead: 'Cut drop-offs 18%, D7 retention up 3 pp', rest: ' by running cohort CleverTap lifecycle email and notification campaigns for 3k users on user funnel data.' },
+        { lead: 'Cut drop-offs 18%, D7 retention up 3 pp', rest: ' — split 3,000 users into 5 activation drop-off cohorts and ran tailored CleverTap email and push campaigns on funnel data.' },
       ] }],
   },
   {
@@ -186,10 +187,11 @@ export const EXPERIENCE: Company[] = [
         results: [
           { value: m('szl-states').shown, label: 'CSR analysis led as team lead', metric: 'szl-states' },
           { value: m('szl-pipelines').shown, label: 'workflows automated', metric: 'szl-pipelines' },
+          { value: m('szl-beneficiaries').shown, label: 'beneficiaries shaped by the CSR analysis', metric: 'szl-beneficiaries' },
         ],
         bullets: [
-          { lead: 'Led 5 interns on an 8-state CSR analysis', rest: ' with Excel and VBA; built and presented Power BI KPI dashboards and PPTs to leadership.' },
-          { lead: 'Automated 10 workflows with n8n', rest: ' integrating AI agents and IMAP email parsing to build CSVs and PPTs; cut reporting time by 66%.' },
+          { lead: 'Led 5 interns on an 8-state CSR analysis', rest: ' — built and presented Power BI KPI dashboards and PPTs to leadership, shaping spending for 2.3M beneficiaries.' },
+          { lead: 'Automated 10 workflows with n8n', rest: ' — reporting data sat in email inboxes; added AI agents and IMAP email parsing to build CSVs and PPTs, cutting reporting time by 66%.' },
         ] },
     ],
   },
@@ -391,6 +393,7 @@ export const POSITIONS: Position[] = [
     line: 'Leading campus placements and corporate outreach for the **2026 batch**, end-to-end, with a **25**-member team.',
     headline: { metric: 'pc-rate', label: 'batch placement, May to October 2026' },
     details: [
+      'Built an **agentic AI mailing CRM** with outreach analytics; a 15-person team automated **3,700 emails and replies** across 4 campaigns.',
       'Project SYNERGY: a phased proposal to centralize placement and internship drives across the three BITS campuses. Approved.',
       'Selected 1 of 8 out of 1,000+ students.',
     ],

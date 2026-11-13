@@ -447,12 +447,13 @@ One per company, newest first (RISA = `NOW`). Entrance: staggered rise
     (`strong` lead + rest).
 Data (`site.ts EXPERIENCE`, source = the Nov 2026 resume): RISA Labs (Healthcare AI,
 product; 250 hrs/wk hero) — a **standard card** since the punch pass (the featured
-treatment was retired): 7 punchy result rows (400 docs/day, 92% Vapi, 2x QC, 87%
-auto-RCA, 60% portal TAT, $10K/yr Doc Studio, 10% time-per-order; the hero 250 lives
-only in the hero figure, never duplicated in the rows) plus the always-present
-"All 8 results" dropdown, InvestMates (FinTech·Wealth, product; 25% CTR; sessions
-10%), Suzlon Group (Renewable Energy; 66%), Chimera VC (Venture Capital; $4M
-pipeline — corrected from $5M), PrimeWealth (Wealth Management; 16%).
+treatment was retired): 8 punchy result rows (400 docs/day, 92% Vapi, 2x QC, 92
+SUS QC UI, 87% auto-RCA used by 8 PMs, 60% portal TAT, $10K/yr Doc Studio, 10%
+time-per-order; the hero 250 lives only in the hero figure, never duplicated in the
+rows) plus the always-present "All 8 results" dropdown, InvestMates (FinTech·Wealth,
+product; 25% CTR; sessions 10%; 5 activation drop-off cohorts), Suzlon Group
+(Renewable Energy; 66% reporting cut; 2.3M beneficiaries), Chimera VC (Venture
+Capital; $4M pipeline — corrected from $5M), PrimeWealth (Wealth Management; 16%).
 
 ---
 
@@ -480,8 +481,8 @@ Each card:
   * AskCart — "From the MVP": **8%** null results (down from 27.3%, n=150) · **96.5%**
     RAG eval pass (n=113) · **78.7%** resolved within 2 follow-ups (hot).
   * Insight — "One run": **8** live platforms mined per run (hot,
-    `ie-platforms`) · **187** records across six platforms in a deep run
-    (`ie-records`) · **6** insight buckets per report (`ie-buckets`).
+    `ie-platforms`) · **82%** rerun stability on the same brief (`ie-stability`)
+    · **98%** run success under the 3-call cap (`ie-success`).
   * Research — "One run": **500+** pain points (hot) · **28** nodes · **70%**
     research-to-spec cut.
 * Summary paragraph, stack line, then foot: **"Read the case study →"** (btn,
@@ -857,8 +858,10 @@ pass — collapsed height ≤380px at 1440, equal tops):
    "Consultathon on Unstop ↗" link).
 6. **`More detail` `<Disclosure>`** (`.ab-details`) — **closed by default**
    (expanded with JS off; state in sessionStorage): Placement holds the
-   SYNERGY sentence (plain, no dash) and "Selected 1 of 8 out of 1,000+
-   students"; Director holds the static sponsor line and "50K+ course
+   mailing-CRM line (agentic AI mailing CRM, outreach analytics, a 15-person team
+   automated 3,700 emails and replies across 4 campaigns — `pc-crm-emails`/
+   `pc-crm-campaigns`), the SYNERGY sentence (plain, no dash) and "Selected 1 of 8
+   out of 1,000+ students"; Director holds the static sponsor line and "50K+ course
    impressions · 85% retention (PM and consulting courses)".
 
 * **CEL strip (`.ab-strip`, R-2)**: one row — eyebrow, title and dates on
@@ -1228,6 +1231,10 @@ Contract:
   **confirmed** — 96.5% = 109 of 113 per the Nov 2026 resume — and the
   assertion verifies it. No metric currently carries the flag; flagged ones
   would print a loud dev-console warning and stay as-is until confirmed.
+  QA-14 (Nov 2026 resume sync) adds `risa-sus` (92 SUS, unified QC UI),
+  `szl-beneficiaries` (2.3M), `ie-stability` (82%), `ie-noise` (95%),
+  `ie-labels` (86%), `ie-success` (98%) and `pc-crm-emails` / `pc-crm-campaigns`
+  (3,700 / 4).
 
 Consumers read by id — no stat literal in components:
 * `site.ts`: EXPERIENCE `metric`/`hero`/`results`, CORPORATE `stamp`/`proof`/`chips`,

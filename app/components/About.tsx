@@ -229,7 +229,7 @@ export default function About() {
           <div className="ab-page ab-l">
             <blockquote className="ab-pq">The best product decisions come from people, not dashboards.</blockquote>
             <div className="ab-bio">
-              <p className="ab-dc">I studied Electronics and Communication Engineering at BITS Pilani Goa, with a Finance minor. I drifted into product because my questions were never only about the tech — they were also about people, and about money. Now I&apos;m an Associate Product Manager at RISA Labs, shipping AI workflows for US healthcare.</p>
+              <p className="ab-dc">I studied Electronics and Communication Engineering at BITS Pilani Goa, with a Finance minor. I drifted into product because my questions were never only about the tech — they were also about people. Now I&apos;m an Associate Product Manager at RISA Labs, shipping AI workflows for US healthcare.</p>
               <p>Outside work I lead campus placements at BITS Goa and run a 45-consultant practice at 180 Degrees Consulting.</p>
             </div>
             <div className="ab-offclock">

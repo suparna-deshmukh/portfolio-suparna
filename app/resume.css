@@ -3,22 +3,22 @@
    Type scale is tuned so a line holds about 125 characters. */
 .rpage{min-height:100vh;min-height:100dvh;background:var(--bg);display:flex;flex-direction:column;align-items:center;padding:48px 16px 64px}
 .r-sheet{width:210mm;background:#FFFFFF;color:#16181A;padding:9mm 11mm 8mm;
-  font:400 8.3pt/1.16 var(--fb);
+  font:400 8pt/1.12 var(--fb);
   box-shadow:0 1px 2px rgba(0,0,0,.12),0 28px 60px -28px rgba(0,0,0,.5)}
 .r-sheet ::selection{background:#177E5B;color:#fff}
 
-.r-hd{margin-bottom:2.8mm}
+.r-hd{margin-bottom:2mm}
 .r-hd h1{margin:0;font:700 16pt/1.05 var(--fd);letter-spacing:-.015em;color:#111315}
 .r-stand{margin:1mm 0 0;font:600 8.6pt/1.18 var(--fb);color:#2A2E31}
 .r-contact{margin:.8mm 0 0;font:400 7.4pt/1.25 var(--fm);color:#3A3F43;letter-spacing:0}
 
-.r-sec{margin-top:2.2mm}
-.r-sec h2{margin:0 0 .8mm;font:500 7pt/1 var(--fm);letter-spacing:.2em;text-transform:uppercase;color:#177E5B;
+.r-sec{margin-top:1.6mm}
+.r-sec h2{margin:0 0 .5mm;font:500 7pt/1 var(--fm);letter-spacing:.2em;text-transform:uppercase;color:#177E5B;
   border-bottom:1px solid #D9DEE1;padding-bottom:1mm}
 
-.r-entry{margin-top:1mm}
+.r-entry{margin-top:0.6mm}
 .r-entry:first-of-type{margin-top:0}
-.r-ehd{display:flex;align-items:baseline;gap:2mm;flex-wrap:wrap;font-size:8.4pt;line-height:1.14}
+.r-ehd{display:flex;align-items:baseline;gap:2mm;flex-wrap:wrap;font-size:8.2pt;line-height:1.12}
 .r-ehd b{font-weight:700;color:#111315}
 .r-ehd span{color:#3A3F43}
 .r-ehd i{font-style:normal;color:#6A7176;font-size:7.8pt}
@@ -26,11 +26,11 @@
 
 .r-sheet ul{margin:.6mm 0 0;padding:0;list-style:none}
 .r-sheet li{position:relative;padding-left:3.4mm;line-height:1.14;color:#1E2225}
-.r-sheet li + li{margin-top:.3mm}
+.r-sheet li + li{margin-top:.2mm}
 .r-sheet li::before{content:"";position:absolute;left:0;top:.5em;width:2mm;height:.5mm;background:#177E5B}
 
-.r-edu{margin:.7mm 0 0;font-size:8.3pt;color:#1E2225}
-.r-skills p{margin:.55mm 0;font-size:8pt;color:#1E2225}
+.r-edu{margin:.5mm 0 0;font-size:8pt;color:#1E2225}
+.r-skills p{margin:.4mm 0;font-size:8pt;color:#1E2225}
 .r-plain li{font-size:8pt}
 
 .r-print-hint{margin-top:6mm;font:500 11px/1.4 var(--fm);letter-spacing:.06em;color:#5F6F62;text-transform:uppercase}
