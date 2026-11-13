@@ -116,7 +116,7 @@ export default function Projects() {
               index={1}
               slug={insight.slug}
               title={insight.title}
-              summary="Reviews are the only dataset that will tell you why a search failed. The extractor mines 94.6K of them from three stores and resolves the noise into four root causes, each with its own treatment."
+              summary="Give it a brief and it mines reviews from every platform it uses: eight live sources tapped in parallel, noise dropped in SQL, signal bucketed by an LLM into a fixed-format report in minutes."
               liveUrl={insight.live_url}
               links={insight.links}
               stack="Python · SQL · LLM agents · REST APIs"

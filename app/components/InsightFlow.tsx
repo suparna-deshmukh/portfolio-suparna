@@ -34,7 +34,7 @@ const STEPS: TlStep[] = [
 const LOOP_MS = 6300
 
 /**
- * The extractor's real mechanism, animated: raw review text from three stores, the agentic
+ * The extractor's real mechanism, animated: raw review text from five sources, the agentic
  * extractor, the 6-stage SQL pipeline, and the four root causes it isolates. One stamped
  * number at the end: 94.6K reviews. First paint is the finished frame.
  */
@@ -68,12 +68,12 @@ export default function InsightFlow() {
 
   return (
     <div ref={ref} role="img"
-      aria-label={`Animated review mining pipeline: raw e-commerce reviews from Reddit, the App Store and Play Store pass through an agentic extractor and a 6-stage SQL pipeline, and come out as four root causes of search failure. 94.6K reviews in, four causes out. Sample text is illustrative.`}>
+      aria-label={`Animated review mining pipeline: raw e-commerce reviews from Amazon, the Play Store, Trustpilot, the App Store and Reddit pass through an agentic extractor and a 6-stage SQL pipeline, and come out as four root causes of search failure. 94.6K reviews in, four causes out. Sample text is illustrative.`}>
       <FitStage w={560} h={490}>
         <div className="if" onPointerMove={onMove} onPointerLeave={onLeave}>
           <div ref={paper} className={`if-paper${replaying ? ' shake' : ''}`}>
             <div className="if-hd">
-              <div><b>Insight Extractor</b><small>Agentic review mining · 3 sources</small></div>
+              <div><b>Insight Extractor</b><small>Agentic review mining · 5 sources</small></div>
               <span className="sc">{m('ac-reviews').shown} reviews in<br />4 causes out</span>
             </div>
             <div className="if-cols">
@@ -113,7 +113,7 @@ export default function InsightFlow() {
               </div>
             </div>
             <div className="if-ft">
-              <span className="if-src">reddit · app store · play store</span>
+                <span className="if-src">amazon · play store · trustpilot · app store · reddit</span>
               <i className="if-ill">Illustrative</i>
             </div>
             <Stamp

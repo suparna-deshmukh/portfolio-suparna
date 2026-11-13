@@ -45,6 +45,13 @@ html.motion-ok #about .ab-panel:hover{transform:translateY(-2px);box-shadow:0 18
 #about .ab-sec span{font:500 11px/1.3 var(--fm);letter-spacing:.05em;text-transform:uppercase;color:var(--dimmer)}
 #about .ab-line{margin:11px 0 0;font-size:15px;line-height:1.5;color:var(--dim);max-width:52ch}
 #about .ab-line b{color:var(--fg);font-weight:700}
+#ab-l .ab-offclock{margin-top:24px;padding-top:18px;border-top:1px solid var(--lineS)}
+#ab-l .ab-offclock .lab{margin:0 0 10px}
+#ab-l .ab-offclock .lab span{text-transform:none;letter-spacing:.02em;color:var(--dimmer)}
+#ab-l .ab-sports{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:4px 24px}
+#ab-l .ab-sports li{display:flex;align-items:baseline;gap:9px;font-size:14.5px;line-height:1.3;color:var(--fg)}
+#ab-l .ab-sports i{font:600 10px var(--fm);font-style:normal;letter-spacing:.1em;color:var(--acc)}
+#ab-l .ab-sports b{font-weight:600}
 #about .ab-details{margin:0;padding:12px 0 0;list-style:none;display:grid;gap:8px}
 #about .ab-details li{position:relative;padding-left:17px;font-size:13px;line-height:1.5;color:var(--dim)}
 #about .ab-details li::before{content:"";position:absolute;left:0;top:.62em;width:9px;height:1.5px;background:color-mix(in oklab,var(--acc) 65%,var(--lineS))}

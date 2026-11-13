@@ -479,9 +479,9 @@ Each card:
 * **Stats** (CountUp; `hot` stat in accent):
   * AskCart — "From the MVP": **8%** null results (down from 27.3%, n=150) · **96.5%**
     RAG eval pass (n=113) · **78.7%** resolved within 2 follow-ups (hot).
-  * Insight — "One run": **94.6K** reviews mined across 3 stores (hot,
-    `ac-reviews`) · **4** root causes (`ac-causes`) · **6** SQL pipeline stages
-    (`ie-stages`).
+  * Insight — "One run": **8** live platforms mined per run (hot,
+    `ie-platforms`) · **187** records across six platforms in a deep run
+    (`ie-records`) · **6** insight buckets per report (`ie-buckets`).
   * Research — "One run": **500+** pain points (hot) · **28** nodes · **70%**
     research-to-spec cut.
 * Summary paragraph, stack line, then foot: **"Read the case study →"** (btn,
@@ -538,11 +538,12 @@ The extractor's real mechanism, in the family of the AskCart report and the
 ResearchBoard (paper, ink, DM Mono labels, the card's `--pa` tint): raw review
 text → agentic extractor → 6-stage SQL pipeline → four root causes.
 
-* Header: "Insight Extractor / Agentic review mining · 3 sources" + "94.6K
+* Header: "Insight Extractor / Agentic review mining · 5 sources" + "94.6K
   reviews in / 4 causes out" (values from the registry).
 * Left column: four **raw review lines** (12.5px mono; the slang/typo spans —
   "sneekrs", "foldable", "brownish" — get an inset underline in the accent). The
-  source line reads "reddit · app store · play store" and carries the dashed
+  source line reads "amazon · play store · trustpilot · app store · reddit"
+  (the real AskCart corpus sources) and carries the dashed
   **Illustrative** tag (`.if-ill`) — the review text is sample, not real data.
 * Middle: the hexagon **AI glyph** (58px, `--paText`), the "agentic extractor"
   label, and the **6-stage pipeline** — six 48×6 segments that fill in a 90ms

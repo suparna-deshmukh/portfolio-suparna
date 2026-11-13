@@ -280,7 +280,7 @@ export const CORPORATE: Corporate[] = [
   {
     id: 'fedaykin', no: 2, name: 'Fedaykin AV',
     engagement: { via: 'independent', role: 'GTM Strategy Consultant' },
-    dur: 'Jul to Aug 2024', where: 'Remote',
+    dur: 'Jul to Aug 2024', where: 'Goa',
     rows: [
       { label: 'Competitor benchmarks', attribution: 'built' },
       { label: 'Pricing + unit-econ model', attribution: 'built' },

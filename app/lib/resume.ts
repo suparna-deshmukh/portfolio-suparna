@@ -73,7 +73,7 @@ export const RESUME = {
     {
       name: 'AskCart', role: 'Guided AI E-Commerce Search and Chatbot', when: '', place: 'Next.js, SQL, Python, RAG, ML, REST APIs',
       bullets: [
-        'Mined **94,600 reviews** via an agentic extractor (Reddit, App Store, Play Store APIs) and a 6-stage SQL pipeline; isolated **4 root causes**',
+        'Mined **94,600 reviews** via an agentic extractor (Amazon, Play, Trustpilot, App Store and Reddit) and a 6-stage SQL pipeline; isolated **4 root causes**',
         'Interviewed 6 users; built a Vercel-deployed guided follow-up MVP over 54,000 Bayesian-rated SKUs: **null results down 27.3% to 8%** (150 sessions)',
         'Embedding fallback for vague queries (**top-3 88%**); RAG chatbot AI evals **96.5% pass (113)**; **78.7% resolved in 2 follow-ups (150)**',
       ],
@@ -94,7 +94,7 @@ export const RESUME = {
       ],
     },
     {
-      name: 'Fedaykin AV', role: 'GTM Strategy Consultant', when: 'Jul 2024 – Aug 2024', place: 'Remote · Independent engagement',
+      name: 'Fedaykin AV', role: 'GTM Strategy Consultant', when: 'Jul 2024 – Aug 2024', place: 'Goa · Independent engagement',
       bullets: [
         'GTM strategy from market research; pricing optimization lifted **unit economics 30%**; curated a 950-client B2B database with bottom-up sizing',
       ],

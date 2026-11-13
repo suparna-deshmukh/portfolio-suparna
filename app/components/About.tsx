@@ -232,6 +232,14 @@ export default function About() {
               <p className="ab-dc">I studied Electronics and Communication Engineering at BITS Pilani Goa, with a Finance minor. I drifted into product because my questions were never only about the tech — they were also about people, and about money. Now I&apos;m an Associate Product Manager at RISA Labs, shipping AI workflows for US healthcare.</p>
               <p>Outside work I lead campus placements at BITS Goa and run a 45-consultant practice at 180 Degrees Consulting.</p>
             </div>
+            <div className="ab-offclock">
+              <p className="lab">Off the clock <span>sports</span></p>
+              <ul className="ab-sports">
+                <li><i>01</i><b>Powerlifting</b></li>
+                <li><i>02</i><b>Table tennis</b></li>
+                <li><i>03</i><b>Swimming</b></li>
+              </ul>
+            </div>
             <span className="ab-folio" aria-hidden="true">Suparna Deshmukh</span>
           </div>
           <div className="ab-page ab-r">
