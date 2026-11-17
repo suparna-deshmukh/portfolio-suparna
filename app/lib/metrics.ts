@@ -88,6 +88,7 @@ export const METRICS: Record<string, Metric> = {
   'pc-pool': M({ id: 'pc-pool', shown: '1,000+', num: 1000, unit: 'count', source: 'Placement Coordinator selection pool, BITS Goa', asOf: 'May 2026' }),
   'pc-crm-emails': M({ id: 'pc-crm-emails', shown: '3,700', num: 3700, unit: 'count', source: 'Placement Coordinator, BITS Goa — emails sent via CampusMail AI, the agentic outreach CRM (15-person team, 4 campaigns)', asOf: 'Nov 2026' }),
   'pc-crm-campaigns': M({ id: 'pc-crm-campaigns', shown: '4', num: 4, unit: 'count', source: 'Placement Coordinator, BITS Goa — campaigns run through the agentic mailing CRM', asOf: 'Nov 2026' }),
+  'pc-crm-team': M({ id: 'pc-crm-team', shown: '15', num: 15, unit: 'count', source: 'Placement Coordinator, BITS Goa — placement team using CampusMail AI for recruiter outreach', asOf: 'Nov 2026' }),
   'dc-sponsor': M({ id: 'dc-sponsor', shown: '₹17L', num: 17, unit: '$', source: '180 Degrees Consulting — Consultathon sponsorships', asOf: 'Jun 2026' }),
   'dc-reg': M({ id: 'dc-reg', shown: '3,200', num: 3200, unit: 'count', source: '180 Degrees Consulting — Consultathon registrations', asOf: 'Jun 2026' }),
   'dc-rev': M({ id: 'dc-rev', shown: '30%', num: 30, unit: '%', source: '180 Degrees Consulting, BITS Goa — YoY revenue growth, 16 projects', asOf: 'Jun 2026' }),

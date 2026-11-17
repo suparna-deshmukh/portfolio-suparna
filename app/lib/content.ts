@@ -131,6 +131,30 @@ export const PROJECTS: Project[] = [
     "highlights": [ "mine reviews and user signal from every platform the run picks", "so the free-tier quota is enforced platform-wide, never per instance", "the report lands in the same insight buckets 82% of the time" ]
   },
   {
+    "id": "s-p4",
+    "slug": "campusmail-ai",
+    "title": "CampusMail AI: An Agentic Outreach CRM for Recruiter Mail",
+    "summary": "The placement cycle runs on small, high-stakes emails to hundreds of recruiters. CampusMail AI turned that into a four-step send flow a 15-person team could run safely — personalized mail, honest delivery counts and replies tracked to the end: 3,700 emails across 4 campaigns.",
+    "tags": ["Flask", "Supabase Postgres", "Google Auth", "Gmail API"],
+    "body": "## Why\nThe placement cycle is a campaign of small, high-stakes emails: every company on the list needs an introduction, a reminder, and a follow-up once it replies. In the last cycle that lived in spreadsheets and personal Gmail inboxes — fifteen people composing nearly identical mail by hand, nobody could say who had actually been reached, and bounced addresses sat unnoticed for weeks.\n\n## The platform\nCampusMail AI is the CRM I built for the 2026 batch: a Flask app on Supabase Postgres, signed in with Google Auth. The team brings a contact list and an email template, and the platform personalises it for every recipient, sends it through their own Gmail at a chosen pace, and tracks who replied or bounced. All 15 placement-team members run their outreach through it.\n\n## The four-step send flow\nEvery send passes through Audience → Message → Delivery → Review. Audience pins exactly who is included — a list, or a row range — so nobody mails someone twice. Message maps merge fields like {recruiter_name} to list columns and renders live previews as real email paper, or hands a one-line brief to the AI to draft it. Delivery queues, drafts, schedules (with a stagger so Gmail never flags the account) or sends now. Review is the last look before it leaves.\n\n## Guardrails on every send\nOutreach at campus scale breaks accounts, not just inboxes — so every send carries rails: a daily cap of 100 by default, a safe mode that hard-blocks immediate sends, a 20-person CC ceiling, batch attachments, and scheduled follow-up rounds — up to five — to non-repliers.\n\n## Delivery you can believe\nGmail retries undelivered mail for up to ~72 hours, so a send inside that window shows as verifying, not delivered — delivered counts are only claimed once the window closes, and bounces are flagged with Google's reason so the list can be fixed and re-sent. Reply polling runs continuously over delivered mail, and each reply lands in a thread with AI-suggested replies you can edit and send from Gmail.\n\n## The result\nThe 2026 batch outreach ran entirely through the platform: four campaigns, **3,700 emails** sent, tracked to the reply.",
+    "cover_image_url": "/images/projects/campusmail-cover.webp",
+    "links": [{ "label": "Source on GitHub", "href": "https://github.com/suparna-deshmukh/campusmail-ai" }],
+    "stats": [
+      { "id": "pc-crm-emails", "label": "emails sent across all campaigns", "hot": true },
+      { "id": "pc-crm-campaigns", "label": "campaigns in one placement cycle" },
+      { "id": "pc-crm-team", "label": "team members it runs for" }
+    ],
+    "is_published": true,
+    "created_at": "2026-11-10T10:00:00+00:00",
+    "pull_quote": { "text": "Outreach at campus scale breaks accounts, not just inboxes", "mark": "breaks accounts, not just inboxes" },
+    "notes": [
+      { "label": "The problem", "line": "fifteen people composing nearly identical mail by hand" },
+      { "label": "The guardrail", "line": "a safe mode that hard-blocks immediate sends" },
+      { "label": "The payoff", "line": "tracked to the reply" }
+    ],
+    "highlights": [ "personalises it for every recipient, sends it through their own Gmail at a chosen pace", "delivered counts are only claimed once the window closes", "3,700 emails" ]
+  },
+  {
     "id": "s-p2",
     "slug": "research-agent",
     "title": "Research Agent: An n8n Workflow That Turns Reddit and Hacker News into PRDs",

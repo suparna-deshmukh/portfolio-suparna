@@ -235,9 +235,18 @@ export default function About() {
             <div className="ab-offclock">
               <p className="lab">Off the clock <span>sports</span></p>
               <ul className="ab-sports">
-                <li><i>01</i><b>Powerlifting</b></li>
-                <li><i>02</i><b>Table tennis</b></li>
-                <li><i>03</i><b>Swimming</b></li>
+                <li>
+                  <span className="ab-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2 12h20M6.5 7.5v9M9 9.5v5M15 9.5v5M17.5 7.5v9" /></svg></span>
+                  <i>01</i><b>Powerlifting</b>
+                </li>
+                <li>
+                  <span className="ab-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="9" r="5.5" /><path d="M13 13l5.5 5.5" /><circle cx="19.5" cy="5" r="1.7" /></svg></span>
+                  <i>02</i><b>Table tennis</b>
+                </li>
+                <li>
+                  <span className="ab-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="16.5" cy="6.5" r="2" /><path d="M3 12.5l5.5-1.5L14.5 8" /><path d="M3 18c1.6 1.4 3.4 1.4 5 0s3.4-1.4 5 0 3.4 1.4 5 0" /></svg></span>
+                  <i>03</i><b>Swimming</b>
+                </li>
               </ul>
             </div>
             <span className="ab-folio" aria-hidden="true">Suparna Deshmukh</span>

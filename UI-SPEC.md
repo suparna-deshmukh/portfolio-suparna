@@ -460,19 +460,21 @@ Capital; $4M pipeline — corrected from $5M), PrimeWealth (Wealth Management; 1
 ## 8. Projects — "What I've built." (`Projects.tsx`)
 
 Band with its **own palette** that crossfades with the card in front
-(`data-current="tm|fl|vx"` set by `VisibleCard`; `@property` color transitions, .6s).
+(`data-current="tm|fl|vx|cm"` set by `VisibleCard`; `@property` color transitions, .6s).
 Background: 96px vertical hairlines fading out by 60% height; a 220px **scan line**
 sweeps the top edge (6s loop, compositor-only transform); a 120%×70% radial glow in
 the front card's accent drifts ±12%. Header `md`: "What I've built." + fact column
-("3 personal case studies" / "Review mining, guided search, agentic research") +
-3-dot pip. The old "Corporate projects right below" pointer line is gone.
+("4 personal case studies" / "Review mining, guided search, agentic
+outreach") + 4-dot pip. The old "Corporate projects right below" pointer line is gone.
 
-### 8.1 Case cards (`.case case-tm | case-fl | case-vx`, stacked via `VisibleCard`)
-Three full cards in display order: **AskCart** (`tm`, index 0), **Insight
+### 8.1 Case cards (`.case case-tm | case-fl | case-cm | case-vx`, stacked via `VisibleCard`)
+Four full cards in display order: **AskCart** (`tm`, index 0), **Insight
 Extractor** (`fl`, index 1 — the review-mining extractor that fed AskCart; it is
-*not* the n8n Research Agent, which stays a separate case) and **Research Agent**
-(`vx`, index 2, sage `--pa-vx` — green is taken twice). `Case` takes
-`variant: 'tm' | 'fl' | 'vx'`.
+*not* the n8n Research Agent, which stays a separate case), **CampusMail AI**
+(`cm`, index 2, brass `--pa-cm` — the placement-cycle outreach CRM; warm on
+purpose, the one non-jade card in the stack) and **Research Agent** (`vx`,
+index 3, sage `--pa-vx` — green is taken twice). `Case` takes
+`variant: 'tm' | 'fl' | 'vx' | 'cm'`.
 Each card:
 
 * h3: project name (links to `/projects/{slug}`, view-transition named) + optional tag
@@ -483,13 +485,18 @@ Each card:
   * Insight — "One run": **8** live platforms mined per run (hot,
     `ie-platforms`) · **82%** rerun stability on the same brief (`ie-stability`)
     · **98%** run success under the 3-call cap (`ie-success`).
+  * CampusMail — "Placement cycle": **3,700** emails sent across all campaigns
+    (hot, `pc-crm-emails`) · **4** campaigns in one placement cycle
+    (`pc-crm-campaigns`) · **15** team members it runs for (`pc-crm-team`).
   * Research — "One run": **500+** pain points (hot) · **28** nodes · **70%**
     research-to-spec cut.
 * Summary paragraph, stack line, then foot: **"Read the case study →"** (btn,
   ViewTransitionLink), live host (when set), and `case-link` chips — currently
   **Live on Vercel ↗** / **Read the PRD ↗** (both `href="#"` — TODO: real URLs).
 * `.media` — the animated evidence illustration (below). `.shade` gradient at the base.
-* Research card carries a `SortingDots` signature (the dots that sort themselves).
+* Research card carries a `SortingDots` signature (the dots that sort themselves);
+  CampusMail carries a `MailDots` signature (16 mail chips settling into four
+  campaign rows).
 * `tm-field` on AskCart: two animated field lines.
 
 ### 8.2 AskCartReport (560×440 `FitStage`) — the benchmark animation
@@ -565,6 +572,29 @@ text → agentic extractor → 6-stage SQL pipeline → four root causes.
   cause cards; the stamp keeps its bottom-right slot.
 * Fonts: 11.5–13px at stage size; at the ~0.9 stage scale in the 1440 card the
   effective size stays ≥11px (verified by `qa-fonts`).
+
+### 8.5 CampusMailBoard (`CampusMailBoard.tsx`, `FitStage` 560×340) — QA-16
+One campaign email from draft to reply, in the family of the ResearchBoard
+(dotted paper, DM Mono labels, the card's brass `--pa` tint; the card also gets
+a diagonal ledger-hatch `::before` and a 4th `pj-pip` dot).
+
+* Left: the **email paper** — "2026 Placements — {recruiter_name}" subject with
+  the merge field as a dashed chip that fills solid on the *person* step; body
+  line with a second merge field (`{company_name}`); "AI draft · 15-person team"
+  tag riding the paper's bottom edge.
+* Right: four **recipient rows** (TCS / Wipro / Zeta / Infosys, HR · TA ·
+  Recruiter) that slide in staggered; each carries a status pill that flips
+  queued → sent (staggered, accent) → delivered, and the two `reply` rows flip
+  to a filled **replied** pill (and their dot goes `--accText`).
+* Bottom: **count-up counter** to `pc-crm-emails` (3,700) with the label
+  "emails sent, all campaigns"; round `tone="ok"` Stamp "**3,700 SENT** /
+  4 campaigns" slams in last.
+* Timeline: draft 0, person 1100, sent 2200 (count-up 900ms), replies 3600,
+  stamp 4300; **loop 7200ms**, `initialHoldMs: 0` (loops on scroll-in, pauses
+  off-screen via `VisibleCard .paused`). Hover shows the pre-personalisation
+  frame while the loop keeps its schedule.
+* `role="img"` with a finished-state label; sent/replied wording is real
+  product behaviour, not invented copy.
 
 ---
 
@@ -818,6 +848,15 @@ credential surfaces early in recruiter scan order).
   groups of index-card tags (`Engineering core` / `Finance minor` /
   `Product-relevant`) + `Academic highlights` + a one-line bridge sentence —
   all hidden while empty (nothing supplied yet).
+* **Off the clock** strip (`.ab-offclock`, hairline rule above; label
+  "Off the clock / sports"): three sports in a wrapping flex row — **01
+  Powerlifting, 02 Table tennis, 03 Swimming** — each row = a 24px icon tile
+  (barbell / paddle + ball / swimmer, 13px stroke icons in `--accText`) +
+  mono 10px index (`flex:none; min-width:14px` so the number can never touch
+  the name) + 14.5px sport name. QA-16: the whole block was scoped to `#ab-l`
+  while the left page is `.ab-page.ab-l` (class, not id) — dead CSS that left
+  the numbers italic 16px with default bullets colliding into the names;
+  re-scoped to `#about .ab-l`.
 * **YearStrip — removed (QA-12).** The "four years at a glance" strip
   (`.ys`, `YearStrip.tsx`) was deleted: its year labels and pills jammed at
   narrow widths (overlapping pills, crammed headers) and the timeline

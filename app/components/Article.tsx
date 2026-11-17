@@ -18,6 +18,7 @@ const COVER_SIZE: Record<string, [number, number]> = {
   '/images/projects/askcart-cover.webp': [1200, 690],
   '/images/projects/insight-extractor-cover.webp': [1200, 690],
   '/images/projects/research-agent-cover.webp': [480, 288],
+  '/images/projects/campusmail-cover.webp': [1200, 690],
   '/images/blog/null-results-cover.webp': [1200, 675],
 }
 

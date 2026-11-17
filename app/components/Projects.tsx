@@ -4,17 +4,17 @@ import CountUp from './CountUp'
 import MetricTip from './MetricTip'
 import { m } from '../lib/metrics'
 import { link } from '../lib/site'
-import { LazyAskCartReport, LazyInsightFlow, LazyResearchBoard } from './lazy'
+import { LazyAskCartReport, LazyCampusMailBoard, LazyInsightFlow, LazyResearchBoard } from './lazy'
 import ViewTransitionLink from './ViewTransitionLink'
 import VisibleCard from './VisibleCard'
-import { SortingDots } from './ProjectSignatures'
+import { MailDots, SortingDots } from './ProjectSignatures'
 
 const liveHost = (url?: string | null) => (url ? url.replace(/^https?:\/\//, '') : '')
 
 interface Stat { id?: string; value: string; label: string; hot?: boolean }
 
 interface CaseProps {
-  variant: 'tm' | 'fl' | 'vx'
+  variant: 'tm' | 'fl' | 'vx' | 'cm'
   id: string
   index: number
   slug: string
@@ -73,9 +73,10 @@ function Case({ variant, id, index, slug, title, summary, liveUrl, links, stack,
 export default function Projects() {
   const askcart = PROJECTS.find(p => p.slug === 'askcart')
   const insight = PROJECTS.find(p => p.slug === 'insight-extractor')
+  const campusmail = PROJECTS.find(p => p.slug === 'campusmail-ai')
   const research = PROJECTS.find(p => p.slug === 'research-agent')
-  const shipped = [askcart, insight, research].filter(Boolean)
-  const meta: [string, string] = [`${shipped.length} personal case studies`, 'Review mining, guided search, agentic research']
+  const shipped = [askcart, insight, campusmail, research].filter(Boolean)
+  const meta: [string, string] = [`${shipped.length} personal case studies`, 'Review mining, guided search, agentic outreach']
 
   return (
     <section className="band" id="projects" data-current="tm">
@@ -89,7 +90,7 @@ export default function Projects() {
           meta={meta}
           aside={<>
             <b>{meta[0]}</b><span>{meta[1]}</span>
-            <span className="pj-pip" aria-hidden="true"><i /><i /><i /></span>
+            <span className="pj-pip" aria-hidden="true"><i /><i /><i /><i /></span>
           </>}
         />
         <div className="pj stack">
@@ -125,11 +126,28 @@ export default function Projects() {
               media={<LazyInsightFlow />}
             />
           )}
+          {campusmail && (
+            <Case
+              variant="cm"
+              id="projects-campusmail"
+              index={2}
+              slug={campusmail.slug}
+              title={campusmail.title}
+              summary="Four campaigns of recruiter outreach for the 2026 batch: personalized mail from a contact list, a four-step send flow with safe-mode rails, and delivered counts you can actually believe."
+              liveUrl={campusmail.live_url}
+              links={campusmail.links}
+              stack="Flask · Supabase Postgres · Google Auth · Gmail API"
+              statsLabel="Placement cycle"
+              stats={(campusmail.stats ?? []).map(st => ({ id: st.id, value: m(st.id).shown, label: st.label, hot: st.hot }))}
+              media={<LazyCampusMailBoard />}
+              signature={<MailDots />}
+            />
+          )}
           {research && (
             <Case
               variant="vx"
               id="projects-research"
-              index={2}
+              index={3}
               slug={research.slug}
               title={research.title}
               summary="Give it a topic: it mines Reddit and Hacker News, clusters the pain points, and hands back a ranked list plus a first draft of the PRD."

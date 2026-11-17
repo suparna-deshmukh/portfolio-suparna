@@ -11,6 +11,14 @@ export const CASE_SHOTS: Record<string, CaseShot[]> = {
     { src: '/images/projects/askcart-analytics.webp', w: 1280, h: 900,
       cap: 'Live analytics against the study baseline: null results 8.0% vs 27.3%, 78.7% resolved within two follow-ups.' },
   ],
+  'campusmail-ai': [
+    { src: '/images/projects/campusmail-campaigns.webp', w: 1440, h: 1000,
+      cap: 'The campaign hub: every drive of the placement cycle, its audience and its status in one list.' },
+    { src: '/images/projects/campusmail-send.webp', w: 1440, h: 900,
+      cap: 'The send flow, delivery step: 219 recipients pinned, the AI-drafted recruiter mail, a schedule — and the safe-mode rail on every send.' },
+    { src: '/images/projects/campusmail-home.webp', w: 1440, h: 1100,
+      cap: 'The home: emails sent, replies and what needs attention — real data only, with one-click fixes for bounces and failed sends.' },
+  ],
   'insight-extractor': [
     { src: '/images/projects/insight-extractor-wizard.webp', w: 1200, h: 690,
       cap: 'The run starts with the 4-step brief: topic, objective, audience, competitors, timeframe — platforms and the ≤3-call Gemini budget up front.' },

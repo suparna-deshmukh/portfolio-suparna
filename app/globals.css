@@ -122,15 +122,16 @@ main>section.band{contain:layout style}
 @property --pjbg{syntax:'<color>';inherits:true;initial-value:transparent}
 @property --pjacc{syntax:'<color>';inherits:true;initial-value:transparent}
 #projects{--bg:#E4EBE2;--surf:#F6F9F4;--surf2:#E4EBE2;--fg:#15211A;--dim:#46584C;--dimmer:#576A5D;--line:#D8E1D6;--lineS:#C7D4C6;
-  --pa-tm:#177E5B;--pa-fl:#2E8562;--pa-vx:#5FA98C;--paText-tm:#146248;--paText-fl:#1E6B4C;--paText-vx:#35705A;--paInk:#F4FAF7;
-  --pj-tm:#DCEAE0;--pj-fl:#DFEBE2;--pj-vx:#E0EBE4;--pjwash:#CBDCCF;--pjline:rgba(70,90,78,.06);
+  --pa-tm:#177E5B;--pa-fl:#2E8562;--pa-vx:#5FA98C;--pa-cm:#A16A1B;--paText-tm:#146248;--paText-fl:#1E6B4C;--paText-vx:#35705A;--paText-cm:#8A5715;--paInk:#F4FAF7;
+  --pj-tm:#DCEAE0;--pj-fl:#DFEBE2;--pj-vx:#E0EBE4;--pj-cm:#EDE7D8;--pjwash:#CBDCCF;--pjline:rgba(70,90,78,.06);
   --pjbg:var(--pj-tm);--pjacc:var(--pa-tm);
   background:radial-gradient(60% 55% at 92% 4%,var(--pjwash),transparent 70%),var(--pjbg);transition:--pjbg .6s var(--ease),--pjacc .6s var(--ease)}
 [data-theme="dark"] #projects{--bg:#0F1713;--surf:#18211B;--surf2:#212D25;--fg:#ECF3EE;--dim:#A9BCAE;--dimmer:#8FA394;--line:rgba(236,243,238,.08);--lineS:rgba(236,243,238,.14);
-  --pa-tm:#4FD3A0;--pa-fl:#55D6A5;--paText-tm:#4FD3A0;--paText-fl:#55D6A5;--paText-vx:#79CBA6;
-  --pj-tm:#141C17;--pj-fl:#141B16;--pj-vx:#151D19;--pjwash:#101813;--pjline:rgba(236,243,238,.035)}
+  --pa-tm:#4FD3A0;--pa-fl:#55D6A5;--pa-cm:#E5B36B;--paText-tm:#4FD3A0;--paText-fl:#55D6A5;--paText-vx:#79CBA6;--paText-cm:#EDBE7A;
+  --pj-tm:#141C17;--pj-fl:#141B16;--pj-vx:#151D19;--pj-cm:#1C1912;--pjwash:#101813;--pjline:rgba(236,243,238,.035)}
 #projects[data-current="fl"]{--pjbg:var(--pj-fl);--pjacc:var(--pa-fl)}
 #projects[data-current="vx"]{--pjbg:var(--pj-vx);--pjacc:var(--pa-vx)}
+#projects[data-current="cm"]{--pjbg:var(--pj-cm);--pjacc:var(--pa-cm)}
 #projects .sh-meta .secref{background:var(--pjbg)}
 /* layers: 96px clay hairlines fading out by 60% height, a scan line across the top edge, and a drifting glow in the front card's accent */
 #projects::before{inset:0;background-image:repeating-linear-gradient(90deg,var(--pjline) 0 1px,transparent 1px 96px);mask-image:linear-gradient(180deg,#000 0%,transparent 60%);-webkit-mask-image:linear-gradient(180deg,#000 0%,transparent 60%)}
@@ -521,11 +522,12 @@ html.motion-ok .desk .rc .row,html.motion-ok .desk .rc .hd{animation:print .3s s
 /* 3-segment progress pip under the Projects meta: each segment fills in its card's accent as that card comes to the front */
 .pj-pip{display:flex;gap:6px;margin-top:6px}
 .pj-pip i{width:28px;height:4px;border-radius:2px;background:var(--lineS);transition:background .6s var(--ease)}
-.pj-pip i:nth-child(1){--c:var(--pa-tm)}.pj-pip i:nth-child(2){--c:var(--pa-fl)}.pj-pip i:nth-child(3){--c:var(--pa-vx)}
-#projects .pj-pip i:nth-child(1),#projects[data-current="fl"] .pj-pip i:nth-child(2),#projects[data-current="vx"] .pj-pip i{background:var(--c)}
+.pj-pip i:nth-child(1){--c:var(--pa-tm)}.pj-pip i:nth-child(2){--c:var(--pa-fl)}.pj-pip i:nth-child(3){--c:var(--pa-vx)}.pj-pip i:nth-child(4){--c:var(--pa-cm)}
+#projects .pj-pip i:nth-child(1),#projects[data-current="fl"] .pj-pip i:nth-child(2),#projects[data-current="vx"] .pj-pip i,#projects[data-current="cm"] .pj-pip i{background:var(--c)}
 /* each project has its own identity: accent, wordmark and signature graphic. The accent has two roles:
    --pa fills (button, oscilloscope, rings, dots) and --paText for accent text; --paInk labels the fills. */
 .case-tm{--pa:var(--pa-tm);--paText:var(--paText-tm)}.case-fl{--pa:var(--pa-fl);--paText:var(--paText-fl)}.case-vx{--pa:var(--pa-vx);--paText:var(--paText-vx)}
+.case-cm{--pa:var(--pa-cm);--paText:var(--paText-cm)}
 .case{position:relative;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(24px,3.4vw,48px);align-items:center;padding:clamp(24px,3vw,40px);border:1px solid color-mix(in oklab,var(--pa) 34%,var(--lineS));border-radius:calc(var(--r) + 6px);background:color-mix(in oklab,var(--pa) 4%,var(--surf));overflow:hidden;isolation:isolate;scroll-margin-top:80px}
 .case::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none}
 .case .sig{position:absolute;z-index:-1;pointer-events:none}
@@ -542,12 +544,16 @@ html.motion-ok .case-tm::before{animation:tmGlow 9s ease-in-out infinite alterna
 html.motion-ok .tm-field .d{animation:tmDot 7s linear infinite}
 html.motion-ok .tm-field .h{animation:tmHatch 7s linear infinite}
 html.motion-ok .case-tm.paused::before,html.motion-ok .case-tm.paused .tm-field i{animation-play-state:paused}
+html.motion-ok .case-cm.paused .cm{animation-play-state:paused}
 @keyframes tmGlow{0%{transform:none}50%{transform:translate(6.9%,-4.6%)}100%{transform:translate(2.8%,0)}}
 @keyframes tmDot{to{transform:translate(-16px,16px)}}
 @keyframes tmHatch{to{transform:translate(-40px,40px)}}
 @media (prefers-reduced-motion:reduce){.case-tm::before,.tm-field i{animation:none}}
+@media (prefers-reduced-motion:reduce){.case-cm::before{animation:none}}
 .case-fl::before{background-image:radial-gradient(color-mix(in oklab,var(--fg) 16%,transparent) 1px,transparent 1.4px);background-size:18px 18px;mask-image:linear-gradient(200deg,#000 0%,transparent 70%);-webkit-mask-image:linear-gradient(200deg,#000 0%,transparent 70%)}
 .case-vx::before{background:radial-gradient(70% 90% at 0% 70%,color-mix(in oklab,var(--pa) 16%,transparent),transparent 70%),radial-gradient(50% 60% at 100% 0%,color-mix(in oklab,var(--fg) 8%,transparent),transparent 70%)}
+.case-cm::before{background:repeating-linear-gradient(115deg,color-mix(in oklab,var(--pa) 13%,transparent) 0 2px,transparent 2px 30px);
+  mask-image:linear-gradient(100deg,transparent 34%,#000 82%);-webkit-mask-image:linear-gradient(100deg,transparent 34%,#000 82%)}
 .case .copy{display:flex;flex-direction:column;gap:14px;min-width:0;align-self:start}
 .case .idx{display:flex;gap:14px;flex-wrap:wrap;margin:0;font:500 var(--t-meta)/1 var(--fm);letter-spacing:.08em;text-transform:uppercase}
 .case .idx a{color:var(--dim);padding-bottom:3px;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
@@ -577,6 +583,13 @@ html.motion-ok .case-tm.paused::before,html.motion-ok .case-tm.paused .tm-field 
 .sig-dots{top:22px;right:26px;width:132px;height:72px}
 .sig-dots i{position:absolute;left:0;top:0;width:6px;height:6px;border-radius:50%;background:var(--pa);opacity:.75;animation:sortdot 5s var(--ease) infinite alternate;animation-delay:calc(var(--k) * -.12s)}
 @keyframes sortdot{0%,15%{transform:translate(var(--x0),var(--y0))}70%,100%{transform:translate(var(--x1),var(--y1))}}
+.sig-mail{top:22px;right:26px;width:132px;height:72px}
+.sig-mail i{position:absolute;left:0;top:0;width:11px;height:8px;border-radius:2px;background:var(--pa);opacity:.7;
+  background-image:linear-gradient(160deg,transparent 46%,color-mix(in oklab,var(--pa) 55%,#fff) 46% 54%,transparent 54%);
+  animation:mailsort 5.4s var(--ease) infinite alternate;animation-delay:calc(var(--k) * -.13s)}
+@keyframes mailsort{0%,15%{transform:translate(var(--x0),var(--y0)) rotate(-8deg)}70%,100%{transform:translate(var(--x1),var(--y1)) rotate(0deg)}}
+.paused .sig-mail i{animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){.sig-mail i{animation:none;transform:translate(var(--x1),var(--y1))}}
 .case-vx .call{position:relative;z-index:1}
 .sig-rings{width:420px;height:420px;top:50%;right:calc(min(100%,380px) / 2 - 210px);margin-top:-210px}
 .sig-rings i{position:absolute;inset:0;border-radius:50%;border:1.5px solid var(--pa);opacity:0;animation:ring 3.6s ease-out infinite}
@@ -624,6 +637,7 @@ html.motion-ok .case-tm.paused::before,html.motion-ok .case-tm.paused .tm-field 
 .call.run:not(.on) .av{animation:callRing 1s ease-out infinite}
 @keyframes callRing{from{box-shadow:0 0 0 0 color-mix(in oklab,var(--pa) 60%,transparent)}to{box-shadow:0 0 0 16px transparent}}
 .case-vx .ft{color:var(--dim)}
+.case-cm .ft{color:var(--dim)}
 /* FitStage: a fixed-size illustration scaled to its column */
 .fit{position:relative;width:100%}
 .fit>.stage{position:absolute;top:0;left:calc((100% - var(--w) * var(--s,1)) / 2);transform-origin:0 0;transform:scale(var(--s,1))}
@@ -669,6 +683,49 @@ html.motion-ok .case-tm.paused::before,html.motion-ok .case-tm.paused .tm-field 
 @keyframes fbThud{30%{transform:translateY(2px)}}
 .fb-cap{position:absolute;left:12px;bottom:10px;font:500 13.5px/1 var(--fm);letter-spacing:.04em;color:var(--dim);opacity:0}
 .fb.sorted .fb-cap{opacity:1;transition:opacity .4s .7s}
+/* CampusMail board: one campaign email personalised per recruiter, sent, replies back */
+.cm{position:absolute;inset:0;border-radius:var(--r);overflow:hidden;border:1px solid var(--lineS);
+  background:radial-gradient(color-mix(in oklab,var(--paText) 22%,transparent) 1px,transparent 1.4px) 0 0/18px 18px,color-mix(in oklab,var(--pa) 8%,var(--surf))}
+.cm-mail{position:absolute;left:22px;top:20px;width:230px;padding:13px 15px 12px;border-radius:6px;background:var(--surf);
+  border:1px solid var(--lineS);box-shadow:0 1px 1px rgba(23,19,14,.18),0 12px 18px -10px rgba(23,19,14,.4)}
+.cm-subj small{display:block;font:500 10px/1 var(--fm);letter-spacing:.1em;text-transform:uppercase;color:var(--dimmer);margin-bottom:5px}
+.cm-subj b{display:flex;align-items:center;gap:7px;font:600 14.5px/1.25 var(--fd);letter-spacing:-.01em;color:var(--fg)}
+.cm-subj .mf{display:inline-block;font:600 10.5px/1 var(--fm);letter-spacing:0;color:var(--accText);padding:3px 5px;border:1px dashed color-mix(in oklab,var(--acc) 55%,transparent);border-radius:4px;opacity:.5;transition:opacity .3s,background .3s}
+.cm.person .cm-subj .mf{opacity:1;background:color-mix(in oklab,var(--acc) 14%,transparent);border-style:solid}
+.cm-mail p{margin:8px 0 0;font:400 12.5px/1.45 var(--fb);color:var(--dim)}
+.cm-mail .cm-merge{font:500 12.5px/1 var(--fm);color:var(--accText);opacity:.5;transition:opacity .3s}
+.cm.person .cm-mail .cm-merge{opacity:1}
+.cm-sign{margin-top:9px;font:400 11.5px/1 var(--fm);color:var(--dimmer)}
+.cm-tag{position:absolute;left:15px;bottom:-9px;font:500 9.5px/1 var(--fm);letter-spacing:.06em;text-transform:uppercase;color:var(--dim);
+  background:var(--surf);border:1px dashed var(--lineS);border-radius:999px;padding:4px 8px}
+.cm-rail{position:absolute;left:278px;top:0;right:22px;bottom:0}
+.cm-rec{position:absolute;left:0;right:0;top:var(--y);height:58px;display:flex;align-items:center;gap:10px;padding:10px 12px;
+  border:1px solid var(--lineS);border-radius:7px;background:color-mix(in oklab,var(--surf) 72%,transparent);
+  opacity:0;transform:translateX(12px);transition:opacity .3s var(--ease),transform .5s var(--ease);transition-delay:calc(var(--i) * 110ms)}
+.cm.sent .cm-rec,.cm.replies .cm-rec{opacity:1;transform:none}
+.cm-rec .dot{flex:none;width:10px;height:10px;border-radius:50%;background:var(--lineS);transition:background .3s}
+.cm.sent .cm-rec .dot{background:var(--pa);animation:cmPulse 1.8s ease-out infinite;animation-delay:calc(var(--i) * .18s)}
+.cm.replies .cm-rec .dot{animation:none}
+.cm.replies .cm-rec.rep .dot{background:var(--accText)}
+@keyframes cmPulse{0%{box-shadow:0 0 0 0 color-mix(in oklab,var(--pa) 55%,transparent)}100%{box-shadow:0 0 0 9px transparent}}
+.cm-rec .who{min-width:0;flex:1}
+.cm-rec .who b{display:block;font:600 13.5px/1.2 var(--fb);color:var(--fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cm-rec .who small{display:block;font:400 11px/1.4 var(--fm);color:var(--dimmer);margin-top:2px}
+.cm-rec .st{position:relative;flex:none;width:66px;height:20px}
+.cm-rec .st i{position:absolute;inset:0;display:grid;place-items:center;font:600 9.5px/1 var(--fm);letter-spacing:.09em;text-transform:uppercase;
+  border:1px solid var(--lineS);border-radius:999px;color:var(--dim);opacity:0;transition:opacity .3s,background .3s,color .3s,border-color .3s;transition-delay:calc(var(--i) * 140ms)}
+.cm .st .q{opacity:1}
+.cm.sent .st .q{opacity:0}
+.cm.sent .st .s{opacity:1;color:var(--paText);border-color:color-mix(in oklab,var(--pa) 45%,transparent);background:color-mix(in oklab,var(--pa) 10%,transparent)}
+.cm.replies .st .s{opacity:0}
+.cm.replies .st .d{opacity:1;color:var(--dim);background:color-mix(in oklab,var(--fg) 5%,transparent)}
+.cm.replies .st.rep .d{opacity:0}
+.cm.replies .st.rep .r{opacity:1;color:var(--accInk);background:var(--acc);border-color:var(--acc)}
+.cm-tot{position:absolute;left:24px;bottom:16px;display:flex;align-items:baseline;gap:8px}
+.cm-tot .n{font:700 26px/1 var(--fm);letter-spacing:-.02em;color:var(--paText);font-variant-numeric:tabular-nums}
+.cm-tot label{font:500 11px/1.3 var(--fm);letter-spacing:.03em;color:var(--dim)}
+.cm-stamp{position:absolute;right:16px;bottom:12px;z-index:9}
+@media (prefers-reduced-motion:reduce){.cm-rec .dot{animation:none}}
 /* ToolMonkey report: three injected failures, a verdict each, then the health score is stamped */
 @property --tra{syntax:"<integer>";inherits:false;initial-value:0}
 @property --trb{syntax:"<integer>";inherits:false;initial-value:0}
@@ -1157,7 +1214,7 @@ html.vt-nav::view-transition-old(root){animation-direction:reverse}
   .case{grid-template-columns:1fr;gap:16px;padding:20px}
   .themes .th3.blur:nth-child(n+4){display:none}
   .call .wave{display:none}
-  .sig-dots{display:none}
+  .sig-dots,.sig-mail{display:none}
   .th3{grid-template-columns:minmax(0,1fr) 60px auto}
   .ct{grid-template-columns:1fr;gap:34px}
   .form .two{grid-template-columns:1fr}
