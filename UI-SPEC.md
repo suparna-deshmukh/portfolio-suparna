@@ -492,8 +492,9 @@ Each card:
   * Research — "One run": **500+** pain points (hot) · **28** nodes · **70%**
     research-to-spec cut.
 * Summary paragraph, stack line, then foot: **"Read the case study →"** (btn,
-  ViewTransitionLink), live host (when set), and `case-link` chips — currently
-  **Live on Vercel ↗** / **Read the PRD ↗** (both `href="#"` — TODO: real URLs).
+  ViewTransitionLink), live host (when set — CampusMail shows
+  **aicampusmail.pythonanywhere.com ↗**), and `case-link` chips (per-project
+  **Source on GitHub ↗**).
 * `.media` — the animated evidence illustration (below). `.shade` gradient at the base.
 * Research card carries a `SortingDots` signature (the dots that sort themselves);
   CampusMail carries a `MailDots` signature (16 mail chips settling into four
