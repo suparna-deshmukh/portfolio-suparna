@@ -471,9 +471,10 @@ outreach") + 4-dot pip. The old "Corporate projects right below" pointer line is
 Four full cards in display order: **AskCart** (`tm`, index 0), **Insight
 Extractor** (`fl`, index 1 — the review-mining extractor that fed AskCart; it is
 *not* the n8n Research Agent, which stays a separate case), **CampusMail AI**
-(`cm`, index 2, brass `--pa-cm` — the placement-cycle outreach CRM; warm on
-purpose, the one non-jade card in the stack) and **Research Agent** (`vx`,
-index 3, sage `--pa-vx` — green is taken twice). `Case` takes
+(`cm`, index 2, jade `--pa-cm` — the placement-cycle outreach CRM; all four
+cards share the same jade-family scheme, the band crossfades between the four
+steps of the ramp) and **Research Agent** (`vx`, index 3, sage `--pa-vx` —
+green is taken twice). `Case` takes
 `variant: 'tm' | 'fl' | 'vx' | 'cm'`.
 Each card:
 
@@ -575,7 +576,7 @@ text → agentic extractor → 6-stage SQL pipeline → four root causes.
 
 ### 8.5 CampusMailBoard (`CampusMailBoard.tsx`, `FitStage` 560×340) — QA-16
 One campaign email from draft to reply, in the family of the ResearchBoard
-(dotted paper, DM Mono labels, the card's brass `--pa` tint; the card also gets
+(dotted paper, DM Mono labels, the card's jade `--pa` tint; the card also gets
 a diagonal ledger-hatch `::before` and a 4th `pj-pip` dot).
 
 * Left: the **email paper** — "2026 Placements — {recruiter_name}" subject with

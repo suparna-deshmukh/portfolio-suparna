@@ -11,7 +11,7 @@ export const contentType = 'image/png'
 const CASE_STYLE: Record<string, { wash: string; accent: string }> = {
   askcart: { wash: '#DCEAE0', accent: OG.pine },
   'research-agent': { wash: '#E2EAEF', accent: OG.blue },
-  'campusmail-ai': { wash: '#EDE7D8', accent: '#A16A1B' },
+  'campusmail-ai': { wash: '#DCEAE0', accent: OG.pine },
 }
 
 export default async function OgImage({ params }: { params: Promise<{ slug: string }> }) {
