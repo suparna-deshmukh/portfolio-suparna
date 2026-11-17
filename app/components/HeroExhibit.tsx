@@ -41,7 +41,7 @@ export default function HeroExhibit() {
 
         <div className="ex-col">
           <span className="ex-lab"><span className="ix">03</span> · RISA LABS</span>
-          <a className="ex-ob ex-risa" href="#experience-risa" style={{ ['--d' as string]: 1.45 }} aria-label={`RISA Labs: ${m('risa-hours').num} hours a week saved across ${m('risa-users').shown} users by Status Tracking; ${m('risa-docs').num} docs/day on a cron pipeline; ${m('risa-vapi').shown} accuracy on the Vapi calling MVP; ${m('risa-qc').shown} QC throughput; ${m('risa-pulse').shown} auto-RCA precision; ${m('risa-tat').shown} faster portal filing; ${m('risa-studio').shown} saved by Document Studio. ${m('risa-hours').source}, as of ${m('risa-hours').asOf}`}>
+          <a className="ex-ob ex-risa" href="#experience-risa" style={{ ['--d' as string]: 1.45 }} aria-label={`RISA Labs: ${m('risa-hours').num} hours a week saved across ${m('risa-users').shown} users by Status Tracking; ${m('risa-docs').num} docs/day on a cron pipeline; ${m('risa-vapi').shown} success rate on the Vapi voice agent MVP; ${m('risa-qc').shown} QC throughput; ${m('risa-pulse').shown} auto-RCA precision; ${m('risa-tat').shown} faster portal filing; ${m('risa-studio').shown} saved by the Acrobat replacement. ${m('risa-hours').source}, as of ${m('risa-hours').asOf}`}>
             <span className="ex-risa-hd"><b>RISA Labs</b><small>APM intern · now</small></span>
             <MetricTip id="risa-hours" className="block" focusable={false}><span className="ex-risa-big"><CountUp text={String(m('risa-hours').num)} delayMs={600} /><i> hrs/wk</i></span></MetricTip>
             <span className="ex-risa-sub">saved across {m('risa-users').shown} users · Status Tracking 0→1</span>

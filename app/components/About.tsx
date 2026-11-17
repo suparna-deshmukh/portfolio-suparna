@@ -84,7 +84,7 @@ function Positions() {
             <div className="ab-herorow">
               <HeroFigure metric={p.headline.metric} label={p.headline.label} secondary={p.secondary} />
               {p.id === 'placement' && <PlacementTrack />}
-              {p.id === 'consult' && <TileField count={m('dc-projects').num ?? 16} caption={`${m('dc-projects').shown} projects · 45 consultants`} />}
+              {p.id === 'consult' && <TileField count={m('dc-projects').num ?? 16} caption={`${m('dc-projects').shown} projects · ${m('dc-consultants').shown} consultants`} />}
             </div>
             {p.line && <p className="ab-line"><Rich text={p.line} /></p>}
             {p.chips.length > 0 && (

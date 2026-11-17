@@ -31,36 +31,36 @@ export const RESUME = {
     {
       name: 'RISA Labs', role: 'Associate Product Manager Intern', when: 'Jul 2026 – Present', place: 'Bengaluru · AI Workflows for US Healthcare',
       bullets: [
-        'Owned **Status Tracking** 0→1: 90,000-order SQL analysis, user research, PRDs (v0 and v1), HLD and dev-testing; **200 users save 250 hrs/wk**',
-        'Designed a **cron pipeline for 400 docs/day** via bots, portal and fax APIs; order matching at **85% coverage, 96% precision** (coverage-first trade-off)',
-        "Inquiry calls took **12% of a user's day**, so built a **voice agent MVP on Vapi** from 4 months of data, checklists and configs: **92% accuracy** in a 20-user pilot",
-        'QC reviewers juggled **4 platforms**, so prototyped and shipped a **unified UI**: **92 SUS, 2x throughput, 40% faster error fixes** on 2,500 orders/day',
-        'Built **Pulse**, a RAG, BigQuery-based auto-RCA tool **used by 8 PMs**; eval-tested to flag 15 metric drops/day at **87% precision**, 60% RCA coverage',
-        'Replaced Adobe Acrobat with **Document Studio** on platform APIs to fetch and process clinical docs by diagnosis: **saved $10K/yr, step TAT cut 70%**',
-        "Portal filing took **17% of a user's day**, so co-launched **RISA Assist**, a low-latency AI extension on the Chrome Store: parses HTML, autofills, **TAT cut 60%**",
-        'Revamped 4 key UI steps via **user interviews and Amplitude**, resolving edge cases with tech, design and compliance: **time per order cut 10%**',
+        'Owned **Status Tracking** 0→1: SQL analysis of 90,000 orders, user research, PRDs (v0 and v1), HLD and dev-testing; **200 users save 250 hrs/wk**',
+        'Built an **AI cron pipeline for 400 docs/day** via bots, portal and fax APIs; order matching at **85% coverage, 96% precision** (coverage-first trade-off)',
+        "Inquiry calls took **12% of a user's day**, so built a **voice agent MVP on Vapi** from 4 months of data, checklists and configs: **92% success rate** in a 20-user pilot",
+        'QC reviewers juggled **4 tools**, so prototyped, iterated and shipped a **unified UI**: **92 SUS (16 reviewers), 2x throughput, 42% faster fixes** on 2,500 orders/day',
+        "Portal filing took **17% of a user's day**, so co-launched a **low-latency AI extension** on the Chrome Store, parsing HTML to autofill: **TAT cut 60%**",
+        'Replaced Acrobat via **platform APIs** to fetch and process clinical docs by diagnosis across workflows: **saved $10K/yr, step TAT cut 70%**',
+        'PMs hand-traced KPI drops, so built a **RAG, BigQuery auto-RCA tool** for my team to flag **15 drops/day** at **87% precision**, **64% RCA coverage**',
+        'Prioritized a **Kanban roadmap** with Engineering, UX, GTM and Legal to revamp **4 UI steps** via user interviews and Amplitude: **time per order cut 11%**',
       ],
     },
     {
       name: 'InvestMates', role: 'Product Manager (Part-time)', when: 'Jul 2025 – Sep 2025', place: 'Seattle, US (Remote) · AI Wealth Management for NRIs',
       bullets: [
-        'Owned **E2E onboarding** (risk, goal and portfolio import) from PRD to launch in Jira: **completion up 19%, portfolio up 22%, TTFV cut 15%**',
-        'Portfolio import was buried, so A/B tested it as a homepage checkpoint (sample 4,200, p < 0.05): **homepage CTR up 25%, sessions up 10%**',
-        'Split **3,000 users into 5 activation drop-off cohorts**; tailored **CleverTap email and push campaigns** cut drop-offs 18%, **D7 retention up 3 pp**',
+        'Owned **E2E onboarding** (risk, goal and portfolio import) from PRD to launch in Jira: **completion up 17%, portfolio up 22%, TTFV cut 15%**',
+        'Portfolio import was buried, so A/B tested and added it as a homepage checkpoint (4,200 users, p < 0.05): **CTR up 25%, session length up 10%**',
+        'Segmented **6,000 users into 10 activation drop-off cohorts**, ran **CleverTap email and push campaigns**: **drop-offs cut 18%, D7 retention up 3 pp**',
       ],
     },
     {
-      name: 'Suzlon Group', role: 'Summer Intern (Team Lead)', when: 'May 2025 – Jul 2025', place: 'Pune · Renewable Energy',
+      name: 'Suzlon Group', role: 'Summer Intern (SPOC)', when: 'May 2025 – Jul 2025', place: 'Pune · Leading Renewable Energy Provider',
       bullets: [
         'Led **5 interns** on an 8-state CSR analysis; presented Power BI KPI dashboards and PPTs to leadership, **shaping spending for 2.3M beneficiaries**',
-        'Reporting data sat in **email inboxes**, so automated **10 workflows** with n8n, AI agents and IMAP parsing: **reporting time cut 66%**',
+        'Reporting data sat in **email inboxes**, so automated it with **n8n, AI agents and IMAP parsing**: **reporting time cut 66%** over **10 workflows**',
       ],
     },
     {
       name: 'Chimera VC', role: 'Investment Analyst Intern', when: 'Mar 2025 – May 2025', place: 'Singapore (Remote) · Gaming Venture Capital',
       bullets: [
-        'Evaluated 10 early-stage gaming startups; co-authored **7 memos** for the **$4M pipeline**, enabling **3 term sheets, 2 investments**',
-        'Drove **3 term sheets and 2 closed investments**; owned end-to-end due diligence and deal flow in a lean team of 4',
+        'Wrote **7 investment memos**, leading to **$4M invested in 6 deals**',
+        'Analyzed **10 B2C gaming startups** on benchmarks, traction and LTV/CAC; owned end-to-end due diligence and deal flow in a lean team of 4',
       ],
     },
     {
@@ -74,18 +74,19 @@ export const RESUME = {
     {
       name: 'AskCart', role: 'Guided AI E-Commerce Search and Chatbot', when: '', place: 'Next.js, SQL, Python, RAG, ML, REST APIs',
       bullets: [
-        'Mined **94,600 reviews** from 5 sources with the Insight Extractor, a 6-stage SQL pipeline and K-means validation; isolated **4 root causes**',
+        'Mined **94,600 reviews** from **8 sources** with the Insight Extractor, a 6-stage SQL pipeline and K-means validation; isolated **4 root causes**',
         'Interviewed 6 users; built a Vercel-deployed guided follow-up MVP over 54,000 Bayesian-rated SKUs: **null results down 27.3% to 8%** (150 sessions)',
-        'Built an ML semantic fallback with **multilingual-e5-small** embeddings for vague-query similarity: **top-3 relevance 88%** (100 queries)',
-        'Built a RAG chatbot on **Gemini** LLM intent parsing and embedding search; AI evals for search, RAG and UX passed **96.5%** (113 cases)',
+        'Devised an **ML semantic fallback** using **multilingual-e5-small** embeddings for vague-query similarity search: **top-3 relevance 88%** (100 queries)',
+        'Built a RAG chatbot on **Gemini** LLM intent parsing and embedding search; AI evals for search, RAG and UX passed **96%** (113 cases)',
         'Integrated **click and event analytics** with properties and a funnel dashboard: **78.7% of searches resolved in 2 follow-ups** (150 sessions)',
       ],
     },
     {
-      name: 'Research Agent', role: 'An n8n workflow that turns Reddit and Hacker News into PRDs', when: '', place: 'n8n, Ollama (Llama 3), Python, REST APIs',
+      name: 'Insight Extractor', role: 'Agentic User Research Engine for PMs', when: '', place: 'Next.js, SQL, Gemini, Qwen, Redis, REST APIs',
       bullets: [
-        'Built a **28-node agentic workflow** (auto subreddit discovery, LLM theme classification) that aggregates **over 500 pain points per run**',
-        'Deployed on a schedule with a form-based UI, keyword expansion and history logging: **research-to-spec time cut 70%**',
+        'Engineered an **agentic tool** mining Reddit, HN, App Store, Play Store, GitHub, YouTube, Product Hunt and Trends at **82% rerun stability**',
+        'Integrated a **6-stage pipeline** of LLM planning, scraping, SQL cleaning, labelling, analysis and reporting: **95% noise cut at 86% label accuracy**',
+        'Capped web-version runs at **3 LLM calls** to control cost, with health-ranked API fallbacks, auto-recovery and run limits: **98% run success**',
       ],
     },
   ] satisfies Entry[],
@@ -93,7 +94,7 @@ export const RESUME = {
     {
       name: 'Everyday Diamonds', role: 'Team Lead of 10 · GTM and Series A', when: 'Aug 2024 – Sep 2024', place: 'Bengaluru · 180 Degrees Consulting',
       bullets: [
-        'Modeled profitability, pricing and projections; expansion roadmap and Series A deck aided a **$2.5M raise** (All In Capital); first store launched',
+        'Modeled **pricing, profitability and projections**, a **4-year offline roadmap** and a **Series A deck** pitched to investors, raising **$2.5M** from All In Capital',
       ],
     },
     {
@@ -113,16 +114,17 @@ export const RESUME = {
     {
       name: 'BITS Goa', role: 'Placement Coordinator', when: 'May 2026 – Present', place: '',
       bullets: [
-        'Selected **1 of 8** from over 1,000 students; leading campus placements and corporate outreach for the 2026 batch with a **25-member team**',
-        'Placed **240 students** since May 2026, lifting batch placement from **58% to 85%**; **Project SYNERGY** 3-campus centralization proposal approved',
-        'Built an **agentic AI mailing CRM** with outreach analytics; a 15-person team used it to automate **3,700 emails and replies** across 4 campaigns',
+        'Selected **1 of 8** from over 1,000 students to lead campus placements and recruiter outreach, managing a **25-member team** end to end',
+        'Drove the **2026 batch** placement cycle since May: placed **240 students**, lifting the placement percentage from **58% to 85%** by November',
+        'Architected **Project SYNERGY**, a phased plan to centralize placement and internship drives across **3 BITS campuses**; secured admin approval',
+        'Built **CampusMail AI**, an agentic outreach CRM on Flask, Supabase Postgres and Google Auth for a 15-person team: **3,700 emails, 4 campaigns**',
       ],
     },
     {
       name: '180 Degrees Consulting, BITS Goa', role: 'Director', when: 'May 2025 – Jun 2026', place: '',
       bullets: [
-        'Youngest Director to lead **45 consultants across 16 projects**, driving **30% YoY revenue growth**; awarded Best Consultant as a sophomore',
-        'Spearheaded Consultathon, BITS Goa\u2019s flagship case competition: **₹17L in sponsorships**, 3,200 registrations; PM and consulting courses to 50,000 impressions',
+        'Youngest Director to lead **54 consultants** on **16 client projects**, driving **30% YoY revenue growth**; awarded Best Consultant as a sophomore',
+        'Spearheaded **Consultathon**, BITS Goa\u2019s flagship case competition: **₹17L in sponsorships**, **3,200 registrations** via targeted outreach',
       ],
     },
     {
@@ -138,7 +140,7 @@ export const RESUME = {
     "Top 10% of 270, NextLeap Product Management Fellowship '26 (guided AI search for Google Photos)",
   ],
   skills: [
-    'Programming and AI: Python, SQL, JavaScript, Next.js, APIs, HLD, RAG, AI agents, MCP, LLM evals, Claude Code, GitHub',
+    'Programming and AI: Python, SQL, JavaScript, Next.js, APIs, HLD, RAG, AI agents, n8n, MCP, agent skills, LLM evals, Claude Code, GitHub',
     'Product and analytics: Amplitude, Mixpanel, CleverTap, BigQuery, Firebase, Metabase, Power BI, Excel, Jira, Figma, A/B testing',
   ],
 }
